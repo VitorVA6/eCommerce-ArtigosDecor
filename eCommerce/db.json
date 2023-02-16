@@ -1,0 +1,92 @@
+{
+    "produtos": [
+        {
+            "id": 1,
+            "title": "Suporte g para bolos com detalhe de pérolas",
+            "preco": 375.94,
+            "img": "https://offstore-teste.s3-sa-east-1.amazonaws.com/compressed/6128494683cd24a840b44b70443af209.jpg",
+            "destaque": true,
+            "desconto": 18,
+            "categoria": 2,
+            "promotion": true,
+            "desc": "cor: dourado \ntam: 30x40cm"
+        },
+        {
+            "id": 2,
+            "title": "Suporte m para bolos com detalhe de pérolas",
+            "preco": 292.56,
+            "img": "https://offstore-teste.s3-sa-east-1.amazonaws.com/compressed/1e807287c0941ad0cb7f9fd1f247eae9.jpg",
+            "destaque": true,
+            "desconto": 14,
+            "categoria": 2,
+            "promotion": true,
+            "desc": "cor: dourado \n tam: 30x40cm"
+        },
+        {
+            "id": 3,
+            "title": "Painel de led p happy birthday",
+            "preco": 323.45,
+            "img": "https://offstore-teste.s3-sa-east-1.amazonaws.com/compressed/c4c2d00fae7489886cfb01c64c75ebbd.jpg",
+            "destaque": true,
+            "desconto": 18,
+            "categoria": 3,
+            "promotion": true,
+            "desc": "cor: dourado \n tam: 30x40cm"
+        },
+        {
+            "id": 4,
+            "title": "Número 9 de led",
+            "preco": 249.90,
+            "img": "https://offstore-teste.s3-sa-east-1.amazonaws.com/compressed/4ca561c09c8bbff1d2b350d6bb5d6ef9.jpg",
+            "destaque": false,
+            "desconto": 0,
+            "categoria": 3,
+            "promotion": false,
+            "desc": "cor: dourado \n tam: 30x40cm"
+        },
+        {
+            "id": 5,
+            "title": "Castiçal g com detalhe gradeado",
+            "preco": 155.00,
+            "img": "https://offstore-teste.s3-sa-east-1.amazonaws.com/compressed/fd07be0afc4f9ba9d1bde6380c161c54.jpg",
+            "destaque": true,
+            "desconto": 7,
+            "categoria": 5,
+            "promotion": true,
+            "desc": "cor: dourado \n tam: 30x40cm"
+        },
+        {
+            "id": 6,
+            "title": "Castiçal m para velas",
+            "preco": 111.79,
+            "img": "https://offstore-teste.s3-sa-east-1.amazonaws.com/compressed/9858aee1eaa545c2bd554e0eddff3e6f.jpg",
+            "destaque": true,
+            "desconto": 0,
+            "categoria": 5,
+            "promotion": false,
+            "desc": "cor: dourado \n tam: 30x40cm"
+        },
+        {
+            "id": 7,
+            "title": "Vaso g com detalhe sofisticado",
+            "preco": 309.42,
+            "img": "https://offstore-teste.s3-sa-east-1.amazonaws.com/compressed/d3a07a0f06da68c5cf64cccc4a4e2fc6.jpg",
+            "destaque": false,
+            "desconto": 0,
+            "categoria": 4,
+            "promotion": false,
+            "desc": "cor: dourado \n tam: 30x40cm"
+        },
+        {
+            "id": 8,
+            "title": "Vaso p design moderno",
+            "preco": 113.55,
+            "img": "https://offstore-teste.s3-sa-east-1.amazonaws.com/compressed/d7fd6e6935e469fd0c39b635bd62b12c.jpg",
+            "destaque": false,
+            "desconto": 0,
+            "categoria": 4,
+            "promotion": false,
+            "desc": "cor: dourado \n tam: 30x40cm"
+        }
+    ]
+}
