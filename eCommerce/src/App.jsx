@@ -7,6 +7,7 @@ import axios from 'axios'
 import Cart from './pages/Cart'
 import PageNotFound from './pages/PageNotFound'
 import CarrinhoProvider from './contexts/Carrinho'
+import Admin from './pages/Admin'
 
 axios.defaults.baseURL = 'http://[::1]:3000'
 
@@ -22,6 +23,7 @@ function App() {
           <Route path='/cart' element={<Cart />} />
         </Route>
         <Route path='/404' element={<PageNotFound />} />
+        <Route path='/admin' element={<Admin />} />
       </Routes>
       </CarrinhoProvider>
     </BrowserRouter>

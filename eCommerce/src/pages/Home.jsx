@@ -1,7 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import ListaProdutos from '../components/ListaProdutos'
-import Modal from '../components/Modal'
 import NavLateral from '../components/NavLateral'
 import { useCarrinhoContext } from '../contexts/Carrinho'
 

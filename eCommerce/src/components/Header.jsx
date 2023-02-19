@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useCarrinhoContext } from '../contexts/Carrinho'
+import logo from '../assets/logo.png'
 
 export default function Header() {
 
@@ -9,7 +10,9 @@ export default function Header() {
   return (
     <header className='flex bg-black text-white justify-between items-center px-20 h-20 fixed w-full z-30'>
         <nav className='flex justify-between items-center  w-full'>
-            <Link to={'/'} className='font-bold text-lg'>ARTIGOS DECOR</Link >
+            <Link to={'/'} className='w-16'>
+                <img src={logo} alt="" />
+            </Link >
             <div className='flex gap-10'>
                 <Link to={'/'}>Página inicial</Link>
                 <Link>Promoções</Link>
