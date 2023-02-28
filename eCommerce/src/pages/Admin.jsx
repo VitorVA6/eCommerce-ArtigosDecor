@@ -1,14 +1,26 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CatalogoAdmin from '../components/CatalogoAdmin'
 import HeaderAdmin from '../components/HeaderAdmin'
 import NavLateralAdmin from '../components/NavLateralAdmin'
 import InfoAdmin from '../components/InfoAdmin'
 import PersoAdmin from '../components/PersoAdmin'
 import ContaAdmin from '../components/ContaAdmin'
+import { useUserContext } from '../contexts/User'
+import { Navigate } from 'react-router-dom'
 
 export default function Admin() {
-
+  const {authenticated, checkAuth} = useUserContext()
   const [selected, setSelected] = useState('catalog')
+
+  useEffect( ()=> {
+
+    checkAuth()
+
+  }, [] )
+
+  if(!authenticated){
+    return <Navigate to='/login'/>
+  }
 
   return (
     <div className='flex flex-col'>

@@ -7,16 +7,19 @@ import axios from 'axios'
 import Cart from './pages/Cart'
 import PageNotFound from './pages/PageNotFound'
 import CarrinhoProvider from './contexts/Carrinho'
+import UserProvider from './contexts/User'
 import Admin from './pages/Admin'
 import Login from './pages/Login'
 
-axios.defaults.baseURL = 'http://[::1]:3000'
+axios.defaults.baseURL = 'http://[::1]:4000'
+axios.defaults.withCredentials = true
 
 function App() {
 
   return (
     <BrowserRouter>
       <CarrinhoProvider>
+      <UserProvider>
       <Routes>
         <Route path='/' element={<Base />}>
           <Route index element={<Home />} />
@@ -27,6 +30,7 @@ function App() {
         <Route path='/login' element={<Login />}/>
         <Route path='/admin' element={<Admin />} />
       </Routes>
+      </UserProvider>
       </CarrinhoProvider>
     </BrowserRouter>
   )

@@ -19,12 +19,13 @@ export default function CatalogoAdmin() {
     const [edit, setEdit] = useState(false)
 
     useEffect( () =>{
-        axios.get('/produtos').then( ({data}) => setProdutos(data) )
+        axios.post('/users/test').then( (data) => console.log(data) )
         .catch( erro => console.log(erro) )
     }, [] )
 
   return (
     <section>
+        
         {
             modalCategoria && <ModalCategoria setModalCategoria={setModalCategoria} edit={edit} placeh='Ex: Bandejas' />
         }      
