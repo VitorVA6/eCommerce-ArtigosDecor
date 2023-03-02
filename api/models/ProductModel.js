@@ -5,28 +5,30 @@ const ProductSchema = new Schema({
     title: {
         type: String,
         unique: true,
-        require: true
+        required: true
     },
     preco: {
         type: Number,
-        require: true
+        required: true
     },
     img: {
         type: String,
-        require: true
+        required: true
     },
     destaque: {
         type: Boolean,
-        require: true
+        required: true
     },
     desconto: {
         type: Number,
-        require: true
+        required: true
     },
     categoria: {
-        type: String,
-        require: true 
+        type: [String],
+        required: true 
     },
     desc: String
 
 })
+
+module.exports = mongoose.model('Product', ProductSchema)

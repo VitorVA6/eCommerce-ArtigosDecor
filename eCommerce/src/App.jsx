@@ -7,6 +7,7 @@ import axios from 'axios'
 import Cart from './pages/Cart'
 import PageNotFound from './pages/PageNotFound'
 import CarrinhoProvider from './contexts/Carrinho'
+import ProductProvider from './contexts/Product'
 import UserProvider from './contexts/User'
 import Admin from './pages/Admin'
 import Login from './pages/Login'
@@ -20,6 +21,7 @@ function App() {
     <BrowserRouter>
       <CarrinhoProvider>
       <UserProvider>
+      <ProductProvider>
       <Routes>
         <Route path='/' element={<Base />}>
           <Route index element={<Home />} />
@@ -30,6 +32,7 @@ function App() {
         <Route path='/login' element={<Login />}/>
         <Route path='/admin' element={<Admin />} />
       </Routes>
+      </ProductProvider>
       </UserProvider>
       </CarrinhoProvider>
     </BrowserRouter>

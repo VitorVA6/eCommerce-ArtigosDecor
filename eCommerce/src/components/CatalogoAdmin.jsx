@@ -6,21 +6,24 @@ import ModalCategoria from './ModalCategoria'
 import ListaProdutosAdmin from './ListaProdutosAdmin'
 import ModalVariacoes from './ModalVariacoes'
 import ModalProduto from './ModalProduto'
+import { useProductContext } from '../contexts/Product'
 
 export default function CatalogoAdmin() {
+
+    const {produtos, getProducts} = useProductContext()
+    const [idProduto, setIdProduto] = useState(undefined)
 
     const [categorias, setCategorias] = useState(['Painéis de Led', 'Vasos', 'Castiçais', 'Bandejas'])
     const [variacoes, setVariacoes] = useState(['Tamanho', 'Cor'])
     const [variacoesVisible, setVariacoesVisible] = useState(false)
-    const [produtos, setProdutos] = useState([])
+    
     const [modalCategoria ,setModalCategoria] = useState(false)
     const [modalVariacoes ,setModalVariacoes] = useState(false)
     const [modalProduto, setModalProduto] = useState(false);
     const [edit, setEdit] = useState(false)
 
     useEffect( () =>{
-        axios.post('/users/test').then( (data) => console.log(data) )
-        .catch( erro => console.log(erro) )
+        getProducts()   
     }, [] )
 
   return (
@@ -33,7 +36,7 @@ export default function CatalogoAdmin() {
             modalVariacoes && <ModalVariacoes setModalVariacoes={setModalVariacoes} edit={edit} placeh1='Exemplo: "Cor"' placeh2={'Exemplo: "Azul", "Amarelo"'}/>
         }  
         {
-            modalProduto && <ModalProduto categorias={categorias} setModalProduto={setModalProduto} edit={edit}/>
+            modalProduto && <ModalProduto categorias={categorias} setModalProduto={setModalProduto} edit={edit} idProduto = {idProduto}/>
         }  
         <input 
             type="text" 
@@ -52,7 +55,7 @@ export default function CatalogoAdmin() {
             onClick={() => setVariacoesVisible(!variacoesVisible)}
         >{`${variacoesVisible?'Menos':'Mais'} opções`}</p>
 
-        <ListaProdutosAdmin setModalProduto={setModalProduto} produtos={produtos} /> 
+        <ListaProdutosAdmin setModalProduto={setModalProduto} produtos={produtos} setEdit={setEdit} setIdProduto={setIdProduto}/> 
     </section>
   )
 }

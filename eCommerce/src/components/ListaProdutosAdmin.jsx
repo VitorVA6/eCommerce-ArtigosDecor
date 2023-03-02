@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { styled } from '@mui/material/styles';
 import Switch from '@mui/material/Switch';
 
-export default function ListaProdutosAdmin({produtos, setModalProduto}) {
+export default function ListaProdutosAdmin({produtos, setModalProduto, setEdit, setIdProduto}) {
   
     const [checkedSwitch, setCheckedSwitch] = useState(false);
     const Android12Switch = styled(Switch)(({ theme }) => ({
@@ -47,17 +47,23 @@ export default function ListaProdutosAdmin({produtos, setModalProduto}) {
                 className='bg-blue-500 py-3 w-80 text-white rounded-md font-medium'
                 onClick={() => {
                     setModalProduto(true)
+                    setEdit(false)
                 }}
             >Adicionar produto</button>
         </div>
         <div className='flex flex-col mt-6 gap-y-2 mb-20'>
             {produtos?.map( produto => (
                 <div 
-                    key={produto.id} 
+                    key={produto._id} 
                     className='flex p-2 justify-between items-center border bg-white rounded-xl hover:opacity-70 cursor-pointer duration-200'
+                    onClick={() => {
+                      setModalProduto(true)
+                      setEdit(true)
+                      setIdProduto(produto._id)
+                    }}
                 >
                     <div className='flex items-center gap-2.5'>
-                        <img className='w-14 rounded-md' src={produto?.img} alt="Foto do produto" />
+                        <img className='w-14 h-14 rounded-md' src={`http://localhost:4000/images/products/${produto?.img}`} alt="Foto do produto" />
                         <div className='flex flex-col'>
                             <p className='text-base'>{produto.title}</p>
                             <p className='text-sm text-gray-400'>{produto.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
