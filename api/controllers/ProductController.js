@@ -125,8 +125,58 @@ module.exports = class ProductController{
             res.status(200).json({product: updatedProd})
         }
         catch(err){
-            res.status(500).json({message: err})
+            res.status(500).json(err)
         }
+    }
+
+    static async deleteProduct(req, res){
+        
+        const id = req.params.id 
+
+        if (!ObjectId.isValidObjectId(id)){
+            return res.status(422).json({message: 'ID inválido'})   
+        }
+
+        const product = await Product.findOne({_id:id}) 
+
+        if(!product){
+            return res.status(404).json({message: 'Produto não existe!'})
+        }
+
+        try {
+            await Product.findOneAndDelete({_id: id})
+            res.status(200).json({message: 'Produto removido com sucesso!'})
+        }
+        catch(err){
+            res.status(500).json(err)
+        }
+    }
+
+    static async favoriteProduct(req, res){
+
+        const id = req.params.id 
+        const { destaque } = req.body
+
+        if (!ObjectId.isValidObjectId(id)){
+            return res.status(422).json({message: 'ID inválido'})   
+        }
+
+        const product = await Product.findOne({_id:id})
+        if(!product){
+            return res.status(404).json({message: 'Produto não existe!'})
+        }
+
+        if(!req.body.hasOwnProperty('destaque')){
+            return res.status(422).json({message: 'Dados não fornecidos!'})
+        }
+        product.destaque = destaque
+        try{
+            await Product.findOneAndUpdate({_id: id}, product)
+            res.status(200).json({message: 'Produto destacado com sucesso!'})
+        }catch(err){
+            res.status(500).json(err)
+        }
+
     }
 
 }

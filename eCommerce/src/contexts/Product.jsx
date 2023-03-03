@@ -57,12 +57,22 @@ export function useProductContext(){
             console.log(err.response.data)
         }
     }
+    
+    async function favoriteProduct(id, destaque){
+
+        try{
+            await axios.patch(`/products/favorite/${id}`, {destaque: !destaque})
+            getProducts()
+        }
+        catch(err){
+            console.log(err.response.data)
+        }
+    }
 
     async function getProducts(){
 
         try{
             const {data} = await axios.get('/products/all')
-            console.log(data.products)
             setProdutos(data.products)
         }
         catch(err){
@@ -80,6 +90,17 @@ export function useProductContext(){
         catch(err){
             console.log(err)
         }
+    }
+
+    async function deleteProduct(id){
+
+        try{
+            await axios.delete(`/products/${id}`)
+            getProducts()
+        }
+        catch(err){
+            console.log(err)
+        }
 
     }
 
@@ -89,7 +110,9 @@ export function useProductContext(){
         addProduct,
         getProducts,
         getProductById,
-        updateProduct
+        updateProduct,
+        deleteProduct,
+        favoriteProduct
     }
 
 }

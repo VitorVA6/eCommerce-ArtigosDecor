@@ -7,5 +7,7 @@ router.post('/add', checkToken, imageUpload.single('image'), ProductController.c
 router.get('/all', ProductController.getAll)
 router.get('/:id', ProductController.getProductById)
 router.patch('/:id', checkToken, imageUpload.single('image'), ProductController.updateProduct)
+router.patch('/favorite/:id', checkToken, ProductController.favoriteProduct)
+router.delete('/:id', checkToken, ProductController.deleteProduct)
 
 module.exports = router
