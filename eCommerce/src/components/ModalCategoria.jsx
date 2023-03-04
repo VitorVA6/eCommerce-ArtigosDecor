@@ -1,6 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useCatalogContext } from '../contexts/Catalog'
 
 export default function ModalCategoria({setModalCategoria, edit, placeh}) {
+
+  const {setCatalog, updateCatalog} = useCatalogContext()
+  const [category, setCategory] = useState('')
+
+  function addCatagory(){
+    if(category.trim().length > 0){
+      setCatalog( prev => {
+        return {...prev, categorias: [...prev.categorias, category]}
+      } )
+      updateCatalog()
+    }
+  }
+
   return (
     <>
     <div 
@@ -16,8 +30,17 @@ export default function ModalCategoria({setModalCategoria, edit, placeh}) {
         <h2 className='text-center py-4 border-b w-full font-medium'>{`${edit?'Editar':'Inserir'} categoria`}</h2>
         <div className='flex flex-col py-2 px-7 w-full'>
             <p className='mb-2 mt-2 text-sm font-medium'>Nome da categoria</p>
-            <input className='px-4 py-2 mb-6 w-full border outline-0 rounded-lg border-gray-300' type="text" placeholder={`${placeh}`} />
-            <button className='bg-blue-500 py-2 w-full text-white text-medium rounded-lg mb-4'>Confirmar</button>
+            <input 
+              className='px-4 py-2 mb-6 w-full border outline-0 rounded-lg border-gray-300' 
+              type="text" 
+              placeholder={`${placeh}`} 
+              value={category}
+              onChange={(ev) => setCategory(ev.target.value)}
+            />
+            <button 
+              className='bg-blue-500 py-2 w-full text-white text-medium rounded-lg mb-4'
+              onClick={() => addCatagory()}
+            >Confirmar</button>
         </div>
         
     </div>

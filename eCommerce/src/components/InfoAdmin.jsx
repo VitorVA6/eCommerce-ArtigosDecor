@@ -1,9 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {IoShareSocialOutline} from 'react-icons/io5'
+import { useCatalogContext } from '../contexts/Catalog';
+import ModalRsociais from './ModalRsociais';
 
 export default function InfoAdmin() {
+
+  const [modalRS, setModalRS] = useState(false);
+
+  const {getCatalog, catalog, setCatalog, updateCatalog} = useCatalogContext()
+
+  useEffect( ()=> {
+
+    getCatalog()
+
+  }, [] )
+
   return (
     <section className='flex flex-col gap-1'>
+      {
+        modalRS && <ModalRsociais setModalRS={setModalRS} catalog={catalog} setCatalog={setCatalog}/>
+      }
       <h2 className='mb-3 font-medium'>Informações</h2>
       <div className='flex flex-col w-full gap-y-3 bg-white border rounded-lg p-5'>
         <h2 className='flex gap-2 font-medium items-center'>
@@ -12,7 +28,17 @@ export default function InfoAdmin() {
           </svg>
           Sobre
         </h2>
-        <textarea className='border-b outline-none focus:border-black text-sm' rows="3" placeholder='Informações sobre o seu negócio'></textarea>
+        <textarea 
+          className='border-b outline-none focus:border-black text-sm' 
+          rows="3" 
+          placeholder='Informações sobre o seu negócio'
+          value={catalog.sobre}
+          onChange={(ev)=> {
+            setCatalog( (prev) => {
+              return {...prev, sobre: ev.target.value}
+            } )
+          }}
+        ></textarea>
       </div>
 
       <div className='flex flex-col w-full gap-y-3 bg-white border rounded-lg p-5'>
@@ -20,7 +46,10 @@ export default function InfoAdmin() {
           <IoShareSocialOutline className='w-5 h-5'/>
           Redes sociais
         </h2>
-        <button className='text-blue-500 w-fit text-sm font-medium'>+ Adicionar redes sociais</button>
+        <button 
+          className='text-blue-500 w-fit text-sm font-medium'
+          onClick={() => setModalRS(true)}
+        >+ Adicionar redes sociais</button>
       </div>
 
       <div className='flex flex-col w-full gap-y-3 bg-white border rounded-lg p-5'>
@@ -30,7 +59,17 @@ export default function InfoAdmin() {
           </svg>
           Telefone
         </h2>
-        <input className='border-b outline-none focus:border-black py-1 text-sm' type="text" placeholder='Telefone para contato' />
+        <input 
+          className='border-b outline-none focus:border-black py-1 text-sm' 
+          type="text" 
+          placeholder='Telefone para contato' 
+          value={catalog.telefone}
+          onChange={(ev)=> {
+            setCatalog( (prev) => {
+              return {...prev, telefone: ev.target.value}
+            } )
+          }}
+        />
       </div>
 
       <div className='flex flex-col w-full gap-y-3 bg-white border rounded-lg p-5'>
@@ -40,8 +79,25 @@ export default function InfoAdmin() {
         </svg>
           E-mail
         </h2>
-        <input className='border-b outline-none focus:border-black py-1 text-sm' type="text" placeholder='E-mail para contato' />
+        <input 
+          className='border-b outline-none focus:border-black py-1 text-sm' 
+          type="text" 
+          placeholder='E-mail para contato' 
+          value={catalog.email}
+          onChange={(ev)=> {
+            setCatalog( (prev) => {
+              return {...prev, email: ev.target.value}
+            } )
+          }}
+        />
       </div>
+
+      <button 
+        className='rounded-lg bg-blue-500 text-white py-2 w-fit px-10 mt-8'
+        onClick={() => updateCatalog()}
+      >
+        Salvar alterações
+      </button>
     
     </section>
   )

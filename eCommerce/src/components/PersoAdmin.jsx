@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FiSmartphone } from "react-icons/fi";
 import { AiOutlineDesktop } from "react-icons/ai";
 import { v4 as uuidv4 } from 'uuid';
+import { useCatalogContext } from '../contexts/Catalog';
 
 export default function PersoAdmin() {
+
+  const { catalog, getCatalog, setCatalog, updateCatalog } = useCatalogContext()
 
   const [banners, setBanners] = useState([
     'https://offstore-teste.s3-sa-east-1.amazonaws.com/compressed/388cea6033b0bca52e7cdc784e3a338a.jpg',
@@ -13,17 +16,43 @@ export default function PersoAdmin() {
 
   const [bannerSelect, setBannerSelect] = useState('cell')
 
+  useEffect( () => {
+
+    getCatalog()
+
+  }, [] )
+
   return (
     <section className='flex items-center flex-col w-full'>
       <div className='flex flex-col w-9/12 bg-white py-5 px-7 rounded-t-xl border-b'>
         <h2 className='mb-3 font-medium text-lg'>Informações</h2>
         <div className='flex flex-col w-full gap-2 mb-2.5'>
           <h3 className='text-sm font-medium'>Nome</h3>
-          <input type="text" className='px-2 py-2.5 outline-none bg-gray-50 text-sm rounded-lg' placeholder='Nome do seu negócio' />
+          <input 
+            type="text" 
+            className='px-2 py-2.5 outline-none bg-gray-50 text-sm rounded-lg' 
+            placeholder='Nome do seu negócio' 
+            value={catalog.nome}
+            onChange={(ev)=> {
+              setCatalog( (prev) => {
+                return {...prev, nome: ev.target.value}
+              } )
+          }}
+          />
         </div>
         <div className='flex flex-col w-full gap-2'>
           <h3 className='text-sm font-medium'>Número do Whatsapp</h3>
-          <input type="text" className='px-2 py-2.5 outline-none bg-gray-50 text-sm rounded-lg' placeholder='Através desse número seus clientes entrarão em contato' />
+          <input 
+            type="text" 
+            className='px-2 py-2.5 outline-none bg-gray-50 text-sm rounded-lg' 
+            placeholder='Através desse número seus clientes entrarão em contato' 
+            value={catalog.whats}
+            onChange={(ev)=> {
+              setCatalog( (prev) => {
+                return {...prev, whats: ev.target.value}
+              } )
+          }}
+          />
         </div>
       </div>
       <div className='flex flex-col w-9/12 bg-white py-5 px-7'>
@@ -54,6 +83,15 @@ export default function PersoAdmin() {
           {banners.map( banner => <img key={uuidv4()} className='w-40 h-24 rounded-xl' src={`${banner}`} alt="Imagem do banner" /> )}
         </div>
       </div>
+
+
+      <button 
+        className='rounded-lg bg-blue-500 text-white py-2 w-fit px-10 mt-8'
+        onClick={() => updateCatalog()}
+      >
+        Salvar alterações
+      </button>
+      
     </section>
   )
 }

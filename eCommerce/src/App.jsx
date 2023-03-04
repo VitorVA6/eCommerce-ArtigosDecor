@@ -8,6 +8,7 @@ import Cart from './pages/Cart'
 import PageNotFound from './pages/PageNotFound'
 import CarrinhoProvider from './contexts/Carrinho'
 import ProductProvider from './contexts/Product'
+import CatalogProvider from './contexts/Catalog'
 import UserProvider from './contexts/User'
 import Admin from './pages/Admin'
 import Login from './pages/Login'
@@ -22,6 +23,7 @@ function App() {
       <CarrinhoProvider>
       <UserProvider>
       <ProductProvider>
+      <CatalogProvider>
       <Routes>
         <Route path='/' element={<Base />}>
           <Route index element={<Home />} />
@@ -32,6 +34,7 @@ function App() {
         <Route path='/login' element={<Login />}/>
         <Route path='/admin' element={<Admin />} />
       </Routes>
+      </CatalogProvider>
       </ProductProvider>
       </UserProvider>
       </CarrinhoProvider>
