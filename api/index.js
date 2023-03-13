@@ -12,6 +12,7 @@ app.use(cors({
     origin: 'http://[::1]:5173',
   }));
 app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
 
 const userRoutes = require('./routes/userRoutes')

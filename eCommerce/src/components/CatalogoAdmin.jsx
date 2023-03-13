@@ -13,8 +13,9 @@ export default function CatalogoAdmin() {
 
     const {catalog, setCatalog, getCatalog} = useCatalogContext()
 
-    const {produtos, getProducts} = useProductContext()
+    const {produtos, getProducts, filterProduct} = useProductContext()
     const [idProduto, setIdProduto] = useState(undefined)
+    const [idCustom, setIdCustom] = useState(undefined)
 
     const [variacoesVisible, setVariacoesVisible] = useState(false)
     
@@ -22,34 +23,49 @@ export default function CatalogoAdmin() {
     const [modalVariacoes ,setModalVariacoes] = useState(false)
     const [modalProduto, setModalProduto] = useState(false);
     const [edit, setEdit] = useState(false)
+    const [filter, setFilter] = useState('')
 
     useEffect( () =>{
         getCatalog()
         getProducts()
+
     }, [] )
+
+    function handleFilter(ev){
+        let filt = ev.target.value
+        setFilter(filt)
+        if(filt.length > 0){
+            filterProduct(filt)
+        }
+        else{
+            getProducts()
+        }
+    }
 
   return (
     <section>
         
         {
-            modalCategoria && <ModalCategoria setModalCategoria={setModalCategoria} edit={edit} placeh='Ex: Bandejas' />
+            modalCategoria && <ModalCategoria setModalCategoria={setModalCategoria} edit={edit} placeh='Ex: Bandejas' idCustom={idCustom} />
         }      
         {
-            modalVariacoes && <ModalVariacoes setModalVariacoes={setModalVariacoes} edit={edit} placeh1='Exemplo: "Cor"' placeh2={'Exemplo: "Azul", "Amarelo"'}/>
+            modalVariacoes && <ModalVariacoes setModalVariacoes={setModalVariacoes} edit={edit} placeh1='Exemplo: "Cor"' placeh2={'Exemplo: "Azul", "Amarelo"'} idCustom={idCustom}/>
         }  
         {
-            modalProduto && <ModalProduto categorias={categorias} setModalProduto={setModalProduto} edit={edit} idProduto = {idProduto}/>
+            modalProduto && <ModalProduto categorias={catalog.categorias} setModalProduto={setModalProduto} edit={edit} idProduto = {idProduto}/>
         }  
         <input 
             type="text" 
             placeholder='Buscar produto'
             className='py-3 px-6 w-full rounded-md outline-none border mb-5 shadow-lg shadow-gray-200/50'
+            value={filter}
+            onChange={(ev) => {handleFilter(ev)} }
         />
 
-        <CustomList setEdit={setEdit} title={'Categorias'} customs={catalog.categorias} setModalCustom={setModalCategoria}/>
+        <CustomList setEdit={setEdit} title={'Categorias'} customs={catalog.categorias} setModalCustom={setModalCategoria} setIdCustom={setIdCustom}/>
         {
             variacoesVisible && 
-            <CustomList setEdit={setEdit} title={'Variações'} customs={catalog.variacoes} setModalCustom={setModalVariacoes}/>
+            <CustomList setEdit={setEdit} title={'Variações'} customs={catalog.variacoes} setModalCustom={setModalVariacoes} setIdCustom={setIdCustom}/>
         }
         
         <p 

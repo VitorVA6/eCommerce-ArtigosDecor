@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function CustomList( {title, customs, setModalCustom, setEdit} ) {
+export default function CustomList( {title, customs, setModalCustom, setEdit, setIdCustom} ) {
   return (
     <div className='mb-6'>
             <h2 className='mb-3 font-medium'>{title}</h2>
@@ -17,13 +17,14 @@ export default function CustomList( {title, customs, setModalCustom, setEdit} ) 
                     </svg>
                 </button>
                 {customs.map( (custom) => (
-                    <div key={custom} className='flex rounded-xl bg-gray-200 items-center pl-3 cursor-pointer'>
-                        <p className='border-r h-full border-gray-300 flex items-center pr-3 text-sm'>{custom}</p>
+                    <div key={custom.name ? custom.name : custom} className='flex rounded-xl bg-gray-200 items-center pl-3 cursor-pointer'>
+                        <p className='border-r h-full border-gray-300 flex items-center pr-3 text-sm'>{custom.name ? custom.name : custom}</p>
                         <button 
                             className='p-3 flex justify-center'
                             onClick={() => {
                                 setEdit(true)
                                 setModalCustom(true)
+                                setIdCustom(customs.indexOf(custom))
                             }}    
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-gray-400">

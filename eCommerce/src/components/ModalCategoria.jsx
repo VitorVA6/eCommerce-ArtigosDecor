@@ -1,17 +1,51 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useCatalogContext } from '../contexts/Catalog'
 
-export default function ModalCategoria({setModalCategoria, edit, placeh}) {
+export default function ModalCategoria({setModalCategoria, edit, placeh, idCustom}) {
 
-  const {setCatalog, updateCatalog} = useCatalogContext()
+  const {setCatalog, updateCatalog, catalog} = useCatalogContext()
   const [category, setCategory] = useState('')
 
+  useEffect( () => {
+
+    if(edit){
+      setCategory(catalog.categorias[idCustom])
+    }
+
+  }, [] )
+
   function addCatagory(){
-    if(category.trim().length > 0){
-      setCatalog( prev => {
-        return {...prev, categorias: [...prev.categorias, category]}
+
+    if(edit){
+      let categoriasAux = catalog.categorias.filter( (element, index) => {
+        if (index !== idCustom){
+          return element
+        }
       } )
-      updateCatalog()
+
+      if(category.trim().length > 0 && !categoriasAux.includes(category)){
+        categoriasAux = catalog.categorias.map( (element, index) => {
+          if (index === idCustom){
+            return category
+          }
+          return element
+        } )
+        const catalogAtt = { ...catalog, categorias: categoriasAux }
+        
+        setCatalog(catalogAtt)
+        updateCatalog(catalogAtt)
+      }
+      return
+    }
+
+    const catalogAtt = {...catalog, categorias: [...catalog.categorias, category]}
+    console.log(catalogAtt)
+    if(category.trim().length > 0 && !catalog.categorias.includes(category)){
+      setCatalog(catalogAtt)
+      updateCatalog(catalogAtt)
+    }
+    else{
+      console.log('Categoria inválida')
     }
   }
 

@@ -5,7 +5,7 @@ const CatalogSchema = new Schema({
 
     admin: {type:mongoose.Schema.Types.ObjectId, ref:'User'},
     categorias: [String],
-    variacoes: [String],
+    variacoes: [Object],
     sobre: String,
     rsociais: Object,
     telefone: String,

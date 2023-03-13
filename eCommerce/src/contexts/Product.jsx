@@ -19,7 +19,7 @@ export function useProductContext(){
 
     const { produtos, setProdutos } = useContext(ProductContext)
 
-    async function addProduct(name, price, priceoff, category, desc, image){
+    async function addProduct(name, price, priceoff, category, desc, images){
         const formData = new FormData()
 
         formData.append('title', name)
@@ -27,7 +27,9 @@ export function useProductContext(){
         formData.append('desconto', priceoff)
         formData.append('categoria', category)
         formData.append('desc', desc)
-        formData.append('image', image)
+        for(let i = 0; i < images.length ;i++){
+            formData.append('images', images[i].file)
+        }
 
         try{
             const {data} = await axios.post('/products/add', formData,  {headers: {'Content-Type': 'multipart/form-data'}})
@@ -38,7 +40,7 @@ export function useProductContext(){
         }
     }
 
-    async function updateProduct(id, name, price, priceoff, category, desc, image){
+    async function updateProduct(id, name, price, priceoff, category, desc, images, uploadedImages){
         const formData = new FormData()
 
         formData.append('title', name)
@@ -46,7 +48,10 @@ export function useProductContext(){
         formData.append('desconto', priceoff)
         formData.append('categoria', category)
         formData.append('desc', desc)
-        formData.append('image', image)
+        formData.append('uploadedImages', uploadedImages)
+        for(let i = 0; i < images.length ;i++){
+            formData.append('images', images[i].file)
+        }
 
         try{
             const {data} = await axios.patch(`/products/${id}`, formData,  {headers: {'Content-Type': 'multipart/form-data'}})
@@ -67,6 +72,17 @@ export function useProductContext(){
         catch(err){
             console.log(err.response.data)
         }
+    }
+
+    async function filterProduct(key){
+
+        try{
+            const {data} = await axios.get('/products/filter', {params:{key: key}} )
+            setProdutos(data)
+        }catch(err){
+            console.log(err)
+        }
+
     }
 
     async function getProducts(){
@@ -112,7 +128,8 @@ export function useProductContext(){
         getProductById,
         updateProduct,
         deleteProduct,
-        favoriteProduct
+        favoriteProduct,
+        filterProduct
     }
 
 }

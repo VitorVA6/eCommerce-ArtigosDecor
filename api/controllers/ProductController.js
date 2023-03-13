@@ -1,7 +1,7 @@
 const Product = require('../models/ProductModel')
-
 const ObjectId = require('mongoose')
-const { findOneAndUpdate } = require('../models/ProductModel')
+const fs = require('fs')
+
 
 module.exports = class ProductController{
 
@@ -26,9 +26,11 @@ module.exports = class ProductController{
         if(!desc){
             return res.status(422).json({message: 'Descrição é obrigatório'})
         }
-        if(!req.file){
+        if(req.files.length === 0){
             return res.status(422).json({message: 'Imagem é obrigatório'})
         }
+
+        const images = req.files.map( image => image.filename )
 
         try{
             const newProduct = await Product.create({
@@ -38,7 +40,7 @@ module.exports = class ProductController{
                 desconto,
                 categoria: categoria.split(','),
                 desc,
-                img: req.file.filename
+                img: images
             })
             res.status(201).json({message: 'Produto criado com sucesso', newProduct})
         }catch(err){
@@ -76,7 +78,7 @@ module.exports = class ProductController{
 
     static async updateProduct(req, res){
 
-        const { title, preco, desconto, categoria, desc } = req.body
+        const { title, preco, desconto, categoria, desc, uploadedImages } = req.body
         
         const id = req.params.id 
 
@@ -115,10 +117,26 @@ module.exports = class ProductController{
         }
         product.desc = desc
 
-        if(!req.file){
+        if(req.files.length === 0 && uploadedImages.length === 0){
             return res.status(422).json({message: 'Imagem é obrigatório'})
         }
-        product.img = req.file.filename
+
+        product.img.forEach( elem => {
+            if(!uploadedImages.includes(elem)){
+                fs.stat(`./public/images/products/${elem}`, function (err, stats) {
+                 
+                    if (err) {
+                        return console.error(err);
+                    }
+                 
+                    fs.unlink(`./public/images/products/${elem}`,function(err){
+                         if(err) return console.log(err);
+                    });
+                 });
+            }
+        } )
+        
+        product.img = uploadedImages.concat(req.files.map(image => image.filename)) 
 
         try{
             const updatedProd = await Product.findOneAndUpdate({_id: id}, product, {new: true})
@@ -177,6 +195,34 @@ module.exports = class ProductController{
             res.status(500).json(err)
         }
 
+    }
+
+    static async filter(req, res){
+
+        var {key} = req.query
+
+        if (!!key){
+
+            var specialChars = "!@#$^&%*()+=-[]\/{}|:<>?,."
+    
+            for (var i = 0; i < specialChars.length; i++) {
+                key = key.replace(new RegExp("\\" + specialChars[i], "gi"), `\\${specialChars[i]}`);
+            }
+
+            try{
+                const result = await Product.find({ "title": { "$regex": key, "$options": "i" }})
+                return res.status(200).json(result)
+            }catch(err){
+                return res.status(404).json(err)
+            }
+
+        }
+        else{
+            return res.status(500).json({message: 'Filtragem inválida'})
+        }
+
+        
+        
     }
 
 }

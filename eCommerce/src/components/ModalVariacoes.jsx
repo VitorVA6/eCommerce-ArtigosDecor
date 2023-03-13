@@ -1,9 +1,72 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
+import {useCatalogContext} from '../contexts/Catalog'
 
-export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edit }) {
+export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edit, idCustom }) {
 
     const [options, setOptions] = useState([])
+    const [nome, setNome] = useState('')
+    const {setCatalog, updateCatalog, catalog} = useCatalogContext()
+
+    useEffect( () => {
+        if(edit){
+            setNome(catalog.variacoes[idCustom].name)
+            setOptions(catalog.variacoes[idCustom].options)
+          }
+    }, [] )
+
+    function addVariation(){
+
+        let optionsAux = options
+        if (options.length > 0 ){
+            let vazios = options.filter( elemento => elemento.valor.trim() === '' )            
+                
+            let idVazios = vazios.map( el => el.id )
+            optionsAux = optionsAux.filter( ele => 
+                {
+                    if (!idVazios.find( id => id === ele.id)){
+                        return ele
+                    }}
+            )
+            setOptions(optionsAux)           
+        }
+        
+        let checkRepeat = catalog.variacoes.filter( (element, index) => index !== idCustom)
+        
+        checkRepeat = checkRepeat.find(element => element.name === nome)
+
+        if(edit){
+            if(nome.trim().length > 0 && !checkRepeat){
+
+                let variacoesAux = catalog.variacoes.map( (element, index) => {
+                    if (index === idCustom){
+                        return {
+                            name: nome,
+                            options: options
+                        }
+                    }
+                    return element
+                } )
+                const catalogAtt = { ...catalog, variacoes: variacoesAux }
+                setCatalog(catalogAtt)
+                updateCatalog(catalogAtt)
+            }
+
+            return
+        }
+
+        checkRepeat = catalog.variacoes.find(element => element.name === nome)
+
+        if(nome.trim().length > 0 && !checkRepeat){
+            const catalogoAtt = {...catalog, variacoes: [...catalog.variacoes, {name: nome, options: optionsAux}]}
+            setCatalog(catalogoAtt)
+            updateCatalog(catalogoAtt)
+        }
+        else{
+            console.log('Variação inválida')
+        }
+
+    }
 
     function handleChange(index, e){
         let newOptions = [...options]
@@ -53,7 +116,12 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
         <div className='flex flex-col py-2 px-4 w-full'>
             <p className='mb-1 mt-2 text-sm font-medium'>Nome da variação</p>
             <p className='text-xs text-gray-400 mb-2'>{placeh1}</p>
-            <input className='px-4 py-2 mb-2 w-full outline-0 rounded-lg bg-gray-100' type="text"/>
+            <input 
+                className='px-4 py-2 mb-2 w-full outline-0 rounded-lg bg-gray-100' 
+                type="text"
+                value={nome}
+                onChange={ (ev) => setNome(ev.target.value) }
+            />
             <p className='mb-1 mt-2 text-sm font-medium'>Opções</p>
             <p className='text-xs text-gray-400 mb-2'>{placeh2}</p>
             <button 
@@ -84,7 +152,10 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
             </div>
         </div>
         <div className='p-4 border-t w-full'>
-            <button className='bg-blue-500 py-3 w-full text-white text-medium rounded-lg'>Salvar</button>
+            <button 
+                className='bg-blue-500 py-3 w-full text-white text-medium rounded-lg'
+                onClick={() => addVariation()}
+            >Salvar</button>
         </div>
     </div>
 </>

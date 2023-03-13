@@ -69,7 +69,7 @@ export default function ListaProdutosAdmin({produtos, setModalProduto, setEdit, 
                     }}
                 >
                     <div className='flex items-center gap-2.5'>
-                        <img className='w-14 h-14 rounded-md' src={`http://localhost:4000/images/products/${produto?.img}`} alt="Foto do produto" />
+                        <img className='w-14 h-14 rounded-md' src={`http://localhost:4000/images/products/${produto?.img[0]}`} alt="Foto do produto" />
                         <div className='flex flex-col'>
                             <p className='text-base'>{produto.title}</p>
                             <p className='text-sm text-gray-400'>{produto.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>

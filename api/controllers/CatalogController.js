@@ -47,13 +47,13 @@ module.exports = class CatalogController{
         const user = await getUserByToken(req.headers.authorization)
         
         if(!user){
-            res.status(422).json({message: 'Você não tem autorização pra essa operação'})
+            return res.status(422).json({message: 'Você não tem autorização pra essa operação'})
         }
 
         const catalog = await Catalog.findOne()
 
         if(!catalog.admin.equals(user._id) ){
-            res.status(422).json({message: 'Você não tem autorização pra essa operação'})
+            return res.status(422).json({message: 'Você não tem autorização pra essa operação'})
         }
 
         if(!!categorias){
@@ -90,7 +90,7 @@ module.exports = class CatalogController{
             res.status(200).json({message: 'Catálogo atualizado com sucesso!'})
 
         }catch(err){
-            res.status(500).json(err)
+            return res.status(500).json(err)
         }
 
     }

@@ -17,7 +17,6 @@ export default function Login() {
   const handleSubmit = (event)=>{
     event.preventDefault()
     login(email, password)
-    console.log(authenticated)
   }
 
   if (authenticated){
