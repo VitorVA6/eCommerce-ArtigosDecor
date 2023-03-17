@@ -1,7 +1,10 @@
 const User = require('../models/UserModel')
+const Token = require('../models/TokenModel')
 const bcrypt = require('bcrypt')
 const createUserToken = require('../utils/createUserToken')
 const getUserByToken = require('../utils/getUserByToken')
+const sendEmail = require('../utils/sendEmail')
+const crypto = require('crypto')
 
 module.exports = class UserController{
 
@@ -89,11 +92,26 @@ module.exports = class UserController{
         const {email, senhaAtual, novaSenha} = req.body
 
         if(!user){
-            res.status(422).json({message: 'Você não tem autorização pra essa operação'})
+            return res.status(422).json({message: 'Você não tem autorização pra essa operação'})
         }
 
+        
+
         if(!!email){
-            user.email = email
+            try{
+                const token = await new Token({
+                    userId: user._id,
+                    token: crypto.randomBytes(32).toString("hex"),
+                    email: email
+                }).save()                
+    
+                const url = `${process.env.BASE_URL}users/verify/${token.token}`
+                await sendEmail(email, "Verificação de e-mail", `<h2>Você está quase lá, clique no link para verificar seu e-mail</h2><a href="${url}" target="_blank">Clique aqui</a>`)
+                return res.status(200).json({message: 'E-mail enviado, verique-o.'})
+            }catch(err){
+                return res.status(400).json(err)
+            }
+            
         }
 
         if(!!senhaAtual && !!novaSenha){
@@ -111,10 +129,37 @@ module.exports = class UserController{
 
         try{
             await User.findOneAndUpdate({_id: user._id}, user)
-            res.status(200).json({message: 'Usuário atualizado'})
+            return res.status(200).json({message: 'Usuário atualizado'})
         }
         catch(err){
-            res.status(422).json({message: 'Não foi possível atualizar o usuário'})
+            return res.status(422).json({message: 'Não foi possível atualizar o usuário'})
+        }
+
+    }
+
+    static async verify(req, res){
+
+        const {token} = req.params
+        try{
+            const user = await getUserByToken(req.headers.authorization)
+            if(!user){
+                return res.status(400).json({message: 'Você não tem autorização pra essa operação.'})
+            }
+
+            const tokenEmail = await Token.findOne({
+                userId: user._id,
+                token: token
+            })
+            if(!tokenEmail){
+                return res.status(400).json({message: 'Token inválido.'})
+            }
+            user.email = tokenEmail.email
+            await User.findOneAndUpdate({_id: user._id}, user)
+            await tokenEmail.remove()
+            return res.status(200).json({message: 'Email atualizado'})
+        }
+        catch(err){
+            return res.status(400).json(err)
         }
 
     }

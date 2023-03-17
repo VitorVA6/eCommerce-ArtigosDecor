@@ -12,6 +12,7 @@ import CatalogProvider from './contexts/Catalog'
 import UserProvider from './contexts/User'
 import Admin from './pages/Admin'
 import Login from './pages/Login'
+import EmailVerify from './pages/EmailVerify'
 
 axios.defaults.baseURL = 'http://[::1]:4000'
 axios.defaults.withCredentials = true
@@ -33,6 +34,7 @@ function App() {
         <Route path='/404' element={<PageNotFound />} />
         <Route path='/login' element={<Login />}/>
         <Route path='/admin' element={<Admin />} />
+        <Route path='/users/verify/:token' element={<EmailVerify />}/>
       </Routes>
       </CatalogProvider>
       </ProductProvider>

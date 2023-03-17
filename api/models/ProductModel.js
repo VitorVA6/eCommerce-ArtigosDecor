@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const {Schema} = mongoose 
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const ProductSchema = new Schema({
     title: {
@@ -30,5 +31,7 @@ const ProductSchema = new Schema({
     desc: String
 
 })
+
+ProductSchema.plugin(mongoosePaginate)
 
 module.exports = mongoose.model('Product', ProductSchema)

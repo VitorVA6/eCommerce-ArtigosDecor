@@ -11,9 +11,9 @@ import { useCatalogContext } from '../contexts/Catalog'
 
 export default function CatalogoAdmin() {
 
-    const {catalog, setCatalog, getCatalog} = useCatalogContext()
+    const {catalog, getCatalog} = useCatalogContext()
+    const {produtos, getProducts, filterProduct, page, setPage} = useProductContext()
 
-    const {produtos, getProducts, filterProduct} = useProductContext()
     const [idProduto, setIdProduto] = useState(undefined)
     const [idCustom, setIdCustom] = useState(undefined)
 
@@ -25,11 +25,46 @@ export default function CatalogoAdmin() {
     const [edit, setEdit] = useState(false)
     const [filter, setFilter] = useState('')
 
-    useEffect( () =>{
+    const [next, setNext] = useState(false)
+
+    useEffect( () => {
+
         getCatalog()
-        getProducts()
+        setPage(1)
 
     }, [] )
+
+    useEffect( () =>{
+
+        getProducts(5)
+        .then( next => {
+            setNext(next)
+        })
+        .catch(err => console.log(err))
+
+    }, [page] )
+
+    useEffect( ()=>{
+
+        const handleScroll = (ev) => {
+        
+            const scrollHeight = ev.target.scrollHeight
+            const currentHeight = ev.target.scrollTop + window.innerHeight
+
+            if(currentHeight + 1 >= scrollHeight){
+
+                setPage(page+1*next)
+
+            }
+    
+        }
+
+        window.addEventListener('scroll', handleScroll, true)
+        return () => window.removeEventListener('scroll', handleScroll)
+
+    }, [page, next] )
+
+    
 
     function handleFilter(ev){
         let filt = ev.target.value

@@ -12,5 +12,6 @@ router.post('/test', checkToken, (req, res) => {
     res.json({message: 'autenticado'})
 
 })
+router.get('/verify/:token', checkToken, UserController.verify)
 
 module.exports = router

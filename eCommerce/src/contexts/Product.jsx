@@ -6,9 +6,11 @@ export const ProductContext = createContext()
 export default function ProductProvider( {children} ){
 
     const [produtos, setProdutos] = useState([])
+    const [page, setPage] = useState(1)
+    const perPage = 5
 
     return (
-        <ProductContext.Provider value={{produtos, setProdutos}}>
+        <ProductContext.Provider value={{produtos, setProdutos, page, setPage, perPage}}>
             {children}
         </ProductContext.Provider>
     )
@@ -17,7 +19,7 @@ export default function ProductProvider( {children} ){
 
 export function useProductContext(){
 
-    const { produtos, setProdutos } = useContext(ProductContext)
+    const { produtos, setProdutos, page, setPage, perPage} = useContext(ProductContext)
 
     async function addProduct(name, price, priceoff, category, desc, images){
         const formData = new FormData()
@@ -33,7 +35,7 @@ export function useProductContext(){
 
         try{
             const {data} = await axios.post('/products/add', formData,  {headers: {'Content-Type': 'multipart/form-data'}})
-            getProducts()
+            getProducts(perPage*page, 1)
         }
         catch(err){
             console.log(err.response.data)
@@ -55,7 +57,7 @@ export function useProductContext(){
 
         try{
             const {data} = await axios.patch(`/products/${id}`, formData,  {headers: {'Content-Type': 'multipart/form-data'}})
-            getProducts()
+            getProducts(perPage*page, 1)
             return data
         }
         catch(err){
@@ -67,7 +69,7 @@ export function useProductContext(){
 
         try{
             await axios.patch(`/products/favorite/${id}`, {destaque: !destaque})
-            getProducts()
+            getProducts(perPage*page, 1)
         }
         catch(err){
             console.log(err.response.data)
@@ -85,11 +87,20 @@ export function useProductContext(){
 
     }
 
-    async function getProducts(){
+    async function getProducts(limit, pag=undefined){
 
         try{
-            const {data} = await axios.get('/products/all')
-            setProdutos(data.products)
+            const {data} = await axios.get('/products/all', {params:{p: pag?pag:page, limit: limit}})
+            
+            if((page === 1 && produtos.length > 0)|| limit>perPage){
+                setProdutos([ ...data.docs])
+                return data.hasNextPage
+            }
+            else if(produtos.length < data.totalDocs){
+                setProdutos( prev => [...prev, ...data.docs])
+                return data.hasNextPage
+            }
+            
         }
         catch(err){
             console.log(err)
@@ -112,7 +123,7 @@ export function useProductContext(){
 
         try{
             await axios.delete(`/products/${id}`)
-            getProducts()
+            getProducts(perPage*page, 1)
         }
         catch(err){
             console.log(err)
@@ -129,7 +140,9 @@ export function useProductContext(){
         updateProduct,
         deleteProduct,
         favoriteProduct,
-        filterProduct
+        filterProduct,
+        page,
+        setPage,
     }
 
 }

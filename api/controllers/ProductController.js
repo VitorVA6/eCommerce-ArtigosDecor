@@ -52,8 +52,27 @@ module.exports = class ProductController{
 
     static async getAll(req, res){
 
-        const products = await Product.find().sort('-destaque')
-        res.status(200).json({products: products})
+        const page = parseInt(req.query.p, 10)  || 1
+        const limit = parseInt(req.query.limit, 10)  || 5
+
+        const options = {
+            page: page,
+            limit: limit,
+            collation: {
+                locale: 'pt',
+            },
+            sort: {
+                destaque: -1,
+                title: 1
+            }
+        }
+
+        Product.paginate({}, options, function(err, result){
+            if (err){
+                return res(404).json(err)
+            }
+            return res.status(200).json(result)
+        })
 
     }
 
