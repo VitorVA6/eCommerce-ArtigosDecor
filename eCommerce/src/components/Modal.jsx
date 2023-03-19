@@ -8,13 +8,13 @@ export default function Modal() {
 
   return (<>
     <div 
-      className=' w-screen h-screen bg-gray-400/50 absolute left-0 top-0 flex justify-center items-center z-10' 
+      className=' w-screen h-screen bg-gray-400/50 fixed left-0 top-0 flex justify-center items-center z-10' 
       onClick={() => setModalCarrinho(false)}
     >
         
     </div>
     <div 
-        className='slide-in-bottom h-fit bg-white flex flex-col items-center gap-y-10 z-20 absolute py-12 px-12 rounded-2xl'
+        className='slide-in-bottom h-fit bg-white flex flex-col items-center gap-y-10 z-20 fixed py-12 px-12 rounded-2xl'
         style={{width: '450px',left: 'calc(50% - 225px)', top: 'calc(50% - 200px)'}}    
     >
         <h2 className='text-3xl text-center'>Produto adicionado ao carrinho</h2>

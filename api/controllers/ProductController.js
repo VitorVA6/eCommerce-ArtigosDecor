@@ -2,7 +2,6 @@ const Product = require('../models/ProductModel')
 const ObjectId = require('mongoose')
 const fs = require('fs')
 
-
 module.exports = class ProductController{
 
     static async create (req, res){
@@ -54,6 +53,18 @@ module.exports = class ProductController{
 
         const page = parseInt(req.query.p, 10)  || 1
         const limit = parseInt(req.query.limit, 10)  || 5
+        const category = req.query.category || 'all'
+        const highlight = req.query.highlight || 'false'
+
+        let filter = {}
+
+        if(category !== 'all')
+            filter = { ...filter, categoria: category 
+        }
+
+        if(highlight === 'true' ){
+            filter = {...filter, destaque: true}
+        }
 
         const options = {
             page: page,
@@ -67,7 +78,7 @@ module.exports = class ProductController{
             }
         }
 
-        Product.paginate({}, options, function(err, result){
+        Product.paginate(filter, options, function(err, result){
             if (err){
                 return res(404).json(err)
             }
@@ -238,10 +249,46 @@ module.exports = class ProductController{
         }
         else{
             return res.status(500).json({message: 'Filtragem inválida'})
-        }
+        } 
+    }
 
+    static async getCart(req, res){
+
+        let {id} = req.query
+
+        if(!!id){
+
+            if(typeof(id) === 'string'){
+                id = [id]
+            }
+
+            const ids = id.flatMap( element => {
+
+                if(ObjectId.isValidObjectId(element)){
+                    return ObjectId.Types.ObjectId(element)
+                }
+                else{
+                    return []
+                }
+                
+            } )
+
+            if(ids.length === 0){
+                return res.status(400).json({message: 'Id inválido'})
+            }
+    
+            const cart = await Product.find({
+                '_id': { $in: ids}
+            })
+    
+            return res.json(cart)
+
+        }else{
+            return res.status(400).json({message: 'Id inválido'})
+        }
         
         
+
     }
 
 }

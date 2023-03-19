@@ -1,13 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../assets/logo.png'
+import { useCatalogContext } from '../contexts/Catalog'
 
 export default function HeaderAdmin() {
+
+    const {catalog} = useCatalogContext()
+
   return (
     <header className='flex bg-black text-white justify-between items-center px-10 h-20 fixed w-full z-30'>
         <nav className='flex justify-between items-center w-full'>
-            <Link to={'/'} className='w-16'>
-                <img src={logo} alt="" />
+            <Link to={'/admin'}>
+                <h1 className='text-lg font-medium'>{catalog?.nome !== '' ? catalog.nome.toUpperCase() : 'Logo'}</h1>
             </Link >
             <div className='flex gap-2 border-l border-gray-500 items-center py-2 px-4 cursor-pointer'>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">

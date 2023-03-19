@@ -44,13 +44,13 @@ export function useCatalogContext(){
         try{
             if(categorias !== undefined){
                 const {data} = await axios.patch('/catalog/update', categorias)
-                return
+                return data
             }
             const {data} = await axios.patch('/catalog/update', catalog)
-            console.log(data)
+            return data
         }
         catch(err){
-            console.log(err)
+            return err
         }
 
     }

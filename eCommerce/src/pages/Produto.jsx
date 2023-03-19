@@ -1,7 +1,7 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 import { useCarrinhoContext } from '../contexts/Carrinho';
+import { useProductContext } from '../contexts/Product';
 
 export default function Produto() {
 
@@ -10,6 +10,7 @@ export default function Produto() {
     const [carregado, setCarregado] = useState(false)
     const [quantidade, setQuantidade] = useState(1)
     const {addCarrinho} = useCarrinhoContext()
+    const {getProductById} = useProductContext()
 
     function mudaQuantidade(operador){
 
@@ -22,9 +23,10 @@ export default function Produto() {
     }
 
     useEffect(() => {
-        axios.get(`/produtos/?id=${id}`)
-        .then( ({data}) => {
-            setProduto(data['0'])
+
+        getProductById(id)
+        .then( (data) => {
+            setProduto(data?.product)
             setCarregado(true)
         } )
         .catch(erro => console.log(erro))
@@ -40,7 +42,7 @@ export default function Produto() {
     <>        
         <section className='flex justify-center py-16 gap-10 border-b border-gray-200'>
             <div className='w-2/5'>
-                <img src={`${produto?.img}`} alt="Imagem do produto" />
+                <img src={produto ? `http://localhost:4000/images/products/${produto?.img[0]}` : ''} alt="Imagem do produto" />
             </div>
             <div className='flex flex-col w-2/5'>
                 <h2 className='text-4xl'>{produto?.title}</h2>

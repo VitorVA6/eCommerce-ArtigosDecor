@@ -7,9 +7,11 @@ const  removeImages  = require('../utils/removeImages')
 router.post('/add', checkToken, imageUpload.array('images'), ProductController.create)
 router.get('/all', ProductController.getAll)
 router.get('/filter', ProductController.filter)
+router.get('/get-cart', ProductController.getCart)
+router.patch('/favorite/:id', checkToken, ProductController.favoriteProduct)
 router.get('/:id', ProductController.getProductById)
 router.patch('/:id', checkToken, imageUpload.array('images'), removeImages, ProductController.updateProduct)
-router.patch('/favorite/:id', checkToken, ProductController.favoriteProduct)
 router.delete('/:id', checkToken, ProductController.deleteProduct)
+
 
 module.exports = router

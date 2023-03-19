@@ -21,24 +21,30 @@ export function useCarrinhoContext(){
     const {carrinho, setCarrinho, total, setTotal, quantTotal, setQuantTotal, modalCarrinho, setModalCarrinho} = useContext(CarrinhoContext)
 
     function listaCarrinho(){
-        let url = '/produtos?'
-        if (carrinho > 0){
+        let url = '/products/get-cart?'
+        if (carrinho.length > 0){
             carrinho.forEach(element => {
-                url = url + `id=${element.id}&`
+                url = url + `id=${element._id}&`
             });
             axios.get(url).then(({data}) => {
-                setCarrinho(data.map( (elemento, index) => ({...elemento, quantidade: carrinho[index]?.quantidade}) )) 
+                setCarrinho(data.map( (elemento) => (
+                    {...elemento, quantidade: carrinho.find( element => element._id === elemento._id).quantidade} 
+                ))) 
             })
-            .catch( (erro) => console.log(erro) )
+            .catch( (erro) => {
+                console.log(erro)
+                setCarrinho([])
+                setQuantTotal(0)
+            } )
         }
         calculaTotal()
     }
 
     function addCarrinho(elemento, n){
-        const novoProduto = carrinho.find( element => element.id === elemento.id )
+        const novoProduto = carrinho.find( element => element._id === elemento._id )
         if (novoProduto){
             const aux = carrinho.map( element => {
-                if (element.id === novoProduto.id){
+                if (element._id === novoProduto.id){
 
                     element.quantidade= element.quantidade+n
                 }
@@ -56,8 +62,8 @@ export function useCarrinhoContext(){
     }
 
     function removeCarrinho(id){
-        if (carrinho.find( element => element.id === id)){
-            const aux = carrinho.filter( elem => elem.id !== id )
+        if (carrinho.find( element => element._id === id)){
+            const aux = carrinho.filter( elem => elem._id !== id )
             setCarrinho( aux )
             calculaTotal(aux)
         }
@@ -66,7 +72,7 @@ export function useCarrinhoContext(){
     function alteraQuantidade(id, operador){
         if(operador === '-'){
             setCarrinho(carrinho.map( element => {
-                if(element.id === id && element.quantidade > 1){
+                if(element._id === id && element.quantidade > 1){
                     element.quantidade--
                 }
                 return element
@@ -74,7 +80,7 @@ export function useCarrinhoContext(){
         }
         else {
             setCarrinho(carrinho.map( element => {
-                if(element.id === id){
+                if(element._id === id){
                     element.quantidade++
                 }
                 return element

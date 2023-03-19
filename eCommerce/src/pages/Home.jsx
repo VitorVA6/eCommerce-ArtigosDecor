@@ -1,41 +1,63 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import ListaProdutos from '../components/ListaProdutos'
 import NavLateral from '../components/NavLateral'
-import { useCarrinhoContext } from '../contexts/Carrinho'
+import { useCatalogContext } from '../contexts/Catalog'
+import {useProductContext} from '../contexts/Product'
 
 export default function Home() {
 
-    const [categorias, setCategorias] = useState(
-      [{nome:'Todos os produtos', id: 1}, 
-      {nome:'Bandejas', id: 2}, 
-      {nome:'Painéis de Led', id:3}, 
-      {nome:'Vasos', id: 4}, 
-      {nome:'Castiçais', id: 5}])
-    const [produtos, setProdutos] = useState([])
-    const [filtroCategoria, setFiltroCategoria] = useState(1)
+    const {catalog, getCatalog} = useCatalogContext()
+    const {getProducts, produtos} = useProductContext()
+
+    const [filtroCategoria, setFiltroCategoria] = useState('Todos os produtos')
     const [filtroPromocao, setFiltroPromocao] = useState(false)
-    const {modalCarrinho} = useCarrinhoContext()
-   
+    const [hasNext, setHasNext] = useState(false)
+    const [nextPage, setNextPage] = useState(1)
 
     useEffect( ()=>{
-      const url = `/produtos/${filtroCategoria === 1 ? '' : ('?categoria='+filtroCategoria)}${(filtroPromocao === true && filtroCategoria === 1) ? '?promotion=true':''}${(filtroPromocao === true && filtroCategoria !== 1) ? '&promotion=true':''}`
-      axios.get(url)
-      .then( ({data}) => setProdutos(data) )
-      .catch( erro => console.log(erro) )
+      getCatalog()
+    }, [] )
+
+    useEffect( ()=>{
+      
+      getProducts(5, 1, filtroCategoria === 'Todos os produtos'?'all':filtroCategoria, filtroPromocao)
+      .then( data => {
+        setHasNext(data.hasNextPage)
+        setNextPage(data.nextPage)
+      })
+      .catch(err => console.log(err))
+      
     }, [filtroCategoria, filtroPromocao])
 
   return (
     
     <section className='flex'>
+      
         <NavLateral 
           setCategoria={valor => setFiltroCategoria(valor)} 
-          categorias={categorias}
+          categorias={['Todos os produtos', ...catalog.categorias]}
           categoria={filtroCategoria}
           setFiltroPromocao={(valor) => setFiltroPromocao(valor)}
           filtroPromocao={filtroPromocao}
         />
-        <ListaProdutos produtos={produtos} />
+        <div className='flex flex-col items-center w-full'>        
+          <ListaProdutos produtos={produtos} />      
+          {
+            hasNext &&
+            <button 
+              className='bg-black py-2.5 px-8 text-white font-medium rounded-lg text-sm'
+              onClick = {()=> {
+                getProducts(5, nextPage, filtroCategoria === 'Todos os produtos'?'all':filtroCategoria, filtroPromocao)
+                .then( data => {
+                  setHasNext(data.hasNextPage)
+                  setNextPage(data.nextPage)
+                })
+                .catch(err => console.log(err))
+              }}
+            >Mostrar mais</button>
+          } 
+        </div>
+        
     </section>
 
   )

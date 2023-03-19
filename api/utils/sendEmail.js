@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer') 
+const Token = require('../models/TokenModel')
 
-module.exports = async(email, subject, text) => {
+module.exports = async(email, subject, text, res, user) => {
 
     try{
         const transporter = nodemailer.createTransport({
@@ -20,7 +21,9 @@ module.exports = async(email, subject, text) => {
         })
         console.log('Email enviado com sucesso')
     }catch(err){
+        await Token.findOneAndDelete({userId: user._id})
         console.log(err)
+        throw new Error("Email não foi enviado")
     }
 
 }

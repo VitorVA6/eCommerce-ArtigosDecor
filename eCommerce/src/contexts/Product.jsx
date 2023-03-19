@@ -6,11 +6,10 @@ export const ProductContext = createContext()
 export default function ProductProvider( {children} ){
 
     const [produtos, setProdutos] = useState([])
-    const [page, setPage] = useState(1)
-    const perPage = 5
+    const perPage = 10
 
     return (
-        <ProductContext.Provider value={{produtos, setProdutos, page, setPage, perPage}}>
+        <ProductContext.Provider value={{produtos, setProdutos, perPage}}>
             {children}
         </ProductContext.Provider>
     )
@@ -19,7 +18,7 @@ export default function ProductProvider( {children} ){
 
 export function useProductContext(){
 
-    const { produtos, setProdutos, page, setPage, perPage} = useContext(ProductContext)
+    const { produtos, setProdutos, perPage} = useContext(ProductContext)
 
     async function addProduct(name, price, priceoff, category, desc, images){
         const formData = new FormData()
@@ -35,7 +34,8 @@ export function useProductContext(){
 
         try{
             const {data} = await axios.post('/products/add', formData,  {headers: {'Content-Type': 'multipart/form-data'}})
-            getProducts(perPage*page, 1)
+            const limit = Math.ceil(produtos.length/perPage)*perPage
+            getProducts(limit, 1, 'all', 'false')
         }
         catch(err){
             console.log(err.response.data)
@@ -57,7 +57,8 @@ export function useProductContext(){
 
         try{
             const {data} = await axios.patch(`/products/${id}`, formData,  {headers: {'Content-Type': 'multipart/form-data'}})
-            getProducts(perPage*page, 1)
+            const limit = Math.ceil(produtos.length/perPage)*perPage
+            getProducts(limit, 1, 'all', 'false')
             return data
         }
         catch(err){
@@ -69,7 +70,8 @@ export function useProductContext(){
 
         try{
             await axios.patch(`/products/favorite/${id}`, {destaque: !destaque})
-            getProducts(perPage*page, 1)
+            const limit = Math.ceil(produtos.length/perPage)*perPage
+            getProducts(limit, 1, 'all', 'false')
         }
         catch(err){
             console.log(err.response.data)
@@ -87,18 +89,25 @@ export function useProductContext(){
 
     }
 
-    async function getProducts(limit, pag=undefined){
+    async function getProducts(limit, pag, category, highlight){
 
         try{
-            const {data} = await axios.get('/products/all', {params:{p: pag?pag:page, limit: limit}})
+            const {data} = await axios.get('/products/all', {params:
+                {
+                    p: pag, 
+                    limit: limit,
+                    category: category,
+                    highlight: highlight
+                }
+        })
             
-            if((page === 1 && produtos.length > 0)|| limit>perPage){
+            if((produtos.length > 0 && pag === 1)|| limit>perPage){
                 setProdutos([ ...data.docs])
-                return data.hasNextPage
+                return data
             }
             else if(produtos.length < data.totalDocs){
                 setProdutos( prev => [...prev, ...data.docs])
-                return data.hasNextPage
+                return data
             }
             
         }
@@ -115,7 +124,7 @@ export function useProductContext(){
             return data
         }
         catch(err){
-            console.log(err)
+            return {}
         }
     }
 
@@ -123,7 +132,8 @@ export function useProductContext(){
 
         try{
             await axios.delete(`/products/${id}`)
-            getProducts(perPage*page, 1)
+            const limit = Math.ceil(produtos.length/perPage)*perPage
+            getProducts(limit, 1, 'all', 'false')
         }
         catch(err){
             console.log(err)
@@ -134,15 +144,14 @@ export function useProductContext(){
     return {
         produtos,
         setProdutos,
+        perPage,
         addProduct,
         getProducts,
         getProductById,
         updateProduct,
         deleteProduct,
         favoriteProduct,
-        filterProduct,
-        page,
-        setPage,
+        filterProduct
     }
 
 }

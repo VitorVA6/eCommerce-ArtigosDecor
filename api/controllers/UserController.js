@@ -106,10 +106,10 @@ module.exports = class UserController{
                 }).save()                
     
                 const url = `${process.env.BASE_URL}users/verify/${token.token}`
-                await sendEmail(email, "Verificação de e-mail", `<h2>Você está quase lá, clique no link para verificar seu e-mail</h2><a href="${url}" target="_blank">Clique aqui</a>`)
+                await sendEmail(email, "Verificação de e-mail", `<h2>Você está quase lá, clique no link para verificar seu e-mail</h2><a href="${url}" target="_blank">Clique aqui</a>`, res, user)
                 return res.status(200).json({message: 'E-mail enviado, verique-o.'})
             }catch(err){
-                return res.status(400).json(err)
+                return res.status(400).json({message: "Ocorreu um erro no envio do e-mail de verificação."})
             }
             
         }

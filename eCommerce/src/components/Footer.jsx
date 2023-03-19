@@ -2,8 +2,11 @@ import React from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import insta from '../assets/insta-logo.png'
 import whats from '../assets/whats.png'
+import {useCatalogContext} from '../contexts/Catalog'
 
 export default function Footer() {
+
+    const {catalog} = useCatalogContext()
 
   return (
     <section className='flex flex-col w-full bg-black text-white'>
@@ -14,8 +17,17 @@ export default function Footer() {
             </div>
             <div className='flex flex-col gap-y-2'>
                 <h3 className='text-lg'>Atendimento</h3>
-                <h4 className='text-sm text-gray-200'>ctainarsouza@gmail.com</h4>
-                <h4 className='text-sm text-gray-200'>{'(75)983333176'}</h4>
+                {
+                catalog?.email !== ''?
+                    <h4 className='text-sm text-gray-200'>{catalog.email}</h4>:
+                    <></>
+                }
+                {
+                catalog?.whats !== '' ?
+                    <h4 className='text-sm text-gray-200'>{catalog.whats}</h4>:
+                    <></>
+                }
+                
             </div>
             <Link to={'https://www.instagram.com/artigos.decoracoes/'} target={'_blank'} className='w-12 h-12 bg-gray-800 flex justify-center items-center rounded-full'>
                 <img className='w-5 h-5' src={insta} alt="Logo do instagram" />

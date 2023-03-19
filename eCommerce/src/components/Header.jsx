@@ -1,20 +1,20 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useCarrinhoContext } from '../contexts/Carrinho'
-import logo from '../assets/logo.png'
+import { useCatalogContext } from '../contexts/Catalog'
 
 export default function Header() {
 
     const {quantTotal} = useCarrinhoContext ()
+    const {catalog} = useCatalogContext()
 
   return (
     <header className='flex bg-black text-white justify-between items-center px-20 h-20 fixed w-full z-30'>
         <nav className='flex justify-between items-center  w-full'>
-            <Link to={'/'} className='w-16'>
-                <img src={logo} alt="" />
+            <Link to={'/'}>
+                <h1 className='text-lg font-medium'>{catalog?.nome !== '' ? catalog.nome.toUpperCase() : 'Logo'}</h1>
             </Link >
             <div className='flex gap-10'>
-                <Link to={'/'}>Página inicial</Link>
                 <Link>Promoções</Link>
                 <Link>Categorias</Link>
             </div>

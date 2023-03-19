@@ -12,7 +12,7 @@ import { useCatalogContext } from '../contexts/Catalog'
 export default function CatalogoAdmin() {
 
     const {catalog, getCatalog} = useCatalogContext()
-    const {produtos, getProducts, filterProduct, page, setPage} = useProductContext()
+    const {produtos, getProducts, filterProduct, perPage} = useProductContext()
 
     const [idProduto, setIdProduto] = useState(undefined)
     const [idCustom, setIdCustom] = useState(undefined)
@@ -25,46 +25,20 @@ export default function CatalogoAdmin() {
     const [edit, setEdit] = useState(false)
     const [filter, setFilter] = useState('')
 
-    const [next, setNext] = useState(false)
+    const [hasNext, setHasNext] = useState(false)
+    const [nextPage, setNextPage] = useState(1)
 
     useEffect( () => {
 
         getCatalog()
-        setPage(1)
-
-    }, [] )
-
-    useEffect( () =>{
-
-        getProducts(5)
-        .then( next => {
-            setNext(next)
+        getProducts(perPage, 1, 'all', 'false')
+        .then( data => {
+            setHasNext(data.hasNextPage)
+            setNextPage(data.nextPage)
         })
         .catch(err => console.log(err))
 
-    }, [page] )
-
-    useEffect( ()=>{
-
-        const handleScroll = (ev) => {
-        
-            const scrollHeight = ev.target.scrollHeight
-            const currentHeight = ev.target.scrollTop + window.innerHeight
-
-            if(currentHeight + 1 >= scrollHeight){
-
-                setPage(page+1*next)
-
-            }
-    
-        }
-
-        window.addEventListener('scroll', handleScroll, true)
-        return () => window.removeEventListener('scroll', handleScroll)
-
-    }, [page, next] )
-
-    
+    }, [] )
 
     function handleFilter(ev){
         let filt = ev.target.value
@@ -109,6 +83,22 @@ export default function CatalogoAdmin() {
         >{`${variacoesVisible?'Menos':'Mais'} opções`}</p>
 
         <ListaProdutosAdmin setModalProduto={setModalProduto} produtos={produtos} setEdit={setEdit} setIdProduto={setIdProduto}/> 
+        {
+            hasNext &&
+            <div className='flex w-full justify-center'>
+                <button 
+                  className='bg-blue-500 py-3 w-1/2 text-white font-medium rounded-lg text-sm mb-20'
+                  onClick = {()=> {
+                    getProducts(perPage, nextPage, 'all', 'false')
+                    .then( data => {
+                      setHasNext(data.hasNextPage)
+                      setNextPage(data.nextPage)
+                    })
+                    .catch(err => console.log(err))
+                  }}
+                >Mostrar mais</button>
+            </div>
+          } 
     </section>
   )
 }

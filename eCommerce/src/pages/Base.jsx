@@ -10,7 +10,7 @@ export default function Base() {
   const {modalCarrinho} = useCarrinhoContext()
 
   return (
-    <>
+    <section className=''>
       {modalCarrinho?<Modal />:<></>}
       <Header/>      
       <div className='px-32 py-20'>
@@ -18,6 +18,6 @@ export default function Base() {
       </div>
       
       <Footer />
-        </>
+    </section>
   )
 }
