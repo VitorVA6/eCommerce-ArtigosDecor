@@ -62,7 +62,7 @@ export function useProductContext(){
             return data
         }
         catch(err){
-            console.log(err.response.data)
+            console.log(err.response ? err.response.data : 'Ocorreu um erro no servidor!')
         }
     }
     

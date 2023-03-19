@@ -10,23 +10,23 @@ module.exports = class ProductController{
         const destaque = false
 
         if (!title){
-            return res.status(422).json({message: 'Título é obrigatório'})
+            return res.status(422).json({error: 'Título é obrigatório'})
         }
         if (!preco){
-            return res.status(422).json({message: 'Preço é obrigatório'})
+            return res.status(422).json({error: 'Preço é obrigatório'})
         }
         
         if (!desconto){
-            return res.status(422).json({message: 'Desconto é obrigatório'})
+            return res.status(422).json({error: 'Desconto é obrigatório'})
         }
         if (!categoria){
-            return res.status(422).json({message: 'Categoria é obrigatório'})
+            return res.status(422).json({error: 'Categoria é obrigatório'})
         }
         if(!desc){
-            return res.status(422).json({message: 'Descrição é obrigatório'})
+            return res.status(422).json({error: 'Descrição é obrigatório'})
         }
         if(req.files.length === 0){
-            return res.status(422).json({message: 'Imagem é obrigatório'})
+            return res.status(422).json({error: 'Imagem é obrigatório'})
         }
 
         const images = req.files.map( image => image.filename )
@@ -43,8 +43,7 @@ module.exports = class ProductController{
             })
             res.status(201).json({message: 'Produto criado com sucesso', newProduct})
         }catch(err){
-            console.log(err)
-            res.status(500).json({message: err})
+            res.status(500).json({error: 'Ocorreu um erro na criação do produto.'})
         }
 
     } 
@@ -80,7 +79,7 @@ module.exports = class ProductController{
 
         Product.paginate(filter, options, function(err, result){
             if (err){
-                return res(404).json(err)
+                return res(404).json({error: 'Ocorreu um erro no servidor.'})
             }
             return res.status(200).json(result)
         })
@@ -92,14 +91,14 @@ module.exports = class ProductController{
         const id = req.params.id 
 
         if (!ObjectId.isValidObjectId(id)){
-            return res.status(422).json({message: 'ID inválido'})
+            return res.status(422).json({error: 'ID inválido'})
             
         }
 
         const product = await Product.findOne({_id:id}) 
 
         if(!product){
-            return res.status(404).json({message: 'Produto não existe!'})
+            return res.status(404).json({error: 'Produto não existe!'})
         }
 
         res.status(200).json({product: product})
@@ -113,42 +112,42 @@ module.exports = class ProductController{
         const id = req.params.id 
 
         if (!ObjectId.isValidObjectId(id)){
-            return res.status(422).json({message: 'ID inválido'})   
+            return res.status(422).json({error: 'ID inválido'})   
         }
 
         const product = await Product.findOne({_id:id}) 
 
         if(!product){
-            return res.status(404).json({message: 'Produto não existe!'})
+            return res.status(404).json({error: 'Produto não existe!'})
         }
         
         if (!title){
-            return res.status(422).json({message: 'Título é obrigatório'})
+            return res.status(422).json({error: 'Título é obrigatório'})
         }
         product.title = title
 
         if (!preco){
-            return res.status(422).json({message: 'Preço é obrigatório'})
+            return res.status(422).json({error: 'Preço é obrigatório'})
         }
         product.preco = preco  
         
         if (!desconto){
-            return res.status(422).json({message: 'Desconto é obrigatório'})
+            return res.status(422).json({error: 'Desconto é obrigatório'})
         }
         product.desconto = desconto
 
         if (!categoria){
-            return res.status(422).json({message: 'Categoria é obrigatório'})
+            return res.status(422).json({error: 'Categoria é obrigatório'})
         }
         product.categoria = categoria.split(',')
 
         if(!desc){
-            return res.status(422).json({message: 'Descrição é obrigatório'})
+            return res.status(422).json({error: 'Descrição é obrigatório'})
         }
         product.desc = desc
 
         if(req.files.length === 0 && uploadedImages.length === 0){
-            return res.status(422).json({message: 'Imagem é obrigatório'})
+            return res.status(422).json({error: 'Imagem é obrigatório'})
         }
 
         product.img.forEach( elem => {
@@ -173,7 +172,7 @@ module.exports = class ProductController{
             res.status(200).json({product: updatedProd})
         }
         catch(err){
-            res.status(500).json(err)
+            res.status(500).json({error: 'Ocorreu um erro na atualização do produto.'})
         }
     }
 
@@ -182,13 +181,13 @@ module.exports = class ProductController{
         const id = req.params.id 
 
         if (!ObjectId.isValidObjectId(id)){
-            return res.status(422).json({message: 'ID inválido'})   
+            return res.status(422).json({error: 'ID inválido'})   
         }
 
         const product = await Product.findOne({_id:id}) 
 
         if(!product){
-            return res.status(404).json({message: 'Produto não existe!'})
+            return res.status(404).json({error: 'Produto não existe!'})
         }
 
         try {
@@ -196,7 +195,7 @@ module.exports = class ProductController{
             res.status(200).json({message: 'Produto removido com sucesso!'})
         }
         catch(err){
-            res.status(500).json(err)
+            res.status(500).json({error: 'Ocorreu um erro na deleção do produto.'})
         }
     }
 
@@ -206,23 +205,23 @@ module.exports = class ProductController{
         const { destaque } = req.body
 
         if (!ObjectId.isValidObjectId(id)){
-            return res.status(422).json({message: 'ID inválido'})   
+            return res.status(422).json({error: 'ID inválido'})   
         }
 
         const product = await Product.findOne({_id:id})
         if(!product){
-            return res.status(404).json({message: 'Produto não existe!'})
+            return res.status(404).json({error: 'Produto não existe!'})
         }
 
         if(!req.body.hasOwnProperty('destaque')){
-            return res.status(422).json({message: 'Dados não fornecidos!'})
+            return res.status(422).json({error: 'Dados não fornecidos!'})
         }
         product.destaque = destaque
         try{
             await Product.findOneAndUpdate({_id: id}, product)
             res.status(200).json({message: 'Produto destacado com sucesso!'})
         }catch(err){
-            res.status(500).json(err)
+            res.status(500).json({error: 'Ocorreu um erro na atualização do produto.'})
         }
 
     }
@@ -243,12 +242,12 @@ module.exports = class ProductController{
                 const result = await Product.find({ "title": { "$regex": key, "$options": "i" }})
                 return res.status(200).json(result)
             }catch(err){
-                return res.status(404).json(err)
+                return res.status(404).json({error: 'Ocorreu um erro no servidor'})
             }
 
         }
         else{
-            return res.status(500).json({message: 'Filtragem inválida'})
+            return res.status(500).json({error: 'Filtragem inválida'})
         } 
     }
 
@@ -274,17 +273,17 @@ module.exports = class ProductController{
             } )
 
             if(ids.length === 0){
-                return res.status(400).json({message: 'Id inválido'})
+                return res.status(400).json({error: 'Id inválido'})
             }
     
             const cart = await Product.find({
                 '_id': { $in: ids}
             })
     
-            return res.json(cart)
+            return res.status(200).json(cart)
 
         }else{
-            return res.status(400).json({message: 'Id inválido'})
+            return res.status(400).json({error: 'Id inválido'})
         }
         
         

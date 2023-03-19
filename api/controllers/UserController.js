@@ -13,15 +13,15 @@ module.exports = class UserController{
         const {name, email, password} = req.body
         
         if(!name){
-            res.status(422).json({message: 'Nome é obrigatório'})
+            res.status(422).json({error: 'Nome é obrigatório'})
             return
         }
         if(!email){
-            res.status(422).json({message: 'E-mail é obrigatório'})
+            res.status(422).json({error: 'E-mail é obrigatório'})
             return
         }
         if(!password){
-            res.status(422).json({message: 'Senha é obrigatória'})
+            res.status(422).json({error: 'Senha é obrigatória'})
             return
         }
 
@@ -36,7 +36,7 @@ module.exports = class UserController{
             })
             res.status(201).json({message: 'Usuário criado com sucesso', newUser})
         }catch(err){
-            res.status(422).json({message: err})
+            res.status(422).json({error: 'Ocorreu um erro na criação do usuário'})
         }
     }
 
@@ -49,21 +49,21 @@ module.exports = class UserController{
             return
         }
         if(!password){
-            res.status(422).json('Senha é obrigatória')
+            res.status(422).json({error: 'Senha é obrigatória'})
             return
         }
         
         const user = await User.findOne({email: email})
 
         if (!user){
-            res.status(422).json({message: 'E-mail não existe'})
+            res.status(422).json({error: 'E-mail não existe'})
             return
         }
 
         const checkPassword = await bcrypt.compare(password, user.password)
 
         if(!checkPassword){
-            res.status(422).json({message: 'Senha inválida'})
+            res.status(422).json({error: 'Senha inválida'})
             return
         }
 
@@ -76,7 +76,7 @@ module.exports = class UserController{
         const user = await getUserByToken(req.headers.authorization)
 
         if(!user){
-            res.status(422).json({message: 'Você não tem autorização pra essa operação'})
+            res.status(422).json({error: 'Você não tem autorização pra essa operação'})
         }
 
         user.password = undefined
@@ -92,7 +92,7 @@ module.exports = class UserController{
         const {email, senhaAtual, novaSenha} = req.body
 
         if(!user){
-            return res.status(422).json({message: 'Você não tem autorização pra essa operação'})
+            return res.status(422).json({error: 'Você não tem autorização pra essa operação'})
         }
 
         
@@ -109,7 +109,7 @@ module.exports = class UserController{
                 await sendEmail(email, "Verificação de e-mail", `<h2>Você está quase lá, clique no link para verificar seu e-mail</h2><a href="${url}" target="_blank">Clique aqui</a>`, res, user)
                 return res.status(200).json({message: 'E-mail enviado, verique-o.'})
             }catch(err){
-                return res.status(400).json({message: "Ocorreu um erro no envio do e-mail de verificação."})
+                return res.status(400).json({error: "Ocorreu um erro no envio do e-mail de verificação."})
             }
             
         }
@@ -123,7 +123,7 @@ module.exports = class UserController{
                 user.password = novaSenhaHash
             }
             else{
-                return res.status(422).json({message: 'Os dados que enviou são inválidos.'})
+                return res.status(422).json({error: 'Os dados que enviou são inválidos.'})
             }
         }
 
@@ -132,7 +132,7 @@ module.exports = class UserController{
             return res.status(200).json({message: 'Usuário atualizado'})
         }
         catch(err){
-            return res.status(422).json({message: 'Não foi possível atualizar o usuário'})
+            return res.status(422).json({error: 'Não foi possível atualizar o usuário'})
         }
 
     }
@@ -143,7 +143,7 @@ module.exports = class UserController{
         try{
             const user = await getUserByToken(req.headers.authorization)
             if(!user){
-                return res.status(400).json({message: 'Você não tem autorização pra essa operação.'})
+                return res.status(400).json({error: 'Você não tem autorização pra essa operação.'})
             }
 
             const tokenEmail = await Token.findOne({
@@ -151,7 +151,7 @@ module.exports = class UserController{
                 token: token
             })
             if(!tokenEmail){
-                return res.status(400).json({message: 'Token inválido.'})
+                return res.status(400).json({error: 'Token inválido.'})
             }
             user.email = tokenEmail.email
             await User.findOneAndUpdate({_id: user._id}, user)
@@ -159,7 +159,7 @@ module.exports = class UserController{
             return res.status(200).json({message: 'Email atualizado'})
         }
         catch(err){
-            return res.status(400).json(err)
+            return res.status(400).json({error: 'Ocorreu um erro na verificação de e-mail'})
         }
 
     }

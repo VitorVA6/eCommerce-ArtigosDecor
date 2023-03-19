@@ -33,7 +33,12 @@ export default function ModalCategoria({setModalCategoria, edit, placeh, idCusto
         const catalogAtt = { ...catalog, categorias: categoriasAux }
         
         setCatalog(catalogAtt)
-        updateCatalog(catalogAtt)
+        updateCatalog(catalogAtt).then(data => {
+          if(!!data.message){
+            setModalCategoria(false)
+            console.log(data.message)
+          }
+        })
       }
       return
     }
@@ -42,7 +47,12 @@ export default function ModalCategoria({setModalCategoria, edit, placeh, idCusto
     console.log(catalogAtt)
     if(category.trim().length > 0 && !catalog.categorias.includes(category)){
       setCatalog(catalogAtt)
-      updateCatalog(catalogAtt)
+      updateCatalog(catalogAtt).then(data => {
+        if(!!data.message){
+          setModalCategoria(false)
+          console.log(data.message)
+        }
+      })
     }
     else{
       console.log('Categoria inválida')
