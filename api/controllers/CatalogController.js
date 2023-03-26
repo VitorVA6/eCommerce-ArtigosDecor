@@ -1,6 +1,7 @@
 const Catalog = require('../models/CatalogModel')
 const User = require('../models/UserModel')
 const getUserByToken = require('../utils/getUserByToken')
+const fs = require('fs')
 
 module.exports = class CatalogController{
 
@@ -42,7 +43,7 @@ module.exports = class CatalogController{
 
     static async updateCatalog(req, res){
 
-        const {categorias, variacoes, sobre, rsociais, telefone, email, nome, whats, banners} = req.body
+        const {categorias, variacoes, sobre, rsociais, telefone, email, nome, whats, uploadedImages} = req.body
 
         const user = await getUserByToken(req.headers.authorization)
         
@@ -80,14 +81,33 @@ module.exports = class CatalogController{
         if(!!whats){
             catalog.whats = whats
         }
-        if(!!banners){
-            catalog.banners = banners
+        if(!!req.files || !!uploadedImages ){
+            
+            catalog.bannerdt.forEach( elem => {
+                if(!uploadedImages?.includes(elem)){
+                    fs.stat(`./public/images/carrosel/${elem}`, function (err, stats) {
+                        
+                        if (err) {
+                            return console.error(err);
+                        }
+                        
+                        fs.unlink(`./public/images/carrosel/${elem}`,function(err){
+                                if(err) return console.log(err);
+                        });
+                    });
+                }
+            } )
+            
+            
+            let aux_files =  req.files?.length > 0 ? req.files.map(image => image.filename) : []
+            catalog.bannerdt = aux_files.concat(uploadedImages)
+            
         }
 
         try{
 
             await Catalog.findOneAndUpdate({admin: user._id}, catalog)
-            res.status(200).json({message: 'Catálogo atualizado com sucesso!'})
+            res.status(200).json({message: 'Catálogo atualizado com sucesso!', dados: catalog})
 
         }catch(err){
             return res.status(500).json({error: 'Erro na atualização do catálogo.'})

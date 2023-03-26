@@ -8,7 +8,7 @@ export default function ListaProdutos({produtos}) {
     const navigate = useNavigate()
 
   return (
-    <section className='p-9 w-full'>
+    <section className='p-9 w-full overflow-auto'>
         <h2 className='text-3xl font-medium'>Todos os produtos</h2>
         <p className='text-gray-500'>{produtos.length} produtos encontrados</p>
         <div className='w-full grid grid-cols-3 gap-x-3 gap-y-10 my-8'>

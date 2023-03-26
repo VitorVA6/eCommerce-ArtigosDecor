@@ -1,4 +1,3 @@
-import axios from 'axios'
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import CustomList from './CustomList'
@@ -11,7 +10,7 @@ import { useCatalogContext } from '../contexts/Catalog'
 
 export default function CatalogoAdmin() {
 
-    const {catalog, getCatalog} = useCatalogContext()
+    const {catalog, getCatalog, ToastContainer, notifyError, notifySucess} = useCatalogContext()
     const {produtos, getProducts, filterProduct, perPage} = useProductContext()
 
     const [idProduto, setIdProduto] = useState(undefined)
@@ -52,16 +51,41 @@ export default function CatalogoAdmin() {
     }
 
   return (
-    <section>
-        
+    <section className=' overflow-hidden'>
+        <ToastContainer />
         {
-            modalCategoria && <ModalCategoria setModalCategoria={setModalCategoria} edit={edit} placeh='Ex: Bandejas' idCustom={idCustom} />
+            modalCategoria && 
+            <ModalCategoria 
+                notifySucess = {notifySucess} 
+                notifyError = {notifyError} 
+                setModalCategoria={setModalCategoria} 
+                edit={edit} 
+                placeh='Ex: Bandejas' 
+                idCustom={idCustom}
+            />
         }      
         {
-            modalVariacoes && <ModalVariacoes setModalVariacoes={setModalVariacoes} edit={edit} placeh1='Exemplo: "Cor"' placeh2={'Exemplo: "Azul", "Amarelo"'} idCustom={idCustom}/>
+            modalVariacoes && 
+            <ModalVariacoes
+                notifySucess = {notifySucess} 
+                notifyError = {notifyError} 
+                setModalVariacoes={setModalVariacoes} 
+                edit={edit} 
+                placeh1='Exemplo: "Cor"' 
+                placeh2={'Exemplo: "Azul", "Amarelo"'} 
+                idCustom={idCustom}
+            />
         }  
         {
-            modalProduto && <ModalProduto categorias={catalog.categorias} setModalProduto={setModalProduto} edit={edit} idProduto = {idProduto}/>
+            modalProduto && 
+            <ModalProduto 
+                notifySucess = {notifySucess} 
+                notifyError = {notifyError} 
+                categorias={catalog.categorias} 
+                setModalProduto={setModalProduto} 
+                edit={edit} 
+                idProduto = {idProduto}
+            />
         }  
         <input 
             type="text" 

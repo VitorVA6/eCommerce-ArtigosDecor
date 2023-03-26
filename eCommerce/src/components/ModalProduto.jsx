@@ -4,7 +4,7 @@ import { useProductContext } from '../contexts/Product';
 import { v4 as uuidv4 } from 'uuid';
 import { GrFormClose } from "react-icons/gr";
 
-export default function ModalProduto({setModalProduto, edit, categorias, idProduto}) {
+export default function ModalProduto({setModalProduto, edit, categorias, idProduto, notifySucess, notifyError}) {
 
     useEffect( () => {
         if (edit){
@@ -23,6 +23,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
 
     const {addProduct, getProductById, updateProduct} = useProductContext()
     const [verMais, setVerMais] = useState(false);
+    const [animate, setAnimate] = useState(true)
 
     //estados dos inputs: nome, preço e etc
     const [name, setName] = useState('') 
@@ -58,20 +59,36 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
         if(edit){
             updateProduct(idProduto, name, price, priceoff, category, desc, images, uploadedImages)
             .then( (data) => {
-                setName(data.product.title) 
-                setPrice(data.product.preco)
-                setDesc(data.product.desc) 
-                setCategory(data.product.categoria)
-                setPriceoff(data.product.desconto)
-                setUploadesImages(data.product.img)
-                setImages([])
+                if(!!data.product){
+                    setName(data.product.title) 
+                    setPrice(data.product.preco)
+                    setDesc(data.product.desc) 
+                    setCategory(data.product.categoria)
+                    setPriceoff(data.product.desconto)
+                    setUploadesImages(data.product.img)
+                    setImages([])
+                    setAnimate(false)
+                    setTimeout(() => setModalProduto(false), 400) 
+                    notifySucess('Produto atualizado com sucesso.')
+                
+                }else{
+                    notifyError(data.error)
+                }
+
             } )
-            .catch(err => console.log(err))
-            return
         }
-        
-        addProduct(name, price, priceoff, category, desc, images)
-        
+        else{
+            addProduct(name, price, priceoff, category, desc, images).then(data => {
+                if(!!data.message){
+                  setAnimate(false)
+                  setTimeout(() => setModalProduto(false), 400) 
+                  notifySucess(data.message)
+                }
+                else{
+                  notifyError(data.error)
+                }
+              })
+        }
     }
 
   return (
@@ -79,13 +96,16 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
     <>
     <div 
       className=' w-screen h-screen bg-gray-400/50 absolute left-0 top-0 flex justify-center items-center z-10' 
-      onClick={() => setModalProduto(false)}
+      onClick={() => {
+        setAnimate(false)
+        setTimeout(() => setModalProduto(false), 400) 
+      }}
     >
         
     </div>
     <div 
-        className='slide-in-bottom h-fit bg-white flex flex-col items-center z-40 absolute rounded-2xl'
-        style={{width: '650px',left: 'calc(50% - 325px)', top: 'calc(50% - 320px)'}}   
+        className={`${animate ? 'slide-in-bottom':'slide-out-top'} h-fit bg-white flex flex-col items-center z-40 absolute rounded-2xl`}
+        style={{width: '650px',left: 'calc(50% - 325px)', top: 'calc(50% - 290px)'}}   
     >
         <h2 className='text-center py-4 border-b w-full font-medium'>{`${edit?'Editar':'Adicionar'} Produto`}</h2>
         <div className='flex flex-col py-2 px-7 w-full overflow-auto h-fit' style={{height: '470px'}}>

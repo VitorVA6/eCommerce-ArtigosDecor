@@ -7,7 +7,7 @@ export default function InfoAdmin() {
 
   const [modalRS, setModalRS] = useState(false);
 
-  const {getCatalog, catalog, setCatalog, updateCatalog} = useCatalogContext()
+  const {getCatalog, catalog, setCatalog, updateCatalog, ToastContainer, notifyError, notifySucess} = useCatalogContext()
 
   useEffect( ()=> {
 
@@ -17,6 +17,7 @@ export default function InfoAdmin() {
 
   return (
     <section className='flex flex-col gap-1'>
+      <ToastContainer />
       {
         modalRS && <ModalRsociais setModalRS={setModalRS} catalog={catalog} setCatalog={setCatalog}/>
       }
@@ -94,7 +95,16 @@ export default function InfoAdmin() {
 
       <button 
         className='rounded-lg bg-blue-500 text-white py-2 w-fit px-10 mt-8'
-        onClick={() => updateCatalog()}
+        onClick={() => {
+          updateCatalog().then(data => {
+            if(!!data.message){
+              notifySucess(data.message)
+            }
+            else{
+              notifyError(data.error)
+            }
+          })
+        }}
       >
         Salvar alterações
       </button>

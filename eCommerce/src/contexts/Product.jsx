@@ -36,9 +36,10 @@ export function useProductContext(){
             const {data} = await axios.post('/products/add', formData,  {headers: {'Content-Type': 'multipart/form-data'}})
             const limit = Math.ceil(produtos.length/perPage)*perPage
             getProducts(limit, 1, 'all', 'false')
+            return data
         }
         catch(err){
-            console.log(err.response.data)
+            return err.response ? err.response.data : {error: 'Ocorreu um erro no servidor!'}
         }
     }
 
@@ -62,7 +63,7 @@ export function useProductContext(){
             return data
         }
         catch(err){
-            console.log(err.response ? err.response.data : 'Ocorreu um erro no servidor!')
+            return err.response ? err.response.data : {error: 'Ocorreu um erro no servidor!'}
         }
     }
     

@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import {useCatalogContext} from '../contexts/Catalog'
 
-export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edit, idCustom }) {
+export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edit, idCustom, notifySucess, notifyError }) {
 
     const [options, setOptions] = useState([])
     const [nome, setNome] = useState('')
     const {setCatalog, updateCatalog, catalog} = useCatalogContext()
+    const [animate, setAnimate] = useState(true)
 
     useEffect( () => {
         if(edit){
@@ -49,7 +50,16 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
                 } )
                 const catalogAtt = { ...catalog, variacoes: variacoesAux }
                 setCatalog(catalogAtt)
-                updateCatalog(catalogAtt)
+                updateCatalog(catalogAtt).then(data => {
+                    if(!!data.message){
+                      setAnimate(false)
+                      setTimeout(() => setModalVariacoes(false), 400) 
+                      notifySucess(data.message)
+                    }
+                    else{
+                        notifyError(data.error)
+                    }
+                  })
             }
 
             return
@@ -60,10 +70,19 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
         if(nome.trim().length > 0 && !checkRepeat){
             const catalogoAtt = {...catalog, variacoes: [...catalog.variacoes, {name: nome, options: optionsAux}]}
             setCatalog(catalogoAtt)
-            updateCatalog(catalogoAtt)
+            updateCatalog(catalogoAtt).then(data => {
+                if(!!data.message){
+                  setAnimate(false)
+                  setTimeout(() => setModalVariacoes(false), 400) 
+                  notifySucess(data.message)
+                }
+                else{
+                    notifyError(data.error)
+                }
+              })
         }
         else{
-            console.log('Variação inválida')
+            notifyError('Variação inválida')
         }
 
     }
@@ -101,13 +120,16 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
     <>
     <div 
       className=' w-screen h-screen bg-gray-400/50 absolute left-0 top-0 flex justify-center items-center z-10' 
-      onClick={() => setModalVariacoes(false)}
+      onClick={() => {
+        setAnimate(false)
+        setTimeout(() => setModalVariacoes(false), 400) 
+      }}
     >
         
     </div>
     <div 
-        className='slide-in-bottom h-fit bg-white flex flex-col items-center z-20 absolute rounded-2xl'
-        style={{width: '530px',left: 'calc(50% - 265px)', top: 'calc(50% - 280px)'}}    
+        className={`${animate ? 'slide-in-bottom':'slide-out-top'} h-fit bg-white flex flex-col items-center z-20 absolute rounded-2xl`}
+        style={{width: '530px',left: 'calc(50% - 265px)', top: 'calc(50% - 260px)'}}    
     >
         
         <h2 className='text-center py-4 border-b w-full font-medium relative'>{`${edit ? 'Editar' : 'Adicionar'} variações`}

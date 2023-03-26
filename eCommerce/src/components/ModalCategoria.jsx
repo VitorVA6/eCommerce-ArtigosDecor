@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useCatalogContext } from '../contexts/Catalog'
 
-export default function ModalCategoria({setModalCategoria, edit, placeh, idCustom}) {
+export default function ModalCategoria({setModalCategoria, edit, placeh, idCustom, notifySucess, notifyError}) {
 
   const {setCatalog, updateCatalog, catalog} = useCatalogContext()
   const [category, setCategory] = useState('')
+  const [animate, setAnimate] = useState(true)
 
   useEffect( () => {
 
@@ -35,8 +36,12 @@ export default function ModalCategoria({setModalCategoria, edit, placeh, idCusto
         setCatalog(catalogAtt)
         updateCatalog(catalogAtt).then(data => {
           if(!!data.message){
-            setModalCategoria(false)
-            console.log(data.message)
+            setAnimate(false)
+            setTimeout(() => setModalCategoria(false), 400) 
+            notifySucess(data.message)
+          }
+          else{
+            notifyError(data.error)
           }
         })
       }
@@ -49,27 +54,34 @@ export default function ModalCategoria({setModalCategoria, edit, placeh, idCusto
       setCatalog(catalogAtt)
       updateCatalog(catalogAtt).then(data => {
         if(!!data.message){
-          setModalCategoria(false)
-          console.log(data.message)
+          setAnimate(false)
+          setTimeout(() => setModalCategoria(false), 400) 
+          notifySucess(data.message)
+        }
+        else{
+          notifyError(data.error)
         }
       })
     }
     else{
-      console.log('Categoria inválida')
+      notifyError('Categoria inválida.')
     }
   }
 
   return (
     <>
     <div 
-      className=' w-screen h-screen bg-gray-400/50 absolute left-0 top-0 flex justify-center items-center z-10' 
-      onClick={() => setModalCategoria(false)}
+      className=' w-screen h-screen bg-gray-400/50 absolute left-0 top-0 flex justify-center items-center z-10 overflow-hidden' 
+      onClick={() => {
+        setAnimate(false)
+        setTimeout(() => setModalCategoria(false), 400) 
+      }}
     >
         
     </div>
     <div 
-        className='slide-in-bottom h-fit bg-white flex flex-col items-center z-20 absolute rounded-2xl'
-        style={{width: '450px',left: 'calc(50% - 225px)', top: 'calc(50% - 200px)'}}    
+        className={`${animate ? 'slide-in-bottom':'slide-out-top'} h-fit bg-white flex flex-col items-center z-20 absolute rounded-2xl`}
+        style={{width: '450px',left: 'calc(50% - 225px)', top: 'calc(50% - 100px)'}}    
     >
         <h2 className='text-center py-4 border-b w-full font-medium'>{`${edit?'Editar':'Inserir'} categoria`}</h2>
         <div className='flex flex-col py-2 px-7 w-full'>

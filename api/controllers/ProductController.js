@@ -146,7 +146,7 @@ module.exports = class ProductController{
         }
         product.desc = desc
 
-        if(req.files.length === 0 && uploadedImages.length === 0){
+        if(req.files?.length === 0 && uploadedImages?.length === 0){
             return res.status(422).json({error: 'Imagem é obrigatório'})
         }
 
@@ -165,7 +165,8 @@ module.exports = class ProductController{
             }
         } )
         
-        product.img = uploadedImages.concat(req.files.map(image => image.filename)) 
+        let aux_files =  req.files?.length > 0 ? req.files.map(image => image.filename) : []
+        product.img = aux_files.concat(uploadedImages)
 
         try{
             const updatedProd = await Product.findOneAndUpdate({_id: id}, product, {new: true})
@@ -192,6 +193,19 @@ module.exports = class ProductController{
 
         try {
             await Product.findOneAndDelete({_id: id})
+            product.img.forEach( elem => {                
+                fs.stat(`./public/images/products/${elem}`, function (err, stats) {
+                    
+                    if (err) {
+                        return console.error(err);
+                    }
+                    
+                    fs.unlink(`./public/images/products/${elem}`,function(err){
+                            if(err) return console.log(err);
+                    });
+                    });
+            } )
+            
             res.status(200).json({message: 'Produto removido com sucesso!'})
         }
         catch(err){

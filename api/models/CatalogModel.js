@@ -12,8 +12,7 @@ const CatalogSchema = new Schema({
     email: String,
     nome: String,
     whats: String,
-    banners: [String],
-
+    bannerdt: [String],
 })
 
 module.exports = mongoose.model('Catalog', CatalogSchema)

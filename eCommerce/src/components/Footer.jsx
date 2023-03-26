@@ -9,7 +9,7 @@ export default function Footer() {
     const {catalog} = useCatalogContext()
 
   return (
-    <section className='flex flex-col w-full bg-black text-white'>
+    <section className='flex flex-col w-full bg-black text-white mb-20'>
         <div className='flex gap-x-32 w-full justify-center item-center py-16'>
             <div className='flex flex-col gap-y-2'>
                 <h3 className='text-lg'>Informações</h3>

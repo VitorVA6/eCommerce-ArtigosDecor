@@ -23,7 +23,7 @@ export default function Admin() {
   }
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col overflow-hidden'>
         <HeaderAdmin />
         <div className='flex h-screen overflow-y-hidden'>
             <NavLateralAdmin setSelected={setSelected} selected={selected}/>

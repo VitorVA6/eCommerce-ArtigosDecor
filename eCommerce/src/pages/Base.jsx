@@ -10,14 +10,16 @@ export default function Base() {
   const {modalCarrinho} = useCarrinhoContext()
 
   return (
-    <section className=''>
+    <section className='flex flex-col'>
       {modalCarrinho?<Modal />:<></>}
-      <Header/>      
-      <div className='px-32 py-20'>
-        <Outlet />
-      </div>
-      
-      <Footer />
+      <Header/>   
+      <div className='h-screen overflow-auto mt-20'>
+        <div className='px-32 pb-16'>
+          <Outlet />
+        </div>
+        
+        <Footer />
+      </div>   
     </section>
   )
 }
