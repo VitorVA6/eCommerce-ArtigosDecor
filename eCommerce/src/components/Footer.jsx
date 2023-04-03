@@ -9,14 +9,10 @@ export default function Footer() {
     const {catalog} = useCatalogContext()
 
   return (
-    <section className='flex flex-col w-full bg-black text-white mb-20'>
-        <div className='flex gap-x-32 w-full justify-center item-center py-16'>
-            <div className='flex flex-col gap-y-2'>
-                <h3 className='text-lg'>Informações</h3>
-                <Link className='text-sm text-gray-200' to={'/about'}>Sobre</Link> 
-            </div>
-            <div className='flex flex-col gap-y-2'>
-                <h3 className='text-lg'>Atendimento</h3>
+    <section className='flex flex-col w-full bg-gray-800 text-white mb-28 lg:mb-20'>
+        <div className='flex flex-col gap-y-7 gap-x-32 w-full justify-center items-center py-12 lg:flex-row lg:py-16'>
+            <div className='flex flex-col gap-y-2 items-center'>
+                <h3 className='text-xl'>Atendimento</h3>
                 {
                 catalog?.email !== ''?
                     <h4 className='text-sm text-gray-200'>{catalog.email}</h4>:
@@ -29,11 +25,15 @@ export default function Footer() {
                 }
                 
             </div>
-            <Link to={'https://www.instagram.com/artigos.decoracoes/'} target={'_blank'} className='w-12 h-12 bg-gray-800 flex justify-center items-center rounded-full'>
-                <img className='w-5 h-5' src={insta} alt="Logo do instagram" />
-            </Link>
+           
+            <div className='flex flex-col gap-y-3 items-center'>
+                <h3 className='text-xl'>Redes sociais</h3>
+                <Link to={'https://www.instagram.com/artigos.decoracoes/'} target={'_blank'} className='w-12 h-12 bg-gray-800 flex justify-center items-center rounded-full'>
+                    <img className='w-5 h-5' src={insta} alt="Logo do instagram" />
+                </Link>
+            </div>
         </div>
-        <div className='flex justify-between px-32 py-6 border-t border-t-gray-500 text-xs items-center'>
+        <div className='flex flex-col justify-between px-20 gap-y-8 py-6 border-t border-t-gray-500 text-xs items-center lg:px-32 lg:flex-row'>
             <p>2023 © TODOS OS DIREITOS RESERVADOS</p>
             <p className='font-bold text-lg'>Vitor Vaz Andrade</p>
         </div>

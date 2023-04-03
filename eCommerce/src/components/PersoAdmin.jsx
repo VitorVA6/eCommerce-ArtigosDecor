@@ -44,7 +44,7 @@ export default function PersoAdmin() {
   return (
     <section className='flex items-center flex-col w-full h-screen'>
       <ToastContainer />
-      <div className='flex flex-col w-9/12 bg-white py-5 px-7 rounded-t-xl border-b'>
+      <div className='flex flex-col w-full lg:w-3/4 bg-white py-5 px-4 lg:px-7 rounded-t-xl border border-gray-300/80 lg:border-gray-200/70'>
         <h2 className='mb-3 font-medium text-lg'>Informações</h2>
         <div className='flex flex-col w-full gap-2 mb-2.5'>
           <h3 className='text-sm font-medium'>Nome</h3>
@@ -75,13 +75,13 @@ export default function PersoAdmin() {
           />
         </div>
       </div>
-      <div className='flex flex-col w-9/12 bg-white py-5 px-7'>
+      <div className='flex flex-col w-full lg:w-3/4 bg-white py-5 px-7 border border-gray-300/80 lg:border-gray-200/70'>
         <h3 className='font-medium mb-1.5'>Banners</h3>
         <p className='text-sm text-gray-400 mb-2.5'>Adicione banners para destacar sua marca, promoções e mais.</p>
         <p className='text-sm mb-5'>Imagens dos banners</p>
         
         <div className='flex flex-wrap w-full gap-2'>
-          <label className='bg-gray-100 w-40 h-24 rounded-xl flex items-center justify-center cursor-pointer'>
+          <label className='bg-gray-100 w-32 h-20 lg:w-40 lg:h-24 rounded-xl flex items-center justify-center cursor-pointer'>
             <input className='hidden' multiple={true} type='file' onChange={(ev) => handleFiles(ev)} />
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10 text-gray-300">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -92,7 +92,7 @@ export default function PersoAdmin() {
               <div 
                   key = {image}
                   style={{ backgroundImage: `url(http://localhost:4000/images/carrosel/${image})`, boxSizing: 'border-box', backgroundSize: 'cover'}}
-                  className='w-40 h-24 rounded-xl relative'
+                  className='w-32 h-20 lg:w-40 lg:h-24 rounded-xl relative'
                   >
                   <button 
                       className='bg-white p-0.5 absolute -top-1.5 -right-1.5 rounded-full'

@@ -1,40 +1,19 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
-export default function NavLateral( {categorias, setCategoria, categoria, setFiltroPromocao, filtroPromocao} ) {
-
-  const handleClasses = (id) => {
-    if(id === 'all'){
-      return 'border-l-2 border-l-black'
-    }
-    if(id === categoria){
-      return 'border-l-2 border-l-black'
-    }
-    else{
-      return 'text-gray-500'
-    }
-  }
-
-  const handlePromotion = (state) => {
-    setFiltroPromocao( state )
-  }
-
-  const handleCategory = (id) => {
-    setCategoria(id)
-  }
+export default function NavLateral( {categorias, setCategoria} ) {
 
   return (
-    <section className='flex flex-col border border-b-0 py-8' style={{minWidth: '250px'}}>
-        <div className='flex flex-col gap-y-3'>
-            <h4 className='text-lg px-8'>Categorias</h4>
-            {categorias.map( categoria => <h5 key={categoria}
-                className={`text-base px-8 cursor-pointer ${handleClasses(categoria)}`}
-                onClick={() => handleCategory(categoria)}
-              >{categoria}</h5> )}
-        </div>
-        <div className='flex flex-col gap-y-3 my-10'>
-          <h4 className='text-lg px-8'>Promoções</h4>
-          <h5 className={`text-base px-8 cursor-pointer ${filtroPromocao? 'text-gray-500' : 'border-l-2 border-l-black'}`} onClick={() => handlePromotion(false)}>Todos</h5>
-          <h5 className={`text-base px-8 cursor-pointer ${filtroPromocao? 'border-l-2 border-l-black' : 'text-gray-500'}`} onClick={() => handlePromotion(true)}>Somente promoção</h5>
+    <section className='flex flex-col overflow-x-hidden mb-8 mt-4'>
+        <div className='flex gap-6 overflow-x-auto scrollbar-hide px-6'>
+            {categorias.map( categoria => (
+              <Link key={categoria} to={`/category/${categoria}`} className='flex flex-col items-center gap-y-3'>
+                <div className='p-1.5 bg-white rounded-[60px]'>
+                  <div className='w-32 h-32 bg-cover bg-center rounded-full' style={{backgroundImage:`url(https://s2.glbimg.com/8WjMhMAzFD0a8QAhKrmR9zUx_RI=/smart/e.glbimg.com/og/ed/f/original/2021/04/06/livros-saude-mental.jpg)`}}/>
+                </div>
+                <h3 className='text-gray-600 font-medium text-sm'>{categoria}</h3>
+              </Link> )
+              )}
         </div>
     </section>
   )

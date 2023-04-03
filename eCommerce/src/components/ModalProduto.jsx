@@ -68,7 +68,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                     setUploadesImages(data.product.img)
                     setImages([])
                     setAnimate(false)
-                    setTimeout(() => setModalProduto(false), 400) 
+                    setTimeout(() => setModalProduto(false), 200) 
                     notifySucess('Produto atualizado com sucesso.')
                 
                 }else{
@@ -81,7 +81,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
             addProduct(name, price, priceoff, category, desc, images).then(data => {
                 if(!!data.message){
                   setAnimate(false)
-                  setTimeout(() => setModalProduto(false), 400) 
+                  setTimeout(() => setModalProduto(false), 200) 
                   notifySucess(data.message)
                 }
                 else{
@@ -98,14 +98,13 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
       className=' w-screen h-screen bg-gray-400/50 absolute left-0 top-0 flex justify-center items-center z-10' 
       onClick={() => {
         setAnimate(false)
-        setTimeout(() => setModalProduto(false), 400) 
+        setTimeout(() => setModalProduto(false), 200) 
       }}
     >
         
     </div>
     <div 
-        className={`${animate ? 'slide-in-bottom':'slide-out-top'} h-fit bg-white flex flex-col items-center z-40 absolute rounded-2xl`}
-        style={{width: '650px',left: 'calc(50% - 325px)', top: 'calc(50% - 290px)'}}   
+        className={`${animate ? 'slide-in-bottom':'slide-out-bottom'} w-full lg:w-[650px] left-0 lg:left-[calc(50%-325px)] bottom-0 lg:top-[calc(50%-290px)] h-fit bg-white flex flex-col items-center z-40 absolute rounded-t-3xl lg:rounded-2xl`}
     >
         <h2 className='text-center py-4 border-b w-full font-medium'>{`${edit?'Editar':'Adicionar'} Produto`}</h2>
         <div className='flex flex-col py-2 px-7 w-full overflow-auto h-fit' style={{height: '470px'}}>
@@ -218,7 +217,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                     ) )
                 }
             </div>
-            <div className='flex justify-between items-center w-full'>
+            <div className='flex justify-between items-center w-full mb-6 lg:mb-0'>
 
                 <label className='border border-dashed border-gray-400/70 w-fit h-fit p-2.5 rounded-md cursor-pointer' 
                 >

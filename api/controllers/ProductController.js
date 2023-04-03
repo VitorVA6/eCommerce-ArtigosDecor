@@ -53,17 +53,40 @@ module.exports = class ProductController{
         const page = parseInt(req.query.p, 10)  || 1
         const limit = parseInt(req.query.limit, 10)  || 5
         const category = req.query.category || 'all'
-        const highlight = req.query.highlight || 'false'
+        const ordination = req.query.ordination || '0'
 
         let filter = {}
+        let order = {}
 
         if(category !== 'all')
             filter = { ...filter, categoria: category 
         }
 
-        if(highlight === 'true' ){
-            filter = {...filter, destaque: true}
+        if(ordination === '0'){
+            order = {destaque: -1}
         }
+        else if(ordination === '1'){
+            order = {desconto: -1}
+        }
+        else if(ordination === '2'){
+            order = {title: 1}
+        }
+        else if(ordination === '3'){
+            order = {title: -1}
+        }
+        else if(ordination === '4'){
+            order = {preco: 1}
+        }
+        else if(ordination === '5'){
+            order = {preco: -1}
+        }
+        else if(ordination === '6'){
+            order = {createdAt: 1}
+        }
+        else if(ordination === '7'){
+            order = {createdAt: -1}
+        }
+
 
         const options = {
             page: page,
@@ -71,10 +94,7 @@ module.exports = class ProductController{
             collation: {
                 locale: 'pt',
             },
-            sort: {
-                destaque: -1,
-                title: 1
-            }
+            sort: order
         }
 
         Product.paginate(filter, options, function(err, result){

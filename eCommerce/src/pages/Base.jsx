@@ -13,8 +13,8 @@ export default function Base() {
     <section className='flex flex-col'>
       {modalCarrinho?<Modal />:<></>}
       <Header/>   
-      <div className='h-screen overflow-auto mt-20'>
-        <div className='px-32 pb-16'>
+      <div className='h-screen overflow-auto mt-32 lg:mt-20'>
+        <div className='pb-16 bg-gray-200/60'>
           <Outlet />
         </div>
         

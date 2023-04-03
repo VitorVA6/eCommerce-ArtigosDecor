@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useUserContext } from '../contexts/User'
-import {Navigate} from 'react-router-dom'
+import {Link, Navigate, useNavigate} from 'react-router-dom'
 
 export default function Login() {
 
   const {login, authenticated, checkAuth} = useUserContext()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const navigate = useNavigate()
 
   useEffect( ()=>{
 
@@ -49,6 +50,10 @@ export default function Login() {
                   onChange={(event) => {setPassword(event.target.value)}}  
                 />
             </div>
+            <div className='w-full flex justify-end'>
+              <Link to={'/recovery-pw'} className='mb-5 text-blue-400'>Esqueceu a senha?</Link>
+            </div>
+            
             <button className='bg-blue-500 text-white w-full rounded-lg py-3 text-sm font-medium'>Entrar</button>
         </form>
     </section>

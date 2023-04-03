@@ -37,7 +37,7 @@ export default function ModalCategoria({setModalCategoria, edit, placeh, idCusto
         updateCatalog(catalogAtt).then(data => {
           if(!!data.message){
             setAnimate(false)
-            setTimeout(() => setModalCategoria(false), 400) 
+            setTimeout(() => setModalCategoria(false), 200) 
             notifySucess(data.message)
           }
           else{
@@ -49,13 +49,13 @@ export default function ModalCategoria({setModalCategoria, edit, placeh, idCusto
     }
 
     const catalogAtt = {...catalog, categorias: [...catalog.categorias, category]}
-    console.log(catalogAtt)
+    
     if(category.trim().length > 0 && !catalog.categorias.includes(category)){
       setCatalog(catalogAtt)
       updateCatalog(catalogAtt).then(data => {
         if(!!data.message){
           setAnimate(false)
-          setTimeout(() => setModalCategoria(false), 400) 
+          setTimeout(() => setModalCategoria(false), 200) 
           notifySucess(data.message)
         }
         else{
@@ -71,17 +71,17 @@ export default function ModalCategoria({setModalCategoria, edit, placeh, idCusto
   return (
     <>
     <div 
-      className=' w-screen h-screen bg-gray-400/50 absolute left-0 top-0 flex justify-center items-center z-10 overflow-hidden' 
+      className='w-screen h-screen bg-gray-400/50 absolute left-0 top-0 flex justify-center items-center z-10 overflow-hidden' 
       onClick={() => {
         setAnimate(false)
-        setTimeout(() => setModalCategoria(false), 400) 
+        setTimeout(() => setModalCategoria(false), 200) 
       }}
     >
         
     </div>
     <div 
-        className={`${animate ? 'slide-in-bottom':'slide-out-top'} h-fit bg-white flex flex-col items-center z-20 absolute rounded-2xl`}
-        style={{width: '450px',left: 'calc(50% - 225px)', top: 'calc(50% - 100px)'}}    
+        className={`${animate ? 'slide-in-bottom':'slide-out-bottom'} w-full lg:w-[450px] left-0 lg:left-[calc(50%-225px)] bottom-0 lg:top-[calc(50%-100px)] h-fit bg-white flex flex-col items-center z-20 absolute rounded-t-3xl lg:rounded-2xl`}
+           
     >
         <h2 className='text-center py-4 border-b w-full font-medium'>{`${edit?'Editar':'Inserir'} categoria`}</h2>
         <div className='flex flex-col py-2 px-7 w-full'>
@@ -94,7 +94,7 @@ export default function ModalCategoria({setModalCategoria, edit, placeh, idCusto
               onChange={(ev) => setCategory(ev.target.value)}
             />
             <button 
-              className='bg-blue-500 py-2 w-full text-white text-medium rounded-lg mb-4'
+              className='bg-blue-500 py-2 w-full text-white text-medium rounded-lg mb-6 lg:mb-4'
               onClick={() => addCatagory()}
             >Confirmar</button>
         </div>

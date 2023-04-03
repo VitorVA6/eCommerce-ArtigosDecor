@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 export const UserContext = createContext()
 
@@ -16,6 +17,7 @@ export default function UserProvider({children}){
 
 export function useUserContext(){
     const {authenticated, setAuthenticated, setEmail, email} = useContext(UserContext)
+    const navigate = useNavigate()
 
     async function login(email, password){
         const url = '/users/login'
@@ -32,10 +34,11 @@ export function useUserContext(){
 
     function logout(){
 
-        setAuthenticated(false)
         localStorage.removeItem('token')
         setEmail('')
         axios.defaults.headers.Authorization = undefined
+        navigate('/login')
+        setAuthenticated(false)
 
     }
 

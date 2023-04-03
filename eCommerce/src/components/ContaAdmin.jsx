@@ -41,10 +41,10 @@ export default function ContaAdmin() {
 
   return (
     <section className='flex items-center flex-col w-full overflow-auto pb-20'>
-      <div className='flex flex-col w-3/5'>
+      <div className='flex flex-col w-full lg:w-3/5'>
         <h2 className='mb-3 font-medium text'>Dados cadastrais</h2>
         <form 
-          className='bg-white py-7 px-7 rounded-xl'
+          className='bg-white py-7 px-7 rounded-xl border border-gray-300/80 lg:border-gray-200/70'
           onSubmit={formikEmail.handleSubmit}  
         >
           <div className='flex flex-col w-full gap-2 mb-5'>
@@ -69,10 +69,10 @@ export default function ContaAdmin() {
         </form>
       </div>
 
-      <div className='flex flex-col w-3/5 mt-4'>
+      <div className='flex flex-col w-full lg:w-3/5 mt-4'>
         <h2 className='mb-3 font-medium text'>Alterar senha</h2>
         <form 
-          className='bg-white py-7 px-7 rounded-xl'
+          className='bg-white py-7 px-7 rounded-xl border border-gray-300/80 lg:border-gray-200/70'
           onSubmit={formikPw.handleSubmit}
         >
           <div className='flex flex-col w-full gap-2 mb-5'>
@@ -124,12 +124,12 @@ export default function ContaAdmin() {
         </form>
       </div>
 
-      <div className='flex flex-col w-3/5 mt-8'>
+      <div className='flex flex-col w-full lg:w-3/5 mt-8'>
         <h3 className='font-medium mb-2'>Perdeu a senha?</h3>
-        <p className='text-sm text-gray-400 mb-2'>Ao clicar no botão, uma nova senha será criada e enviada para o seu e-mail</p>
-        <button className='bg-gray-200 text-sm w-full py-2.5 rounded-lg'>Perdi a senha</button>
+        <p className='text-sm text-black mb-2'>Ao clicar no botão, uma nova senha será criada e enviada para o seu e-mail</p>
+        <button className='bg-gray-300 text-sm w-full py-2.5 rounded-lg font-medium'>Perdi a senha</button>
       </div>
-      <div className='flex flex-col w-3/5 mt-8 mb-16'>
+      <div className='flex flex-col w-full lg:w-3/5 mt-8 mb-16'>
         <h3 className='font-medium mb-2'>Sair da conta</h3>
         <button 
           className='flex items-center gap-1 text-red-500 font-medium w-fit'

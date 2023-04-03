@@ -13,6 +13,8 @@ import UserProvider from './contexts/User'
 import Admin from './pages/Admin'
 import Login from './pages/Login'
 import EmailVerify from './pages/EmailVerify'
+import RecoveryPw from './pages/RecoveryPw'
+import Category from './pages/Category'
 
 axios.defaults.baseURL = 'http://[::1]:4000'
 axios.defaults.withCredentials = true
@@ -29,12 +31,14 @@ function App() {
         <Route path='/' element={<Base />}>
           <Route index element={<Home />} />
           <Route path='/produto/:id' element = {<Produto />}/>
+          <Route path='/category/:name' element = {<Category />}/>
           <Route path='/cart' element={<Cart />} />
         </Route>
         <Route path='/404' element={<PageNotFound />} />
         <Route path='/login' element={<Login />}/>
         <Route path='/admin' element={<Admin />} />
         <Route path='/users/verify/:token' element={<EmailVerify />}/>
+        <Route path='/recovery-pw' element={<RecoveryPw />}/>
       </Routes>
       </CatalogProvider>
       </ProductProvider>

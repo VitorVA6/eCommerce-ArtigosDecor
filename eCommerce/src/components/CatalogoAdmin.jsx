@@ -90,7 +90,7 @@ export default function CatalogoAdmin() {
         <input 
             type="text" 
             placeholder='Buscar produto'
-            className='py-3 px-6 w-full rounded-md outline-none border mb-5 shadow-lg shadow-gray-200/50'
+            className='py-1.5 px-6 w-full rounded-md outline-none border mb-5 shadow-lg shadow-gray-200/50 text-sm lg:text-base lg:py-3'
             value={filter}
             onChange={(ev) => {handleFilter(ev)} }
         />
@@ -102,7 +102,7 @@ export default function CatalogoAdmin() {
         }
         
         <p 
-            className='text-blue-500 text-sm font-medium p-0.5 cursor-pointer -mt-3'
+            className='text-blue-500 text-xs lg:text-sm font-medium p-0.5 cursor-pointer -mt-2 lg:-mt-3 text-center lg:text-left'
             onClick={() => setVariacoesVisible(!variacoesVisible)}
         >{`${variacoesVisible?'Menos':'Mais'} opções`}</p>
 

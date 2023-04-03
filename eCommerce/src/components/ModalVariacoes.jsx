@@ -53,7 +53,7 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
                 updateCatalog(catalogAtt).then(data => {
                     if(!!data.message){
                       setAnimate(false)
-                      setTimeout(() => setModalVariacoes(false), 400) 
+                      setTimeout(() => setModalVariacoes(false), 200) 
                       notifySucess(data.message)
                     }
                     else{
@@ -73,7 +73,7 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
             updateCatalog(catalogoAtt).then(data => {
                 if(!!data.message){
                   setAnimate(false)
-                  setTimeout(() => setModalVariacoes(false), 400) 
+                  setTimeout(() => setModalVariacoes(false), 200) 
                   notifySucess(data.message)
                 }
                 else{
@@ -122,14 +122,13 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
       className=' w-screen h-screen bg-gray-400/50 absolute left-0 top-0 flex justify-center items-center z-10' 
       onClick={() => {
         setAnimate(false)
-        setTimeout(() => setModalVariacoes(false), 400) 
+        setTimeout(() => setModalVariacoes(false), 200) 
       }}
     >
         
     </div>
     <div 
-        className={`${animate ? 'slide-in-bottom':'slide-out-top'} h-fit bg-white flex flex-col items-center z-20 absolute rounded-2xl`}
-        style={{width: '530px',left: 'calc(50% - 265px)', top: 'calc(50% - 260px)'}}    
+        className={`${animate ? 'slide-in-bottom':'slide-out-bottom'} w-full lg:w-[530px] left-0 lg:left-[calc(50%-265px)] bottom-0 lg:top-[calc(50%-260px)] h-fit bg-white flex flex-col items-center z-20 absolute rounded-t-3xl lg:rounded-2xl`}  
     >
         
         <h2 className='text-center py-4 border-b w-full font-medium relative'>{`${edit ? 'Editar' : 'Adicionar'} variações`}
@@ -150,7 +149,7 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
                 className='text-blue-500 bg-transparent text-left text-sm font-medium mb-4' 
                 onClick={() => addOption()}    
             >+ Adicionar nova opção</button>
-            <div className='flex flex-col h-60 gap-y-2 overflow-auto'>
+            <div className='flex flex-col h-40 lg:h-60 gap-y-2 overflow-auto'>
                 {
                 options.map( (element, index) => (
                 <div key={element.id} className='flex items-center gap-1'>
@@ -175,7 +174,7 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
         </div>
         <div className='p-4 border-t w-full'>
             <button 
-                className='bg-blue-500 py-3 w-full text-white text-medium rounded-lg'
+                className='bg-blue-500 py-3 w-full text-white text-medium rounded-lg mb-6 lg:mb-0'
                 onClick={() => addVariation()}
             >Salvar</button>
         </div>

@@ -7,9 +7,10 @@ export default function ProductProvider( {children} ){
 
     const [produtos, setProdutos] = useState([])
     const perPage = 10
+    const [selCategory, setSelCategory] = useState('')
 
     return (
-        <ProductContext.Provider value={{produtos, setProdutos, perPage}}>
+        <ProductContext.Provider value={{produtos, setProdutos, perPage, selCategory, setSelCategory}}>
             {children}
         </ProductContext.Provider>
     )
@@ -18,7 +19,7 @@ export default function ProductProvider( {children} ){
 
 export function useProductContext(){
 
-    const { produtos, setProdutos, perPage} = useContext(ProductContext)
+    const { produtos, setProdutos, perPage, selCategory, setSelCategory} = useContext(ProductContext)
 
     async function addProduct(name, price, priceoff, category, desc, images){
         const formData = new FormData()
@@ -44,8 +45,8 @@ export function useProductContext(){
     }
 
     async function updateProduct(id, name, price, priceoff, category, desc, images, uploadedImages){
-        const formData = new FormData()
 
+        const formData = new FormData()
         formData.append('title', name)
         formData.append('preco', price)
         formData.append('desconto', priceoff)
@@ -90,25 +91,25 @@ export function useProductContext(){
 
     }
 
-    async function getProducts(limit, pag, category, highlight){
-
+    async function getProducts(limit, pag, category, ordination){
+        
         try{
             const {data} = await axios.get('/products/all', {params:
                 {
                     p: pag, 
                     limit: limit,
                     category: category,
-                    highlight: highlight
+                    ordination: ordination
                 }
         })
             
             if((produtos.length > 0 && pag === 1)|| limit>perPage){
                 setProdutos([ ...data.docs])
-                return data
+                return data.docs
             }
             else if(produtos.length < data.totalDocs){
                 setProdutos( prev => [...prev, ...data.docs])
-                return data
+                return data.docs
             }
             
         }
@@ -146,6 +147,8 @@ export function useProductContext(){
         produtos,
         setProdutos,
         perPage,
+        selCategory,
+        setSelCategory,
         addProduct,
         getProducts,
         getProductById,
