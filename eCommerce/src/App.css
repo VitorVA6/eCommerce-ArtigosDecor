@@ -1,16 +1,22 @@
+.my-slider {
+  border-radius: 10px;
+  overflow-x: hidden;
+}
+
 .meus-dots {
   
-  margin-top: 10px;
+  margin-top: 0px;
   list-style: none;
   text-align: center;
 }
 
 .meus-dots li {
-  margin: 0 5px;
-  background-color: #333;
+  margin: 0 8px;
+  background-color: transparent;
   border-radius: 50%;
-  width: 7.5px;
-  height: 7.5px;
+  border: 1px solid #555;
+  width: 9px;
+  height: 9px;
   display: inline-block;
   list-style: none;
 }
@@ -30,12 +36,14 @@
 }
 
 .meus-dots li.slick-active {
-  width: 10px;
-  height: 10px;
+  width: 9.5px;
+  height: 9.5px;
+  border-radius: 50%;
   position: relative;
   top: 50%;
-  transform: translateY(-11%);
-  background: #111;
+  transform: translateY(-6%);
+  
+  background: rgb(31 41 55);
 }
 
 .slide-in-bottom {

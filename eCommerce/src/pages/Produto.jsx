@@ -3,6 +3,7 @@ import { Navigate, useParams } from 'react-router-dom'
 import { useCarrinhoContext } from '../contexts/Carrinho';
 import { useProductContext } from '../contexts/Product';
 import Slider from 'react-slick'
+import { AiOutlineArrowDown } from 'react-icons/ai';
 
 export default function Produto() {
 
@@ -12,6 +13,8 @@ export default function Produto() {
     const [quantidade, setQuantidade] = useState(1)
     const {addCarrinho} = useCarrinhoContext()
     const {getProductById} = useProductContext()
+    const taxa = 1.2
+    const [imgId, setImgId] = useState(0)
 
     const settings = {
         dots: true,
@@ -49,69 +52,132 @@ export default function Produto() {
 
   return (
     
-    <>        
-        <section className='flex flex-col justify-center overflow-hidden py-6 lg:py-16 gap-6 lg:gap-10 lg:border-b border-gray-200 lg:flex-row'>
+    <section>        
+        <section className='flex flex-col lg:h-screen justify-center overflow-hidden lg:px-10 pt-6 lg:py-16 lg:gap-7 lg:border-b border-gray-200 lg:flex-row'>
             
-            <div className='w-full lg:w-2/5'>
+            <div className='w-full lg:w-3/5 lg:bg-white lg:rounded-3xl lg:p-6 lg:shadow-lg lg:shadow-gray-300/60 lg:hidden'>
                 <Slider {...settings} dots dotsClass="meus-dots">
                     {
                         produto?.img?.map( image =>{
                             return (
-                            <div key={image}>
-                                <img className='h-96 w-full' src={`http://localhost:4000/images/products/${image}`} alt="Imagem do produto" />
+                            <div key={image} className='px-6 lg:px-0'>
+                                <img className='h-96 w-full lg:px-0 rounded-xl' src={`http://localhost:4000/images/products/${image}`} alt="Imagem do produto" />
                             </div>)
                         })
                         
                     }
                 </Slider>
             </div>
-            
-            
-            <div className='flex flex-col w-full lg:w-2/5'>
-                <h2 className='text-xl mt-2 lg:text-3xl'>{produto?.title}</h2>
-                
-                <div className='text-sm lg:text-lg lg:mt-2'>
-                    <p className={`inline mr-2`}>{(produto?.preco*((100 - produto?.desconto)/100)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p> 
+
+            <div className='w-3/5 h-full lg:bg-white lg:rounded-3xl p-6 shadow-md shadow-gray-300/60 hidden lg:flex'>
+                <div className='w-24 flex flex-col gap-y-2.5'>
                     {
-                        produto?.desconto > 0 &&
-                        <p className='inline line-through text-gray-500'>{produto?.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                        produto?.img?.map( (image, index) =>{
+                            return (
+                            
+                                <img 
+                                    key={image} 
+                                    className={`${imgId === index ? 'border-[3px] border-blue-400': ''} cursor-pointer h-16 w-16 min-w-[64px] p-0 rounded-lg`} 
+                                    src={`http://localhost:4000/images/products/${image}`} 
+                                    alt="Imagem do produto" 
+                                    onMouseOver={() => {
+                                        setImgId(index)
+                                    }}
+                                />
+                            )
+                        })
+                        
                     }
                 </div>
+                {
+                    produto?.img !== undefined &&
+                    <div className='flex w-[calc(100%-64px)] h-full'>
+                        <img className='rounded-lg w-full' src={`http://localhost:4000/images/products/${produto?.img[imgId]}`} alt="Imagem do produto" />
+                    </div>
+                    
+                }
+                
+            </div>
+            
+            
+            <div className='flex flex-col w-full lg:w-2/5 h-fit px-6 lg:px-8 lg:py-3 lg:bg-white lg:rounded-3xl lg:shadow-md lg:shadow-gray-300/60'>
+                <div className='flex flex-col pt-3 pb-5 border-b border-gray-300'>
+                    <h2 className='text-xl font-medium lg:text-[22px]'>{produto?.title}</h2>
+                    <h3 className='text-xs text-blue-500'>Disponível em estoque</h3>
+                </div>
+                
+                
+                <div className='flex gap-x-12 mt-6 mb-6'>
+                    <h3 className='text-sm text-gray-700'>Preço:</h3>
+                    <div className=' flex flex-col text-sm lg:text-lg lg:mt-2'>
+                    {
+                    produto?.desconto > 0 &&
+                    <p className='inline line-through text-gray-500'>{produto?.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>                  
+                    }
+                    <div className='flex items-center gap-x-1.5'>
+                        <p className='font-medium text-2xl text-green-500'>{(produto?.preco*((100 - produto?.desconto)/100)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                        {produto?.desconto > 0 &&
+                            <div className='flex text-white bg-black px items-center justify-center rounded-full h-fit px-2 gap-0.5 mb-0.5'>
+                                <AiOutlineArrowDown className='w-3 h-3' />
+                                <p className='text-[12px]'>{produto.desconto}%</p>
+                            </div>
+                        }
+                    </div>
+                    <p className='text-base'>Em até <strong className='text-black'>12x</strong> de {produto?.desconto > 0 ? ((produto?.preco* taxa * (100 - produto?.desconto)/100)/12).toFixed(2) : (produto?.preco*taxa/12).toFixed(2)}</p>
+                    {
+                        produto?.desconto > 0 &&
+                        <p className='bg-black text-white px-3 pt-0.5 rounded-md flex w-fit mt-1'>R$ {(produto?.preco*((produto?.desconto)/100)).toFixed(0)} de desconto</p>
+                    }
+                    </div>
+                </div>
+                <div className='flex w-full justify-between items-center mb-6'>
+                    <div className='flex gap-x-8 items-center'>
+                        <img className='w-12 h-10' src="../src/images/logo-correios.png" alt="logo correio" />
+                        <div className='flex flex-col'>
+                            <p className='text-sm text-gray-700'>Entrega via correios</p>
+                            <p className='text-xs text-green-500/70 font-normal'>Após o pagamento confirmado</p>
+                        </div>
+                    </div>
+                    <p className='text-xs text-green-500/70 font-normal'>Frete grátis</p>
+                </div>
+                
+                <div className='flex mt-1 pt-6 mb-1 gap-5 items-center lg:border-none border-t border-gray-300 pl-1'>               
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 lg:w-7 lg:h-7 text-gray-600">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
+                    </svg>
+                    <div>
+                        <p className='font-medium text-sm'>Parcele suas compras</p>
+                        <p className='text-gray-500 text-xs'>Parcelamento no cartão de crédito</p>
+                    </div>
+                </div>
+                
+                <div className='flex mt-3 gap-5 items-center border-b border-gray-300 pb-6 lg:border-none pl-1'>              
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 lg:w-7 lg:h-7 text-gray-600">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                    </svg>
+                    <div>
+                        <p className='font-medium text-sm'>Compra segura</p>
+                        <p className='text-gray-500 text-xs'>Sua compra é 100% protegida</p>
+                    </div>
+                </div>
+
                 <div className='flex gap-2 mt-6 mb-6'>
-                    <div className='flex bg-gray-200 rounded-md items-center'>
+                    <div className='flex bg-gray-300 rounded-md items-center'>
                         <button className='px-6 py-3 mb-1' onClick={() => mudaQuantidade('-')}>-</button>
                         <p className=''>{quantidade}</p>
                         <button className='px-6 py-3 mb-1' onClick={() => mudaQuantidade('+')}>+</button>
                     </div>
                     <button 
-                        className='bg-black text-white py-2 w-full rounded-md'
+                        className='bg-gray-800 text-white py-2 w-full rounded-md'
                         onClick={() => addCarrinho(produto, quantidade)}
                     >Comprar</button>
                 </div>
-                <div className='flex mt-5 mb-4 gap-5 items-center border-t-2 border-gray-200 pt-8 lg:border-none  pl-1'>               
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 lg:w-7 lg:h-7">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
-                    </svg>
-                    <div>
-                        <p className='font-medium'>Parcele suas compras</p>
-                        <p className='text-gray-500 text-sm'>Parcelamento no cartão de crédito</p>
-                    </div>
-                </div>
-                <div className='flex mt-3 gap-5 items-center border-b-2 border-gray-200 pb-8 lg:border-none pl-1'>              
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 lg:w-7 lg:h-7">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-                    </svg>
-                    <div>
-                        <p className='font-medium'>Compra segura</p>
-                        <p className='text-gray-500 text-sm'>Sua compra é 100% protegida</p>
-                    </div>
-                </div>
             </div>
         </section>
-        <div className='lg:py-16'>
-            <h3 className='text-lg mb-2 lgtext-3xl font-medium lg:mb-4'>Descrição</h3>
+        <div className='lg:my-16 lg:mx-10 lg:rounded-3xl px-6 lg:bg-white lg:py-8 lg:shadow-md lg:shadow-gray-300/60'>
+            <h3 className='text-lg mb-2 lg:text-[22px] font-medium lg:mb-4'>Informações do produto</h3>
             <p className='text-gray-500 text-sm' style={{whiteSpace: "pre-wrap"}}>{produto?.desc}</p>
         </div>       
-    </>
+    </section>
   )
 }

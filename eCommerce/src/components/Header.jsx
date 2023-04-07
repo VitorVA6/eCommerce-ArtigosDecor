@@ -6,6 +6,9 @@ import useComponentVisible from './DropDown'
 import {FiMenu} from "react-icons/fi"
 import MenuMobile from './MenuMobile'
 import {BsCart2} from 'react-icons/bs'
+import {FiPackage} from 'react-icons/fi'
+import {IoReturnDownBackSharp} from 'react-icons/io5'
+import {AiOutlineHeart} from 'react-icons/ai'
 
 export default function Header() {
 
@@ -15,64 +18,36 @@ export default function Header() {
     const [menu, setMenu] = useState(false)
 
   return (
-    <header className='flex flex-col bg-gray-800 text-white px-5 justify-between lg:justify-center lg:px-20 h-32 lg:h-20 fixed w-full z-30 pb-2.5 pt-6'>
-        <nav className='flex justify-between items-center w-full'>
-            {
-                menu &&
-                <MenuMobile setMenu={setMenu} catalog={catalog}/>
-            }
-            <FiMenu className='w-7 h-7 lg:hidden' onClick={() => setMenu(true)}/>
-            <Link to={'/'}>
-                <h1 className='text-lg font-medium'>{catalog?.nome !== '' ? catalog.nome.toUpperCase() : 'Logo'}</h1>
-            </Link >
-            <div className='hidden lg:flex gap-10'>
-                <div 
-                    className='flex flex-col px-10 text-gray-100 relative'   
-                    ref={ref}
-                >
-                    <p 
-                        className='cursor-pointer px-6 flex gap-x-1 items-center'
-                        onClick={() => visibleTrue()}  
-                    >
-                        Produtos 
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                        </svg>
-                    </p>
-                    {
-                        (isComponentVisible) &&
-                        <>
-
-                            <div 
-                                className='flex flex-col absolute bg-black mt-10 py-3 z-20'                            
-                            >
-                                <div className='w-full h-px bg-gray-400'></div>
-                                <div className='flex flex-col justify-start w-48 gap-y-3 pl-6 py-4'>   
-                                    <h2 className='font-medium'>Destaques</h2>
-                                    <p className='cursor-pointer font-thin'><nobr>Em destaque</nobr></p>
-                                    <p className='cursor-pointer font-thin'>Promoções</p>
-                                    <p className='cursor-pointer font-thin'>Novidades</p>
-                                </div>
-                                
-                                <div className='flex flex-col justify-start w-48 gap-y-3 pl-6 border-t border-gray-400 pb-4 pt-6'>   
-                                    <h2 className='font-medium'>Categorias</h2>
-                                    {
-                                        catalog?.categorias?.map(categoria => (
-                                            <p key={categoria} className='cursor-pointer font-thin'>{categoria}</p>
-                                        ))
-                                    }
-                                </div>
-                            </div>
-                        </>
-                    }                            
-                </div>
-                <Link to={'/about'} className='text-white'>Sobre</Link>
+    <header className='flex flex-col bg-gray-800 text-white justify-between w-full lg:justify-center h-fit'>
+        <div className='flex w-full justify-around py-1.5 text-xs lg:text-sm bg-blue-500'>
+            <div className='flex gap-2 items-center'>
+                <FiPackage className='w-5 h-5 lg:w-6 lg:h-6'/>
+                <p>Frete frátis para todo o Brasil</p>
             </div>
-            <div className='flex items-center gap-8'>
-                <div className='hidden lg:flex rounded-full  bg-white items-center'>
+            <div className='hidden lg:flex gap-2 items-center'>
+                <IoReturnDownBackSharp className='w-6 h-6'/>
+                <p>Trocas e devoluções em até 7 dias</p>
+            </div>
+            <div className='hidden lg:flex gap-2 items-center'>
+                <AiOutlineHeart className='w-6 h-6'/>
+                <p>Satisfação garantida</p>
+            </div>
+        </div>
+        <div className='h-full flex flex-col justify-between px-5 pb-2.5 lg:pb-0 pt-6 lg:px-12 lg:pt-12 gap-7 lg:gap-0'>
+            <nav className='flex justify-between items-center w-full'>
+                {
+                    menu &&
+                    <MenuMobile setMenu={setMenu} catalog={catalog}/>
+                }
+                <FiMenu className='w-7 h-7 lg:hidden' onClick={() => setMenu(true)}/>
+                <Link to={'/'}>
+                    <img className='w-[160px] h-[80px]' src="../src/images/logo-artigos-decor.png" alt="logo" />
+                </Link >
+                
+                <div className='hidden lg:flex rounded-lg w-1/2 bg-white items-center justify-between'>
                     <input 
                         type="text" 
-                        placeholder='O que você procura?'
+                        placeholder='Busque aqui seu produto'
                         className='py-2 px-4 rounded-full flex items-center outline-none text-black'  
                     />
                     <button className='w-10 h-full justify-center flex'>
@@ -84,31 +59,60 @@ export default function Header() {
 
                 </div>
 
-                <Link to={'/cart'} className='flex items-center gap-2 relative'>
-                    <BsCart2 className="w-7 h-7"/>
+                <Link to={'/cart'} className='flex items-end gap-2 relative h-full'>
+                    <div className='flex relative'>
+                        <BsCart2 className="w-7 h-7"/>
+                        <h4 
+                            className='flex justify-center items-center bg-white h-4 w-4 rounded-full text-black font-bold absolute -top-1 -right-1 text-xs leading-none'
+                        >
+                            {quantTotal}
+                        </h4>
+                    </div>
                     
-                    <h4 
-                        className='flex justify-center items-center bg-white h-4 w-4 rounded-full text-black absolute -top-1 -right-1 text-xs'
-                    >
-                        {quantTotal}
-                    </h4>
+                    
+                    <h4 className='font-medium hidden lg:block'>Carrinho</h4>
                 </Link>
+                
+            </nav>
+            <div className='hidden w-full gap-10 py-5 items-center lg:flex justify-center mt-4'>
+                <h4 className='flex gap-2 items-center text-sm cursor-pointer text-white'>
+                    <FiMenu className='w-5 h-5'/>
+                    Início
+                </h4>
+                {
+                    catalog?.categorias?.map(categoria => (
+                        <h4 key={categoria} className='cursor-pointer text-sm text-white'>{categoria}</h4>
+                    ))
+                }
+                <h4 className='flex items-center text-sm cursor-pointer text-white'>
+                    Destaques
+                </h4>
+                <h4 className='flex items-center text-sm cursor-pointer text-white'>
+                    Novidades
+                </h4>
+                <h4 className='flex items-center text-sm cursor-pointer text-white'>
+                    Entrar em contato
+                </h4>
+                <h4 className='flex items-center text-sm cursor-pointer text-white'>
+                    Sobre nós
+                </h4>
             </div>
-        </nav>
-        <div className='flex lg:hidden rounded-md  bg-white items-center w-full justify-between mb-2'>
-            <input 
-                type="text" 
-                placeholder='O que você procura?'
-                className='pt-1 pb-1.5 px-4 rounded-full flex items-center outline-none text-black text-sm'  
-            />
-            <button className='justify-center flex mr-2.5'>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" 
-                    viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-black cursor-pointer mb-0.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                </svg>
-            </button>
+            <div className='flex lg:hidden rounded-md  bg-white items-center w-full mb-2 justify-between'>
+                <input 
+                    type="text" 
+                    placeholder='O que você procura?'
+                    className='pt-1 pb-1.5 px-4 rounded-full flex items-center outline-none text-black text-sm'  
+                />
+                <button className='justify-center flex mr-2.5'>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" 
+                        viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-black cursor-pointer mb-0.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                    </svg>
+                </button>
 
+            </div>
         </div>
+        
     </header>
   )
 }

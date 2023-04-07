@@ -1,16 +1,31 @@
 import React, { useEffect, useState } from 'react'
-import Carousel from '../components/Carousel'
 import ListaProdutos from '../components/ListaProdutos'
 import NavLateral from '../components/NavLateral'
 import { useCatalogContext } from '../contexts/Catalog'
 import {useProductContext} from '../contexts/Product'
 import bannerInfo from '../images/banner-info.png'
 import SliderFooter from '../components/SliderFooter'
+import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 export default function Home() {
 
     const {catalog, getCatalog} = useCatalogContext()
     const {getProducts, produtos} = useProductContext()
+
+    const settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1
+    };
+
+    const sliderStyle = {
+      borderRadius: '10px',
+      overflow: 'hidden'
+    };
 
     useEffect( ()=>{
       getCatalog()
@@ -27,19 +42,28 @@ export default function Home() {
     }, [])
 
   return (
-    
+
     <section className='flex flex-col overflow-x-hidden'>
       {
         catalog?.bannerdt?.length !== 0 ?
-        <div className='lg:mt-5 mb-10'>
-          <Carousel>
-            {catalog.bannerdt.map( s => (
-              <img className='min-w-full' key={s} src={`http://localhost:4000/images/carrosel/${s}`}/>
-            ) ) }
-          </Carousel>
+        <div className='w-full lg:w-[93vw] self-center lg:my-10 rounded-lg'>
+          <Slider className='rounded-lg overflow-x-hidden' {...settings} dots dotsClass="meus-dots">
+          {
+              catalog?.bannerdt?.map( image =>{
+                  return (     
+                    <div key={image} className='rounded-md'>
+                      <img className='w-full h-[50vh]' src={`http://localhost:4000/images/carrosel/${image}`} alt="Imagem do produto" />
+                    </div>             
+                  )
+              })
+              
+          }
+        </Slider>
         </div>
         :
         <div className='10'></div>
+        
+        
       }
       
       <div className='flex flex-col'>
