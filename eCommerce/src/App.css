@@ -1,13 +1,62 @@
-.my-slider {
-  border-radius: 10px;
-  overflow-x: hidden;
-}
-
 .meus-dots {
-  
   margin-top: 0px;
   list-style: none;
   text-align: center;
+
+}
+
+.meus-dots__banner {
+  position: absolute;
+  margin-top: 0px;
+  list-style: none;
+  text-align: center;
+  bottom: 30px;
+  left: 46%;
+}
+
+.meus-dots__banner li {
+  margin: 0 8px;
+  background-color: transparent;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  list-style: none;
+}
+
+.meus-dots__banner li button {
+  font-size: 0;
+  line-height: 0;
+
+  display: block;
+
+  cursor: pointer;
+
+  color: transparent;
+  border: 0;
+  outline: none;
+  background: transparent;
+}
+
+.meus-dots__banner li.slick-active {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  position: relative;
+  top: 50%;
+  transform: translateY(1%);
+  background: #fff;
+}
+
+.meus-dots li.slick-active {
+  width: 9.5px;
+  height: 9.5px;
+  border-radius: 50%;
+  position: relative;
+  top: 50%;
+  transform: translateY(-6%);
+  background: rgb(31 41 55);
 }
 
 .meus-dots li {
@@ -33,17 +82,6 @@
   border: 0;
   outline: none;
   background: transparent;
-}
-
-.meus-dots li.slick-active {
-  width: 9.5px;
-  height: 9.5px;
-  border-radius: 50%;
-  position: relative;
-  top: 50%;
-  transform: translateY(-6%);
-  
-  background: rgb(31 41 55);
 }
 
 .slide-in-bottom {

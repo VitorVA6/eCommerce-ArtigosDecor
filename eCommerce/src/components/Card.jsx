@@ -11,7 +11,7 @@ export default function Card({produto, categoryPage, layout}) {
     const handleClass = () => {
         if(categoryPage){
             if(layout === 'grid'){
-                return 'h-40 w-full'
+                return 'h-[18vh] w-full'
             }else{
                 return 'h-full w-48 mr-5'
             }
@@ -21,9 +21,9 @@ export default function Card({produto, categoryPage, layout}) {
     }
 
   return (
-    <div className={`flex ${layout === 'grid' ? 'flex-col' : 'flex-row'} bg-white rounded-2xl shadow-md shadow-gray-300/70 ${categoryPage ? 'p-3' : 'my-5 p-5'} relative`}>
+    <div className={`flex ${layout === 'grid' ? 'flex-col' : 'flex-row'} bg-white rounded-2xl shadow-md shadow-gray-300/60 ${categoryPage ? 'p-3' : 'my-5 p-5'} relative`}>
         <div 
-            className={`relative ${handleClass()} lg:h-72 p-2 gap-2 rounded-lg cursor-pointer`}
+            className={`relative ${handleClass()} lg:h-[30vh] xl:h-[27vh] p-2 gap-2 rounded-lg cursor-pointer`}
             style={{ backgroundImage: `url(http://localhost:4000/images/products/${produto?.img[0]})`, boxSizing: 'border-box', backgroundSize: 'cover'}}
             onClick={(e) => {
                 if(e.currentTarget != e.target ) return;

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import insta from '../assets/insta-logo.png'
 import whats from '../assets/whats.png'
 import {useCatalogContext} from '../contexts/Catalog'
@@ -37,7 +37,7 @@ export default function Footer() {
             <p>2023 © TODOS OS DIREITOS RESERVADOS</p>
             <p className='font-bold text-lg'>Vitor Vaz Andrade</p>
         </div>
-        <Link to={'https://www.instagram.com/artigos.decoracoes/'} target={'_blank'} className='w-12 h-12 bg-gray-800 flex justify-center items-center rounded-full fixed bottom-4 right-4'>
+        <Link to={'https://www.instagram.com/artigos.decoracoes/'} target={'_blank'} className='w-12 h-12 bg-blue-500 flex justify-center items-center rounded-full fixed bottom-4 right-4'>
             <img className='w-5 h-5' src={whats} alt="Logo do whatsapp" />
         </Link>
     </section>

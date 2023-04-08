@@ -18,33 +18,33 @@ export default function Header() {
     const [menu, setMenu] = useState(false)
 
   return (
-    <header className='flex flex-col bg-gray-800 text-white justify-between w-full lg:justify-center h-fit'>
-        <div className='flex w-full justify-around py-1.5 text-xs lg:text-sm bg-blue-500'>
+    <header className='flex flex-col bg-gray-800 text-white justify-between w-full md:justify-center h-fit'>
+        <div className='flex w-full justify-around py-1.5 text-xs md:text-sm bg-blue-500'>
             <div className='flex gap-2 items-center'>
-                <FiPackage className='w-5 h-5 lg:w-6 lg:h-6'/>
+                <FiPackage className='w-5 h-5 md:w-6 md:h-6'/>
                 <p>Frete frátis para todo o Brasil</p>
             </div>
-            <div className='hidden lg:flex gap-2 items-center'>
+            <div className='hidden md:flex gap-2 items-center'>
                 <IoReturnDownBackSharp className='w-6 h-6'/>
                 <p>Trocas e devoluções em até 7 dias</p>
             </div>
-            <div className='hidden lg:flex gap-2 items-center'>
+            <div className='hidden md:flex gap-2 items-center'>
                 <AiOutlineHeart className='w-6 h-6'/>
                 <p>Satisfação garantida</p>
             </div>
         </div>
-        <div className='h-full flex flex-col justify-between px-5 pb-2.5 lg:pb-0 pt-6 lg:px-12 lg:pt-12 gap-7 lg:gap-0'>
+        <div className='h-full flex flex-col justify-between px-5 pb-2.5 lg:pb-0 pt-6 md:px-12 md:pt-12 gap-7 md:gap-0 md:pb-6'>
             <nav className='flex justify-between items-center w-full'>
                 {
                     menu &&
                     <MenuMobile setMenu={setMenu} catalog={catalog}/>
                 }
-                <FiMenu className='w-7 h-7 lg:hidden' onClick={() => setMenu(true)}/>
+                <FiMenu className='w-7 h-7 md:hidden' onClick={() => setMenu(true)}/>
                 <Link to={'/'}>
                     <img className='w-[160px] h-[80px]' src="../src/images/logo-artigos-decor.png" alt="logo" />
                 </Link >
                 
-                <div className='hidden lg:flex rounded-lg w-1/2 bg-white items-center justify-between'>
+                <div className='hidden md:flex rounded-md w-1/2 bg-white items-center justify-between'>
                     <input 
                         type="text" 
                         placeholder='Busque aqui seu produto'
@@ -59,18 +59,18 @@ export default function Header() {
 
                 </div>
 
-                <Link to={'/cart'} className='flex items-end gap-2 relative h-full'>
+                <Link to={'/cart'} className='flex items-center gap-2 relative h-full'>
                     <div className='flex relative'>
                         <BsCart2 className="w-7 h-7"/>
-                        <h4 
-                            className='flex justify-center items-center bg-white h-4 w-4 rounded-full text-black font-bold absolute -top-1 -right-1 text-xs leading-none'
+                        <span 
+                            className='flex justify-center items-center bg-blue-500 pb-[3.5px] pt-[5px] pl-[7px] pr-[6px] rounded-full text-white font-medium absolute -top-1 -right-1 text-xs leading-none'
                         >
                             {quantTotal}
-                        </h4>
+                        </span>
                     </div>
                     
                     
-                    <h4 className='font-medium hidden lg:block'>Carrinho</h4>
+                    <h4 className='font-medium hidden md:block'>Carrinho</h4>
                 </Link>
                 
             </nav>
@@ -97,7 +97,7 @@ export default function Header() {
                     Sobre nós
                 </h4>
             </div>
-            <div className='flex lg:hidden rounded-md  bg-white items-center w-full mb-2 justify-between'>
+            <div className='flex md:hidden rounded-md  bg-white items-center w-full mb-2 justify-between'>
                 <input 
                     type="text" 
                     placeholder='O que você procura?'

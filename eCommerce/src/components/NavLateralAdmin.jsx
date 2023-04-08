@@ -19,7 +19,7 @@ export default function NavLateralAdmin({selected, setSelected, menuMobile, setM
     }
 
     function handleClass(){
-        if(verifyScreen(1224)){
+        if(verifyScreen(767)){
             if(animate){
                 return 'slide-in-right'
             }else{
@@ -32,8 +32,8 @@ export default function NavLateralAdmin({selected, setSelected, menuMobile, setM
     }
 
   return (
-    <section className={`${menuMobile ? 'flex flex-col' : 'hidden'} ${handleClass()} absolute -top-20 right-0 lg:static lg:flex flex-col border my-20 lg:py-8 lg:pl-10 w-72 gap-y-6 h-full bg-white z-40`}>
-        <div className='flex items-center justify-between lg:hidden py-4 pl-5 pr-3 border-b border-gray-200'>
+    <section className={`${menuMobile ? 'flex flex-col' : 'hidden'} ${handleClass()} absolute -top-20 right-0 md:static md:flex flex-col border my-20 md:py-8 md:pl-10 w-72 gap-y-6 h-full bg-white z-40`}>
+        <div className='flex items-center justify-between md:hidden py-4 pl-5 pr-3 border-b border-gray-200'>
             <h3 className='text-lg font-medium'><nobr>Artigos Decor</nobr></h3>
             <GrFormClose 
                 className='w-10 h-10 cursor-pointer'
@@ -43,7 +43,7 @@ export default function NavLateralAdmin({selected, setSelected, menuMobile, setM
             />
         </div>
         <button 
-            className={`cursor-pointer  flex gap-3 items-center ${handleClassPage('catalog')} pl-5 lg:pl-0`}
+            className={`cursor-pointer  flex gap-3 items-center ${handleClassPage('catalog')} pl-5 md:pl-0`}
             onClick = {() => {
                 setSelected('catalog')
                 closeMenu()
@@ -55,7 +55,7 @@ export default function NavLateralAdmin({selected, setSelected, menuMobile, setM
             Catálogo
         </button>
         <button 
-            className={`cursor-pointer  flex gap-3 items-center ${handleClassPage('info')} pl-5 lg:pl-0`}
+            className={`cursor-pointer  flex gap-3 items-center ${handleClassPage('info')} pl-5 md:pl-0`}
             onClick = {() => {
                 setSelected('info')
                 closeMenu()}}
@@ -66,7 +66,7 @@ export default function NavLateralAdmin({selected, setSelected, menuMobile, setM
             Informações
         </button>
         <button 
-            className={`cursor-pointer  flex gap-3 items-center ${handleClassPage('custom')} pl-5 lg:pl-0`}
+            className={`cursor-pointer  flex gap-3 items-center ${handleClassPage('custom')} pl-5 md:pl-0`}
             onClick = {() => {
                 closeMenu()
                 setSelected('custom')}}
@@ -77,7 +77,7 @@ export default function NavLateralAdmin({selected, setSelected, menuMobile, setM
             Personalizar
         </button>
         <button 
-            className={`cursor-pointer  flex gap-3 items-center ${handleClassPage('acc')} pl-5 lg:pl-0`}
+            className={`cursor-pointer  flex gap-3 items-center ${handleClassPage('acc')} pl-5 md:pl-0`}
             onClick = {() => {
                 closeMenu()
                 setSelected('acc')

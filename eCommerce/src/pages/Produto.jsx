@@ -4,6 +4,7 @@ import { useCarrinhoContext } from '../contexts/Carrinho';
 import { useProductContext } from '../contexts/Product';
 import Slider from 'react-slick'
 import { AiOutlineArrowDown } from 'react-icons/ai';
+import { FiChevronRight } from 'react-icons/fi';
 
 export default function Produto() {
 
@@ -52,10 +53,11 @@ export default function Produto() {
 
   return (
     
-    <section>        
-        <section className='flex flex-col lg:h-screen justify-center overflow-hidden lg:px-10 pt-6 lg:py-16 lg:gap-7 lg:border-b border-gray-200 lg:flex-row'>
+    <section className='flex flex-col'>    
+        <h3 className='hidden md:flex gap-1 items-center px-10 my-[28px] text-[13px]'>{`Página inicial`} <FiChevronRight className='w-[12px] h-[12px]'/> {`Armeiro`} <FiChevronRight className='w-[12px] h-[12px]'/> {`Kit 03 bandejas ovais com detalhe sofisticado`} </h3>    
+        <section className='flex flex-col lg:h-fit justify-center overflow-hidden md:px-10 pt-6 md:pt-0 lg:py-8 lg:gap-7 lg:border-b border-gray-200 lg:flex-row md:gap-y-8 md:pb-2'>
             
-            <div className='w-full lg:w-3/5 lg:bg-white lg:rounded-3xl lg:p-6 lg:shadow-lg lg:shadow-gray-300/60 lg:hidden'>
+            <div className='w-full lg:w-3/5 lg:bg-white lg:rounded-3xl lg:p-6 lg:shadow-lg lg:shadow-gray-300/60 md:hidden'>
                 <Slider {...settings} dots dotsClass="meus-dots">
                     {
                         produto?.img?.map( image =>{
@@ -69,8 +71,8 @@ export default function Produto() {
                 </Slider>
             </div>
 
-            <div className='w-3/5 h-full lg:bg-white lg:rounded-3xl p-6 shadow-md shadow-gray-300/60 hidden lg:flex'>
-                <div className='w-24 flex flex-col gap-y-2.5'>
+            <div className='w-full lg:w-3/5 h-[80vh] md:bg-white md:rounded-3xl p-6 shadow-md shadow-gray-300/60 hidden md:flex md:flex-col lg:flex-row'>
+                <div className='flex flex-row lg:flex-col gap-2.5 md:order-2 lg:order-1 md:mt-4 lg:mt-0 overflow-auto lg:mr-4 md:mr-0'>
                     {
                         produto?.img?.map( (image, index) =>{
                             return (
@@ -91,7 +93,7 @@ export default function Produto() {
                 </div>
                 {
                     produto?.img !== undefined &&
-                    <div className='flex w-[calc(100%-64px)] h-full'>
+                    <div className='flex md:w-full lg:w-[calc(100%-80px)] md:h-[calc(100%-80px)] lg:h-full md:order-1 lg:order-2'>
                         <img className='rounded-lg w-full' src={`http://localhost:4000/images/products/${produto?.img[imgId]}`} alt="Imagem do produto" />
                     </div>
                     
@@ -100,7 +102,7 @@ export default function Produto() {
             </div>
             
             
-            <div className='flex flex-col w-full lg:w-2/5 h-fit px-6 lg:px-8 lg:py-3 lg:bg-white lg:rounded-3xl lg:shadow-md lg:shadow-gray-300/60'>
+            <div className='flex flex-col w-full lg:w-2/5 h-fit px-6 md:px-8 md:py-3 md:bg-white md:rounded-3xl md:shadow-md lg:shadow-gray-300/60'>
                 <div className='flex flex-col pt-3 pb-5 border-b border-gray-300'>
                     <h2 className='text-xl font-medium lg:text-[22px]'>{produto?.title}</h2>
                     <h3 className='text-xs text-blue-500'>Disponível em estoque</h3>
@@ -174,8 +176,8 @@ export default function Produto() {
                 </div>
             </div>
         </section>
-        <div className='lg:my-16 lg:mx-10 lg:rounded-3xl px-6 lg:bg-white lg:py-8 lg:shadow-md lg:shadow-gray-300/60'>
-            <h3 className='text-lg mb-2 lg:text-[22px] font-medium lg:mb-4'>Informações do produto</h3>
+        <div className='md:my-6 lg:my-8 md:mx-10 md:rounded-3xl px-6 md-px-8 md:bg-white md:py-8 md:shadow-md md:shadow-gray-300/60'>
+            <h3 className='text-lg mb-2 md:text-[20px] font-medium lg:mb-4'>Informações do produto</h3>
             <p className='text-gray-500 text-sm' style={{whiteSpace: "pre-wrap"}}>{produto?.desc}</p>
         </div>       
     </section>
