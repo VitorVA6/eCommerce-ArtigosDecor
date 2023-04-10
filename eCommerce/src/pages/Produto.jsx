@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 import { useCarrinhoContext } from '../contexts/Carrinho';
 import { useProductContext } from '../contexts/Product';
@@ -16,6 +16,7 @@ export default function Produto() {
     const {getProductById} = useProductContext()
     const taxa = 1.2
     const [imgId, setImgId] = useState(0)
+    const refToTop = useRef();
 
     const settings = {
         dots: true,
@@ -47,13 +48,17 @@ export default function Produto() {
 
     }, [id]);
 
+    useEffect( () => {
+        setTimeout(() => { refToTop.current.scrollIntoView({ behavior: 'smooth' })}, 500)
+    }, [] )
+
     if (carregado && !produto){
         return <Navigate to={'/404'}/>
     }
 
   return (
     
-    <section className='flex flex-col'>    
+    <section className='flex flex-col' ref={refToTop}>    
         <h3 className='hidden md:flex gap-1 items-center px-10 my-[28px] text-[13px]'>{`Página inicial`} <FiChevronRight className='w-[12px] h-[12px]'/> {`Armeiro`} <FiChevronRight className='w-[12px] h-[12px]'/> {`Kit 03 bandejas ovais com detalhe sofisticado`} </h3>    
         <section className='flex flex-col lg:h-fit justify-center overflow-hidden md:px-10 pt-6 md:pt-0 lg:py-8 lg:gap-7 lg:border-b border-gray-200 lg:flex-row md:gap-y-8 md:pb-2'>
             

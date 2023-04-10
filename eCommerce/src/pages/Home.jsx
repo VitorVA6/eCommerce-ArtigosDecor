@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import ListaProdutos from '../components/ListaProdutos'
 import NavLateral from '../components/NavLateral'
 import { useCatalogContext } from '../contexts/Catalog'
-import {useProductContext} from '../contexts/Product'
 import bannerInfo from '../images/banner-info.png'
 import SliderFooter from '../components/SliderFooter'
 import Slider from 'react-slick'
@@ -12,7 +11,6 @@ import 'slick-carousel/slick/slick-theme.css';
 export default function Home() {
 
     const {catalog, getCatalog} = useCatalogContext()
-    const {getProducts, produtos} = useProductContext()
 
     const settings = {
       dots: true,
@@ -30,16 +28,6 @@ export default function Home() {
     useEffect( ()=>{
       getCatalog()
     }, [] )
-
-    useEffect( ()=>{
-      
-      getProducts(5, 1, 'all')
-      .then( data => {
-        
-      })
-      .catch(err => console.log(err))
-      
-    }, [])
 
   return (
 
@@ -72,7 +60,7 @@ export default function Home() {
           categorias={[...catalog.categorias]}
         />
             
-        <ListaProdutos produtos={produtos} title={'Destaques'} />     
+        <ListaProdutos title={'Destaques'} categoria={'destaques'}/>     
 
         <div 
           className='w-full h-40 sm:h-72 md:96 bg-cover bg-center bg-no-repeat flex flex-col py-8 px-6 lg:px-10 mt-6 mb-8' 
@@ -81,7 +69,7 @@ export default function Home() {
           <h2 className='-mt-1 md:text-3xl md:ml-3 md:mt-0 lg:text-[40px] lg:mt-3'>FRETE GRÁTIS</h2>
         </div>
 
-        <ListaProdutos produtos={produtos} title={'Promoções'} /> 
+        <ListaProdutos title={'Promoções'} categoria={'promocoes'}/> 
 
         <SliderFooter />
 

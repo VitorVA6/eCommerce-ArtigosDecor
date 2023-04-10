@@ -105,11 +105,11 @@ export function useProductContext(){
             
             if((produtos.length > 0 && pag === 1)|| limit>perPage){
                 setProdutos([ ...data.docs])
-                return data.docs
+                return data
             }
             else if(produtos.length < data.totalDocs){
                 setProdutos( prev => [...prev, ...data.docs])
-                return data.docs
+                return data
             }
             
         }

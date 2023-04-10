@@ -1,25 +1,55 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import {BiChevronDown} from 'react-icons/bi'
 
-export default function useComponentVisible(initialIsVisible) {
-    const [isComponentVisible, setIsComponentVisible] = useState(initialIsVisible);
-    const ref = useRef(null);
+function Dropdown() {
+  
+  const dropdownRef = useRef(null);
+  const [selOrder, setSelOrder] = useState(0)
+  const [showDropdown, setShowDropdown] = useState(false);
+  const orderList = ['Em destaque', 'Em promoção', 'Ordem alfabética, A-Z', 'Ordem alfabética, Z-A', 'Preço, ordem crescente', 'Preço, ordem decrescente', 'Data, mais antiga primeiro', 'Data, mais recente primeiro']
 
-    const handleClickOutside = (event) => {
-        if (ref.current && !ref.current.contains(event.target)) {
-            setIsComponentVisible(false);
-        }
-    };
-
-    useEffect(() => {
-        document.addEventListener('click', handleClickOutside, true);
-        return () => {
-            document.removeEventListener('click', handleClickOutside, true);
-        };
-    }, []);
-
-    const visibleTrue = () => {
-        setIsComponentVisible(!isComponentVisible)
+  const handleOutsideClick = (event) => {
+    if (dropdownRef.current !== null && !dropdownRef.current.contains(event.target)) {
+      setShowDropdown(!showDropdown);
     }
+  };
 
-    return { ref, isComponentVisible, setIsComponentVisible, visibleTrue };
+  useEffect(() => {
+
+    if(showDropdown){
+        window.addEventListener('click', handleOutsideClick);
+    }
+    
+    return () => {
+      window.removeEventListener('click', handleOutsideClick);
+    };
+  }, [showDropdown, dropdownRef]);
+
+  return (
+    <div className="hidden md:flex flex-col bg-transparent w-fit relative" ref={dropdownRef}>
+      <button className='flex items-center' onClick={() =>setShowDropdown(!showDropdown)}>Ordenar por <BiChevronDown className='w-6 h-6 text-black'/></button>
+      {showDropdown && (
+        <div className="flex flex-col bg-white w-fit px-3 top-[34px] -right-[70%] rounded-sm shadow-md shadow-gray-400/70 absolute z-10 whitespace-nowrap ">
+            
+          {
+                orderList.map( (item, index) => (
+                    <button 
+                        key={index} className={`px-5 py-2 flex w-fit ${selOrder === index && 'text-blue-500 font-medium'}`}
+                        onClick={
+                            () => {
+                                setSelOrder(index)
+                            }
+                        }
+                    >
+                        {item}
+                        
+                    </button>
+                ))
+            }
+        </div>
+      )}
+    </div>
+  );
 }
+
+export default Dropdown;

@@ -57,9 +57,19 @@ module.exports = class ProductController{
 
         let filter = {}
         let order = {}
-
-        if(category !== 'all')
-            filter = { ...filter, categoria: category 
+         
+        if(category === 'destaques'){
+            filter = {
+                destaque: true
+            }
+        }
+        else if(category === 'promocoes'){
+            filter = {
+                desconto: { $gt: 0 }
+            }
+        }
+        else if(category !== 'all'){
+            filter = { categoria: category }
         }
 
         if(ordination === '0'){

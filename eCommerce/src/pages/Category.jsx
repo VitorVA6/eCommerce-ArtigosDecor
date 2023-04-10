@@ -7,9 +7,10 @@ import {FiChevronRight} from 'react-icons/fi'
 import { useProductContext } from '../contexts/Product'
 import Card from '../components/Card'
 import SliderFooter from '../components/SliderFooter'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, Navigate } from 'react-router-dom'
 import ModalOrder from '../components/ModalOrder'
 import {useCatalogContext} from '../contexts/Catalog'
+import Dropdown from '../components/DropDown'
 
 export default function Category() {
 
@@ -19,22 +20,35 @@ export default function Category() {
   const [produtos, setProdutos] = useState([])
   const [modalOrder, setModalOrder] = useState(false)
   const [selOrder, setSelOrder] = useState(0)
+  const [carregado, setcarregado] = useState(false)
+  const [hasNext, setHasNext] = useState(false)
+  const [nextPage, setNextPage] = useState(1)
 
   const {name} = useParams()
 
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
   useEffect(() => {
-    getCatalog()
+    getCatalog().then( data => setcarregado(true)).catch(err => console.log(err))
     if(!!name){
       setSelCategory(name)
       getProducts(5, 1, name, selOrder)
       .then( data => {
-        setProdutos(data)  
+        setProdutos(data.docs)
+        setHasNext(data.hasNextPage)
+        setNextPage(data.nextPage)
       })
       .catch(err => console.log(err))
     }
-    
-    
+        
+       
   }, [selOrder, name])
+
+  if((name !== 'destaques' && name !== 'promocoes' && !catalog?.categorias?.includes(name)) && carregado){
+    return <Navigate to={'/404'}/>
+  }   
 
   return (
     <>
@@ -48,7 +62,7 @@ export default function Category() {
           {
             catalog?.categorias?.map(
               categoria => (
-                <Link to={`/category/${categoria}`} className={`${name === categoria ? 'text-blue-500': ''}`}>{categoria}</Link>
+                <Link key={categoria} to={`/category/${categoria}`} className={`${name === categoria ? 'text-blue-500': ''}`}>{categoria}</Link>
               )
             )
           }
@@ -63,22 +77,24 @@ export default function Category() {
           <ModalOrder setModalOrder={setModalOrder} selOrder={selOrder} setSelOrder={setSelOrder}/>
         }
         <div className='flex flex-col gap-1.5 px-7 py-6'>
-          <h1 className='text-2xl font-medium'>{selCategory}</h1>
+          <h1 className='text-2xl font-medium'>{capitalizeFirstLetter(selCategory)}</h1>
           <p className='text-xs text-gray-700/90'>{`${produtos.length} produtos`}</p>
         </div>      
-        <div className='flex justify-between border-y border-gray-400/60 px-7 py-3 items-center text-sm text-gray-600'>
-          <div className='flex gap-2 items-center cursor-pointer'>
+        <div className='flex justify-between border-y border-gray-300/80 lg:border-t-transparent px-7 py-3 md:py-4 items-center text-[13px]'>
+          <div className='flex lg:hidden gap-2 items-center cursor-pointer'>
             <BiFilterAlt className='w-6 h-6 text-black'/>
             <p>Filtrar</p>
           </div>
           <div 
-            className='flex gap-1 items-center cursor-pointer'
+            className='flex md:hidden gap-1 items-center cursor-pointer'
             onClick={() => {setModalOrder(true)}}
           >
             <p>Ordenar por</p>
             <BiChevronDown className='w-6 h-6 text-black'/>
           </div>
+          <Dropdown />
           <div className='flex gap-2.5 items-center'>
+            <p>Visualização</p>
             <BsGridFill 
               className={`w-5 h-5 ${layout === 'grid' ? 'text-black' : 'text-gray-600'}`}
               onClick={() => {
@@ -100,6 +116,28 @@ export default function Category() {
             ) )
           }
         </div>
+        {
+            hasNext &&
+            <div className='flex w-full justify-center'>
+                <button 
+                  className='bg-blue-500 py-3 w-1/2 text-white font-medium rounded-lg text-sm mb-6 mt-10'
+                  onClick = {()=> {
+                    getProducts(5, nextPage, name, selOrder)
+                    .then( data => {
+                      setHasNext(data.hasNextPage)
+                      setNextPage(data.nextPage)
+                      if((produtos.length > 0 && nextPage === 1)){
+                        setProdutos([ ...data.docs])
+                      }
+                      else if(produtos.length < data.totalDocs){
+                          setProdutos( prev => [...prev, ...data.docs])
+                      }
+                    })
+                    .catch(err => console.log(err))
+                  }}
+                >Mostrar mais</button>
+            </div>
+          } 
       </div>
     </section>
     <SliderFooter />
