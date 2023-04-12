@@ -12,8 +12,6 @@ export default function PersoAdmin() {
 
   const { catalog, getCatalog, setCatalog, updateCatalog, ToastContainer, notifyError, notifySucess } = useCatalogContext()
 
-  const [bannerSelect, setBannerSelect] = useState('cell')
-
   useEffect( () => {
 
     getCatalog()
@@ -126,7 +124,7 @@ export default function PersoAdmin() {
       <button 
         className='rounded-lg bg-blue-500 text-white py-2 w-fit px-10 mt-8'
         onClick={() => {
-          updateCatalog(undefined, uploadedImages, images).then(data => {
+          updateCatalog(uploadedImages, images).then(data => {
             setUploadesImages(data.dados.bannerdt)
             setImages([])
             if(!!data.message){

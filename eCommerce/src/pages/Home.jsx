@@ -7,10 +7,12 @@ import SliderFooter from '../components/SliderFooter'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { useCategoryContext } from '../contexts/Category'
 
 export default function Home() {
 
     const {catalog, getCatalog} = useCatalogContext()
+    const {getCategories, categories} = useCategoryContext()
 
     const settings = {
       dots: true,
@@ -27,6 +29,7 @@ export default function Home() {
 
     useEffect( ()=>{
       getCatalog()
+      getCategories()
     }, [] )
 
   return (
@@ -57,7 +60,7 @@ export default function Home() {
       <div className='flex flex-col'>
         <NavLateral 
           setCategoria={valor => setFiltroCategoria(valor)} 
-          categorias={[...catalog.categorias]}
+          categorias={categories}
         />
             
         <ListaProdutos title={'Destaques'} categoria={'destaques'}/>     

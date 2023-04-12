@@ -11,11 +11,13 @@ import { Link, useParams, Navigate } from 'react-router-dom'
 import ModalOrder from '../components/ModalOrder'
 import {useCatalogContext} from '../contexts/Catalog'
 import Dropdown from '../components/DropDown'
+import { useCategoryContext } from '../contexts/Category'
 
 export default function Category() {
 
   const {getProducts, selCategory, setSelCategory} = useProductContext()
-  const {catalog, getCatalog} = useCatalogContext()
+  const {getCategories, categories} = useCategoryContext()
+  const {getCatalog} = useCatalogContext()
   const [layout, setLayout] = useState('grid')
   const [produtos, setProdutos] = useState([])
   const [modalOrder, setModalOrder] = useState(false)
@@ -26,14 +28,13 @@ export default function Category() {
 
   const {name} = useParams()
 
-  function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
   useEffect(() => {
-    getCatalog().then( data => setcarregado(true)).catch(err => console.log(err))
-    if(!!name){
-      setSelCategory(name)
+    getCategories().then( data => {
+      setcarregado(true)
+
+    }).catch(err => console.log(err))
+
+    if(!!name){          
       getProducts(5, 1, name, selOrder)
       .then( data => {
         setProdutos(data.docs)
@@ -46,7 +47,18 @@ export default function Category() {
        
   }, [selOrder, name])
 
-  if((name !== 'destaques' && name !== 'promocoes' && !catalog?.categorias?.includes(name)) && carregado){
+  const defineTitle = () =>{
+    if(name === 'destaques'){
+      return 'Destaques'
+    }else if(name === 'promocoes'){
+      return 'Promoções'
+    }
+    else {
+      return categories?.find( element => element?._id === name )?.name
+    }
+  }
+
+  if((name !== 'destaques' && name !== 'promocoes') && (categories.find(el => el._id === name) === undefined) && carregado){
     return <Navigate to={'/404'}/>
   }   
 
@@ -60,9 +72,9 @@ export default function Category() {
         <ul className='flex flex-col gap-y-3 text-gray-900 text-sm my-3'>
           <Link to={'/'} className=''>Início</Link>
           {
-            catalog?.categorias?.map(
+            categories?.map(
               categoria => (
-                <Link key={categoria} to={`/category/${categoria}`} className={`${name === categoria ? 'text-blue-500': ''}`}>{categoria}</Link>
+                <Link key={categoria._id} to={`/category/${categoria._id}`} className={`${name === categoria._id ? 'text-blue-500': ''}`}>{categoria.name}</Link>
               )
             )
           }
@@ -77,7 +89,7 @@ export default function Category() {
           <ModalOrder setModalOrder={setModalOrder} selOrder={selOrder} setSelOrder={setSelOrder}/>
         }
         <div className='flex flex-col gap-1.5 px-7 py-6'>
-          <h1 className='text-2xl font-medium'>{capitalizeFirstLetter(selCategory)}</h1>
+          <h1 className='text-2xl font-medium'>{defineTitle()}</h1>
           <p className='text-xs text-gray-700/90'>{`${produtos.length} produtos`}</p>
         </div>      
         <div className='flex justify-between border-y border-gray-300/80 lg:border-t-transparent px-7 py-3 md:py-4 items-center text-[13px]'>

@@ -12,6 +12,9 @@ const imageStorage = multer.diskStorage({
         }else if (req.baseUrl.includes('catalog')){
             folder = 'carrosel'
         }
+        else if (req.baseUrl.includes('category')){
+            folder = 'categories'
+        }
 
         cb(null, `public/images/${folder}`)
     },

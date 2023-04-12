@@ -22,12 +22,12 @@ export function useProductContext(){
     const { produtos, setProdutos, perPage, selCategory, setSelCategory} = useContext(ProductContext)
 
     async function addProduct(name, price, priceoff, category, desc, images){
+        console.log(category)
         const formData = new FormData()
-
         formData.append('title', name)
         formData.append('preco', price)
         formData.append('desconto', priceoff)
-        formData.append('categoria', category)
+        formData.append('categoria', JSON.stringify(category))
         formData.append('desc', desc)
         for(let i = 0; i < images.length ;i++){
             formData.append('images', images[i].file)
@@ -45,12 +45,12 @@ export function useProductContext(){
     }
 
     async function updateProduct(id, name, price, priceoff, category, desc, images, uploadedImages){
-
+        console.log(category)
         const formData = new FormData()
         formData.append('title', name)
         formData.append('preco', price)
         formData.append('desconto', priceoff)
-        formData.append('categoria', category)
+        formData.append('categoria', JSON.stringify(category))
         formData.append('desc', desc)
         formData.append('uploadedImages', uploadedImages)
         for(let i = 0; i < images.length ;i++){

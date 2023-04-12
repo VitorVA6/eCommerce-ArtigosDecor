@@ -3,6 +3,7 @@ import Select from 'react-select'
 import { useProductContext } from '../contexts/Product';
 import { v4 as uuidv4 } from 'uuid';
 import { GrFormClose } from "react-icons/gr";
+import { useCategoryContext } from '../contexts/Category';
 
 export default function ModalProduto({setModalProduto, edit, categorias, idProduto, notifySucess, notifyError}) {
 
@@ -10,26 +11,29 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
         if (edit){
             getProductById(idProduto)
             .then( (data) => {
+                const aux = categorias.filter((element) => data.product.categoria.some((other) => other.value === element._id))
                 setName(data.product.title) 
                 setPrice(data.product.preco)
                 setDesc(data.product.desc) 
-                setCategory(data.product.categoria)
+                setCategory(aux.map( element => ({value:element._id, label:element.name}) ))
                 setPriceoff(data.product.desconto)
                 setUploadesImages(data.product.img)
             } )
             .catch(err => console.log(err))
         }
     },[idProduto] )
+    const [category, setCategory] = useState([])
 
     const {addProduct, getProductById, updateProduct} = useProductContext()
+    const {getCategories} = useCategoryContext()
     const [verMais, setVerMais] = useState(false);
     const [animate, setAnimate] = useState(true)
 
     //estados dos inputs: nome, preço e etc
     const [name, setName] = useState('') 
-    const [price, setPrice] = useState(0) 
-    const [desc, setDesc] = useState('') 
-    const [category, setCategory] = useState([])  
+    const [price, setPrice] = useState(0)
+    const [desc, setDesc] = useState('')
+    const [ids, setIds] = useState([])
     const [priceoff, setPriceoff] = useState(0)
     const [images, setImages] = useState([])
     const [uploadedImages, setUploadesImages] = useState([])
@@ -87,7 +91,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                 else{
                   notifyError(data.error)
                 }
-              })
+            })
         }
     }
 
@@ -146,14 +150,11 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                     placeholder='Ex: Camisas, calças, meias'
                     isMulti 
                     options={categorias.map( element => {
-                        return {value: element, label: element}                    
+                        return {value: element._id, label: element.name}               
                         })}
                         
-                    onChange = {(categorias) => {
-                        setCategory(categorias.map( categoria => categoria.value ))
-                    }}
-                    value={category?.map(categoria => {
-                        return {value: categoria, label: categoria}})}
+                    onChange = {setCategory}
+                    value={category}
                     /> 
             </div>
             {

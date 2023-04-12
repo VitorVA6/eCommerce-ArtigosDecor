@@ -43,7 +43,7 @@ module.exports = class CatalogController{
 
     static async updateCatalog(req, res){
 
-        const {categorias, variacoes, sobre, rsociais, telefone, email, nome, whats, uploadedImages} = req.body
+        const {sobre, rsociais, telefone, email, nome, whats, uploadedImages} = req.body
 
         const user = await getUserByToken(req.headers.authorization)
         
@@ -55,13 +55,6 @@ module.exports = class CatalogController{
 
         if(!catalog.admin.equals(user._id) ){
             return res.status(422).json({error: 'Você não tem autorização pra essa operação'})
-        }
-
-        if(!!categorias){
-            catalog.categorias = categorias
-        }
-        if(!!variacoes){
-            catalog.variacoes = variacoes
         }
         if(!!sobre){
             catalog.sobre = sobre
@@ -81,8 +74,8 @@ module.exports = class CatalogController{
         if(!!whats){
             catalog.whats = whats
         }
-        if(!!req.files || !!uploadedImages ){
-            
+        if(!!req.files || (!!uploadedImages && uploadedImages.length > 0) ){
+
             catalog.bannerdt.forEach( elem => {
                 if(!uploadedImages?.includes(elem)){
                     fs.stat(`./public/images/carrosel/${elem}`, function (err, stats) {

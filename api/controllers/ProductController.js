@@ -37,7 +37,7 @@ module.exports = class ProductController{
                 preco,
                 destaque,
                 desconto,
-                categoria: categoria.split(','),
+                categoria: JSON.parse(categoria),
                 desc,
                 img: images
             })
@@ -69,7 +69,7 @@ module.exports = class ProductController{
             }
         }
         else if(category !== 'all'){
-            filter = { categoria: category }
+            filter = { 'categoria.value': category }
         }
 
         if(ordination === '0'){
@@ -169,7 +169,7 @@ module.exports = class ProductController{
         if (!categoria){
             return res.status(422).json({error: 'Categoria é obrigatório'})
         }
-        product.categoria = categoria.split(',')
+        product.categoria = JSON.parse(categoria)
 
         if(!desc){
             return res.status(422).json({error: 'Descrição é obrigatório'})

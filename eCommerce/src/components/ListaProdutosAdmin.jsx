@@ -93,7 +93,7 @@ export default function ListaProdutosAdmin({produtos, setModalProduto, setEdit, 
                         }
                         </button>
                         
-                        <VscTrash className="w-5 h-5 lg:w-6 lg:h-6 text-gray-400"/>
+                        <VscTrash onClick={ () => {deleteProduct(produto._id)} } className="w-5 h-5 lg:w-6 lg:h-6 text-gray-400"/>
                         
                         {
                           screenWidth < 1024 ?

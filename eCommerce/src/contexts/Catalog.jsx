@@ -14,12 +14,7 @@ export default function CatalogProvider({children}){
         nome: '',
         whats: '',
         email: '',
-        categorias: [],
-        variacoes: [],
-        bannerdt: [],
-        bannermb: []
-
-
+        bannerdt: []
     })
 
     return (
@@ -45,7 +40,7 @@ export function useCatalogContext(){
         
     }
 
-    async function updateCatalog( categorias=undefined, uploadedImages = undefined, images = undefined ){
+    async function updateCatalog( uploadedImages = undefined, images = undefined ){
 
         try{
             if(uploadedImages !== undefined && images !== undefined){
@@ -60,10 +55,6 @@ export function useCatalogContext(){
                 }
 
                 const {data} = await axios.patch('/catalog/update', formData, {headers: {'Content-Type': 'multipart/form-data'}})
-                return data
-            }
-            if(categorias !== undefined){
-                const {data} = await axios.patch('/catalog/update', categorias)
                 return data
             }
             const {data} = await axios.patch('/catalog/update', catalog)

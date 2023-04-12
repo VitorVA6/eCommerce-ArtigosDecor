@@ -25,7 +25,7 @@ const ProductSchema = new Schema({
         required: true
     },
     categoria: {
-        type: [String],
+        type: Array,
         required: true 
     },
     desc: String

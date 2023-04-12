@@ -7,11 +7,13 @@ import ModalVariacoes from './ModalVariacoes'
 import ModalProduto from './ModalProduto'
 import { useProductContext } from '../contexts/Product'
 import { useCatalogContext } from '../contexts/Catalog'
+import {useCategoryContext} from '../contexts/Category'
 
 export default function CatalogoAdmin() {
 
-    const {catalog, getCatalog, ToastContainer, notifyError, notifySucess} = useCatalogContext()
+    const {ToastContainer, notifyError, notifySucess} = useCatalogContext()
     const {produtos, getProducts, filterProduct, perPage} = useProductContext()
+    const { getCategories, categories } = useCategoryContext()
 
     const [idProduto, setIdProduto] = useState(undefined)
     const [idCustom, setIdCustom] = useState(undefined)
@@ -27,9 +29,11 @@ export default function CatalogoAdmin() {
     const [hasNext, setHasNext] = useState(false)
     const [nextPage, setNextPage] = useState(1)
 
+    const [variacoes, setVariacoes] = useState([])
+
     useEffect( () => {
 
-        getCatalog()
+        getCategories()
         getProducts(perPage, 1, 'all', 'false')
         .then( data => {
             setHasNext(data.hasNextPage)
@@ -81,7 +85,7 @@ export default function CatalogoAdmin() {
             <ModalProduto 
                 notifySucess = {notifySucess} 
                 notifyError = {notifyError} 
-                categorias={catalog.categorias} 
+                categorias={categories} 
                 setModalProduto={setModalProduto} 
                 edit={edit} 
                 idProduto = {idProduto}
@@ -95,10 +99,10 @@ export default function CatalogoAdmin() {
             onChange={(ev) => {handleFilter(ev)} }
         />
 
-        <CustomList setEdit={setEdit} title={'Categorias'} customs={catalog.categorias} setModalCustom={setModalCategoria} setIdCustom={setIdCustom}/>
+        <CustomList setEdit={setEdit} title={'Categorias'} customs={categories} setModalCustom={setModalCategoria} setIdCustom={setIdCustom}/>
         {
             variacoesVisible && 
-            <CustomList setEdit={setEdit} title={'Variações'} customs={catalog.variacoes} setModalCustom={setModalVariacoes} setIdCustom={setIdCustom}/>
+            <CustomList setEdit={setEdit} title={'Variações'} customs={variacoes} setModalCustom={setModalVariacoes} setIdCustom={setIdCustom}/>
         }
         
         <p 
