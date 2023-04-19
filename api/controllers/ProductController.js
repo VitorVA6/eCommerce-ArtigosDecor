@@ -1,4 +1,6 @@
 const Product = require('../models/ProductModel')
+const Variation = require('../models/VariationModel')
+
 const ObjectId = require('mongoose')
 const fs = require('fs')
 
@@ -330,7 +332,53 @@ module.exports = class ProductController{
             return res.status(400).json({error: 'Id inválido'})
         }
         
-        
+    }
+
+    static async selectOption(req, res){
+
+        const id = req.params.id
+        const idVar = req.body.var
+        const idOption = req.body.option
+
+        if (!ObjectId.isValidObjectId(id) || !ObjectId.isValidObjectId(idVar)){
+            return res.status(422).json({error: 'ID inválido'})        
+        }
+
+        const product = await Product.findOne({_id:id})
+        if(!product){
+            return res.status(404).json({error: 'Produto não existe!'})
+        }
+
+        const variation = await Variation.findOne({_id:idVar}) 
+
+        if(!variation){
+            return res.status(422).json({error: 'Variação não existe'})
+        }
+
+        const option = variation.options.find( el => el.value === idOption )
+
+        if(!option){
+            return res.status(422).json({error: 'Opção é obrigatório'})
+        }
+
+        const variacao = product.variations.find(el => el.idVariacao === idVar)
+        if(!variacao){
+            product.variations = [ ...product.variations, {idVariacao: idVar, idOptions: [idOption]} ]
+        }else{
+            product.variations = product.variations.map( el =>{
+                if(el.idVariacao === idVar){
+                    return {idVariacao: idVar, idOptions: [...el.idOptions, idOption]}
+                }
+                return el
+            } )
+        }
+
+        try{
+            await Product.findOneAndUpdate({_id: id}, product)
+            res.status(200).json({message: 'Produto atualizado com sucesso!'})
+        }catch(err){
+            res.status(500).json({error: 'Ocorreu um erro na atualização do produto.'})
+        }
 
     }
 

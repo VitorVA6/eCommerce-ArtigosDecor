@@ -28,7 +28,13 @@ const ProductSchema = new Schema({
         type: Array,
         required: true 
     },
-    desc: String
+    desc: String,
+    variations: {
+        type: Array
+    },
+    combinations: {
+        type: Array
+    }
 
 })
 

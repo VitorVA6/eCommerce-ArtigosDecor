@@ -1,7 +1,6 @@
 const express = require('express') 
 const app = express() 
 const cors = require('cors')
-const bodyParser = require("body-parser")
 
 const connectDb = require('./config/dbConnection')
 require('dotenv').config()
@@ -20,10 +19,12 @@ const userRoutes = require('./routes/userRoutes')
 const productRoutes = require('./routes/productRoutes')
 const catalogRoutes = require('./routes/catalogRoutes')
 const categoryRoutes = require('./routes/categoryRoutes')
+const variationRoutes = require('./routes/variationRoutes')
 
 app.use('/users', userRoutes)
 app.use('/products', productRoutes)
 app.use('/catalog', catalogRoutes)
 app.use('/category', categoryRoutes)
+app.use('/variation', variationRoutes)
 
 app.listen(4000)
