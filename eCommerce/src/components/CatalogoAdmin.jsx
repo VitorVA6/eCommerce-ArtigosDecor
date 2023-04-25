@@ -8,12 +8,14 @@ import ModalProduto from './ModalProduto'
 import { useProductContext } from '../contexts/Product'
 import { useCatalogContext } from '../contexts/Catalog'
 import {useCategoryContext} from '../contexts/Category'
+import {useVariationContext} from '../contexts/Variation'
 
 export default function CatalogoAdmin() {
 
     const {ToastContainer, notifyError, notifySucess} = useCatalogContext()
     const {produtos, getProducts, filterProduct, perPage} = useProductContext()
     const { getCategories, categories } = useCategoryContext()
+    const { getVariations, variations } = useVariationContext()
 
     const [idProduto, setIdProduto] = useState(undefined)
     const [idCustom, setIdCustom] = useState(undefined)
@@ -29,11 +31,10 @@ export default function CatalogoAdmin() {
     const [hasNext, setHasNext] = useState(false)
     const [nextPage, setNextPage] = useState(1)
 
-    const [variacoes, setVariacoes] = useState([])
-
     useEffect( () => {
 
         getCategories()
+        getVariations()
         getProducts(perPage, 1, 'all', 'false')
         .then( data => {
             setHasNext(data.hasNextPage)
@@ -102,7 +103,7 @@ export default function CatalogoAdmin() {
         <CustomList setEdit={setEdit} title={'Categorias'} customs={categories} setModalCustom={setModalCategoria} setIdCustom={setIdCustom}/>
         {
             variacoesVisible && 
-            <CustomList setEdit={setEdit} title={'Variações'} customs={variacoes} setModalCustom={setModalVariacoes} setIdCustom={setIdCustom}/>
+            <CustomList setEdit={setEdit} title={'Variações'} customs={variations} setModalCustom={setModalVariacoes} setIdCustom={setIdCustom}/>
         }
         
         <p 

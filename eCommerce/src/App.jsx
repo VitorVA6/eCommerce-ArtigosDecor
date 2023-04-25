@@ -16,6 +16,7 @@ import EmailVerify from './pages/EmailVerify'
 import RecoveryPw from './pages/RecoveryPw'
 import Category from './pages/Category'
 import CategoryProvider from './contexts/Category'
+import VariationProvider from './contexts/Variation'
 
 axios.defaults.baseURL = 'http://[::1]:4000'
 axios.defaults.withCredentials = true
@@ -24,6 +25,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <VariationProvider>
       <CategoryProvider>
       <CarrinhoProvider>
       <UserProvider>
@@ -47,6 +49,7 @@ function App() {
       </UserProvider>
       </CarrinhoProvider>
       </CategoryProvider>
+      </VariationProvider>
     </BrowserRouter>
   )
 }

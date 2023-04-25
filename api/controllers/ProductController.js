@@ -1,6 +1,7 @@
 const Product = require('../models/ProductModel')
 const Variation = require('../models/VariationModel')
-
+const crypto = require('crypto')
+const combine = require('../utils/combine')
 const ObjectId = require('mongoose')
 const fs = require('fs')
 
@@ -367,14 +368,53 @@ module.exports = class ProductController{
         }else{
             product.variations = product.variations.map( el =>{
                 if(el.idVariacao === idVar){
-                    return {idVariacao: idVar, idOptions: [...el.idOptions, idOption]}
+                    if(el.idOptions.includes(idOption)){
+                        return el
+                    }
+                    else{
+                        return {idVariacao: idVar, idOptions: [...el.idOptions, idOption]}
+                    }
+                    
                 }
                 return el
             } )
         }
+        const result = combine(product.variations.map( el => el.idOptions ))
+        product.combinations = result.map( el => {
+            return {
+                id: crypto.randomBytes(16).toString("hex"),
+                price: product.preco,
+                priceoff: 0,
+                combination: el.split(' ')
+            }
+        } )
 
         try{
             await Product.findOneAndUpdate({_id: id}, product)
+            res.status(200).json({message: 'Produto atualizado com sucesso!'})
+        }catch(err){
+            res.status(500).json({error: 'Ocorreu um erro na atualização do produto.'})
+        }
+
+    }
+
+    static async unSelectOption(req, res){
+        
+        const id = req.params.id
+        const idVar = req.body.var
+        const idOption = req.body.option
+
+        if (!ObjectId.isValidObjectId(id) || !ObjectId.isValidObjectId(idVar)){
+            return res.status(422).json({error: 'ID inválido'})        
+        }
+
+        try{
+            await Product.updateOne(
+                {_id:id, variations: { $elemMatch: {idVariacao: idVar }}},
+                { $pull: { "variations.$.idOptions": { $eq:idOption  } } },
+                {arrayFilters: [ { "element.idVariacao": {$eq:id} } ]}
+            )
+
             res.status(200).json({message: 'Produto atualizado com sucesso!'})
         }catch(err){
             res.status(500).json({error: 'Ocorreu um erro na atualização do produto.'})

@@ -3,6 +3,8 @@ const Product = require('../models/ProductModel')
 const User = require('../models/UserModel')
 const getUserByToken = require('../utils/getUserByToken')
 const ObjectId = require('mongoose')
+const combine = require('../utils/combine')
+const crypto = require('crypto')
 
 module.exports = class VariationController {
 
@@ -110,7 +112,11 @@ module.exports = class VariationController {
 
         try{
             await Variation.findOneAndDelete({_id: id})
-            await Product.updateMany({}, { $pull: { variations: { idVariacao: id } } })
+            await Product.updateMany(
+                {"variations.idVariacao": id}, 
+                { 
+                    $set: { variations: [], combinations: [] }
+                })
             
             res.status(200).json({message: 'Variação removida com sucesso!'})
         }catch(err){
@@ -128,22 +134,22 @@ module.exports = class VariationController {
             return res.status(422).json({error: 'ID inválido'})   
         }
 
-        const variation = await Variation.findOne({_id:id})
-
-        if(!variation){
-            return res.status(404).json({error: 'Variação não existe!'})
-        }
-
-        const option = variation.options.find( el => el.value === idOption )
-
-        if(!option){
-            return res.status(404).json({error: 'Opção não existe!'})
-        }
-
         try{
-            await Product.updateMany({}, { $pull: { "variations.$[element].idOptions": { $eq:idOption  } } }, {arrayFilters: [ { "element.idVariacao": {$eq:id} } ]})
+            await Variation.updateOne( {_id: id}, { $pull: { options: {value: idOption} } } )
+            await Product.updateMany(
+                {"variations.idOptions": {$eq: idOption}},
+                {
+                    $set: { variations:[], combinations: [] }
+                }
+            ) 
+                /* 
+                { 
+                    $pull: { "variations.$[element].idOptions": { $eq:idOption  } }, 
+                }, 
+                {arrayFilters: [ { "element.idVariacao": {$eq:id} } ]})
+                */
             
-            res.status(200).json({message: 'Variação removida com sucesso!'})
+            res.status(200).json({message: 'Opção removida com sucesso!'})
         }catch(err){
             res.status(500).json({error: 'Ocorreu um erro na deleção da variação.'})
         }
