@@ -44,7 +44,7 @@ export function useProductContext(){
         }
     }
 
-    async function updateProduct(id, name, price, priceoff, category, desc, images, uploadedImages){
+    async function updateProduct(id, name, price, priceoff, category, desc, images, uploadedImages, combinations){
         console.log(category)
         const formData = new FormData()
         formData.append('title', name)
@@ -52,6 +52,7 @@ export function useProductContext(){
         formData.append('desconto', priceoff)
         formData.append('categoria', JSON.stringify(category))
         formData.append('desc', desc)
+        formData.append('combinations', JSON.stringify(combinations))
         formData.append('uploadedImages', uploadedImages)
         for(let i = 0; i < images.length ;i++){
             formData.append('images', images[i].file)

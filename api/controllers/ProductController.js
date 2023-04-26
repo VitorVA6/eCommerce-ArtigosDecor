@@ -140,7 +140,7 @@ module.exports = class ProductController{
 
     static async updateProduct(req, res){
 
-        const { title, preco, desconto, categoria, desc, uploadedImages } = req.body
+        const { title, preco, desconto, categoria, desc, uploadedImages, combinations } = req.body
         
         const id = req.params.id 
 
@@ -178,6 +178,11 @@ module.exports = class ProductController{
             return res.status(422).json({error: 'Descrição é obrigatório'})
         }
         product.desc = desc
+
+        if(!combinations){
+            return res.status(422).json({error: 'Combinações é obrigatório'})
+        }
+        product.combinations = JSON.parse(combinations)
 
         if(req.files?.length === 0 && uploadedImages?.length === 0){
             return res.status(422).json({error: 'Imagem é obrigatório'})

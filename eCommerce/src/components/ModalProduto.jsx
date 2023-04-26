@@ -10,6 +10,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
 
     const {addProduct, getProductById, updateProduct} = useProductContext()
     const {getCategories} = useCategoryContext()
+    const {getVariations, variations} = useVariationContext()
     const [verMais, setVerMais] = useState(false);
     const [animate, setAnimate] = useState(true)
 
@@ -21,10 +22,12 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
     const [priceoff, setPriceoff] = useState(0)
     const [images, setImages] = useState([])
     const [uploadedImages, setUploadesImages] = useState([])
+    const [variationsProd, setVariationsProd] = useState([])
+    const [combinations, setCombinations] = useState([])
 
     useEffect( () => {
         if (edit){
-
+            getVariations()
             getProductById(idProduto)
             .then( (data) => {
                 const aux = categorias.filter((element) => data.product.categoria.some((other) => other.value === element._id))
@@ -34,6 +37,8 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                 setCategory(aux.map( element => ({value:element._id, label:element.name}) ))
                 setPriceoff(data.product.desconto)
                 setUploadesImages(data.product.img)
+                setVariationsProd(data.product.variations)
+                setCombinations(data.product.combinations)
             } )
             .catch(err => console.log(err))
         }
@@ -63,7 +68,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
     async function handleSubmit() {
 
         if(edit){
-            updateProduct(idProduto, name, price, priceoff, category, desc, images, uploadedImages)
+            updateProduct(idProduto, name, price, priceoff, category, desc, images, uploadedImages, combinations)
             .then( (data) => {
                 if(!!data.product){
                     setName(data.product.title) 
@@ -97,6 +102,21 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
         }
     }
 
+    const genNames = (comb) => {
+        let combFormated = ''
+        for (let i = 0; i < comb.length; i++){
+            const vari = variations.find( el => el._id === variationsProd[i].idVariacao )
+            const op = vari?.options.find( el => el.value === comb[i] )
+            if(i === (comb.length-1)){
+                combFormated = combFormated + `${op.label}`
+            }
+            else{
+                combFormated = combFormated + `${op.label} - `
+            }
+        }
+        return combFormated
+    }
+
   return (
 
     <>
@@ -110,7 +130,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
         
     </div>
     <div 
-        className={`${animate ? 'slide-in-bottom':'slide-out-bottom'} w-full lg:w-[650px] left-0 lg:left-[calc(50%-325px)] bottom-0 lg:top-[calc(50%-290px)] h-fit bg-white flex flex-col items-center z-40 absolute rounded-t-3xl lg:rounded-2xl`}
+        className={`${animate ? 'slide-in-bottom':'slide-out-bottom'} w-full lg:w-[650px] left-0 lg:left-[calc(50%-325px)] bottom-0 lg:top-[calc(50%-330px)] h-fit bg-white flex flex-col items-center z-40 absolute rounded-t-3xl lg:rounded-2xl`}
     >
         <h2 className='text-center py-4 border-b w-full font-medium'>{`${edit?'Editar':'Adicionar'} Produto`}</h2>
         <div className='flex flex-col py-2 px-7 w-full overflow-auto h-fit' style={{height: '470px'}}>
@@ -173,10 +193,51 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                 </div>
                 <div className='flex flex-col'>
                     <p className='mb-3 mt-2 text-sm font-medium'>Variações</p>
-                    <button className='text-sm text-blue-500 font-medium w-full text-left'>Adicionar variações</button>
-                    <div className='flex flex-col'>
-                        
-                    </div>
+                    <button className='text-sm text-blue-500 font-medium w-full text-left'>{`${combinations.length === 0 ? 'Adicionar variações': 'Editar variações'}`}</button>
+                    {
+                        combinations.length > 0 &&
+                        <div className='flex flex-col my-2'>
+                            <div className='flex w-full px-6 py-3 bg-gray-50 text-[14px] font-medium rounded-md'>
+                                <p className='w-1/2'>Variações</p>
+                                <p className='w-1/4'>Preço</p>
+                                <p className='w-1/4'>Desconto (%)</p>
+                            </div>
+                        {
+                            combinations.map(el => (
+                                <div key={el?.id} className='grid grid-cols-4 w-full text-[14px] px-6 py-2 border-b items-center'>
+                                    <p className='col-span-2'>{genNames(el?.combination)}</p>
+                                    <div className='flex bg-gray-200 items-center col-span-1 w-[80%] rounded-lg'>
+                                        <p className='px-2.5 py-2 text-[12px] font-medium'>R$</p> 
+                                        <input 
+                                            type='number' 
+                                            className='py-2 px-2 bg-gray-100 text-[13px] w-full rounded-r-lg outline-0'
+                                            value={el === undefined ? '' : el.price}
+                                            onChange={(e) => {
+                                                setCombinations( prev => prev.map( elem => {
+                                                    if(elem.id === el.id){
+                                                        return { ... el, price: e.target.value }
+                                                    }
+                                                    return elem
+                                                } ) )
+                                                console.log(combinations)
+                                            }}
+                                        />
+                                    </div>
+                                    <div className='flex bg-gray-200 items-center col-span-1 w-[80%] rounded-lg'>
+                                        <p className='px-2.5 py-2 text-[12px] font-medium'>%</p> 
+                                        <input 
+                                            type='number' 
+                                            className='py-2 px-2 bg-gray-100 text-[13px] w-full rounded-r-lg outline-0'
+                                            value={el === undefined ? '' : el?.priceoff}
+                                            onChange={() => {}}
+                                        />
+                                    </div>
+                                </div>)
+                            )
+                        }
+                        </div>
+                    }
+                    
                 </div>
                 </>
             }
