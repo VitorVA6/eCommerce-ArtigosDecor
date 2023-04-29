@@ -9,7 +9,7 @@ module.exports = class ProductController{
 
     static async create (req, res){
 
-        const { title, preco, desconto, categoria, desc } = req.body 
+        const { title, preco, desconto, categoria, desc, combinations, variations } = req.body 
         const destaque = false
 
         if (!title){
@@ -28,6 +28,12 @@ module.exports = class ProductController{
         if(!desc){
             return res.status(422).json({error: 'Descrição é obrigatório'})
         }
+        if(!combinations){
+            return res.status(422).json({error: 'Combinações é obrigatório'})
+        }
+        if(!variations){
+            return res.status(422).json({error: 'Variações é obrigatório'})
+        }
         if(req.files.length === 0){
             return res.status(422).json({error: 'Imagem é obrigatório'})
         }
@@ -41,6 +47,8 @@ module.exports = class ProductController{
                 destaque,
                 desconto,
                 categoria: JSON.parse(categoria),
+                combinations: JSON.parse(combinations),
+                variations: JSON.parse(variations),
                 desc,
                 img: images
             })
@@ -140,9 +148,9 @@ module.exports = class ProductController{
 
     static async updateProduct(req, res){
 
-        const { title, preco, desconto, categoria, desc, uploadedImages, combinations } = req.body
+        const { title, preco, desconto, categoria, desc, uploadedImages, combinations, variations } = req.body
         
-        const id = req.params.id 
+        const id = req.params.id
 
         if (!ObjectId.isValidObjectId(id)){
             return res.status(422).json({error: 'ID inválido'})   
@@ -183,6 +191,11 @@ module.exports = class ProductController{
             return res.status(422).json({error: 'Combinações é obrigatório'})
         }
         product.combinations = JSON.parse(combinations)
+
+        if(!variations){
+            return res.status(422).json({error: 'Variações é obrigatório'})
+        }
+        product.variations = JSON.parse(variations)
 
         if(req.files?.length === 0 && uploadedImages?.length === 0){
             return res.status(422).json({error: 'Imagem é obrigatório'})

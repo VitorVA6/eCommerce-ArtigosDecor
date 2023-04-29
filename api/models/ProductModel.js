@@ -32,9 +32,14 @@ const ProductSchema = new Schema({
     variations: {
         type: Array
     },
-    combinations: {
-        type: Array
-    }
+    combinations: [
+        {
+            id: { type: String },
+            price: {type: Number},
+            priceoff: {type: Number},
+            combination: {type: Array}
+        }
+    ]
 
 })
 

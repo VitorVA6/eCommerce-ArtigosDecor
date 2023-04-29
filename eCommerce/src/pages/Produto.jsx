@@ -5,15 +5,18 @@ import { useProductContext } from '../contexts/Product';
 import Slider from 'react-slick'
 import { AiOutlineArrowDown } from 'react-icons/ai';
 import { FiChevronRight } from 'react-icons/fi';
+import { useVariationContext } from '../contexts/Variation';
 
 export default function Produto() {
 
     const {id} = useParams()
     const [produto, setProduto] = useState({})
+    const [selectedOptions, setSelectedOptions] = useState([])
     const [carregado, setCarregado] = useState(false)
     const [quantidade, setQuantidade] = useState(1)
     const {addCarrinho} = useCarrinhoContext()
     const {getProductById} = useProductContext()
+    const {variations, getVariations} = useVariationContext()
     const taxa = 1.2
     const [imgId, setImgId] = useState(0)
     const refToTop = useRef();
@@ -36,13 +39,86 @@ export default function Produto() {
         }
     }
 
-    useEffect(() => {
+    function verifySelected( idOption ){
+        
+        return selectedOptions.find( el => el.option === idOption ) !== undefined
 
+    }
+
+    function handleSelect( idVar, idOption ){
+        setSelectedOptions( prev => prev.map( el => {
+            if(el.var === idVar){
+                return {var: idVar, option: idOption}
+            }
+            else{
+                return el
+            }
+        }))
+    }
+
+    function getPrice(){
+
+        const comb2 = selectedOptions.map( el => el.option ).sort()
+        produto?.combinations?.forEach(element => {
+            let flag = true
+            const comb = element.combination.sort()
+
+            if (comb.length !== comb2.length) {
+                flag = false;
+            }
+            for (let i = 0; i < comb.length; i++) {
+                if (comb[i] !== comb2[i]) {
+                    flag = false;
+                }
+            }
+            if(flag === true){
+                setProduto( prev => ({...prev, preco: element.price, desconto: element.priceoff}) )
+                return
+            }
+
+        });
+
+    }
+
+    function getVarName(varId){
+
+        const varAux = variations.find( el => el._id === varId )
+        if(!!varAux){
+            
+            return varAux.name
+        }
+        return ''
+    }
+
+    function getOptionName(varId, optionId){
+
+        const varAux = variations?.find( el => el._id === varId )
+        if(!!varAux){
+            const optionAux = varAux.options.filter( el => el.value === optionId )
+            if(!!optionAux && optionAux.length !== 0){
+                return optionAux[0].label
+            }
+            else{
+                return ''
+            }
+        }
+        return ''
+
+    }
+
+    useEffect(() => {
+        getVariations()
         getProductById(id)
         .then( (data) => {
-            setProduto(data.product)
+            setProduto({
+                ...data.product, 
+                preco: data.product.combinations.length > 0 ? data.product.combinations[0].price : data.product.preco,
+                desconto: data.product.combinations.length > 0 ? data.product.combinations[0].priceoff : data.product.desconto,
+                
+            })
+            setSelectedOptions(data.product.variations?.length > 0 ? data.product.variations?.map( el => (
+                {var: el.idVariacao, option:el.idOptions[0]}) ): [])
             setCarregado(true)
-            
         } )
         .catch(erro => console.log(erro))
 
@@ -55,6 +131,12 @@ export default function Produto() {
     if (carregado && !produto){
         return <Navigate to={'/404'}/>
     }
+
+    useEffect( ()=> {
+
+        getPrice()
+
+    }, [selectedOptions] )
 
   return (
     
@@ -114,26 +196,51 @@ export default function Produto() {
                 </div>
                 
                 
+                {   
+                    produto?.combinations?.length > 0 &&  
+                    <div className='flex flex-col mt-6 gap-y-4'>  
+                    {  
+                    produto?.variations?.map( variation => (
+                        <div key={variation.idVariacao} className='flex flex-col w-full'>
+                            <h3 className='text-sm text-gray-700 mb-2'>{getVarName(variation.idVariacao)}:</h3>
+                            <div className='flex flex-wrap gap-2'>
+                                {variation.idOptions.map( option => (
+                                <button 
+                                    key={option}
+                                    className={`${verifySelected(option) === true ? 'text-blue-500 border border-blue-500': 'bg-white border border-gray-300'} py-1 px-3 rounded-lg text-[14px]`}
+                                    onClick={() => handleSelect(variation.idVariacao, option)}
+                                >
+                                    {getOptionName(variation.idVariacao ,option)}                                
+                                </button>
+                                ) )}
+                            </div>
+                        </div>
+                    ) )  
+                    }
+                    </div>              
+                    }
+                
                 <div className='flex gap-x-12 mt-6 mb-6'>
+                    
                     <h3 className='text-sm text-gray-700'>Preço:</h3>
                     <div className=' flex flex-col text-sm lg:text-lg lg:mt-2'>
                     {
                     produto?.desconto > 0 &&
-                    <p className='inline line-through text-gray-500'>{produto?.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>                  
+                    <p className='inline line-through text-gray-500'>{produto?.preco?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                     }
                     <div className='flex items-center gap-x-1.5'>
-                        <p className='font-medium text-2xl text-green-500'>{(produto?.preco*((100 - produto?.desconto)/100)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                        <p className='font-medium text-2xl text-green-500'>{produto?.desconto?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                         {produto?.desconto > 0 &&
                             <div className='flex text-white bg-black px items-center justify-center rounded-full h-fit px-2 gap-0.5 mb-0.5'>
                                 <AiOutlineArrowDown className='w-3 h-3' />
-                                <p className='text-[12px]'>{produto.desconto}%</p>
+                                <p className='text-[12px]'>{ Math.ceil((produto?.preco - produto?.desconto)*100/produto?.preco)}%</p>
                             </div>
                         }
                     </div>
-                    <p className='text-base'>Em até <strong className='text-black'>12x</strong> de {produto?.desconto > 0 ? ((produto?.preco* taxa * (100 - produto?.desconto)/100)/12).toFixed(2) : (produto?.preco*taxa/12).toFixed(2)}</p>
+                    <p className='text-base'>Em até <strong className='text-black'>12x</strong> de {produto?.desconto > 0 ? (produto?.desconto* taxa /12).toFixed(2) : (produto?.preco*taxa/12).toFixed(2)}</p>
                     {
                         produto?.desconto > 0 &&
-                        <p className='bg-black text-white px-3 pt-0.5 rounded-md flex w-fit mt-1'>R$ {(produto?.preco*((produto?.desconto)/100)).toFixed(0)} de desconto</p>
+                        <p className='bg-black text-white px-3 pt-0.5 rounded-md flex w-fit mt-1 text-[15px]'>R$ {(produto?.preco - produto?.desconto).toFixed(0)} de desconto</p>
                     }
                     </div>
                 </div>

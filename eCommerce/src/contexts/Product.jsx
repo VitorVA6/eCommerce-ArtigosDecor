@@ -21,7 +21,7 @@ export function useProductContext(){
 
     const { produtos, setProdutos, perPage, selCategory, setSelCategory} = useContext(ProductContext)
 
-    async function addProduct(name, price, priceoff, category, desc, images){
+    async function addProduct(name, price, priceoff, category, desc, images, combinations, variations){
         console.log(category)
         const formData = new FormData()
         formData.append('title', name)
@@ -29,6 +29,8 @@ export function useProductContext(){
         formData.append('desconto', priceoff)
         formData.append('categoria', JSON.stringify(category))
         formData.append('desc', desc)
+        formData.append('combinations', JSON.stringify(combinations))
+        formData.append('variations', JSON.stringify(variations))
         for(let i = 0; i < images.length ;i++){
             formData.append('images', images[i].file)
         }
@@ -44,8 +46,8 @@ export function useProductContext(){
         }
     }
 
-    async function updateProduct(id, name, price, priceoff, category, desc, images, uploadedImages, combinations){
-        console.log(category)
+    async function updateProduct(id, name, price, priceoff, category, desc, images, uploadedImages, combinations, variations){
+        
         const formData = new FormData()
         formData.append('title', name)
         formData.append('preco', price)
@@ -53,6 +55,7 @@ export function useProductContext(){
         formData.append('categoria', JSON.stringify(category))
         formData.append('desc', desc)
         formData.append('combinations', JSON.stringify(combinations))
+        formData.append('variations', JSON.stringify(variations))
         formData.append('uploadedImages', uploadedImages)
         for(let i = 0; i < images.length ;i++){
             formData.append('images', images[i].file)

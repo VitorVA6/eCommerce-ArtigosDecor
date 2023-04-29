@@ -32,7 +32,7 @@ export default function NavLateralAdmin({selected, setSelected, menuMobile, setM
     }
 
   return (
-    <section className={`${menuMobile ? 'flex flex-col' : 'hidden'} ${handleClass()} absolute -top-20 right-0 md:static md:flex flex-col border my-20 md:py-8 md:pl-10 w-72 gap-y-6 h-full bg-white z-40`}>
+    <section className={`${menuMobile ? 'flex flex-col' : 'hidden'} ${handleClass()} absolute -top-20 right-0 md:static md:flex flex-col border my-20 md:py-8 md:pl-10 w-72 gap-y-6 h-full bg-white z-20`}>
         <div className='flex items-center justify-between md:hidden py-4 pl-5 pr-3 border-b border-gray-200'>
             <h3 className='text-lg font-medium'><nobr>Artigos Decor</nobr></h3>
             <GrFormClose 

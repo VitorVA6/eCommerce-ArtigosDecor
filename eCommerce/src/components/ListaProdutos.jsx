@@ -12,7 +12,7 @@ export default function ListaProdutos({title, categoria}) {
         
         getProducts(5, 1, categoria)
         .then( data => {
-            setProdutos(data.docs)
+            setProdutos(data?.docs)
         })
         .catch(err => console.log(err))
 
@@ -29,7 +29,7 @@ export default function ListaProdutos({title, categoria}) {
         </div>
         
         <div className='flex gap-3.5 overflow-x-auto scrollbar-hide px-5 pb-0.5 md:px-10'>
-            {produtos.map( produto => (
+            {produtos?.map( produto => (
                 <Card key={produto._id} categoryPage={false} produto={produto} layout={'grid'}/>
             ) )} 
         </div>

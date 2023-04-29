@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { GrFormClose } from "react-icons/gr";
 import { useCategoryContext } from '../contexts/Category';
 import { useVariationContext } from '../contexts/Variation';
+import combine from '../utils/combine';
 
 export default function ModalProduto({setModalProduto, edit, categorias, idProduto, notifySucess, notifyError}) {
 
@@ -24,6 +25,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
     const [uploadedImages, setUploadesImages] = useState([])
     const [variationsProd, setVariationsProd] = useState([])
     const [combinations, setCombinations] = useState([])
+    const [modalVariations, setModalVariations] = useState(false)
 
     useEffect( () => {
         if (edit){
@@ -68,7 +70,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
     async function handleSubmit() {
 
         if(edit){
-            updateProduct(idProduto, name, price, priceoff, category, desc, images, uploadedImages, combinations)
+            updateProduct(idProduto, name, price, priceoff, category, desc, images, uploadedImages, combinations, variationsProd)
             .then( (data) => {
                 if(!!data.product){
                     setName(data.product.title) 
@@ -89,7 +91,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
             } )
         }
         else{
-            addProduct(name, price, priceoff, category, desc, images).then(data => {
+            addProduct(name, price, priceoff, category, desc, images, combinations, variationsProd).then(data => {
                 if(!!data.message){
                   setAnimate(false)
                   setTimeout(() => setModalProduto(false), 200) 
@@ -117,23 +119,119 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
         return combFormated
     }
 
+    function verifySelected( idVar, idOption ){
+        const variationSel = variationsProd.find(el => el.idVariacao === idVar)
+        
+        if (!!variationSel){
+            return variationSel.idOptions.includes( idOption)
+        }
+        else {
+            return false
+        }
+    }
+
+    function genCombinations(vars){
+        const result = combine(vars.map( el => el.idOptions )) || []
+        const combs = result.map( el => {
+            return {
+                id: uuidv4(),
+                price: price,
+                priceoff: 0,
+                combination: el.split(' ')
+            }
+        } )
+        setCombinations(combs)
+    }
+
+    function handleSelect(idVar, idOption){
+        const variationSel = variationsProd.find(el => el.idVariacao === idVar)
+        
+        if (!!variationSel){    
+                   
+            const variationsAux = variationsProd.map(el =>{
+                if(el.idVariacao === idVar){
+                    if(el.idOptions.includes(idOption)){
+                        const attOptions = el.idOptions.filter( elem => elem !== idOption )
+                        return {idVariacao: idVar, idOptions: attOptions}
+                    }
+                    else{
+                        return {idVariacao: idVar, idOptions: [...el.idOptions, idOption]}
+                    }
+                    
+                }
+                return el
+            })       
+            setVariationsProd(variationsAux)
+            genCombinations(variationsAux) 
+        }
+        else {
+            const variationsAux = [ ...variationsProd, {idVariacao: idVar, idOptions: [idOption]} ]
+            setVariationsProd( variationsAux )
+            genCombinations(variationsAux)
+        }
+        
+    }
+
   return (
 
     <>
     <div 
       className=' w-screen h-screen bg-gray-400/50 absolute left-0 top-0 flex justify-center items-center z-10' 
       onClick={() => {
+        setModalVariations(false)
         setAnimate(false)
         setTimeout(() => setModalProduto(false), 200) 
       }}
     >
         
     </div>
+    {
+    modalVariations &&
+    <div className='w-full lg:w-[650px] left-0 lg:left-[calc(50%-325px)] bottom-0 lg:top-[calc(50%-330px)] h-fit bg-white flex flex-col items-center z-40 absolute rounded-t-3xl lg:rounded-2xl'>
+
+        <h2 className='text-center py-4 border-b w-full font-medium relative'>{`${combinations.length === 0 ? 'Adicionar variações': 'Editar variações'}`}
+            <GrFormClose 
+                className='absolute w-8 h-8 text-black left-2 top-3 cursor-pointer'
+                onClick={() => setModalVariations(false)}
+            />
+        </h2>
+
+        <div className='flex flex-col py-2 px-4 w-full overflow-auto h-[470px]'>
+            <p className='text-[13px] text-gray-500 text-center my-3'>Adicione ao seu produto variantes como "cores", "tamanhos", e outros.</p>
+            <div className='flex flex-col gap-3 mt-2'>
+            {             
+                variations.length > 0 &&   
+                variations.map( (variation, index) => (
+                    <div key={variation._id} className='flex flex-col w-full border rounded-lg px-[16px] py-5'>
+                        <h3 className='text-[14px] font-medium mb-2'>{variation.name}</h3>
+                        <p className='text-[13px] mb-1'>Selecione as opções</p>
+                        <div className='flex flex-wrap gap-2'>
+                            {variation.options.map( option => (
+                            <button 
+                                key={option.value}
+                                className={`${verifySelected(variation._id, option.value) === true ? 'bg-black text-white': 'bg-white border'} py-2 px-3 rounded-lg text-[14px]`}
+                                onClick={() => handleSelect(variation._id, option.value)}
+                            >
+                                {option.label}                                
+                            </button>
+                            ) )}
+                        </div>
+                    </div>
+                ) )
+               
+            }
+            </div>
+        </div>
+
+    </div>
+
+    }
+    
     <div 
-        className={`${animate ? 'slide-in-bottom':'slide-out-bottom'} w-full lg:w-[650px] left-0 lg:left-[calc(50%-325px)] bottom-0 lg:top-[calc(50%-330px)] h-fit bg-white flex flex-col items-center z-40 absolute rounded-t-3xl lg:rounded-2xl`}
+        className={`${animate ? 'slide-in-bottom':'slide-out-bottom'} w-full lg:w-[650px] left-0 lg:left-[calc(50%-325px)] bottom-0 lg:top-[calc(50%-330px)] h-fit bg-white flex flex-col items-center z-30 absolute rounded-t-3xl lg:rounded-2xl`}
     >
         <h2 className='text-center py-4 border-b w-full font-medium'>{`${edit?'Editar':'Adicionar'} Produto`}</h2>
-        <div className='flex flex-col py-2 px-7 w-full overflow-auto h-fit' style={{height: '470px'}}>
+        <div className='flex flex-col py-2 px-7 w-full overflow-auto h-[470px]'>
             <div className='flex gap-x-6'>
                 <div className='flex flex-col  w-8/12 mb-6'>
                     <p className='mb-2 mt-2 text-sm font-medium'>Nome</p>
@@ -193,7 +291,12 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                 </div>
                 <div className='flex flex-col'>
                     <p className='mb-3 mt-2 text-sm font-medium'>Variações</p>
-                    <button className='text-sm text-blue-500 font-medium w-full text-left'>{`${combinations.length === 0 ? 'Adicionar variações': 'Editar variações'}`}</button>
+                    <button 
+                        className='text-sm text-blue-500 font-medium w-full text-left'
+                        onClick={() => setModalVariations(true)}
+                        >
+                            {`${combinations.length === 0 ? 'Adicionar variações': 'Editar variações'}`}
+                    </button>
                     {
                         combinations.length > 0 &&
                         <div className='flex flex-col my-2'>
@@ -211,7 +314,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                                         <input 
                                             type='number' 
                                             className='py-2 px-2 bg-gray-100 text-[13px] w-full rounded-r-lg outline-0'
-                                            value={el === undefined ? '' : el.price}
+                                            value={el === undefined ? 0 : el.price}
                                             onChange={(e) => {
                                                 setCombinations( prev => prev.map( elem => {
                                                     if(elem.id === el.id){
@@ -219,7 +322,6 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                                                     }
                                                     return elem
                                                 } ) )
-                                                console.log(combinations)
                                             }}
                                         />
                                     </div>
@@ -229,7 +331,14 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                                             type='number' 
                                             className='py-2 px-2 bg-gray-100 text-[13px] w-full rounded-r-lg outline-0'
                                             value={el === undefined ? '' : el?.priceoff}
-                                            onChange={() => {}}
+                                            onChange={(e) => {
+                                                setCombinations( prev => prev.map( elem => {
+                                                    if(elem.id === el.id){
+                                                        return { ... el, priceoff: e.target.value }
+                                                    }
+                                                    return elem
+                                                } ) )
+                                            }}
                                         />
                                     </div>
                                 </div>)

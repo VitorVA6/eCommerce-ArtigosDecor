@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useCarrinhoContext } from '../contexts/Carrinho';
 import {AiOutlineArrowDown} from 'react-icons/ai'
@@ -7,6 +7,8 @@ export default function Card({produto, categoryPage, layout}) {
 
     const navigate = useNavigate()
     const taxa = 1.2
+    const [price, setPrice] = useState(produto?.combinations?.length > 0 ? produto.combinations[0]?.price : produto.preco)
+    const [priceoff, setPriceoff] = useState(produto?.combinations?.length > 0 ? produto.combinations[0]?.priceoff : produto.desconto)
 
     const handleClass = () => {
         if(categoryPage){
@@ -20,6 +22,13 @@ export default function Card({produto, categoryPage, layout}) {
         }
     }
 
+    function handlePrice( valueProd, valueComb ){
+        if(produto?.combinations?.length > 0){
+            return valueComb
+        }
+        return valueProd
+    }
+
   return (
     <div className={`flex ${layout === 'grid' ? 'flex-col' : 'flex-row'} bg-white rounded-2xl shadow-md shadow-gray-300/60 ${categoryPage ? 'p-3' : 'my-5 p-5'} relative`}>
         <div 
@@ -28,29 +37,27 @@ export default function Card({produto, categoryPage, layout}) {
             onClick={(e) => {
                 if(e.currentTarget != e.target ) return;
                 navigate(`/produto/${produto?._id}`)
-                }} 
+                }}
             >
         
             {
-                produto?.desconto > 0 ?
+                priceoff > 0 ?
                 <div className='flex absolute -left-1.5 -top-1.5 gap-0.5 bg-black w-fit py-0.5 px-1.5 items-center text-white rounded-lg'>
                     <AiOutlineArrowDown className='w-4 h-4' />
-                    <h4 className='text-white font-medium text-sm mb-0.5'>{`${produto?.desconto}%`}</h4>
+                    <h4 className='text-white font-medium text-sm mb-0.5'>{`${Math.ceil(((price - priceoff)*100)/price)}%`}</h4>
                 </div>
                 :<></>
-                    
-                
             }
             
         </div>
-        <div className={`flex flex-col px-2 py-1.5 lg:p-3 w-full ${layout === 'grid' ? 'mt-2' : ''}`}>
+        <div className={`flex flex-col py-1.5 lg:py-3 w-full ${layout === 'grid' ? 'mt-2' : ''}`}>
             <p className='text-xs text-gray-700 mb-4'>{produto?.title}</p>
-            <p className={`inline font-medium mr-2 text-green-500`}>{(produto?.preco*((100 - produto?.desconto)/100)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p> 
+            <p className={`inline font-medium mr-2 text-green-500`}>{priceoff > 0 ? priceoff.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }</p> 
             {
-                produto?.desconto > 0 &&
-                <p className='inline line-through text-gray-500 text-xs'>{produto?.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                priceoff > 0 &&
+                <p className='inline line-through text-gray-500 text-xs'>{price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
             }
-            <p className='text-xs text-gray-700 -mt-1.5'>Em até <strong className='text-black text-sm'>12x</strong> de {produto?.desconto > 0 ? ((produto?.preco* taxa * (100 - produto?.desconto)/100)/12).toFixed(2) : (produto?.preco*taxa/12).toFixed(2)}</p>
+            <p className='text-xs text-gray-700 -mt-1.5'>Em até <strong className='text-black text-sm'>12x</strong> de {priceoff > 0 ? (priceoff * taxa/12).toFixed(2) : (price*taxa/12).toFixed(2)}</p>
             {
                 layout === 'list' &&
                 <Link to={`/produto/${produto?._id}`} className='flex justify-center w-full py-2 text-white rounded-md text-medium bg-green-500 mt-3'>
