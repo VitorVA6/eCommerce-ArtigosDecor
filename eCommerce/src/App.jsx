@@ -17,6 +17,7 @@ import RecoveryPw from './pages/RecoveryPw'
 import Category from './pages/Category'
 import CategoryProvider from './contexts/Category'
 import VariationProvider from './contexts/Variation'
+import Payment from './pages/Payment'
 
 axios.defaults.baseURL = 'http://[::1]:4000'
 axios.defaults.withCredentials = true
@@ -37,6 +38,7 @@ function App() {
           <Route path='/produto/:id' element = {<Produto />}/>
           <Route path='/category/:name' element = {<Category />}/>
           <Route path='/cart' element={<Cart />} />
+          <Route path='/payment' element={<Payment />} />
         </Route>
         <Route path='/404' element={<PageNotFound />} />
         <Route path='/login' element={<Login />}/>
