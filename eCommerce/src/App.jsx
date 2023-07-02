@@ -17,7 +17,7 @@ import RecoveryPw from './pages/RecoveryPw'
 import Category from './pages/Category'
 import CategoryProvider from './contexts/Category'
 import VariationProvider from './contexts/Variation'
-import Payment from './pages/Payment'
+import Payment from './pages/PaymentPage'
 
 axios.defaults.baseURL = 'http://[::1]:4000'
 axios.defaults.withCredentials = true
