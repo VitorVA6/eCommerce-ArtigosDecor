@@ -20,11 +20,13 @@ const productRoutes = require('./routes/productRoutes')
 const catalogRoutes = require('./routes/catalogRoutes')
 const categoryRoutes = require('./routes/categoryRoutes')
 const variationRoutes = require('./routes/variationRoutes')
+const paymentRoutes = require('./routes/paymentRoutes')
 
 app.use('/users', userRoutes)
 app.use('/products', productRoutes)
 app.use('/catalog', catalogRoutes)
 app.use('/category', categoryRoutes)
 app.use('/variation', variationRoutes)
+app.use('/mercado-pago', paymentRoutes)
 
 app.listen(4000)

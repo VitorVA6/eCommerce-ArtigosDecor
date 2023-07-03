@@ -70,7 +70,10 @@ export default function Footer() {
             <p>2023 © TODOS OS DIREITOS RESERVADOS</p>
             <p className='font-bold text-sm'>Vitor Vaz Andrade</p>
         </div>
-        <Link to={'https://www.instagram.com/artigos.decoracoes/'} target={'_blank'} className='w-12 h-12 bg-blue-500 flex justify-center items-center rounded-full fixed bottom-4 right-4'>
+        <Link 
+            to={'https://www.instagram.com/artigos.decoracoes/'} 
+            target={'_blank'} 
+            className='w-12 h-12 bg-blue-500 flex justify-center items-center rounded-full fixed bottom-8 right-12'>
             <img className='w-5 h-5' src={whats} alt="Logo do whatsapp" />
         </Link>
     </section>

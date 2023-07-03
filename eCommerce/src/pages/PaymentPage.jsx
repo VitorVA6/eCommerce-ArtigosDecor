@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { initMercadoPago } from '@mercadopago/sdk-react';
 import Card from '@mercadopago/sdk-react/bricks/cardPayment'
+import axios from 'axios';
 
 export default function PaymentPage() {
 
@@ -15,7 +16,8 @@ export default function PaymentPage() {
         <Card
           initialization={{ amount: 100 }}
           onSubmit={async (param) => {
-            console.log(param);
+            const response = await axios.post('/mercado-pago/process_payment', param)
+            console.log(response)
           }}
     />
     </div>
