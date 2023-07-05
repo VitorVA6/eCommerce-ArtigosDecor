@@ -7,7 +7,7 @@ export default function InputPayment({title, placeholder}) {
         <input 
             type="text" 
             placeholder={placeholder} 
-            className=' rounded-md border border-gray-300 outline-none py-3 px-5 text-sm mt-1.5'
+            className=' rounded-md border border-gray-300 outline-none py-3 px-5 text-xs mt-1.5'
         />
     </div>
   )
