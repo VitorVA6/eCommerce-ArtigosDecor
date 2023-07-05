@@ -5,31 +5,39 @@ import axios from 'axios';
 import PaymentBlock from '../components/PaymentBlock';
 import InputPayment from '../components/InputPayment';
 import {HiArrowNarrowRight} from 'react-icons/hi'
+import {IoTicketOutline} from 'react-icons/io5'
 
 export default function PaymentPage() {
 
     const [validCEP, setValidCEP] = useState(false)
-    const [blockManager, setBlockManager] = useState({
-      block1: {
-        selected: false,
-        completed: true,
-        disabled: false
-      },
-      block2: {
-        selected: false,
-        completed: true,
-        disabled: false
-      },
-      block3: {
-        selected: false,
-        completed: false,
-        disabled: true
-      }
-    })
+    const [block1, setBlock1] = useState({selected:true, completed:false, disabled: false})
+    const [block2, setBlock2] = useState({selected:false, completed:true, disabled: false})
+    const [block3, setBlock3] = useState({selected:false, completed:false, disabled: true})
+    const [changeBlock, setChangeBlock] = useState('1')
 
     useEffect(()=> {
         initMercadoPago('TEST-8baf6102-c707-4284-a248-a0ac11256c46', { locale: 'pt-BR' });
-    }, [] ) 
+    }, [] )
+
+    useEffect(()=>{
+
+      if(changeBlock === '1'){
+        setBlock1(prev => ({...prev, selected: true}))
+        setBlock2(prev => ({...prev, selected: false}))
+        setBlock3(prev => ({...prev, selected: false}))
+      }
+      else if(changeBlock === '2'){
+        setBlock1(prev => ({...prev, selected: false}))
+        setBlock2(prev => ({...prev, selected: true}))
+        setBlock3(prev => ({...prev, selected: false}))
+      }
+      else if(changeBlock === '3'){
+        setBlock1(prev => ({...prev, selected: false}))
+        setBlock2(prev => ({...prev, selected: false}))
+        setBlock3(prev => ({...prev, selected: true}))
+      }
+
+    }, [changeBlock])
 
   return (
     <div className='grid grid-cols-3 px-32 py-10 gap-5'>
@@ -38,14 +46,14 @@ export default function PaymentPage() {
             step={'1'} 
             title={'Identifique-se'} 
             desc={'Informações pessoais e de contato.'} 
-            selected={blockManager.block1.selected}
-            completed={blockManager.block1.completed}
-            disabled={blockManager.block1.disabled}
+            selected={block1.selected}
+            completed={block1.completed}
+            disabled={block1.disabled}
             altDesc={''}
-            
+            setChange={setChangeBlock}
           >
             {
-              blockManager.block1.selected === true && 
+              block1.selected === true && 
               <>
                 <div className='flex flex-col gap-4 mt-3'>
                 <InputPayment title={'Nome completo'} placeholder={'ex.: Paulo Henrique Martins'}/>
@@ -60,7 +68,7 @@ export default function PaymentPage() {
               </>
             }
             {
-              blockManager.block1.completed === true && 
+              block1.completed === true && 
               <>
                 <div className='flex flex-col mt-3'>
                   <h3 className='font-medium mb-3'>Vitor Vaz Andrade</h3>
@@ -76,13 +84,14 @@ export default function PaymentPage() {
             step={'2'} 
             title={'Entrega'} 
             desc={'Informe o endereço de entrega.'}
-            selected={blockManager.block2.selected}
-            completed={blockManager.block2.completed}
-            disabled={blockManager.block2.disabled}
+            selected={block2.selected}
+            completed={block2.completed}
+            disabled={block2.disabled}
             altDesc={'Preencha suas informações pessoais para continuar.'}
+            setChange={setChangeBlock}
           >
             {
-              blockManager.block2.selected === true &&
+              block2.selected === true &&
               <div className='flex flex-col mt-2 gap-4 w-full'>
                 <div className='grid grid-cols-2'>
                   <InputPayment title={'CEP'} placeholder={''}/>
@@ -109,7 +118,7 @@ export default function PaymentPage() {
             }
 
             {
-              blockManager.block2.completed === true && 
+              block2.completed === true && 
               <div className='flex flex-col'>
                 <h3 className='font-medium mb-1'>Endereço para entrega:</h3>
                 <h3 className='text-sm text-gray-600'>Caminho 18, 11 - Campo Limpo</h3>
@@ -124,27 +133,46 @@ export default function PaymentPage() {
           step={'3'} 
           title={'Pagamento'} 
           desc={'Informe os dados do cartão.'}
-          selected={blockManager.block3.selected}
-          completed={blockManager.block3.completed}
-          disabled={blockManager.block3.disabled}
+          selected={block3.selected}
+          completed={block3.completed}
+          disabled={block3.disabled}
           altDesc={'Preencha suas informações de entrega para continuar.'}
+          setChange={setChangeBlock}
         >
-          <div className='border border-gray-300 rounded-md mt-3'>
-            <Card
-              initialization={{ 
-                amount: 100,
-                payer: {
-                  email: 'mandradejunior.vva@gmail.com'
-                } 
-              }}
-              onSubmit={async (param) => {
-                const response = await axios.post('/mercado-pago/process_payment', param)
-                console.log(response)
-              }}
-            />
-          </div>          
+          {
+            block3.selected === true &&
+            <div className='border border-gray-300 rounded-md mt-3'>
+              <Card
+                initialization={{ 
+                  amount: 100,
+                  payer: {
+                    email: 'mandradejunior.vva@gmail.com'
+                  } 
+                }}
+                onSubmit={async (param) => {
+                  const response = await axios.post('/mercado-pago/process_payment', param)
+                  console.log(response)
+                }}
+              />
+            </div>    
+          }
+                
         </PaymentBlock>
-        
+
+        <div className='flex flex-col bg-white px-6 py-7 rounded-lg shadow-md/90 h-fit'>
+          <h2 className='font-medium'>RESUMO</h2>
+          <p>Tem um cupom</p>
+          <div className='grid grid-cols-10 items-center border rounded-md'>
+            <div className='flex justify-center col-span-2'>
+              <IoTicketOutline className='w-5 h-5'/>
+            </div>
+            <input 
+              className='py-2 px-1 outline-none col-span-8' 
+              type="text"
+              placeholder='Código do cupom'
+            />
+          </div>
+        </div>
     </div>
   )
 }
