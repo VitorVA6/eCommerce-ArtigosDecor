@@ -69,7 +69,7 @@ export default function PaymentBlock({step, title, desc, children, selected, com
             }
         </div>
         
-        <p className='text-[13px] my-2 text-gray-600'>
+        <p className='text-[13px] mt-2 text-gray-600'>
             {
                 selectDesc()
             }

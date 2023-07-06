@@ -4,6 +4,8 @@ import InputPayment from '../components/InputPayment';
 import {HiArrowNarrowRight} from 'react-icons/hi'
 import PaymentResume from '../components/PaymentResume';
 import MyCardBlock from '../components/MyCardBlock';
+import { useFormik } from 'formik';
+import { block1Schema } from '../schemas';
 
 export default function PaymentPage() {
 
@@ -13,9 +15,18 @@ export default function PaymentPage() {
     const [block3, setBlock3] = useState({selected:false, completed:false, disabled: false})
     const [changeBlock, setChangeBlock] = useState('1')
 
-    const [name, setName] = useState('')
-    const [cpf, setCpf] = useState('')
-    const [whats, setWhats] = useState('')
+    const formikStep1 = useFormik({
+      enableReinitialize: true,
+      initialValues: {
+        name: '',
+        cpf: '',
+        whats: ''
+      },
+      validationSchema: block1Schema,
+      onSubmit: values =>{
+        
+      }
+    })
 
     useEffect(()=>{
 
@@ -53,11 +64,39 @@ export default function PaymentPage() {
             {
               block1.selected === true && 
               <>
-                <div className='flex flex-col gap-4 mt-3'>
-                <InputPayment title={'Nome completo'} placeholder={'ex.: Paulo Henrique Martins'}/>
-                <InputPayment title={'CPF'} placeholder={'000.000.000-00'}/>
-                <InputPayment title={'Ceular / Whatsapp'} placeholder={'(00) 00000-0000'}/>
-                </div>
+                <form className='flex flex-col mt-3'>
+                  <InputPayment 
+                    title={'Nome completo'} 
+                    placeholder={'ex.: Paulo Henrique Martins'}
+                    field={ formikStep1.values.name}
+                    setField = { formikStep1.handleChange}
+                    id='name'
+                    blur={formikStep1.handleBlur}
+                    />
+                    {
+                      formikStep1.touched.name && formikStep1.errors.name && <p className='text-red-400 text-xs'>{`${formikStep1.errors.name}`}</p>
+                    }
+                  <InputPayment 
+                    title={'CPF'} 
+                    placeholder={'000.000.000-00'}
+                    field={ formikStep1.values.cpf}
+                    setField = { formikStep1.handleChange}
+                    id='cpf'
+                    blur={formikStep1.handleBlur}/>
+                    {
+                      formikStep1.touched.cpf && formikStep1.errors.cpf && <p className='text-red-400 text-xs'>{`${formikStep1.errors.cpf}`}</p>
+                    }
+                  <InputPayment 
+                    title={'Ceular / Whatsapp'} 
+                    placeholder={'(00) 00000-0000'}
+                    field={ formikStep1.values.whats}
+                    setField = { formikStep1.handleChange}
+                    id='whats'
+                    blur={formikStep1.handleBlur}/>
+                    {
+                      formikStep1.touched.whats && formikStep1.errors.whats && <p className='text-red-400 text-xs'>{`${formikStep1.errors.whats}`}</p>
+                    }
+                </form>
                 <button className='flex justify-center items-center gap-2 text-white bg-green-500 font-bold py-3 mt-6 rounded-md'>
                   Continuar
                   <HiArrowNarrowRight className='w-6 h-6'/>
