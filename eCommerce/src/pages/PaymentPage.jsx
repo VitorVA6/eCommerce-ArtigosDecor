@@ -7,8 +7,8 @@ import MyCardBlock from '../components/MyCardBlock';
 import { useFormik } from 'formik';
 import { block1Schema, block2Schema } from '../schemas';
 import masks from '../utils/masks.js';
-import axios from 'axios';
 import checkComplete from '../utils/checkComplete';
+import checkCEP from '../utils/checkCEP';
 
 export default function PaymentPage() {
 
@@ -45,25 +45,19 @@ export default function PaymentPage() {
     })
 
     useEffect(() => {
-      if(formikStep2.values.cep.length === 9){
-        axios.get(`https://viacep.com.br/ws/${formikStep2.values.cep}/json/`)
-        .then(({data}) => {
-          if(!!data.erro){
-            formikStep2.setFieldValue('endereco', '')
-            formikStep2.setFieldValue('bairro', '')
-            setErrorCEP('CEP inválido.')
-          }else{
-            formikStep2.setFieldValue('endereco', data?.logradouro)
-            formikStep2.setFieldValue('bairro', data?.bairro)
-            setValidCEP(true)
-          }
-        })
-        .catch(err => console.log(err)) 
-      }
-      else{
-        setValidCEP(false)
-        setErrorCEP('')
-      }
+      checkCEP(formikStep2.values.cep).then(response => {        
+        if(response.status === true){
+          formikStep2.setFieldValue('endereco', response.info?.logradouro)
+          formikStep2.setFieldValue('bairro', response.info?.bairro)
+          setValidCEP(true)
+        }
+        else{
+          formikStep2.setFieldValue('endereco', '')
+          formikStep2.setFieldValue('bairro', '')
+          setErrorCEP(response.errorAPI)
+          setValidCEP(false)
+        }
+      })     
     }, [formikStep2.values.cep])
 
     useEffect(()=>{
