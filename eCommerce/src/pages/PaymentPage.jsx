@@ -7,14 +7,16 @@ import MyCardBlock from '../components/MyCardBlock';
 import { useFormik } from 'formik';
 import { block1Schema, block2Schema } from '../schemas';
 import masks from '../utils/masks.js';
+import axios from 'axios';
 
 export default function PaymentPage() {
 
-    const [validCEP, setValidCEP] = useState(true)
+    const [validCEP, setValidCEP] = useState(false)
     const [block1, setBlock1] = useState({selected:true, completed:false, disabled: false})
     const [block2, setBlock2] = useState({selected:false, completed:true, disabled: false})
     const [block3, setBlock3] = useState({selected:false, completed:false, disabled: false})
     const [changeBlock, setChangeBlock] = useState('1')
+    const [errorCEP, setErrorCEP] = useState('')
 
     const formikStep1 = useFormik({
       enableReinitialize: true,
@@ -40,6 +42,26 @@ export default function PaymentPage() {
       onSubmit: values =>{
       }
     })
+
+    useEffect(() => {
+      if(formikStep2.values.cep.length === 9){
+        axios.get(`https://viacep.com.br/ws/${formikStep2.values.cep}/json/`)
+        .then(({data}) => {
+          if(!!data.erro){
+            setErrorCEP('CEP inválido.')
+          }else{
+            formikStep2.setFieldValue('endereco', data?.logradouro)
+            formikStep2.setFieldValue('bairro', data?.bairro)
+            setValidCEP(true)
+          }
+        })
+        .catch(err => console.log(err)) 
+      }
+      else{
+        setValidCEP(false)
+        setErrorCEP('')
+      }
+    }, [formikStep2.values.cep])
 
     useEffect(()=>{
       if(changeBlock === '1'){
@@ -86,8 +108,9 @@ export default function PaymentPage() {
                     blur={formikStep1.handleBlur}
                     />
                     {
-                      formikStep1.touched.name && formikStep1.errors.name && <p className='text-red-400 text-xs'>{`${formikStep1.errors.name}`}</p>
+                      formikStep1.touched.name && formikStep1.errors.name && <p className='text-red-500 text-xs'>{`${formikStep1.errors.name}`}</p>
                     }
+                    
                   <InputPayment 
                     title={'CPF'} 
                     placeholder={'000.000.000-00'}
@@ -99,7 +122,7 @@ export default function PaymentPage() {
                     blur={formikStep1.handleBlur}
                   />
                     {
-                      formikStep1.touched.cpf && formikStep1.errors.cpf && <p className='text-red-400 text-xs'>{`${formikStep1.errors.cpf}`}</p>
+                      formikStep1.touched.cpf && formikStep1.errors.cpf && <p className='text-red-500 text-xs'>{`${formikStep1.errors.cpf}`}</p>
                     }
                   <InputPayment 
                     title={'Ceular / Whatsapp'} 
@@ -111,7 +134,7 @@ export default function PaymentPage() {
                     id='whats'
                     blur={formikStep1.handleBlur}/>
                     {
-                      formikStep1.touched.whats && formikStep1.errors.whats && <p className='text-red-400 text-xs'>{`${formikStep1.errors.whats}`}</p>
+                      formikStep1.touched.whats && formikStep1.errors.whats && <p className='text-red-500 text-xs'>{`${formikStep1.errors.whats}`}</p>
                     }
                   <button className='flex justify-center items-center gap-2 text-white bg-green-500 font-bold py-3 mt-6 rounded-md'>
                     Continuar
@@ -159,7 +182,10 @@ export default function PaymentPage() {
                       blur={formikStep2.handleBlur}
                     />
                     {
-                      formikStep2.touched.cep && formikStep2.errors.cep && <p className='text-red-400 text-xs'>{`${formikStep2.errors.cep}`}</p>
+                      formikStep2.touched.cep && formikStep2.errors.cep && <p className='text-red-500 text-xs'>{`${formikStep2.errors.cep}`}</p>
+                    }
+                    {
+                      errorCEP !== '' && <p className='text-red-500 text-xs'>{`${errorCEP}`}</p>
                     }
                   </div>
                   
@@ -176,7 +202,7 @@ export default function PaymentPage() {
                       blur={formikStep2.handleBlur}
                     />
                     {
-                      formikStep2.touched.endereco && formikStep2.errors.endereco && <p className='text-red-400 text-xs'>{`${formikStep2.errors.endereco}`}</p>
+                      formikStep2.touched.endereco && formikStep2.errors.endereco && <p className='text-red-500 text-xs'>{`${formikStep2.errors.endereco}`}</p>
                     }
                     <div className='grid grid-cols-3 gap-3'>
                       <div className='flex flex-col'>

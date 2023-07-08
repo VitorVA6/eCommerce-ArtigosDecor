@@ -20,7 +20,6 @@ import VariationProvider from './contexts/Variation'
 import Payment from './pages/PaymentPage'
 
 axios.defaults.baseURL = 'http://[::1]:4000'
-axios.defaults.withCredentials = true
 
 function App() {
 
