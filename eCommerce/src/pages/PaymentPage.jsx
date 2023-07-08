@@ -5,11 +5,12 @@ import {HiArrowNarrowRight} from 'react-icons/hi'
 import PaymentResume from '../components/PaymentResume';
 import MyCardBlock from '../components/MyCardBlock';
 import { useFormik } from 'formik';
-import { block1Schema } from '../schemas';
+import { block1Schema, block2Schema } from '../schemas';
+import masks from '../utils/masks.js';
 
 export default function PaymentPage() {
 
-    const [validCEP, setValidCEP] = useState(false)
+    const [validCEP, setValidCEP] = useState(true)
     const [block1, setBlock1] = useState({selected:true, completed:false, disabled: false})
     const [block2, setBlock2] = useState({selected:false, completed:true, disabled: false})
     const [block3, setBlock3] = useState({selected:false, completed:false, disabled: false})
@@ -24,12 +25,23 @@ export default function PaymentPage() {
       },
       validationSchema: block1Schema,
       onSubmit: values =>{
-        
+      }
+    })
+    const formikStep2 = useFormik({
+      enableReinitialize: true,
+      initialValues: {
+        cep: '',
+        endereco: '',
+        numero: '',
+        bairro: '',
+        complemento: ''
+      },
+      validationSchema: block2Schema,
+      onSubmit: values =>{
       }
     })
 
     useEffect(()=>{
-
       if(changeBlock === '1'){
         setBlock1(prev => ({...prev, selected: true, completed: false}))
         setBlock2(prev => ({...prev, selected: false}))
@@ -69,7 +81,7 @@ export default function PaymentPage() {
                     title={'Nome completo'} 
                     placeholder={'ex.: Paulo Henrique Martins'}
                     field={ formikStep1.values.name}
-                    setField = { formikStep1.handleChange}
+                    setField = {formikStep1.handleChange}
                     id='name'
                     blur={formikStep1.handleBlur}
                     />
@@ -80,9 +92,12 @@ export default function PaymentPage() {
                     title={'CPF'} 
                     placeholder={'000.000.000-00'}
                     field={ formikStep1.values.cpf}
-                    setField = { formikStep1.handleChange}
+                    setField = {(ev) => {
+                      formikStep1.setFieldValue('cpf', masks.maskCPF(ev.target.value))
+                    }}
                     id='cpf'
-                    blur={formikStep1.handleBlur}/>
+                    blur={formikStep1.handleBlur}
+                  />
                     {
                       formikStep1.touched.cpf && formikStep1.errors.cpf && <p className='text-red-400 text-xs'>{`${formikStep1.errors.cpf}`}</p>
                     }
@@ -90,17 +105,19 @@ export default function PaymentPage() {
                     title={'Ceular / Whatsapp'} 
                     placeholder={'(00) 00000-0000'}
                     field={ formikStep1.values.whats}
-                    setField = { formikStep1.handleChange}
+                    setField = { (ev) => {
+                      formikStep1.setFieldValue('whats', masks.maskWhats(ev.target.value))
+                    }}
                     id='whats'
                     blur={formikStep1.handleBlur}/>
                     {
                       formikStep1.touched.whats && formikStep1.errors.whats && <p className='text-red-400 text-xs'>{`${formikStep1.errors.whats}`}</p>
                     }
+                  <button className='flex justify-center items-center gap-2 text-white bg-green-500 font-bold py-3 mt-6 rounded-md'>
+                    Continuar
+                    <HiArrowNarrowRight className='w-6 h-6'/>
+                  </button>
                 </form>
-                <button className='flex justify-center items-center gap-2 text-white bg-green-500 font-bold py-3 mt-6 rounded-md'>
-                  Continuar
-                  <HiArrowNarrowRight className='w-6 h-6'/>
-                </button>
               </>
             }
             {
@@ -128,21 +145,68 @@ export default function PaymentPage() {
           >
             {
               block2.selected === true &&
-              <div className='flex flex-col mt-2 gap-4 w-full'>
+              <form className='flex flex-col mt-2 w-full'>
                 <div className='grid grid-cols-2'>
-                  <InputPayment title={'CEP'} placeholder={''}/>
+                  <div className='flex flex-col'>
+                    <InputPayment 
+                      title={'CEP'} 
+                      placeholder={''}
+                      field={ formikStep2.values.cep}
+                      setField = {(ev) => {
+                        formikStep2.setFieldValue('cep', masks.maskCEP(ev.target.value))
+                      }}
+                      id='cep'
+                      blur={formikStep2.handleBlur}
+                    />
+                    {
+                      formikStep2.touched.cep && formikStep2.errors.cep && <p className='text-red-400 text-xs'>{`${formikStep2.errors.cep}`}</p>
+                    }
+                  </div>
+                  
                 </div>
                 {
                   validCEP && 
                   <>
-                    <InputPayment title={'Endereço'} placeholder={''}/>
+                    <InputPayment 
+                      title={'Endereço'} 
+                      placeholder={''}
+                      field={ formikStep2.values.endereco}
+                      setField = {formikStep2.handleChange}
+                      id='endereco'
+                      blur={formikStep2.handleBlur}
+                    />
+                    {
+                      formikStep2.touched.endereco && formikStep2.errors.endereco && <p className='text-red-400 text-xs'>{`${formikStep2.errors.endereco}`}</p>
+                    }
                     <div className='grid grid-cols-3 gap-3'>
-                      <InputPayment title={'Número'} placeholder={''}/>
+                      <div className='flex flex-col'>
+                        <InputPayment 
+                          title={'Número'} 
+                          placeholder={''}
+                          field={ formikStep2.values.numero}
+                          setField = {formikStep2.handleChange}
+                          id='numero'
+                          blur={formikStep2.handleBlur}
+                        />
+                        {
+                          formikStep2.touched.numero && formikStep2.errors.numero && <p className='text-red-400 text-xs'>{`${formikStep2.errors.numero}`}</p>
+                        }
+                      </div>                      
                       <div className=' col-span-2'>
-                        <InputPayment title={'Bairro'} placeholder={''}/>
+                        <InputPayment 
+                          title={'Bairro'} 
+                          placeholder={''}
+                          field={ formikStep2.values.bairro}
+                          setField = {formikStep2.handleChange}
+                          id='bairro'
+                          blur={formikStep2.handleBlur}
+                        />
+                        {
+                          formikStep2.touched.bairro && formikStep2.errors.bairro && <p className='text-red-400 text-xs'>{`${formikStep2.errors.bairro}`}</p>
+                        }
                       </div>
                     </div>
-                    <InputPayment title={'Complemento (opcional)'} placeholder={'(00) 00000-0000'}/>
+                    <InputPayment title={'Complemento (opcional)'} placeholder={''}/>
                     <button className='flex justify-center items-center gap-2 text-white bg-green-500 font-bold py-3 mt-2 rounded-md'>
                       Continuar
                     <HiArrowNarrowRight className='w-6 h-6'/>
@@ -150,7 +214,7 @@ export default function PaymentPage() {
                   </>
                 }
                 
-              </div>
+              </form>
             }
 
             {
