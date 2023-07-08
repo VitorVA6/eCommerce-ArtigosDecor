@@ -8,13 +8,14 @@ import { useFormik } from 'formik';
 import { block1Schema, block2Schema } from '../schemas';
 import masks from '../utils/masks.js';
 import axios from 'axios';
+import checkComplete from '../utils/checkComplete';
 
 export default function PaymentPage() {
 
     const [validCEP, setValidCEP] = useState(false)
     const [block1, setBlock1] = useState({selected:true, completed:false, disabled: false})
-    const [block2, setBlock2] = useState({selected:false, completed:true, disabled: false})
-    const [block3, setBlock3] = useState({selected:false, completed:false, disabled: false})
+    const [block2, setBlock2] = useState({selected:false, completed:false, disabled: false})
+    const [block3, setBlock3] = useState({selected:false, completed:false, disabled: true})
     const [changeBlock, setChangeBlock] = useState('1')
     const [errorCEP, setErrorCEP] = useState('')
 
@@ -48,6 +49,8 @@ export default function PaymentPage() {
         axios.get(`https://viacep.com.br/ws/${formikStep2.values.cep}/json/`)
         .then(({data}) => {
           if(!!data.erro){
+            formikStep2.setFieldValue('endereco', '')
+            formikStep2.setFieldValue('bairro', '')
             setErrorCEP('CEP inválido.')
           }else{
             formikStep2.setFieldValue('endereco', data?.logradouro)
@@ -66,11 +69,11 @@ export default function PaymentPage() {
     useEffect(()=>{
       if(changeBlock === '1'){
         setBlock1(prev => ({...prev, selected: true, completed: false}))
-        setBlock2(prev => ({...prev, selected: false}))
+        setBlock2(prev => ({...prev, selected: false, completed: checkComplete(formikStep2.errors, formikStep2.values)}))
         setBlock3(prev => ({...prev, selected: false}))
       }
       else if(changeBlock === '2'){
-        setBlock1(prev => ({...prev, selected: false}))
+        setBlock1(prev => ({...prev, selected: false, completed: checkComplete(formikStep1.errors, formikStep1.values)}))
         setBlock2(prev => ({...prev, selected: true, completed: false}))
         setBlock3(prev => ({...prev, selected: false}))
       }
@@ -147,9 +150,9 @@ export default function PaymentPage() {
               block1.completed === true && 
               <>
                 <div className='flex flex-col mt-3'>
-                  <h3 className='font-medium mb-3'>Vitor Vaz Andrade</h3>
-                  <h3 className='text-sm text-gray-600'>mandradejunior.vva@gmail.com</h3>
-                  <h3 className='text-sm text-gray-600'>CPF 066.533.075-81</h3> 
+                  <h3 className='font-medium mb-3'>{`${formikStep1.values.name}`}</h3>
+                  <h3 className='text-sm text-gray-600'>{`${formikStep1.values.cpf}`}</h3>
+                  <h3 className='text-sm text-gray-600'>{`${formikStep1.values.whats}`}</h3> 
                 </div>
               </>
             }
