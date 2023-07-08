@@ -9,6 +9,7 @@ import PageNotFound from './pages/PageNotFound'
 import CarrinhoProvider from './contexts/Carrinho'
 import ProductProvider from './contexts/Product'
 import CatalogProvider from './contexts/Catalog'
+import PaymentProvider from './contexts/Payment'
 import UserProvider from './contexts/User'
 import Admin from './pages/Admin'
 import Login from './pages/Login'
@@ -31,6 +32,7 @@ function App() {
       <UserProvider>
       <ProductProvider>
       <CatalogProvider>
+      <PaymentProvider>
       <Routes>
         <Route path='/' element={<Base />}>
           <Route index element={<Home />} />
@@ -45,6 +47,7 @@ function App() {
         <Route path='/users/verify/:token' element={<EmailVerify />}/>
         <Route path='/recovery-pw' element={<RecoveryPw />}/>
       </Routes>
+      </PaymentProvider>
       </CatalogProvider>
       </ProductProvider>
       </UserProvider>
