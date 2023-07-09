@@ -23,6 +23,11 @@ export default function PaymentProvider ( {children} ){
         },
         validationSchema: block1Schema,
         onSubmit: values =>{
+            if(block2.completed === false){
+                setChangeBlock('2')
+            }else{
+                setChangeBlock('3')
+            }
         }
       })
     const formikStep2 = useFormik({
@@ -36,6 +41,11 @@ export default function PaymentProvider ( {children} ){
         },
         validationSchema: block2Schema,
         onSubmit: values =>{
+            if(block1.completed === false){
+                setChangeBlock('1')
+            }else{
+                setChangeBlock('3')
+            }
         }
     })
 
@@ -76,17 +86,17 @@ export function usePaymentContext(){
         if(changeBlock === '1'){
             setBlock1(prev => ({...prev, selected: true, completed: false}))
             setBlock2(prev => ({...prev, selected: false, completed: checkComplete(formikStep2.errors, formikStep2.values)}))
-            setBlock3(prev => ({...prev, selected: false}))
+            setBlock3(prev => ({...prev, selected: false, disabled: true}))
         }
         else if(changeBlock === '2'){
             setBlock1(prev => ({...prev, selected: false, completed: checkComplete(formikStep1.errors, formikStep1.values)}))
             setBlock2(prev => ({...prev, selected: true, completed: false}))
-            setBlock3(prev => ({...prev, selected: false}))
+            setBlock3(prev => ({...prev, selected: false, disabled: true}))
         }
         else if(changeBlock === '3'){
-            setBlock1(prev => ({...prev, selected: false}))
-            setBlock2(prev => ({...prev, selected: false}))
-            setBlock3(prev => ({...prev, selected: true, completed: false}))
+            setBlock1(prev => ({...prev, selected: false, completed: true}))
+            setBlock2(prev => ({...prev, selected: false, completed: true}))
+            setBlock3(prev => ({...prev, selected: true, completed: false, disabled: false}))
         }
     }
 

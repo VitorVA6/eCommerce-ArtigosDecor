@@ -1,4 +1,4 @@
-import * as yup from 'yup' 
+import * as yup from 'yup'
 
 const regexNomeComposto = /^([a-zA-ZÀ-ÿ]+)( [a-zA-ZÀ-ÿ]+)/
 
@@ -15,7 +15,7 @@ export const passwordSchema = yup.object().shape({
 })
 
 export const block1Schema = yup.object().shape({
-    name: yup.string().min(6, 'Digite seu nome completo').matches(regexNomeComposto, 'aaa.').required('Campo obrigatório'),
+    name: yup.string().min(6, 'Digite seu nome completo').matches(regexNomeComposto, 'Digite seu nome completo.').required('Campo obrigatório'),
     cpf: yup.string().min(14, 'Campo inválido').required('Campo obrigatório'),
     whats: yup.string().min(15, 'Campo inválido').required('Campo obrigatório')
 })

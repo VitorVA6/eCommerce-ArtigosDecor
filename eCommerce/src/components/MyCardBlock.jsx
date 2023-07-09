@@ -10,45 +10,47 @@ export default function MyCardBlock() {
     }, [] )
 
   return (
-    <Card
-        initialization={{ 
-            amount: 100
-        }}
-        customization={{
-            visual: {
-                texts: {
-                    formTitle: "",
-                    emailSectionTitle: "Receba a confirmação",
-                    installmentsSectionTitle: "",
-                    cardholderName: {
-                        label: "",
-                        placeholder: "",
-                    },
-                    email: {
-                        label: "",
-                        placeholder: "",
-                    },
-                    cardholderIdentification: {
-                        label: "",
-                    },
-                    cardNumber: {
-                        label: "",
-                    },
-                    expirationDate: {
-                        label: "",
-                    },
-                    securityCode: {
-                        label: "",
-                    },
-                    selectInstallments: "",
-                    selectIssuerBank: "",
-                    formSubmit: "",
-                }
-            }}}
-        onSubmit={async (param) => {
-            const response = await axios.post('/mercado-pago/process_payment', param)
-            console.log(response)
-        }}
+    <div className='mt-3 -mx-[18px]'>
+        <Card
+            initialization={{ 
+                amount: 100
+            }}
+            customization={{
+                visual: {
+                    texts: {
+                        formTitle: "",
+                        emailSectionTitle: "Receba a confirmação",
+                        installmentsSectionTitle: "",
+                        cardholderName: {
+                            label: "",
+                            placeholder: "",
+                        },
+                        email: {
+                            label: "",
+                            placeholder: "",
+                        },
+                        cardholderIdentification: {
+                            label: "",
+                        },
+                        cardNumber: {
+                            label: "",
+                        },
+                        expirationDate: {
+                            label: "",
+                        },
+                        securityCode: {
+                            label: "",
+                        },
+                        selectInstallments: "",
+                        selectIssuerBank: "",
+                        formSubmit: "",
+                    }
+                }}}
+            onSubmit={async (param) => {
+                const response = await axios.post('/mercado-pago/process_payment', param)
+                console.log(response)
+            }}
         />
+    </div>
   )
 }

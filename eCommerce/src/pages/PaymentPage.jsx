@@ -37,7 +37,10 @@ export default function PaymentPage() {
             {
               block1.selected === true && 
               <>
-                <form className='flex flex-col mt-3'>
+                <form 
+                  className='flex flex-col mt-3'
+                  onSubmit={formikStep1.handleSubmit}
+                >
                   <InputPayment 
                     title={'Nome completo'} 
                     placeholder={'ex.: Paulo Henrique Martins'}
@@ -107,7 +110,10 @@ export default function PaymentPage() {
           >
             {
               block2.selected === true &&
-              <form className='flex flex-col mt-2 w-full'>
+              <form 
+                className='flex flex-col mt-2 w-full'
+                onSubmit={formikStep2.handleSubmit}
+              >
                 <div className='grid grid-cols-2'>
                   <div className='flex flex-col'>
                     <InputPayment 
@@ -206,9 +212,7 @@ export default function PaymentPage() {
         >
           {
             block3.selected === true &&
-            <div className='mt-3 -mx-[18px]'>
-                <MyCardBlock />
-            </div>    
+            <MyCardBlock />   
           }
                 
         </PaymentBlock>

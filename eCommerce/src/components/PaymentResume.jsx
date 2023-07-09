@@ -1,7 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {IoTicketOutline} from 'react-icons/io5'
+import { useCarrinhoContext } from '../contexts/Carrinho'
+import { Navigate } from 'react-router-dom'
 
 export default function PaymentResume() {
+
+    const {total} = useCarrinhoContext()
+
+    if(total === 0){
+        return <Navigate to={'/'}/>
+    }
+
   return (
     <div className='flex flex-col bg-white px-6 py-7 rounded-lg shadow-md/90 h-fit opacity-80'>
         <h2 className='font-bold text-lg mb-2.5'>RESUMO</h2>
@@ -22,11 +31,11 @@ export default function PaymentResume() {
         <div className='flex flex-col bg-gray-100/90 rounded-md px-5 py-6 mt-5 gap-4'>
             <div className='flex justify-between items-center text-sm'>
                 <h3 className='font-bold'>Produtos</h3>
-                <h3 className='font-bold'>R$ 108,90</h3>
+                <h3 className='font-bold'>{`R$ ${total}`}</h3>
             </div>
             <div className='flex justify-between items-center text-[#28be09]'>
                 <h3 className='font-bold'>Total</h3>
-                <h3 className='font-bold text-lg'>R$ 108,90</h3>
+                <h3 className='font-bold text-lg'>{`R$ ${total}`}</h3>
             </div>
         </div>
     </div>

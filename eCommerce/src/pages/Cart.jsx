@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useCarrinhoContext } from '../contexts/Carrinho'
+import {Link} from 'react-router-dom'
 
 export default function Cart() {
 
@@ -70,7 +71,7 @@ export default function Cart() {
                     <p className='font-medium'>Total</p>
                     <p className='font-medium'>{total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                 </div>
-                <button className='w-full py-3 bg-gray-800 text-white rounded-lg'>Finzalizar compra</button>
+                <Link to={'/payment'} className='flex justify-center w-full py-3 bg-gray-800 text-white rounded-lg'>Finzalizar compra</Link>
             </div>
         </div>
     </section>
