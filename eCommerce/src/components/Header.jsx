@@ -40,8 +40,8 @@ export default function Header() {
                     <MenuMobile setMenu={setMenu} catalog={catalog}/>
                 }
                 <FiMenu className='w-7 h-7 md:hidden' onClick={() => setMenu(true)}/>
-                <Link to={'/'}>
-                    <img className='w-[160px] h-[80px]' src="../src/images/logo-artigos-decor.png" alt="logo" />
+                <Link to={'/'} className='text-3xl font-bold text-blue-400'>
+                    SUA LOGO
                 </Link >
                 
                 <div className='hidden md:flex rounded-md w-1/2 bg-white items-center justify-between'>
