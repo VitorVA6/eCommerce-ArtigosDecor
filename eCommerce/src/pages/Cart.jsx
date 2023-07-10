@@ -19,13 +19,16 @@ export default function Cart() {
         <h2 className='pt-20 mb-5  font-bold text-[40px] text-black/80'>Meu Carrinho</h2>
         <div className = 'grid grid-cols-7 gap-12'>
             <div className='flex flex-col col-span-5 w-full'>
-                <div className='grid grid-cols-6 text-gray-500/80 py-4 font-medium border-b'>
-                    <h3 className='col-span-3'>PRODUTO</h3>
-                    <h3 className='col-span-1'>PREÇO</h3>
-                    <h3 className='col-span-1 pl-[16%]'>QTD</h3>
-                    <h3 className='col-span-1'>TOTAL</h3>
-                </div>                
-                { carrinho.length > 0 ? carrinho.map( (elemento, index) => (
+                              
+                { carrinho.length > 0 ? 
+                    <>
+                    <div className='grid grid-cols-6 text-gray-500/80 py-4 font-medium border-b'>
+                        <h3 className='col-span-3'>PRODUTO</h3>
+                        <h3 className='col-span-1'>PREÇO</h3>
+                        <h3 className='col-span-1 pl-[16%]'>QTD</h3>
+                        <h3 className='col-span-1'>TOTAL</h3>
+                    </div>  
+                    {carrinho.map( (elemento, index) => (
                     <div key={elemento?._id} className={`grid grid-cols-6 py-5 items-center ${index<(carrinho.length-1)&&'border-b border-gray-300'}`}>
                         <div className='flex gap-5 col-span-3'>
                             <img src={`http://localhost:4000/images/products/${elemento?.img[0]}`} alt="Imagem do produto" className='rounded-sm w-24 h-24'/>
@@ -51,13 +54,15 @@ export default function Cart() {
                             <IoMdClose className='w-4 h-4 text-black/80 cursor-pointer m-1' onClick={() => removeCarrinho(elemento._id)} />
                         </div>
                     </div>
-                ) ): <div className='py-5'>
-                    <h1 className='my-2 font-medium'>Seu carrinho de compras está vazio.</h1>
-                    <h2 className='mb-2 text-sm'>Não perca tempo e preencha-o com lindos artigos de decoração.</h2>
+                ) )}</>: <div className='flex flex-col py-5 h-[240px]'>
+                        <h1 className='my-2 font-medium text-2xl text-black/80'>Seu carrinho de compras está vazio.</h1>
+                        <h2 className='mb-2 text-black/80'>Não perca tempo e preencha-o com lindos artigos de decoração.</h2>
+                        <Link to={'/'} className='flex justify-center w-[40%] py-3 bg-blue-600 text-white mt-3'>CONTINUAR COMPRANDO</Link>
                     </div>}            
                 
                 
             </div>
+            { carrinho.length > 0 &&
             <div className='flex flex-col gap-5 col-span-2'>
                 <div className='w-full h-fit bg-gray-100 py-4 px-5 rounded-md'>
                     <h2 className='text-[22px] font-bold text-black/80 pb-4 border-b'>Resumo</h2>
@@ -81,8 +86,9 @@ export default function Cart() {
                         <p className='font-medium'>{total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                     </div>
                 </div>
-                <Link to={'/payment'} className='flex justify-center w-full py-3 bg-blue-700 text-white'>CHECKOUT</Link>
-            </div>            
+                <Link to={'/payment'} className='flex justify-center w-full py-3 bg-blue-600 text-white'>CHECKOUT</Link>
+            </div> 
+            }           
         </div>
     </section>
   )
