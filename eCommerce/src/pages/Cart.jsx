@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useCarrinhoContext } from '../contexts/Carrinho'
+import {useCarrinhoContext} from '../contexts/Carrinho'
 import {Link} from 'react-router-dom'
 import {AiOutlineMinus, AiOutlinePlus} from 'react-icons/ai'
 import {IoMdClose} from 'react-icons/io'
@@ -11,46 +11,67 @@ export default function Cart() {
 
     useEffect(() => {
         listaCarrinho()
-        console.log(carrinho)
     }, []);
 
   return (
-    <section className='bg-white px-20 pb-20 -mb-16'>
-        <h2 className='pt-20 mb-5  font-bold text-[40px] text-black/80'>Meu Carrinho</h2>
-        <div className = 'grid grid-cols-7 gap-12'>
-            <div className='flex flex-col col-span-5 w-full'>
+    <section className='bg-white px-5 md:px-20 pb-20 -mb-16'>
+        <h2 className='pt-10 md:pt-12 lg:pt-16 xl:pt-20 mb-10 lg:mb-8 font-bold text-[30px] md:text-[36px] text-black/80'>Meu Carrinho</h2>
+        <div className = 'grid lg:grid-cols-12 xl:grid-cols-7 gap-12'>
+            <div className='flex flex-col lg:col-span-8 xl:col-span-5 w-full border-y border-gray-300 md:border-none'>
                               
                 { carrinho.length > 0 ? 
                     <>
-                    <div className='grid grid-cols-6 text-gray-500/80 py-4 font-medium border-b'>
+                    <div className='hidden md:grid grid-cols-5 xl:grid-cols-6 text-gray-500/80 py-4 font-medium border-b'>
                         <h3 className='col-span-3'>PRODUTO</h3>
-                        <h3 className='col-span-1'>PREÇO</h3>
-                        <h3 className='col-span-1 pl-[16%]'>QTD</h3>
+                        <h3 className='col-span-1 hidden xl:block'>PREÇO</h3>
+                        <h3 className='col-span-1 pl-[16%] hidden md:block'>QTD</h3>
                         <h3 className='col-span-1'>TOTAL</h3>
                     </div>  
                     {carrinho.map( (elemento, index) => (
-                    <div key={elemento?._id} className={`grid grid-cols-6 py-5 items-center ${index<(carrinho.length-1)&&'border-b border-gray-300'}`}>
+                    <div key={elemento?._id} 
+                        className={`flex md:grid md:grid-cols-5 xl:grid-cols-6 py-5 md:items-center ${index<(carrinho.length-1)&&'border-b border-gray-300'}`}>
                         <div className='flex gap-5 col-span-3'>
-                            <img src={`http://localhost:4000/images/products/${elemento?.img[0]}`} alt="Imagem do produto" className='rounded-sm w-24 h-24'/>
-                            <div className='flex flex-col justify-center'>    
-                                <p className='font-medium text-black/80'>{elemento?.title}</p>
-                                <p className='text-xs font-medium text-gray-500/80'>{`#${elemento?._id}`}</p>                                
+                            <img src={`http://localhost:4000/images/products/${elemento?.img[0]}`} alt="Imagem do produto" className='rounded-sm w-20 h-20 md:w-[72px] md:h-[72px] lg:w-20 lg:h-20 xl:w-24 xl:h-24'/>
+                            <div className='flex flex-col md:justify-center'>    
+                                <p className='md:font-medium text-black/80 text-sm md:text-base w-full'>{elemento?.title}</p>
+                                <p className='hidden md:block text-xs font-medium text-gray-500/80'>{`#${elemento?._id}`}</p>   
+                                <p className='font-bold text-black/80 md:hidden'>{elemento?.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                                <div className='flex items-center md:hidden gap-[60px] text-sm mt-3'>                                    
+                                    <div className='flex rounded-lg items-center h-6'>
+                                        <div className='w-8 border border-gray-500/80 justify-center h-full rounded-l-lg bg-gray-300 flex items-center'>
+                                            <AiOutlineMinus
+                                                className='w-3 h-3 cursor-pointer'
+                                                onClick={()=>alteraQuantidade(elemento?._id, '-')}
+                                            />
+                                        </div>
+                                        <p className='text-center px-3 border-y border-gray-500/80 flex items-center h-full'>{elemento?.quantidade}</p>
+                                        <div className='w-8 justify-center border border-gray-500/80 rounded-r-lg h-full bg-gray-300 flex items-center'>
+                                            <AiOutlinePlus
+                                                className='w-4 h-3 cursor-pointer'
+                                                onClick={()=>alteraQuantidade(elemento?._id, '+')}
+                                            />
+                                        </div>
+                                    </div> 
+                                    <button className='rounded-lg px-3 py-1 text-xs bg-gray-200 border border-gray-400'>
+                                        Excluir
+                                    </button>     
+                                </div>                
                             </div>
                         </div>
-                        <p className='font-medium text-lg text-black/80'>{elemento?.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
-                        <div className='flex items-center text-black/80 font-medium gap-4 text-lg'>
-                            <AiOutlineMinus 
-                                className='w-4 h-4 text-black/80 cursor-pointer'
+                        <p className='font-medium text-lg text-black/80 hidden xl:block'>{elemento?.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                        <div className='items-center text-black/80 font-medium gap-4 hidden md:flex xl:text-lg'>
+                            <AiOutlineMinus
+                                className='lg:w-3 lg:h-3.5 xl:w-4 xl:h-4 text-black/80 cursor-pointer'
                                 onClick={()=>alteraQuantidade(elemento?._id, '-')}
                             />
-                            <p className=' text-center '>{elemento?.quantidade}</p>
-                            <AiOutlinePlus 
-                                className='w-4 h-4 text-black/80 cursor-pointer'
+                            <p className='text-center'>{elemento?.quantidade}</p>
+                            <AiOutlinePlus
+                                className='lg:w-3 lg:h-3.5 xl:w-4 xl:h-4 text-black/80 cursor-pointer'
                                 onClick={()=>alteraQuantidade(elemento?._id, '+')}
                             />
                         </div>
-                        <div className='flex justify-between items-center w-full'>
-                            <p className='font-medium text-lg text-black/80'>{(elemento?.preco*elemento?.quantidade).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                        <div className='hidden md:flex justify-between items-center w-full'>
+                            <p className='font-medium xl:text-lg text-black/80'>{(elemento?.preco*elemento?.quantidade).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                             <IoMdClose className='w-4 h-4 text-black/80 cursor-pointer m-1' onClick={() => removeCarrinho(elemento._id)} />
                         </div>
                     </div>
@@ -63,27 +84,27 @@ export default function Cart() {
                 
             </div>
             { carrinho.length > 0 &&
-            <div className='flex flex-col gap-5 col-span-2'>
+            <div className='flex flex-col gap-5 lg:col-span-4 xl:col-span-2'>
                 <div className='w-full h-fit bg-gray-100 py-4 px-5 rounded-md'>
-                    <h2 className='text-[22px] font-bold text-black/80 pb-4 border-b'>Resumo</h2>
+                    <h2 className='text-[20px] xl:text-[22px] font-bold text-black/80 pb-4 border-b'>Resumo</h2>
                     <div className='flex flex-col gap-4 border-b py-5'>
                         <div className='flex justify-between'>
-                            <p className='text-sm'>Produtos</p>
-                            <p className='text-sm'>{total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                            <p className='lg:text-sm'>Produtos</p>
+                            <p className='lg:text-sm'>{total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                         </div>
                         <div className='flex justify-between'>
-                            <p className='text-sm'>Frete</p>
-                            <p className='text-sm'>Grátis</p>
+                            <p className='lg:text-sm'>Frete</p>
+                            <p className='lg:text-sm'>Grátis</p>
                         </div>
-                        <button className='flex items-center gap-1 font-medium text-sm'>
+                        <button className='flex items-center gap-1 font-medium lg:text-sm'>
                             Adicionar Cupom 
                             <FiChevronRight />
                         </button>
                         
                     </div>
                     <div className='flex justify-between pt-5'>
-                        <p className='font-medium'>Total</p>
-                        <p className='font-medium'>{total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                        <p className='font-medium text-[18px] lg:text-base'>Total</p>
+                        <p className='font-medium text-[18px] lg:text-base'>{total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                     </div>
                 </div>
                 <Link to={'/payment'} className='flex justify-center w-full py-3 bg-blue-600 text-white'>CHECKOUT</Link>
