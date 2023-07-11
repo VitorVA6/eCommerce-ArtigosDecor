@@ -1,35 +1,45 @@
 import React, { createContext, useContext, useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import {useFormik} from 'formik'
+import {loginSchema} from '../schemas'
 
 export const UserContext = createContext()
 
 export default function UserProvider({children}){
     const [authenticated, setAuthenticated] = useState(false)
     const [email, setEmail] = useState('')
+    const loginForm = useFormik({
+        enableReinitialize: true,
+        initialValues: {
+            email: '',
+            password: ''
+        },
+        validationSchema: loginSchema,
+        onSubmit: values => {
+            const url = '/users/login'            
+            axios.post(url, values).then(response => {
+                setAuthenticated(true)
+                localStorage.setItem('token', response.data.token)
+                setEmail(response.data.email)
+            })
+            .catch(err => console.log(err.response.data))                
+        }
+    })
 
     return (
-        <UserContext.Provider value = {{authenticated, setAuthenticated, setEmail, email}}>
+        <UserContext.Provider value = {{authenticated, setAuthenticated, loginForm, email, setEmail}}>
             {children}
         </UserContext.Provider>
     )
 }
 
 export function useUserContext(){
-    const {authenticated, setAuthenticated, setEmail, email} = useContext(UserContext)
+    const {authenticated, setAuthenticated, loginForm, email, setEmail} = useContext(UserContext)
     const navigate = useNavigate()
 
     async function login(email, password){
-        const url = '/users/login'
-        try{
-            const response = await axios.post(url, {email, password})
-            setAuthenticated(true)
-            localStorage.setItem('token', response.data.token)
-            setEmail(response.data.email)
-            
-        }catch(err){
-            console.log(err.response.data)
-        }
+        
     }
 
     function logout(){
@@ -78,11 +88,12 @@ export function useUserContext(){
 
     return {
         authenticated,
+        loginForm,
+        email, 
+        setEmail,
         checkAuth,
         login,
         logout,
-        email,
-        setEmail,
         getUser,
         updateUser
     }

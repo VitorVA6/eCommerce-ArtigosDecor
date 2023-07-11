@@ -282,9 +282,9 @@ export default function Produto() {
                         <button className='px-6 py-3 mb-1' onClick={() => mudaQuantidade('+')}>+</button>
                     </div>
                     <button 
-                        className='bg-gray-800 text-white py-2 w-full rounded-md'
+                        className='bg-green-600 text-white py-2 w-full rounded-md font-medium text-lg'
                         onClick={() => addCarrinho(produto, quantidade)}
-                    >Comprar</button>
+                    >Comprar agora</button>
                 </div>
             </div>
         </section>

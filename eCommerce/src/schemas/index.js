@@ -8,6 +8,11 @@ export const emailSchema = yup.object().shape({
     .required("Campo obrigatório.")
 })
 
+export const loginSchema = yup.object().shape({
+    email: yup.string().email('Formato inválido').required('Campo obrigatório'),
+    password: yup.string().required('Campo obrigatório.')
+})
+
 export const passwordSchema = yup.object().shape({
     password: yup.string().min(6, 'Senha muito curta').required('Campo obrigatório.'),
     newPassword: yup.string().min(6, 'Senha muito curta').required('Campo obrigatório.'),
