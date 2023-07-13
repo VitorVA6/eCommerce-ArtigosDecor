@@ -8,6 +8,7 @@ import {BsCart2} from 'react-icons/bs'
 import {FiPackage} from 'react-icons/fi'
 import {IoReturnDownBackSharp} from 'react-icons/io5'
 import {AiOutlineHeart} from 'react-icons/ai'
+import {BiSearch} from 'react-icons/bi'
 import { useCategoryContext } from '../contexts/Category'
 
 export default function Header() {
@@ -48,17 +49,14 @@ export default function Header() {
                     SUA LOGO
                 </Link >
                 
-                <div className='hidden md:flex rounded-md w-1/2 bg-white items-center justify-between'>
+                <div className='hidden md:flex rounded-xl w-[45%] bg-white items-center justify-between'>
                     <input 
                         type="text" 
                         placeholder='Busque aqui seu produto'
-                        className='py-2 px-4 rounded-full flex items-center outline-none text-black'  
+                        className='py-2.5 px-5 rounded-full w-full flex items-center outline-none text-black text-sm'  
                     />
-                    <button className='w-10 h-full justify-center flex'>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" 
-                            viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-black cursor-pointer">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                        </svg>
+                    <button className='w-14 h-full justify-center flex'>
+                        <BiSearch className='w-[26px] h-[26px] text-blue-500'/>
                     </button>
 
                 </div>

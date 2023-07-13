@@ -9,7 +9,7 @@ import {AiOutlinePlus} from 'react-icons/ai'
 export default function Footer() {
 
     const {catalog} = useCatalogContext()
-    const classItems = 'text-sm text-gray-200'
+    const classItems = 'text-[13px] text-gray-200'
 
   return (
     <section className='flex flex-col w-full bg-gray-800 text-white'>
@@ -22,7 +22,7 @@ export default function Footer() {
                 </div>
                 
                 <div className='flex flex-col gap-y-2'>
-                    <Link to={'/'} className={classItems}>Artigos Decor</Link>
+                    <Link to={'/about-us'} className={classItems}>Artigos Decor</Link>
                     <Link to={'/'} className={classItems}>Política de privacidade</Link>
                     <Link to={'/'} className={classItems}>Política de devolução</Link>
                 </div>
@@ -35,14 +35,14 @@ export default function Footer() {
                     <AiOutlinePlus className='md:hidden'/>
                 </div>
                 <div className='flex flex-col gap-y-2'>
-                {
-                catalog?.email !== '' &&
-                    <h4 className={classItems}>{catalog.email}</h4>
-                }
-                {
-                catalog?.telefone !== ''  &&
-                    <h4 className={classItems}>{catalog.telefone}</h4>
-                }
+                    {
+                    catalog?.email !== '' &&
+                        <h4 className={classItems}>{catalog.email}</h4>
+                    }
+                    {
+                    catalog?.telefone !== ''  &&
+                        <h4 className={classItems}>{catalog.telefone}</h4>
+                    }
                 </div>
                 
                 
@@ -53,12 +53,18 @@ export default function Footer() {
                     <h3 className='font-medium'>Redes sociais</h3>
                     <AiOutlinePlus className='md:hidden'/>
                 </div>
-                <div className='flex flex-col gap-y-2'>
-                    <Link to={'https://www.instagram.com/artigos.decoracoes/'} target={'_blank'} className='text-sm gap-2 flex items-center rounded-full text-gray-200'>
-                        <img className='w-4 h-4' src={insta} alt="Logo do instagram" /> Instagram
+                <div className='flex flex-col gap-y-2 text-[13px]'>
+                    <Link 
+                        to={'https://www.instagram.com/artigos.decoracoes/'} 
+                        target={'_blank'} 
+                        className='gap-2 flex items-center rounded-full text-gray-200'>
+                            <img className='w-4 h-4' src={insta} alt="Logo do instagram" /> Instagram
                     </Link>
-                    <Link to={'https://www.instagram.com/artigos.decoracoes/'} target={'_blank'} className='text-sm gap-2 flex items-center rounded-full text-gray-200'>
-                        <FaFacebookSquare className='w-[17px] h-[17px] text-white'/> Facebook
+                    <Link 
+                        to={'https://www.instagram.com/artigos.decoracoes/'} 
+                        target={'_blank'} 
+                        className='gap-2 flex items-start rounded-full text-gray-200'>
+                            <FaFacebookSquare className='w-[16px] h-[16px] text-white'/> Facebook
                     </Link>
                 </div>
                 
@@ -66,7 +72,7 @@ export default function Footer() {
         </div>
         <div className='flex flex-col justify-between px-20 gap-y-8 py-6 border-t border-t-gray-500 text-xs items-center lg:px-32 lg:flex-row'>
             <p>2023 © TODOS OS DIREITOS RESERVADOS</p>
-            <p className='font-bold text-sm'>Vitor Vaz Andrade</p>
+            <p className='font-medium text-xs'>Desenvolvido por: Vitor Vaz Andrade</p>
         </div>
         <Link 
             to={'https://www.instagram.com/artigos.decoracoes/'} 
