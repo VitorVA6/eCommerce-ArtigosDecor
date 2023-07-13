@@ -326,7 +326,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                                         />
                                     </div>
                                     <div className='flex bg-gray-200 items-center col-span-1 w-[80%] rounded-lg'>
-                                        <p className='px-2.5 py-2 text-[12px] font-medium'>%</p> 
+                                        <p className='px-2.5 py-2 text-[12px] font-medium'>R$</p> 
                                         <input 
                                             type='number' 
                                             className='py-2 px-2 bg-gray-100 text-[13px] w-full rounded-r-lg outline-0'

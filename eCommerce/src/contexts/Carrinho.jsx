@@ -4,8 +4,7 @@ import { createContext, useContext, useState } from "react";
 export const CarrinhoContext = createContext()
 
 export default function CarrinhoProvider ( {children} ){
-    const [carrinho, setCarrinho] = useState([
-        ])
+    const [carrinho, setCarrinho] = useState([])
     const [total, setTotal] = useState(0)
     const [quantTotal, setQuantTotal] = useState(0)
     const [modalCarrinho, setModalCarrinho] = useState(false)

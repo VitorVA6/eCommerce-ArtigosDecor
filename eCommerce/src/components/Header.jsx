@@ -2,20 +2,24 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useCarrinhoContext } from '../contexts/Carrinho'
 import { useCatalogContext } from '../contexts/Catalog'
-import useComponentVisible from './DropDown'
 import {FiMenu} from "react-icons/fi"
 import MenuMobile from './MenuMobile'
 import {BsCart2} from 'react-icons/bs'
 import {FiPackage} from 'react-icons/fi'
 import {IoReturnDownBackSharp} from 'react-icons/io5'
 import {AiOutlineHeart} from 'react-icons/ai'
+import { useCategoryContext } from '../contexts/Category'
 
 export default function Header() {
 
+    const {getCategories, categories} = useCategoryContext()
     const {quantTotal} = useCarrinhoContext ()
     const {catalog} = useCatalogContext()
-    const { ref, isComponentVisible, visibleTrue } = useComponentVisible(false)
     const [menu, setMenu] = useState(false)
+
+    useEffect( () => {
+        getCategories()
+    }, [] )
 
   return (
     <header className='flex flex-col bg-gray-800 text-white justify-between w-full md:justify-center h-fit'>
@@ -75,27 +79,25 @@ export default function Header() {
                 
             </nav>
             <div className='hidden w-full gap-10 py-5 items-center lg:flex justify-center mt-4'>
-                <h4 className='flex gap-2 items-center text-sm cursor-pointer text-white'>
+                <Link to={'/'} className='flex gap-2 items-center text-sm cursor-pointer text-white'>
                     <FiMenu className='w-5 h-5'/>
                     Início
-                </h4>
+                </Link>
                 {
-                    catalog?.categorias?.map(categoria => (
-                        <h4 key={categoria} className='cursor-pointer text-sm text-white'>{categoria}</h4>
+                    categories?.map(categoria => (
+                        <Link 
+                            key={categoria._id} 
+                            className='cursor-pointer text-sm text-white'
+                            to={`/category/${categoria._id}`}
+                        >{categoria.name}</Link>
                     ))
                 }
-                <h4 className='flex items-center text-sm cursor-pointer text-white'>
+                <Link to={'/category/destaques'} className='flex items-center text-sm cursor-pointer text-white'>
                     Destaques
-                </h4>
-                <h4 className='flex items-center text-sm cursor-pointer text-white'>
-                    Novidades
-                </h4>
-                <h4 className='flex items-center text-sm cursor-pointer text-white'>
-                    Entrar em contato
-                </h4>
-                <h4 className='flex items-center text-sm cursor-pointer text-white'>
-                    Sobre nós
-                </h4>
+                </Link>
+                <Link to={'/category/promocoes'} className='flex items-center text-sm cursor-pointer text-white'>
+                    Promoções
+                </Link>
             </div>
             <div className='flex md:hidden rounded-md  bg-white items-center w-full mb-2 justify-between'>
                 <input 

@@ -9,7 +9,6 @@ import Card from '../components/Card'
 import SliderFooter from '../components/SliderFooter'
 import { Link, useParams, Navigate } from 'react-router-dom'
 import ModalOrder from '../components/ModalOrder'
-import {useCatalogContext} from '../contexts/Catalog'
 import Dropdown from '../components/DropDown'
 import { useCategoryContext } from '../contexts/Category'
 
@@ -17,7 +16,6 @@ export default function Category() {
 
   const {getProducts, selCategory, setSelCategory} = useProductContext()
   const {getCategories, categories} = useCategoryContext()
-  const {getCatalog} = useCatalogContext()
   const [layout, setLayout] = useState('grid')
   const [produtos, setProdutos] = useState([])
   const [modalOrder, setModalOrder] = useState(false)
@@ -78,8 +76,8 @@ export default function Category() {
               )
             )
           }
-          <Link to={'/'} className=''>Entrar em contato</Link>
-          <Link to={'/'} className=''>Sobre nós</Link>
+          <Link to={'/category/destaques'} className={`${name === 'destaques' ? 'text-blue-500': ''}`}>Destaques</Link>
+          <Link to={'/category/promocoes'} className={`${name === 'promocoes' ? 'text-blue-500': ''}`}>Promocoes</Link>
         </ul>
       </div>
 
