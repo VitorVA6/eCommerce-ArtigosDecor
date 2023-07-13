@@ -27,9 +27,24 @@ export function useCarrinhoContext(){
                 url = url + `id=${element._id}&`
             });
             axios.get(url).then(({data}) => {
-                setCarrinho(data.map( (elemento) => (
-                    {...elemento, quantidade: carrinho.find( element => element._id === elemento._id).quantidade} 
-                ))) 
+                setCarrinho(data.map( (elemento) => {
+                    const cartElement = carrinho.find( element => element._id === elemento._id)
+                    if(!!cartElement.combinations?.length > 0){
+                        const combination = elemento.combinations.find(el => el.id === cartElement.combinationId)
+                        return {...elemento, 
+                            quantidade: cartElement.quantidade, 
+                            combinationId:cartElement.combinationId, 
+                            preco: combination.price, 
+                            desconto:combination.priceoff}
+                        }    
+                    else{
+                        return {...elemento, 
+                            quantidade: cartElement.quantidade, 
+                            combinationId: undefined,
+                        } 
+                    }
+                }                                  
+                )) 
             })
             .catch( (erro) => {
                 console.log(erro)

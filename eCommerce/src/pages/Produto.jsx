@@ -72,7 +72,7 @@ export default function Produto() {
                 }
             }
             if(flag === true){
-                setProduto( prev => ({...prev, preco: element.price, desconto: element.priceoff}) )
+                setProduto( prev => ({...prev, preco: element.price, desconto: element.priceoff, combinationId: element.id}) )
                 return
             }
 
@@ -114,7 +114,7 @@ export default function Produto() {
                 ...data.product, 
                 preco: data.product.combinations.length > 0 ? data.product.combinations[0].price : data.product.preco,
                 desconto: data.product.combinations.length > 0 ? data.product.combinations[0].priceoff : data.product.desconto,
-                
+                combinationId: data.product.combinations.length > 0 ? data.product.combinations[0].id : undefined
             })
             setSelectedOptions(data.product.variations?.length > 0 ? data.product.variations?.map( el => (
                 {var: el.idVariacao, option:el.idOptions[0]}) ): [])

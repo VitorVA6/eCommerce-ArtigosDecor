@@ -4,14 +4,33 @@ import {Link} from 'react-router-dom'
 import {AiOutlineMinus, AiOutlinePlus} from 'react-icons/ai'
 import {IoMdClose} from 'react-icons/io'
 import {FiChevronRight} from 'react-icons/fi'
+import { useVariationContext } from '../contexts/Variation'
 
 export default function Cart() {
 
     const {carrinho, listaCarrinho, removeCarrinho, alteraQuantidade, total} = useCarrinhoContext()
+    const {variations, getVariations} = useVariationContext()
 
     useEffect(() => {
+        getVariations()
         listaCarrinho()
+
     }, []);
+
+    function fillVarAndOptions(element){
+        let description = ''
+        const comb = element.combinations.find(el => el.id === element.combinationId)
+        comb.combination.forEach(element => {
+            for(let i=0; i<variations.length;i++){
+                const option = variations[i].options.find(el => el.value === element)
+                if(!!option){
+                    description += `${variations[i].name}: ${option.label}${i !== (comb.combination.length-1)?' // ':''}`
+                    break
+                }
+            }
+        });
+        return description
+    }
 
   return (
     <section className='bg-white px-5 md:px-20 pb-20 -mb-16'>
@@ -34,7 +53,11 @@ export default function Cart() {
                             <img src={`http://localhost:4000/images/products/${elemento?.img[0]}`} alt="Imagem do produto" className='rounded-sm w-20 h-20 md:w-[72px] md:h-[72px] lg:w-20 lg:h-20 xl:w-24 xl:h-24'/>
                             <div className='flex flex-col md:justify-center'>    
                                 <p className='md:font-medium text-black/80 text-sm md:text-base w-full'>{elemento?.title}</p>
-                                <p className='hidden md:block text-xs font-medium text-gray-500/80'>{`#${elemento?._id}`}</p>   
+                                <p className='hidden md:block text-xs font-medium text-gray-500/80'>{`#${elemento?._id}`}</p>
+                                {
+                                    elemento?.combinations?.length > 0 &&
+                                    <p className='text-xs font-medium text-gray-500/80'>{`${fillVarAndOptions(elemento)}`}</p>
+                                }
                                 <p className='font-bold text-black/80 md:hidden'>{elemento?.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                                 <div className='flex items-center md:hidden gap-[60px] text-sm mt-3'>                                    
                                     <div className='flex rounded-lg items-center h-6'>
