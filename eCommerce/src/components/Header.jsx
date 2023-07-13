@@ -70,8 +70,6 @@ export default function Header() {
                             {quantTotal}
                         </span>
                     </div>
-                    
-                    
                     <h4 className='font-medium hidden md:block'>Carrinho</h4>
                 </Link>
                 

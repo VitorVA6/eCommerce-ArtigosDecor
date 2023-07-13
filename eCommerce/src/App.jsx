@@ -20,6 +20,8 @@ import CategoryProvider from './contexts/Category'
 import VariationProvider from './contexts/Variation'
 import Payment from './pages/PaymentPage'
 import About from './pages/About'
+import PolicyPage from './pages/PolicyPage'
+import pagestexts from './utils/pagesText'
 
 axios.defaults.baseURL = 'http://[::1]:4000'
 
@@ -42,6 +44,8 @@ function App() {
           <Route path='/cart' element={<Cart />} />
           <Route path='/payment' element={<Payment />} />
           <Route path='/about-us' element={<About />} />
+          <Route path='/devolution-policy' element={<PolicyPage title={'Política de reembolso'} text={pagestexts.devolution} />} />
+          <Route path='/privacy-policy' element={<PolicyPage title={'Política de privacidade'} text={pagestexts.privacy} />} />
         </Route>
         <Route path='/404' element={<PageNotFound />} />
         <Route path='/login' element={<Login />}/>

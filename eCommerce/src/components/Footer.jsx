@@ -23,8 +23,8 @@ export default function Footer() {
                 
                 <div className='flex flex-col gap-y-2'>
                     <Link to={'/about-us'} className={classItems}>Artigos Decor</Link>
-                    <Link to={'/'} className={classItems}>Política de privacidade</Link>
-                    <Link to={'/'} className={classItems}>Política de devolução</Link>
+                    <Link to={'/devolution-policy'} className={classItems}>Política de reembolso</Link>
+                    <Link to={'/privacy-policy'} className={classItems}>Política de privacidade</Link>
                 </div>
                 
             </div>
