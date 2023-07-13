@@ -11,7 +11,7 @@ import { useCategoryContext } from '../contexts/Category'
 
 export default function Home() {
 
-    const {catalog, getCatalog} = useCatalogContext()
+    const {catalog} = useCatalogContext()
     const {getCategories, categories} = useCategoryContext()
 
     const settings = {
@@ -28,7 +28,6 @@ export default function Home() {
     };
 
     useEffect( ()=>{
-      getCatalog()
       getCategories()
     }, [] )
 

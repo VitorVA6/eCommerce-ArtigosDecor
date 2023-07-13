@@ -1,19 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 import Modal from '../components/Modal'
 import { useCarrinhoContext } from '../contexts/Carrinho'
+import {useCatalogContext} from '../contexts/Catalog'
 
 export default function Base() {
 
   const {modalCarrinho} = useCarrinhoContext()
+  const {getCatalog} = useCatalogContext()
+  
+  useEffect(()=>{
+    getCatalog()
+  }, [])
 
   return (
     <section className='flex flex-col h-screen overflow-auto'>
-      {modalCarrinho?<Modal />:<></>}
-        
-      
+      {modalCarrinho?<Modal />:<></>}       
         <Header/> 
         <div className='pb-16 bg-gray-200/40'>
           <Outlet />

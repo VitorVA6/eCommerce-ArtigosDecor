@@ -36,14 +36,12 @@ export default function Footer() {
                 </div>
                 <div className='flex flex-col gap-y-2'>
                 {
-                catalog?.email !== ''?
-                    <h4 className={classItems}>{catalog.email}</h4>:
-                    <></>
+                catalog?.email !== '' &&
+                    <h4 className={classItems}>{catalog.email}</h4>
                 }
                 {
-                catalog?.whats !== '' ?
-                    <h4 className={classItems}>{catalog.whats}</h4>:
-                    <></>
+                catalog?.telefone !== ''  &&
+                    <h4 className={classItems}>{catalog.telefone}</h4>
                 }
                 </div>
                 
