@@ -58,7 +58,7 @@ export default function Cart() {
                                     elemento?.combinations?.length > 0 &&
                                     <p className='text-xs font-medium text-gray-500/80'>{`${fillVarAndOptions(elemento)}`}</p>
                                 }
-                                <p className='font-bold text-black/80 md:hidden'>{elemento?.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                                <p className='font-bold text-black/80 md:hidden'>{(elemento?.desconto>0?elemento?.desconto:elemento?.preco).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                                 <div className='flex items-center md:hidden gap-[60px] text-sm mt-3'>                                    
                                     <div className='flex rounded-lg items-center h-6'>
                                         <div className='w-8 border border-gray-500/80 justify-center h-full rounded-l-lg bg-gray-300 flex items-center'>
@@ -81,7 +81,7 @@ export default function Cart() {
                                 </div>                
                             </div>
                         </div>
-                        <p className='font-medium text-lg text-black/80 hidden xl:block'>{elemento?.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                        <p className='font-medium text-lg text-black/80 hidden xl:block'>{(elemento?.desconto>0?elemento?.desconto:elemento?.preco).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                         <div className='items-center text-black/80 font-medium gap-4 hidden md:flex xl:text-lg'>
                             <AiOutlineMinus
                                 className='lg:w-3 lg:h-3.5 xl:w-4 xl:h-4 text-black/80 cursor-pointer'
@@ -94,7 +94,7 @@ export default function Cart() {
                             />
                         </div>
                         <div className='hidden md:flex justify-between items-center w-full'>
-                            <p className='font-medium xl:text-lg text-black/80'>{(elemento?.preco*elemento?.quantidade).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                            <p className='font-medium xl:text-lg text-black/80'>{((elemento?.desconto>0?elemento?.desconto:elemento?.preco)*elemento?.quantidade).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                             <IoMdClose className='w-4 h-4 text-black/80 cursor-pointer m-1' onClick={() => removeCarrinho(elemento._id)} />
                         </div>
                     </div>

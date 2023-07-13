@@ -105,7 +105,7 @@ export function useCarrinhoContext(){
     }
 
     function calculaTotal (lista = carrinho){
-        setTotal( lista.reduce( (acum, atual) => acum + ( atual.quantidade*atual.preco ), 0 ) )
+        setTotal( lista.reduce( (acum, atual) => acum + ( atual.quantidade*(atual.desconto>0?atual.desconto:atual.preco) ), 0 ) )
         setQuantTotal( lista.reduce( (acum, atual) => acum + atual.quantidade, 0 ) )
     }
 
