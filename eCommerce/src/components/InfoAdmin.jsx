@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import {IoShareSocialOutline} from 'react-icons/io5'
 import { useCatalogContext } from '../contexts/Catalog';
 import ModalRsociais from './ModalRsociais';
+import masks from '../utils/masks.js';
 
 export default function InfoAdmin() {
 
@@ -16,12 +17,12 @@ export default function InfoAdmin() {
   }, [] )
 
   return (
-    <section className='flex flex-col gap-1 items-center'>
+    <section className='flex flex-col gap-1 items-center pb-5'>
       <ToastContainer />
       {
         modalRS && <ModalRsociais setModalRS={setModalRS} catalog={catalog} setCatalog={setCatalog}/>
       }
-      <h2 className='mb-3 font-medium'>Informações</h2>
+      <h2 className='mb-5 font-medium w-full text-xl'>Informações</h2>
       <div className='flex flex-col w-full gap-y-3 bg-white border border-gray-300/80 lg:border-gray-200/70 rounded-lg p-5'>
         <h2 className='flex gap-2 font-medium items-center'>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
@@ -67,7 +68,7 @@ export default function InfoAdmin() {
           value={catalog.telefone}
           onChange={(ev)=> {
             setCatalog( (prev) => {
-              return {...prev, telefone: ev.target.value}
+              return {...prev, telefone: masks.maskWhats(ev.target.value)}
             } )
           }}
         />
@@ -94,7 +95,7 @@ export default function InfoAdmin() {
       </div>
 
       <button 
-        className='rounded-lg bg-blue-500 text-white py-2.5 lg:w-fit px-10 mt-8'
+        className='rounded-lg bg-blue-500 text-white text-sm font-medium py-2.5 lg:py-3 lg:w-fit px-10 mt-8'
         onClick={() => {
           updateCatalog().then(data => {
             if(!!data.message){

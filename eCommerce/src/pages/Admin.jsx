@@ -30,9 +30,9 @@ export default function Admin() {
   return (
     <div className='flex flex-col overflow-hidden'>
         <HeaderAdmin setMenuMobile={setMenuMobile} setAnimate={setAnimate}/>
-        <div className='flex h-screen overflow-y-hidden'>
+        <div className='flex h-screen overflow-y-hidden pt-20'>
             <NavLateralAdmin setSelected={setSelected} animate={animate} setAnimate ={setAnimate} selected={selected} menuMobile={menuMobile} setMenuMobile={setMenuMobile}/>
-            <div className='bg-gray-200/60 lg:bg-gray-100 w-full h-full my-20 overflow-auto px-4 py-8 lg:p-10'>
+            <div className='bg-gray-200/60 lg:bg-gray-100 w-full h-full overflow-auto px-4 py-8 lg:p-10'>
                 { selected === 'catalog' && <CatalogoAdmin /> }
                 { selected === 'info' && <InfoAdmin /> }
                 { selected === 'custom' && <PersoAdmin /> }

@@ -42,7 +42,7 @@ export default function ContaAdmin() {
   return (
     <section className='flex items-center flex-col w-full overflow-auto pb-20'>
       <div className='flex flex-col w-full lg:w-3/5'>
-        <h2 className='mb-3 font-medium text'>Dados cadastrais</h2>
+        <h2 className='mb-3 font-medium'>Dados cadastrais</h2>
         <form 
           className='bg-white py-7 px-7 rounded-xl border border-gray-300/80 lg:border-gray-200/70'
           onSubmit={formikEmail.handleSubmit}  
@@ -70,7 +70,7 @@ export default function ContaAdmin() {
       </div>
 
       <div className='flex flex-col w-full lg:w-3/5 mt-4'>
-        <h2 className='mb-3 font-medium text'>Alterar senha</h2>
+        <h2 className='mb-3 font-medium'>Alterar senha</h2>
         <form 
           className='bg-white py-7 px-7 rounded-xl border border-gray-300/80 lg:border-gray-200/70'
           onSubmit={formikPw.handleSubmit}

@@ -122,7 +122,7 @@ export default function PersoAdmin() {
 
 
       <button 
-        className='rounded-lg bg-blue-500 text-white py-2 w-fit px-10 mt-8'
+        className='rounded-md bg-blue-500 text-white text-sm font-medium py-2.5 lg:py-3 w-fit px-10 mt-8'
         onClick={() => {
           updateCatalog(uploadedImages, images).then(data => {
             setUploadesImages(data.dados.bannerdt)

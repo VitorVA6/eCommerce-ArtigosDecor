@@ -17,7 +17,7 @@ export default function Footer() {
 
             <div className='flex flex-col gap-y-2'>
                 <div className='flex justify-between items-center'>
-                    <h3 className='font-medium'>Sobre</h3>
+                    <h3 className='font-medium  text-lg'>Sobre</h3>
                     <AiOutlinePlus className='md:hidden'/>
                 </div>
                 
@@ -31,7 +31,7 @@ export default function Footer() {
 
             <div className='flex flex-col gap-y-2'>
                 <div className='flex justify-between items-center'>
-                    <h3 className='font-medium'>Contato</h3>
+                    <h3 className='font-medium  text-lg'>Atendimento</h3>
                     <AiOutlinePlus className='md:hidden'/>
                 </div>
                 <div className='flex flex-col gap-y-2'>
@@ -50,7 +50,7 @@ export default function Footer() {
            
             <div className='flex flex-col gap-y-2'>
                 <div className='flex justify-between items-center'>
-                    <h3 className='font-medium'>Redes sociais</h3>
+                    <h3 className='font-medium text-lg'>Redes sociais</h3>
                     <AiOutlinePlus className='md:hidden'/>
                 </div>
                 <div className='flex flex-col gap-y-2 text-[13px]'>

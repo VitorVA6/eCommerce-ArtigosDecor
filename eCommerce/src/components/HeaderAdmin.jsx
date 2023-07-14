@@ -9,7 +9,7 @@ export default function HeaderAdmin({setMenuMobile, setAnimate}) {
     const {catalog} = useCatalogContext()
 
   return (
-    <header className='flex bg-gray-800 text-white justify-between items-center px-6 lg:px-10 h-20 fixed w-full z-30'>
+    <header className='flex bg-gray-800 text-white justify-between items-center px-6 lg:px-10 h-20 fixed w-full z-20'>
         <nav className='flex justify-between items-center w-full'>
             <Link to={'/admin'}>
                 <h1 className='lg:text-lg font-medium'>{'Logo'}</h1>
