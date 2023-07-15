@@ -23,7 +23,7 @@ export default function PaymentPage() {
     }, [changeBlock])
 
   return (
-    <div className='grid xl:grid-cols-3 xl:px-32 py-10 gap-5'>
+    <div className='grid xl:grid-cols-3 md:px-36 lg:px-64 xl:px-32 py-10 gap-5'>
         <ProgressbarPayment />
         <div className='order-2 xl:order-1 flex flex-col gap-5'>
           <PaymentBlock 

@@ -6,7 +6,7 @@ export default function ProgressbarPayment() {
     const {block1, block2, block3, setChangeBlock} = usePaymentContext()
 
   return (
-    <div className='grid grid-cols-3 px-4 xl:hidden h-fit'>
+    <div className='grid grid-cols-3 px-4 md:px-0 xl:hidden h-fit md:my-4'>
         <div 
             className='flex flex-col items-center relative'
             onClick={()=>{
