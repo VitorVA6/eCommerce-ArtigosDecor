@@ -1,7 +1,7 @@
 import React from 'react'
 import {FaCheck} from 'react-icons/fa'
 
-export default function PaymentBlock({step, title, desc, children, selected, completed, disabled, altDesc, setChange}) {
+export default function PaymentBlock({step, title, desc, children, selected, completed, disabled, altDesc, setChange, change}) {
 
     function classTitle(){
         let titleClass = ''
@@ -53,7 +53,7 @@ export default function PaymentBlock({step, title, desc, children, selected, com
 
   return (
     <div 
-        className={`flex flex-col bg-white px-6 py-7 rounded-lg shadow-md/90 h-fit ${cursorClass()} ${disabled===true&&'opacity-40'}`}
+        className={`${step==='3'?'order-2':''} ${change===step?'flex':'hidden'} xl:flex flex-col bg-white px-4 xl:px-6 py-7 xl:rounded-lg shadow-md/90 h-fit ${cursorClass()} ${disabled===true&&'opacity-40'}`}
         onClick={() => {
             if(disabled===false && selected===false){
                 setChange(step)

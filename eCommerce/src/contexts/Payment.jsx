@@ -12,7 +12,7 @@ export default function PaymentProvider ( {children} ){
     const [errorCEP, setErrorCEP] = useState('')
     const [changeBlock, setChangeBlock] = useState('1')
     const [block1, setBlock1] = useState({selected:true, completed:false, disabled: false})
-    const [block2, setBlock2] = useState({selected:false, completed:false, disabled: false})
+    const [block2, setBlock2] = useState({selected:false, completed:false, disabled: true})
     const [block3, setBlock3] = useState({selected:false, completed:false, disabled: true})
     const formikStep1 = useFormik({
         enableReinitialize: true,
@@ -90,13 +90,13 @@ export function usePaymentContext(){
         }
         else if(changeBlock === '2'){
             setBlock1(prev => ({...prev, selected: false, completed: checkComplete(formikStep1.errors, formikStep1.values)}))
-            setBlock2(prev => ({...prev, selected: true, completed: false}))
+            setBlock2(prev => ({selected: true, completed: false, disabled: false}))
             setBlock3(prev => ({...prev, selected: false, disabled: true}))
         }
         else if(changeBlock === '3'){
             setBlock1(prev => ({...prev, selected: false, completed: true}))
             setBlock2(prev => ({...prev, selected: false, completed: true}))
-            setBlock3(prev => ({...prev, selected: true, completed: false, disabled: false}))
+            setBlock3(prev => ({selected: true, completed: false, disabled: false}))
         }
     }
 

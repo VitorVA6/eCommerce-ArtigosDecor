@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect} from 'react'
 import PaymentBlock from '../components/PaymentBlock';
 import InputPayment from '../components/InputPayment';
 import {HiArrowNarrowRight} from 'react-icons/hi'
@@ -6,6 +6,7 @@ import PaymentResume from '../components/PaymentResume';
 import MyCardBlock from '../components/MyCardBlock';
 import masks from '../utils/masks.js';
 import { usePaymentContext } from '../contexts/Payment';
+import ProgressbarPayment from '../components/ProgressbarPayment';
 
 export default function PaymentPage() {
 
@@ -22,8 +23,9 @@ export default function PaymentPage() {
     }, [changeBlock])
 
   return (
-    <div className='grid grid-cols-3 px-32 py-10 gap-5'>
-        <div className='flex flex-col gap-5'>
+    <div className='grid xl:grid-cols-3 xl:px-32 py-10 gap-5'>
+        <ProgressbarPayment />
+        <div className='order-2 xl:order-1 flex flex-col gap-5'>
           <PaymentBlock 
             step={'1'} 
             title={'Identifique-se'} 
@@ -33,6 +35,7 @@ export default function PaymentPage() {
             disabled={block1.disabled}
             altDesc={''}
             setChange={setChangeBlock}
+            change={changeBlock}
           >
             {
               block1.selected === true && 
@@ -107,6 +110,7 @@ export default function PaymentPage() {
             disabled={block2.disabled}
             altDesc={'Preencha suas informações pessoais para continuar.'}
             setChange={setChangeBlock}
+            change={changeBlock}
           >
             {
               block2.selected === true &&
@@ -178,7 +182,8 @@ export default function PaymentPage() {
                       </div>
                     </div>
                     <InputPayment title={'Complemento (opcional)'} placeholder={''}/>
-                    <button className='flex justify-center items-center gap-2 text-white bg-green-500 font-bold py-3 mt-2 rounded-md'>
+                    <button 
+                      className='flex justify-center items-center gap-2 text-white bg-green-500 font-bold py-3 mt-2 rounded-md'>
                       Continuar
                     <HiArrowNarrowRight className='w-6 h-6'/>
                   </button>
@@ -209,6 +214,7 @@ export default function PaymentPage() {
           disabled={block3.disabled}
           altDesc={'Preencha suas informações de entrega para continuar.'}
           setChange={setChangeBlock}
+          change={changeBlock}
         >
           {
             block3.selected === true &&

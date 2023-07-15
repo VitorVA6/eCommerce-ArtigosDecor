@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { FiSmartphone } from "react-icons/fi";
-import { AiOutlineDesktop } from "react-icons/ai";
 import { v4 as uuidv4 } from 'uuid';
 import { useCatalogContext } from '../contexts/Catalog';
 import { GrFormClose } from "react-icons/gr";

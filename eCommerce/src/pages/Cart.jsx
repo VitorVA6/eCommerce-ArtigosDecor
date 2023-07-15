@@ -14,7 +14,6 @@ export default function Cart() {
     useEffect(() => {
         getVariations()
         listaCarrinho()
-
     }, []);
 
     function fillVarAndOptions(element){
