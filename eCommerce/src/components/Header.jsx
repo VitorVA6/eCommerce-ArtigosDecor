@@ -15,7 +15,6 @@ export default function Header() {
 
     const {getCategories, categories} = useCategoryContext()
     const {quantTotal} = useCarrinhoContext ()
-    const {catalog} = useCatalogContext()
     const [menu, setMenu] = useState(false)
 
     useEffect( () => {
@@ -42,10 +41,10 @@ export default function Header() {
             <nav className='flex justify-between items-center w-full'>
                 {
                     menu &&
-                    <MenuMobile setMenu={setMenu} catalog={catalog}/>
+                    <MenuMobile setMenu={setMenu} categories={categories}/>
                 }
-                <FiMenu className='w-7 h-7 md:hidden' onClick={() => setMenu(true)}/>
-                <Link to={'/'} className='text-3xl font-bold text-blue-400'>
+                <FiMenu className='w-[26px] h-[26px] md:hidden' onClick={() => setMenu(true)}/>
+                <Link to={'/'} className='text-2xl md:text-3xl font-bold text-blue-400'>
                     SUA LOGO
                 </Link >
                 
@@ -63,9 +62,9 @@ export default function Header() {
 
                 <Link to={'/cart'} className='flex items-center gap-2 relative h-full'>
                     <div className='flex relative'>
-                        <BsCart2 className="w-7 h-7"/>
+                        <BsCart2 className="w-[26px] h-[26px] md:w-7 md:h-7"/>
                         <span 
-                            className='flex justify-center items-center bg-blue-500 pb-[3.5px] pt-[5px] pl-[7px] pr-[6px] rounded-full text-white font-medium absolute -top-1 -right-1 text-xs leading-none'
+                            className='flex justify-center items-center bg-blue-500 pb-[2.5px] pt-[4px] pl-[6px] pr-[5px] rounded-full text-white font-medium absolute -top-1 -right-1 text-xs leading-none'
                         >
                             {quantTotal}
                         </span>
@@ -95,20 +94,18 @@ export default function Header() {
                     Promoções
                 </Link>
             </div>
-            <div className='flex md:hidden rounded-md  bg-white items-center w-full mb-2 justify-between'>
+
+            <div className='flex md:hidden rounded-xl w-full bg-white items-center justify-between mb-2'>
                 <input 
                     type="text" 
-                    placeholder='O que você procura?'
-                    className='pt-1 pb-1.5 px-4 rounded-full flex items-center outline-none text-black text-sm'  
+                    placeholder='Busque aqui seu produto'
+                    className='py-2 px-5 rounded-full w-full flex items-center outline-none text-black text-sm placeholder-gray-700'  
                 />
-                <button className='justify-center flex mr-2.5'>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" 
-                        viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-black cursor-pointer mb-0.5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                    </svg>
+                <button className='w-14 h-full justify-center flex items-center'>
+                    <BiSearch className='w-[26px] h-[26px] text-blue-500'/>
                 </button>
-
             </div>
+
         </div>
         
     </header>
