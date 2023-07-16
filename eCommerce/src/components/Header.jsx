@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useCarrinhoContext } from '../contexts/Carrinho'
-import { useCatalogContext } from '../contexts/Catalog'
 import {FiMenu} from "react-icons/fi"
 import MenuMobile from './MenuMobile'
 import {BsCart2} from 'react-icons/bs'
@@ -12,14 +11,22 @@ import {BiSearch} from 'react-icons/bi'
 import { useCategoryContext } from '../contexts/Category'
 
 export default function Header() {
-
     const {getCategories, categories} = useCategoryContext()
     const {quantTotal} = useCarrinhoContext ()
     const [menu, setMenu] = useState(false)
+    const navigate = useNavigate()
+    const [key, setKey] = useState('')
 
     useEffect( () => {
         getCategories()
     }, [] )
+
+    function handleSearch(){
+        if(key.length > 0){
+            navigate(`/search/${key}`)
+            setKey('')
+        }
+    }
 
   return (
     <header className='flex flex-col bg-gray-800 text-white justify-between w-full md:justify-center h-fit'>
@@ -52,9 +59,14 @@ export default function Header() {
                     <input 
                         type="text" 
                         placeholder='Busque aqui seu produto'
-                        className='py-2.5 px-5 rounded-full w-full flex items-center outline-none text-black text-sm'  
+                        className='py-2.5 px-5 rounded-full w-full flex items-center outline-none text-black text-sm'
+                        value={key}
+                        onChange={(ev) => setKey(ev.target.value)}
                     />
-                    <button className='w-14 h-full justify-center flex'>
+                    <button 
+                        className='w-14 h-full justify-center flex'
+                        onClick={handleSearch}
+                    >
                         <BiSearch className='w-[26px] h-[26px] text-blue-500'/>
                     </button>
 

@@ -22,6 +22,7 @@ import Payment from './pages/PaymentPage'
 import About from './pages/About'
 import PolicyPage from './pages/PolicyPage'
 import pagestexts from './utils/pagesText'
+import Search from './pages/Search'
 
 axios.defaults.baseURL = 'http://[::1]:4000'
 
@@ -41,6 +42,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path='/produto/:id' element = {<Produto />}/>
           <Route path='/category/:name' element = {<Category />}/>
+          <Route path='/search/:name' element = {<Search />}/>
           <Route path='/cart' element={<Cart />} />
           <Route path='/payment' element={<Payment />} />
           <Route path='/about-us' element={<About />} />
