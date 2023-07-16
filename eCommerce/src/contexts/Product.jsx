@@ -6,7 +6,7 @@ export const ProductContext = createContext()
 export default function ProductProvider( {children} ){
 
     const [produtos, setProdutos] = useState([])
-    const perPage = 10
+    const perPage = 8
     const [selCategory, setSelCategory] = useState('')
 
     return (
@@ -85,28 +85,25 @@ export function useProductContext(){
     }
 
     async function filterProduct(key){
-
         try{
             const {data} = await axios.get('/products/filter', {params:{key: key}} )
             setProdutos(data)
         }catch(err){
             console.log(err)
         }
-
     }
 
-    async function getProducts(limit, pag, category, ordination){
-        
+    async function getProducts(limit, pag, category, ordination, key){    
         try{
             const {data} = await axios.get('/products/all', {params:
                 {
                     p: pag, 
                     limit: limit,
                     category: category,
-                    ordination: ordination
+                    ordination: ordination,
+                    key: !!key ? key : ''
                 }
-        })
-            
+            })          
             if((produtos.length > 0 && pag === 1)|| limit>perPage){
                 setProdutos([ ...data.docs])
                 return data
@@ -114,13 +111,11 @@ export function useProductContext(){
             else if(produtos.length < data.totalDocs){
                 setProdutos( prev => [...prev, ...data.docs])
                 return data
-            }
-            
+            }         
         }
         catch(err){
             console.log(err)
         }
-
     }
 
     async function getProductById(id){

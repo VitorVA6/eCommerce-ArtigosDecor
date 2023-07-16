@@ -59,13 +59,32 @@ module.exports = class ProductController{
 
     } 
 
-    static async getAll(req, res){
+    static async filter(req, res){
+        var {key} = req.query
+        if (!!key){
+            var specialChars = "!@#$^&%*()+=-[]\/{}|:<>?,."
+            for (var i = 0; i < specialChars.length; i++) {
+                key = key.replace(new RegExp("\\" + specialChars[i], "gi"), `\\${specialChars[i]}`);
+            }
+            try{
+                const result = await Product.find({ "title": { "$regex": key, "$options": "i" }})
+                return res.status(200).json(result)
+            }catch(err){
+                return res.status(404).json({error: 'Ocorreu um erro no servidor'})
+            }
+        }
+        else{
+            return res.status(500).json({error: 'Filtragem inválida'})
+        } 
+    }
 
+    static async getAll(req, res){
         const page = parseInt(req.query.p, 10)  || 1
-        const limit = parseInt(req.query.limit, 10)  || 5
+        const limit = parseInt(req.query.limit, 10)  || 8
         const category = req.query.category || 'all'
         const ordination = req.query.ordination || '0'
-
+        var key = req.query.key || ''
+        
         let filter = {}
         let order = {}
          
@@ -79,10 +98,16 @@ module.exports = class ProductController{
                 desconto: { $gt: 0 }
             }
         }
+        else if (key !== ''){
+            var specialChars = "!@#$^&%*()+=-[]\/{}|:<>?,."
+            for (var i = 0; i < specialChars.length; i++) {
+                key = key.replace(new RegExp("\\" + specialChars[i], "gi"), `\\${specialChars[i]}`);
+            }            
+            filter = { "title": { "$regex": key, "$options": "i" }}           
+        }
         else if(category !== 'all'){
             filter = { 'categoria.value': category }
         }
-
         if(ordination === '0'){
             order = {destaque: -1}
         }
@@ -108,7 +133,6 @@ module.exports = class ProductController{
             order = {createdAt: -1}
         }
 
-
         const options = {
             page: page,
             limit: limit,
@@ -117,14 +141,12 @@ module.exports = class ProductController{
             },
             sort: order
         }
-
         Product.paginate(filter, options, function(err, result){
             if (err){
                 return res(404).json({error: 'Ocorreu um erro no servidor.'})
             }
             return res.status(200).json(result)
         })
-
     }
 
     static async getProductById(req, res) {
@@ -289,31 +311,6 @@ module.exports = class ProductController{
             res.status(500).json({error: 'Ocorreu um erro na atualização do produto.'})
         }
 
-    }
-
-    static async filter(req, res){
-
-        var {key} = req.query
-
-        if (!!key){
-
-            var specialChars = "!@#$^&%*()+=-[]\/{}|:<>?,."
-    
-            for (var i = 0; i < specialChars.length; i++) {
-                key = key.replace(new RegExp("\\" + specialChars[i], "gi"), `\\${specialChars[i]}`);
-            }
-
-            try{
-                const result = await Product.find({ "title": { "$regex": key, "$options": "i" }})
-                return res.status(200).json(result)
-            }catch(err){
-                return res.status(404).json({error: 'Ocorreu um erro no servidor'})
-            }
-
-        }
-        else{
-            return res.status(500).json({error: 'Filtragem inválida'})
-        } 
     }
 
     static async getCart(req, res){

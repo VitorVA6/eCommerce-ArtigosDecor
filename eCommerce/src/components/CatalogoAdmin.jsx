@@ -13,7 +13,7 @@ import {useVariationContext} from '../contexts/Variation'
 export default function CatalogoAdmin() {
 
     const {ToastContainer, notifyError, notifySucess} = useCatalogContext()
-    const {produtos, getProducts, filterProduct, perPage} = useProductContext()
+    const {produtos, getProducts, perPage} = useProductContext()
     const { getCategories, categories } = useCategoryContext()
     const { getVariations, variations } = useVariationContext()
 
@@ -31,29 +31,19 @@ export default function CatalogoAdmin() {
     const [hasNext, setHasNext] = useState(false)
     const [nextPage, setNextPage] = useState(1)
 
-    useEffect( () => {
-
+    useEffect(()=>{
         getCategories()
         getVariations()
-        getProducts(perPage, 1, 'all', 'false')
+    }, [])
+
+    useEffect( () => {
+        getProducts(perPage, 1, 'all', 'false', filter)
         .then( data => {
             setHasNext(data.hasNextPage)
             setNextPage(data.nextPage)
         })
         .catch(err => console.log(err))
-
-    }, [] )
-
-    function handleFilter(ev){
-        let filt = ev.target.value
-        setFilter(filt)
-        if(filt.length > 0){
-            filterProduct(filt)
-        }
-        else{
-            getProducts()
-        }
-    }
+    }, [filter] )
 
   return (
     <section className=' overflow-hidden'>
@@ -97,7 +87,7 @@ export default function CatalogoAdmin() {
             placeholder='Buscar produto'
             className='py-1.5 px-6 w-full rounded-md outline-none border mb-5 shadow-lg shadow-gray-200/50 text-sm lg:text-base lg:py-3'
             value={filter}
-            onChange={(ev) => {handleFilter(ev)} }
+            onChange={(ev) => setFilter(ev.target.value) }
         />
 
         <CustomList setEdit={setEdit} title={'Categorias'} customs={categories} setModalCustom={setModalCategoria} setIdCustom={setIdCustom}/>
@@ -118,7 +108,7 @@ export default function CatalogoAdmin() {
                 <button 
                   className='bg-blue-500 py-3 w-1/2 text-white font-medium rounded-lg text-sm mb-20'
                   onClick = {()=> {
-                    getProducts(perPage, nextPage, 'all', 'false')
+                    getProducts(perPage, nextPage, 'all', 'false', filter)
                     .then( data => {
                       setHasNext(data.hasNextPage)
                       setNextPage(data.nextPage)
