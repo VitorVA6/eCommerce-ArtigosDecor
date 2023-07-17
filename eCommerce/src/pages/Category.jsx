@@ -11,6 +11,7 @@ import { Link, useParams, Navigate } from 'react-router-dom'
 import ModalOrder from '../components/ModalOrder'
 import Dropdown from '../components/DropDown'
 import { useCategoryContext } from '../contexts/Category'
+import CategoryFilter from '../components/CategoryFilter'
 
 export default function Category() {
 
@@ -23,7 +24,7 @@ export default function Category() {
   const [carregado, setcarregado] = useState(false)
   const [hasNext, setHasNext] = useState(false)
   const [nextPage, setNextPage] = useState(1)
-
+  const [show, setShow] = useState(true)
   const {name} = useParams()
 
   useEffect(() => {
@@ -64,23 +65,10 @@ export default function Category() {
     <>
     <h3 className='hidden md:flex gap-1 items-center px-10 my-[28px] text-[13px]'>{`Página inicial`} <FiChevronRight className='w-[12px] h-[12px]'/> {`Armeiro`}</h3>
     <section className='flex md:grid md:grid-cols-10 overflow-x-hidden lg:gap-x-[30px] w-full md:px-10 pb-2 md:mb-16'>
-      
-      <div className='hidden lg:flex flex-col h-fit rounded-3xl px-[25px] py-[20px] bg-white shadow-md lg:shadow-gray-300/60 lg:col-span-3 xl:col-span-2'>
-        <h2 className='text-center mb-[10px] text-xl font-medium'>Menu principal</h2>
-        <ul className='flex flex-col gap-y-3 text-gray-900 text-sm my-3'>
-          <Link to={'/'} className=''>Início</Link>
-          {
-            categories?.map(
-              categoria => (
-                <Link key={categoria._id} to={`/category/${categoria._id}`} className={`${name === categoria._id ? 'text-blue-500': ''}`}>{categoria.name}</Link>
-              )
-            )
-          }
-          <Link to={'/category/destaques'} className={`${name === 'destaques' ? 'text-blue-500': ''}`}>Destaques</Link>
-          <Link to={'/category/promocoes'} className={`${name === 'promocoes' ? 'text-blue-500': ''}`}>Promocoes</Link>
-        </ul>
-      </div>
-
+      {
+        show === true &&
+        <CategoryFilter categories={categories} name={name} show={show} setShow={setShow}/>
+      }
       <div className='flex flex-col w-full md:bg-white md:col-span-10 lg:col-span-7 xl:col-span-8 md:rounded-3xl lg:shadow-md lg:shadow-gray-300/60'>
         {
           modalOrder && 
@@ -91,7 +79,10 @@ export default function Category() {
           <p className='text-xs text-gray-700/90'>{`${produtos.length} produtos`}</p>
         </div>      
         <div className='flex justify-between border-y border-gray-300/80 lg:border-t-transparent px-7 py-3 md:py-4 items-center text-[13px]'>
-          <div className='flex lg:hidden gap-2 items-center cursor-pointer'>
+          <div 
+            className='flex lg:hidden gap-2 items-center cursor-pointer'
+            onClick={() => setShow(true)}
+          >
             <BiFilterAlt className='w-6 h-6 text-black'/>
             <p>Filtrar</p>
           </div>
@@ -104,7 +95,7 @@ export default function Category() {
           </div>
           <Dropdown />
           <div className='flex gap-2.5 items-center'>
-            <p>Visualização</p>
+            <p className='hidden md:block'>Visualização</p>
             <BsGridFill 
               className={`w-5 h-5 ${layout === 'grid' ? 'text-black' : 'text-gray-600'}`}
               onClick={() => {
