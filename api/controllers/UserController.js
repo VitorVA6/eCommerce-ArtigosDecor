@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt')
 const createUserToken = require('../utils/createUserToken')
 const getUserByToken = require('../utils/getUserByToken')
 const sendEmail = require('../utils/sendEmail')
+const templates = require('../utils/templates')
 const crypto = require('crypto')
 
 module.exports = class UserController{
@@ -41,9 +42,7 @@ module.exports = class UserController{
     }
 
     static async login( req, res ){
-
         const {email, password} = req.body
-
         if(!email){
             res.status(422).json({error: 'E-mail é obrigatório'})
             return
@@ -52,51 +51,35 @@ module.exports = class UserController{
             res.status(422).json({error: 'Senha é obrigatória'})
             return
         }
-        
         const user = await User.findOne({email: email})
-
         if (!user){
             res.status(422).json({error: 'E-mail não existe'})
             return
         }
-
         const checkPassword = await bcrypt.compare(password, user.password)
-
         if(!checkPassword){
             res.status(422).json({error: 'Senha inválida'})
             return
         }
-
         createUserToken(user, req, res)
-
     }
 
     static async getUser(req, res){
-
         const user = await getUserByToken(req.headers.authorization)
-
         if(!user){
             res.status(422).json({error: 'Você não tem autorização pra essa operação'})
         }
-
         user.password = undefined
-
         res.status(200).json(user)
-
     }
 
     static async updateUser(req, res){
-
         const user = await getUserByToken(req.headers.authorization)
-
         const {email, senhaAtual, novaSenha} = req.body
 
         if(!user){
             return res.status(422).json({error: 'Você não tem autorização pra essa operação'})
         }
-
-        
-
         if(!!email){
             try{
                 const token = await new Token({
@@ -104,16 +87,13 @@ module.exports = class UserController{
                     token: crypto.randomBytes(32).toString("hex"),
                     email: email
                 }).save()                
-    
                 const url = `${process.env.BASE_URL}users/verify/${token.token}`
-                await sendEmail(email, "Verificação de e-mail", `<h2>Você está quase lá, clique no link para verificar seu e-mail</h2><a href="${url}" target="_blank">Clique aqui</a>`, res, user)
+                await sendEmail(email, "Verificação de e-mail", templates(url, user.name), res, user)
                 return res.status(200).json({message: 'E-mail enviado, verique-o.'})
             }catch(err){
                 return res.status(400).json({error: "Ocorreu um erro no envio do e-mail de verificação."})
-            }
-            
+            }      
         }
-
         if(!!senhaAtual && !!novaSenha){
             const checkPassword = await bcrypt.compare(senhaAtual, user.password)
             console.log(checkPassword)
@@ -126,7 +106,6 @@ module.exports = class UserController{
                 return res.status(422).json({error: 'Os dados que enviou são inválidos.'})
             }
         }
-
         try{
             await User.findOneAndUpdate({_id: user._id}, user)
             return res.status(200).json({message: 'Usuário atualizado'})
@@ -134,7 +113,6 @@ module.exports = class UserController{
         catch(err){
             return res.status(422).json({error: 'Não foi possível atualizar o usuário'})
         }
-
     }
 
     static async verify(req, res){
