@@ -18,18 +18,18 @@ export default function CategoryFilter({categories, name, show, setShow}) {
             onClick={() => {
                 setAnimate(false)
                 setOpacity(0)
-                setTimeout(() => setShow(false), 500) 
+                setTimeout(() => setShow(false), 400) 
             }}
             >
                 
         </div>
-        <div className={`${animate===true?'slide-in-right':'slide-out-right'} w-[85%] top-0 right-0 h-full absolute lg:static lg:flex flex-col lg:h-fit lg:rounded-3xl px-[25px] py-[20px] bg-white shadow-md lg:shadow-gray-300/60 lg:col-span-3 xl:col-span-2 z-30 lg:w-full`}>
+        <div className={`${animate===true?'slide-in-right':'slide-out-right'} lg:hidden w-[85%] top-0 right-0 h-full absolute lg:static lg:rounded-3xl px-[25px] py-[20px] bg-white shadow-md lg:shadow-gray-300/60 lg:col-span-3 xl:col-span-2 z-30 lg:w-full`}>
             <div className='flex gap-3 items-center mb-4 lg:hidden'>
                 <IoMdClose 
                     className='flex lg:hidden w-7 h-7'
                     onClick={() => {
                         setAnimate(false)
-                        setTimeout(() => setShow(false), 200) 
+                        setTimeout(() => setShow(false), 300) 
                     }}
                 />
                 <h2 className='text-center text-xl font-bold'>Filtros</h2>

@@ -24,7 +24,7 @@ export default function Category() {
   const [carregado, setcarregado] = useState(false)
   const [hasNext, setHasNext] = useState(false)
   const [nextPage, setNextPage] = useState(1)
-  const [show, setShow] = useState(true)
+  const [show, setShow] = useState(false)
   const {name} = useParams()
 
   useEffect(() => {
@@ -69,6 +69,22 @@ export default function Category() {
         show === true &&
         <CategoryFilter categories={categories} name={name} show={show} setShow={setShow}/>
       }
+      <div className={`hidden top-0 right-0 h-full absolute lg:static lg:flex flex-col lg:h-fit lg:rounded-3xl px-[25px] py-[20px] bg-white shadow-md lg:shadow-gray-300/60 lg:col-span-3 xl:col-span-2 z-30 lg:w-full`}>
+        <h2 className='hidden lg:block text-center text-xl font-medium mb-2'>Menu principal</h2>
+        <h2 className='block lg:hidden pl-6 text-xs font-bold border-y -mx-6 bg-gray-100 py-2'>CATEGORIAS</h2>
+        <ul className='flex flex-col gap-y-3 text-gray-900 text-sm my-3'>
+        <Link to={'/'} className='hidden lg:block'>Início</Link>
+        {
+            categories?.map(
+            categoria => (
+                <Link key={categoria._id} to={`/category/${categoria._id}`} className={`${name === categoria._id ? 'text-blue-500': ''}`}>{categoria.name}</Link>
+            )
+            )
+        }
+        <Link to={'/category/destaques'} className={`${name === 'destaques' ? 'text-blue-500': ''}`}>Destaques</Link>
+        <Link to={'/category/promocoes'} className={`${name === 'promocoes' ? 'text-blue-500': ''}`}>Promocoes</Link>
+        </ul>
+        </div>
       <div className='flex flex-col w-full md:bg-white md:col-span-10 lg:col-span-7 xl:col-span-8 md:rounded-3xl lg:shadow-md lg:shadow-gray-300/60'>
         {
           modalOrder && 
