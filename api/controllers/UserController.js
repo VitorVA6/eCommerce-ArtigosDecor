@@ -76,7 +76,6 @@ module.exports = class UserController{
     static async updateUser(req, res){
         const user = await getUserByToken(req.headers.authorization)
         const {email, senhaAtual, novaSenha} = req.body
-        console.log(email)
         if(!user){
             return res.status(422).json({error: 'Você não tem autorização pra essa operação'})
         }
@@ -89,9 +88,9 @@ module.exports = class UserController{
                 }).save()                
                 const url = `${process.env.BASE_URL}users/verify/${token.token}`
                 await sendEmail(email, "Verificação de e-mail", templates(url, user.name), res, user)
-                return res.status(200).json({message: 'E-mail enviado, verique-o.'})
+                return res.status(200).json({message: 'Foi enviado um e-mail de confirmação para o endereço informado, verique-o'})
             }catch(err){
-                return res.status(400).json({error: "Ocorreu um erro no envio do e-mail de verificação."})
+                return res.status(400).json({error: "Oops! Ocorreu um erro no envio do e-mail de verificação. Caso já tenha enviado uma solitação de alteração para esse e-mail, espere alguns minutos e tente novamente."})
             }      
         }
         if(!!senhaAtual && !!novaSenha){

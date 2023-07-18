@@ -38,10 +38,6 @@ export function useUserContext(){
     const {authenticated, setAuthenticated, loginForm, email, setEmail} = useContext(UserContext)
     const navigate = useNavigate()
 
-    async function login(email, password){
-        
-    }
-
     function logout(){
 
         localStorage.removeItem('token')
@@ -78,10 +74,13 @@ export function useUserContext(){
 
         try {
             const {data} = await axios.patch('/users/update', user)
-            console.log(data)
+            return data
         }
         catch(err){
-            console.log(err)
+           if(!!err.response?.data){
+               return err.response.data
+           }
+            return {error: 'O servidor está com problemas, tente mais tarde.'}
         }
 
     }
@@ -92,7 +91,6 @@ export function useUserContext(){
         email, 
         setEmail,
         checkAuth,
-        login,
         logout,
         getUser,
         updateUser

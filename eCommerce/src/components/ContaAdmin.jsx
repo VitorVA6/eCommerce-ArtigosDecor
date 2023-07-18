@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FiLogOut } from "react-icons/fi";
 import { useUserContext } from '../contexts/User';
 import {useFormik} from 'formik'
 import { emailSchema, passwordSchema } from '../schemas';
+import loadImg from '../images/load-icon.png'
 
 export default function ContaAdmin() {
  
   const { email, logout, getUser, updateUser } = useUserContext()
+  const [loading, setLoading] = useState(false)
+  const [message, setMessage] = useState('')
 
   const formikEmail = useFormik({
     enableReinitialize: true,
@@ -15,7 +18,13 @@ export default function ContaAdmin() {
     },
     validationSchema: emailSchema,
     onSubmit: values =>{
+      setLoading(true)
+      setMessage('')
       updateUser({email: values.email})
+      .then(data => {
+        setLoading(false)
+        setMessage(data)
+      })
     }
   })
 
@@ -31,13 +40,19 @@ export default function ContaAdmin() {
     }
   })
 
-  
-
   useEffect( () => {
-
     getUser()
-
   }, [] )
+
+  function classManager(){
+    if(!!message.message){
+      return <p className={`text-sm mt-2 text-green-500`}>{message.message}</p>
+    }
+    else if(!!message.error){
+      return <p className={`text-sm mt-2 text-red-500`}>{message.error}</p>
+    }
+    else return <></>
+  }
 
   return (
     <section className='flex items-center flex-col w-full overflow-auto pb-20'>
@@ -64,8 +79,23 @@ export default function ContaAdmin() {
           </div>
           <button 
             type='submit'
-            className='bg-blue-500 text-white w-full rounded-lg py-3 text-sm font-medium'
-          >Salvar alterações</button>
+            className='bg-blue-500 text-white w-full rounded-lg py-3 text-sm font-medium flex items-center justify-center gap-3'
+          >
+              {
+                loading === true ?
+                <>
+                <img className='w-5 h-5 animate-spin' src={loadImg} alt="" />
+                Processando
+                </>:
+                <>
+                Alterar e-mail
+                </>
+              }
+            </button>
+            {
+              classManager()
+            }
+            
         </form>
       </div>
 
