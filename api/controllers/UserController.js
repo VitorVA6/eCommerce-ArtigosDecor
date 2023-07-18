@@ -76,7 +76,7 @@ module.exports = class UserController{
     static async updateUser(req, res){
         const user = await getUserByToken(req.headers.authorization)
         const {email, senhaAtual, novaSenha} = req.body
-
+        console.log(email)
         if(!user){
             return res.status(422).json({error: 'Você não tem autorização pra essa operação'})
         }
