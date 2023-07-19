@@ -77,8 +77,8 @@ export default function Footer() {
         <Link 
             to={'https://www.instagram.com/artigos.decoracoes/'} 
             target={'_blank'} 
-            className='w-12 h-12 bg-blue-500 flex justify-center items-center rounded-full fixed bottom-8 right-12'>
-            <img className='w-5 h-5' src={whats} alt="Logo do whatsapp" />
+            className='w-12 h-12 md:w-[56px] md:h-[56px] xl:w-16 xl:h-16 bg-blue-500 flex justify-center items-center rounded-full fixed bottom-6 right-6 md:right-8 md:bottom-8 xl:right-10'>
+            <img className='w-5 h-5 xl:w-7 xl:h-7' src={whats} alt="Logo do whatsapp" />
         </Link>
     </section>
   )
