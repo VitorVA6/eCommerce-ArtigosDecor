@@ -29,8 +29,8 @@ export default function Header() {
     }
 
   return (
-    <header className='flex flex-col bg-gray-800 text-white justify-between w-full md:justify-center h-fit'>
-        <div className='flex w-full justify-around py-1.5 text-xs md:text-sm bg-blue-500'>
+    <header className='flex flex-col bg-white justify-between w-full md:justify-center h-fit'>
+        <div className='flex w-full justify-around py-1.5 text-xs md:text-sm bg-blue-500 text-white font-medium'>
             <div className='flex gap-2 items-center'>
                 <FiPackage className='w-5 h-5 md:w-6 md:h-6'/>
                 <p>Frete frátis para todo o Brasil</p>
@@ -44,22 +44,22 @@ export default function Header() {
                 <p>Satisfação garantida</p>
             </div>
         </div>
-        <div className='h-full flex flex-col justify-between px-5 pb-2.5 lg:pb-0 pt-6 md:px-12 md:pt-12 gap-7 md:gap-0 md:pb-6'>
+        <div className='h-full flex flex-col justify-between px-5 pb-2.5 lg:pb-0 pt-6 md:px-16 md:pt-12 gap-7 md:gap-0 md:pb-6'>
             <nav className='flex justify-between items-center w-full'>
                 {
                     menu &&
                     <MenuMobile setMenu={setMenu} categories={categories}/>
                 }
                 <FiMenu className='w-[26px] h-[26px] md:hidden' onClick={() => setMenu(true)}/>
-                <Link to={'/'} className='text-2xl md:text-3xl font-bold text-blue-400'>
-                    SUA LOGO
+                <Link to={'/'} className='text-2xl md:text-3xl font-black'>
+                    MEU PIQUETE
                 </Link >
                 
-                <div className='hidden md:flex rounded-xl w-[45%] bg-white items-center justify-between'>
+                <div className='hidden md:flex rounded-xl w-[52%] bg-white items-center justify-between shadow-sm shadow-black/20'>
                     <input 
                         type="text" 
                         placeholder='Busque aqui seu produto'
-                        className='py-2.5 px-5 rounded-full w-full flex items-center outline-none text-black text-sm'
+                        className='py-2.5 px-5 rounded-full w-full flex items-center outline-none text-sm placeholder-black/70'
                         value={key}
                         onChange={(ev) => setKey(ev.target.value)}
                     />
@@ -86,7 +86,7 @@ export default function Header() {
                 
             </nav>
             <div className='hidden w-full gap-10 py-5 items-center lg:flex justify-center mt-4'>
-                <Link to={'/'} className='flex gap-2 items-center text-sm cursor-pointer text-white'>
+                <Link to={'/'} className='flex gap-2 items-center text-sm cursor-pointer'>
                     <FiMenu className='w-5 h-5'/>
                     Início
                 </Link>
@@ -94,19 +94,20 @@ export default function Header() {
                     categories?.map(categoria => (
                         <Link 
                             key={categoria._id} 
-                            className='cursor-pointer text-sm text-white'
+                            className='cursor-pointer text-sm'
                             to={`/category/${categoria._id}`}
                         >{categoria.name}</Link>
                     ))
                 }
-                <Link to={'/category/destaques'} className='flex items-center text-sm cursor-pointer text-white'>
+                <Link to={'/category/destaques'} className='flex items-center text-sm cursor-pointer'>
                     Destaques
                 </Link>
-                <Link to={'/category/promocoes'} className='flex items-center text-sm cursor-pointer text-white'>
+                <Link to={'/category/promocoes'} className='flex items-center text-sm cursor-pointer'>
                     Promoções
                 </Link>
             </div>
-
+            <div className='h-[6px] bg-black -mx-16'>
+            </div>
             <div className='flex md:hidden rounded-xl w-full bg-white items-center justify-between mb-2'>
                 <input 
                     type="text" 
@@ -117,7 +118,7 @@ export default function Header() {
                     <BiSearch className='w-[26px] h-[26px] text-blue-500'/>
                 </button>
             </div>
-
+            
         </div>
         
     </header>

@@ -19,7 +19,9 @@ export default function Home() {
       infinite: true,
       speed: 500,
       slidesToShow: 1,
-      slidesToScroll: 1
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 3000
     };
 
     const sliderStyle = {
@@ -42,7 +44,7 @@ export default function Home() {
               catalog?.bannerdt?.map( image =>{
                   return (     
                     
-                    <img key={image} className='w-full h-[25vh] md:h-[23vh] lg:h-[50vh]' src={`http://localhost:4000/images/carrosel/${image}`} alt="Imagem do produto" />
+                    <img key={image} className='w-full h-[25vh] md:h-[23vh] lg:h-[61vh]' src={`http://localhost:4000/images/carrosel/${image}`} alt="Imagem do produto" />
                              
                   )
               })
