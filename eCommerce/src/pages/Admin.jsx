@@ -7,7 +7,7 @@ import PersoAdmin from '../components/PersoAdmin'
 import ContaAdmin from '../components/ContaAdmin'
 import { useUserContext } from '../contexts/User'
 import { Navigate, useNavigate } from 'react-router-dom'
-import verifyScreen from '../utils/verifyScreen'
+import Requests from '../components/Requests'
 
 export default function Admin() {
   const {authenticated, checkAuth} = useUserContext()
@@ -26,18 +26,15 @@ export default function Admin() {
 
   return (
     <div className='flex flex-col overflow-hidden'>
-        <HeaderAdmin setMenuMobile={setMenuMobile}/>
+        <HeaderAdmin setMenuMobile={setMenuMobile} setSelected={setSelected}/>
         <div className='flex h-screen overflow-y-hidden pt-16 md:pt-20'>
-            
-              
-              <NavLateralAdmin setSelected={setSelected} selected={selected} setMenuMobile={setMenuMobile} menuMobile={menuMobile}/>
-            
+            <NavLateralAdmin setSelected={setSelected} selected={selected} setMenuMobile={setMenuMobile} menuMobile={menuMobile}/>         
             <div className='bg-gray-200/60 lg:bg-gray-50 w-full h-full overflow-auto px-4 py-8 lg:p-10'>
                 { selected === 'catalog' && <CatalogoAdmin /> }
                 { selected === 'info' && <InfoAdmin /> }
                 { selected === 'custom' && <PersoAdmin /> }
                 { selected === 'acc' && <ContaAdmin /> }
-                
+                { selected === 'req' && <Requests /> }
             </div>
         </div>
     </div>

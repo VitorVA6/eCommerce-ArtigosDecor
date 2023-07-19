@@ -6,7 +6,7 @@ import {FiMenu} from "react-icons/fi"
 import {HiOutlineExternalLink} from 'react-icons/hi'
 import noteIcon from '../images/caderno.png'
 
-export default function HeaderAdmin({setMenuMobile, setAnimate}) {
+export default function HeaderAdmin({setMenuMobile, setSelected}) {
     const {catalog} = useCatalogContext()
 
   return (
@@ -26,13 +26,17 @@ export default function HeaderAdmin({setMenuMobile, setAnimate}) {
                     </Link>
                 </div>
                 <div className='flex gap-4 lg:gap-2 md:border-l border-gray-300 items-center py-3 pl-4 lg:cursor-pointer'>
-                    <img className="cursor-pointer w-5 h-5 lg:w-6 lg:h-6" src={noteIcon}/>
-                    <h3 className='hidden md:block'>Pedidos</h3>
+                    <div 
+                        className='flex items-center gap-2'
+                        onClick={() => setSelected('req')}
+                    >
+                        <img className="cursor-pointer w-5 h-5 lg:w-6 lg:h-6" src={noteIcon}/>
+                        <h3 className='hidden md:block'>Pedidos</h3>
+                    </div>
                     <FiMenu 
                         className="md:hidden w-7 h-7 cursor-pointer"
                         onClick={() => {
                             setMenuMobile(true)
-                           
                         }}
                     />
                 </div>
