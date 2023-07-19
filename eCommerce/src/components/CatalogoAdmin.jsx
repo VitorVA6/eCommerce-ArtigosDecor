@@ -85,7 +85,7 @@ export default function CatalogoAdmin() {
         <input 
             type="text" 
             placeholder='Buscar produto'
-            className='py-1.5 px-6 w-full rounded-md outline-none border mb-5 shadow-lg shadow-gray-200/50 text-sm lg:text-base lg:py-3'
+            className='py-2.5 px-6 w-full rounded-md outline-none border mb-5 shadow-lg shadow-gray-200/50 text-sm lg:text-base lg:py-3'
             value={filter}
             onChange={(ev) => setFilter(ev.target.value) }
         />

@@ -6,7 +6,7 @@ export default function CustomList( {title, customs, setModalCustom, setEdit, se
             <h2 className='text-sm lg:text-base mb-3 font-medium'>{title}</h2>
             <div className='flex lg:flex-wrap gap-3 overflow-auto scrollbar-hide'>
                 <button 
-                    className='border border-gray-300/80 lg:border-gray-200/70 lg:px-3 lg:py-3 px-2 py-1 rounded-xl bg-gray-50'
+                    className='border border-gray-300/80 lg:border-gray-200/70 lg:px-3 lg:py-2.5 px-2 py-1 rounded-xl bg-gray-50'
                     onClick={() => {
                         setEdit(false)
                         setModalCustom(true)
@@ -19,10 +19,10 @@ export default function CustomList( {title, customs, setModalCustom, setEdit, se
                     </svg>
                 </button>
                 {customs.map( (custom) => (
-                    <div key={custom.name ? custom.name : custom} className='flex rounded-lg lg:rounded-xl bg-gray-300 items-center pl-3 cursor-pointer'>
-                        <p className='border-r mb-0.5 border-gray-400 flex items-center pr-3 text-sm'>{custom.name ? custom.name : custom}</p>
+                    <div key={custom.name ? custom.name : custom} className='flex rounded-lg lg:rounded-xl bg-gray-200 items-center pl-3 cursor-pointer'>
+                        <p className='border-r mb-[1px] border-gray-400 flex items-center pr-3 text-sm'>{custom.name ? custom.name : custom}</p>
                         <button 
-                            className='p-3 lg:p-3 flex justify-center'
+                            className='p-3 lg:py-2.5 lg:px-3 flex justify-center'
                             onClick={() => {
                                 setEdit(true)
                                 setModalCustom(true)
