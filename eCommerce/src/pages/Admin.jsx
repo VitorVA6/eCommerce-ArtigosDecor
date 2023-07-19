@@ -7,6 +7,7 @@ import PersoAdmin from '../components/PersoAdmin'
 import ContaAdmin from '../components/ContaAdmin'
 import { useUserContext } from '../contexts/User'
 import { Navigate, useNavigate } from 'react-router-dom'
+import verifyScreen from '../utils/verifyScreen'
 
 export default function Admin() {
   const {authenticated, checkAuth} = useUserContext()
@@ -14,9 +15,7 @@ export default function Admin() {
   const navigate = useNavigate()
 
   useEffect( ()=> {
-
     checkAuth()
-
   }, [] )
 
   if(!authenticated){
@@ -25,13 +24,14 @@ export default function Admin() {
 
   const [menuMobile, setMenuMobile] = useState(false)
 
-  const [animate, setAnimate] = useState(true)
-
   return (
     <div className='flex flex-col overflow-hidden'>
-        <HeaderAdmin setMenuMobile={setMenuMobile} setAnimate={setAnimate}/>
+        <HeaderAdmin setMenuMobile={setMenuMobile}/>
         <div className='flex h-screen overflow-y-hidden pt-16 md:pt-20'>
-            <NavLateralAdmin setSelected={setSelected} animate={animate} setAnimate ={setAnimate} selected={selected} menuMobile={menuMobile} setMenuMobile={setMenuMobile}/>
+            
+              
+              <NavLateralAdmin setSelected={setSelected} selected={selected} setMenuMobile={setMenuMobile} menuMobile={menuMobile}/>
+            
             <div className='bg-gray-200/60 lg:bg-gray-50 w-full h-full overflow-auto px-4 py-8 lg:p-10'>
                 { selected === 'catalog' && <CatalogoAdmin /> }
                 { selected === 'info' && <InfoAdmin /> }

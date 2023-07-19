@@ -32,7 +32,7 @@ export default function HeaderAdmin({setMenuMobile, setAnimate}) {
                         className="md:hidden w-7 h-7 cursor-pointer"
                         onClick={() => {
                             setMenuMobile(true)
-                            setAnimate(true)
+                           
                         }}
                     />
                 </div>
