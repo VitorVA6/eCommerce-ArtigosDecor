@@ -13,7 +13,8 @@ const PaymentSchema = new Schema({
     endereco: String,
     cep: String,
     payment_type_id: String,
-    status: String
+    status: String,
+    payment_id: String
 })
 
 module.exports = mongoose.model('Payment', PaymentSchema)

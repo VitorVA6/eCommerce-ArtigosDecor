@@ -37,7 +37,8 @@ module.exports = class PaymentController {
                 endereco,
                 cep,
                 payment_type_id,
-                status
+                status,
+                payment_id: id
             })
             res.status(response.status).json({ status, status_detail, id });
         })
@@ -46,9 +47,8 @@ module.exports = class PaymentController {
         });
     }
 
-    static async getPayment(req, res){
+    static async getPaymentById(req, res){
         const id = req.params.id 
-        console.log(id)
         mercadopago.configurations.setAccessToken('TEST-462015067611172-063011-b3e5d6ffd1265f43497f38b1a4341944-517694611')
         mercadopago.payment.findById(id)
         .then(function(response) {
@@ -59,5 +59,14 @@ module.exports = class PaymentController {
         .catch(function(error) {
             console.log(error);
         });
+    }
+
+    static async getAll(req, res){
+        try{
+            const payments = await Payment.find()
+            return res.status(200).json(payments)
+        }catch(err){
+            return res.status(400).json({error: "Não possível carregar os dados dos pedidos."})
+        }
     }
 }

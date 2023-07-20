@@ -2,6 +2,7 @@ const router = require('express').Router()
 const PaymentController = require('../controllers/PaymentController')
 
 router.post('/process_payment', PaymentController.processPayment)
-router.get('/get-payment/:id', PaymentController.getPayment)
+router.get('/get-all', PaymentController.getAll)
+router.get('/get-payment/:id', PaymentController.getPaymentById)
 
 module.exports = router
