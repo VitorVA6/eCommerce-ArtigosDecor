@@ -68,8 +68,8 @@ export default function ({setSelected}) {
             <div className='flex justify-between'>
               <div className='flex flex-col'>
                 {
-                  payment.products.map(el => (
-                    <h3 className='text-gray-300 text-sm'>{`${el.qty} x ${el.name}`}</h3>
+                  payment.products.map((el, index) => (
+                    <h3 key={index} className='text-gray-500/90 text-sm'>{`${el.qty} x ${el.name}`}</h3>
                   ))
                 }
               </div>

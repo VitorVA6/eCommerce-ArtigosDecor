@@ -9,9 +9,9 @@ export default function PaymentResume() {
     const {total} = useCarrinhoContext()
     const [show, setShow] = useState(false)
 
-    /* if(total === 0){
+    if(total === 0){
         return <Navigate to={'/'}/>
-    } */
+    } 
 
   return (
     <div className='mx-4 md:mx-0 order-1 xl:order-3 flex flex-col bg-white px-4 py-4 xl:px-6 xl:py-7 rounded-lg shadow-lg shadow-gray-400/10 lg:shadow-md/90 h-fit opacity-80'>

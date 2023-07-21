@@ -7,7 +7,7 @@ import { usePaymentContext } from '../contexts/Payment';
 
 export default function MyCardBlock() {
 
-    const {carrinho} = useCarrinhoContext()
+    const {carrinho, total} = useCarrinhoContext()
     const {formikStep1, formikStep2} = usePaymentContext()
 
     useEffect(()=> {
@@ -18,7 +18,7 @@ export default function MyCardBlock() {
     <div className='mt-3 -mx-[18px]'>
         <Card
             initialization={{ 
-                amount: 100
+                amount: total
             }}
             customization={{
                 visual: {
@@ -59,7 +59,7 @@ export default function MyCardBlock() {
                     whats: formikStep1.values.whats,
                     endereco: `${formikStep2.values.endereco}, ${formikStep2.values.numero}, ${formikStep2.values.bairro}`,
                     cep: formikStep2.values.cep,
-                    subtotal: 100,
+                    subtotal: total,
                     delivery_rate: 0,
                     products: carrinho.map( el => {
                         return {
