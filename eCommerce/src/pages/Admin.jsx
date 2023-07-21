@@ -8,6 +8,7 @@ import ContaAdmin from '../components/ContaAdmin'
 import { useUserContext } from '../contexts/User'
 import { Navigate, useNavigate } from 'react-router-dom'
 import Requests from '../components/Requests'
+import OrderById from '../components/OrderById'
 
 export default function Admin() {
   const {authenticated, checkAuth} = useUserContext()
@@ -34,7 +35,8 @@ export default function Admin() {
                 { selected === 'info' && <InfoAdmin /> }
                 { selected === 'custom' && <PersoAdmin /> }
                 { selected === 'acc' && <ContaAdmin /> }
-                { selected === 'req' && <Requests /> }
+                { selected === 'req' && <Requests setSelected={setSelected}/> }
+                { selected === 'order-id' && <OrderById setSelected={setSelected}/> }
             </div>
         </div>
     </div>

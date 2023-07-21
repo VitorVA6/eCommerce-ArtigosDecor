@@ -14,7 +14,8 @@ const PaymentSchema = new Schema({
     cep: String,
     payment_type_id: String,
     status: String,
-    payment_id: String
+    payment_id: String,
+    date_approved: String
 })
 
 module.exports = mongoose.model('Payment', PaymentSchema)

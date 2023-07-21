@@ -3,6 +3,6 @@ const PaymentController = require('../controllers/PaymentController')
 
 router.post('/process_payment', PaymentController.processPayment)
 router.get('/get-all', PaymentController.getAll)
-router.get('/get-payment/:id', PaymentController.getPaymentById)
+router.get('/:id', PaymentController.getPaymentById)
 
 module.exports = router

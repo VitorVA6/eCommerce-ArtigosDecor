@@ -3,17 +3,20 @@ import { useFormik } from 'formik';
 import { block1Schema, block2Schema } from '../schemas';
 import checkCEP from '../utils/checkCEP';
 import checkComplete from '../utils/checkComplete';
+import axios from "axios";
 
 export const PaymentContext = createContext()
 
 export default function PaymentProvider ( {children} ){
 
+    const [paymentId, setPaymentId] = useState(undefined)
     const [validCEP, setValidCEP] = useState(false)
     const [errorCEP, setErrorCEP] = useState('')
     const [changeBlock, setChangeBlock] = useState('1')
     const [block1, setBlock1] = useState({selected:true, completed:false, disabled: false})
     const [block2, setBlock2] = useState({selected:false, completed:false, disabled: true})
     const [block3, setBlock3] = useState({selected:false, completed:false, disabled: true})
+    const [payments, setPayments] = useState([])
     const formikStep1 = useFormik({
         enableReinitialize: true,
         initialValues: {
@@ -53,7 +56,7 @@ export default function PaymentProvider ( {children} ){
         <PaymentContext.Provider 
             value={{
                 formikStep1, formikStep2, validCEP, setValidCEP, errorCEP, setErrorCEP, changeBlock, setChangeBlock,
-                block1, setBlock1, block2, setBlock2, block3, setBlock3
+                block1, setBlock1, block2, setBlock2, block3, setBlock3, payments, setPayments, paymentId, setPaymentId
             }}>
             {children}
         </PaymentContext.Provider>
@@ -63,7 +66,7 @@ export default function PaymentProvider ( {children} ){
 export function usePaymentContext(){
     const {
         formikStep1, formikStep2, validCEP, setValidCEP, errorCEP, setErrorCEP, changeBlock, setChangeBlock,
-        block1, setBlock1, block2, setBlock2, block3, setBlock3
+        block1, setBlock1, block2, setBlock2, block3, setBlock3, payments, setPayments, paymentId, setPaymentId
     } = useContext(PaymentContext)
 
     function cepIsValid(){
@@ -100,6 +103,26 @@ export function usePaymentContext(){
         }
     }
 
+    async function getPayments(){
+        try{
+            const {data} = await axios.get('/mercado-pago/get-all')
+            setPayments(data)
+        }catch(err){
+            console.log(err)
+        }
+    }
+
+    async function getPaymentById(){
+        if(!!paymentId){
+            try{
+                const {data} = await axios.get(`/mercado-pago/${paymentId}`)
+                return data    
+            }catch(err){
+                console.log(err)
+            }
+        }
+    }
+
     return {
         formikStep1,
         formikStep2,
@@ -110,7 +133,12 @@ export function usePaymentContext(){
         block2,
         block3,
         setChangeBlock,
+        payments,
+        paymentId, 
+        setPaymentId,
         cepIsValid,
-        blockManager
+        blockManager,
+        getPayments,
+        getPaymentById
     }
 }
