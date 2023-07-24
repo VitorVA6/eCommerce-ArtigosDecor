@@ -192,7 +192,6 @@ export default function PaymentPage() {
                 
               </form>
             }
-
             {
               block2.completed === true && 
               <div className='flex flex-col'>
@@ -201,10 +200,8 @@ export default function PaymentPage() {
                 <h3 className='text-sm text-gray-600'>Feira de Santana-BA | CEP 44034-292</h3> 
               </div>
             }
-            
           </PaymentBlock>
         </div>
-
         <PaymentBlock 
           step={'3'} 
           title={'Pagamento'} 
@@ -219,8 +216,7 @@ export default function PaymentPage() {
           {
             block3.selected === true &&
             <MyCardBlock />   
-          }
-                
+          } 
         </PaymentBlock>
         <PaymentResume />
     </div>

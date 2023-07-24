@@ -142,9 +142,11 @@ export default function Produto() {
   return (
     
     <section className='flex flex-col' ref={refToTop}>    
-        <h3 className='hidden md:flex gap-1 items-center px-10 my-[28px] text-[13px]'>{`Página inicial`} <FiChevronRight className='w-[12px] h-[12px]'/> {produto?.categoria[0]?.label} <FiChevronRight className='w-[12px] h-[12px]'/> {produto?.title} </h3>    
+        <h3 className='hidden md:flex gap-1 items-center px-10 my-[28px] text-[13px]'>{`Página inicial`} 
+            <FiChevronRight className='w-[12px] h-[12px]'/> 
+            {produto?.categoria[0]?.label} <FiChevronRight className='w-[12px] h-[12px]'/> {produto?.title}
+        </h3>    
         <section className='flex flex-col lg:h-fit justify-center overflow-hidden md:px-10 pt-6 md:pt-0 lg:py-8 lg:gap-7 lg:border-b border-gray-200 lg:flex-row md:gap-y-8 md:pb-2'>
-            
             <div className='w-full lg:w-3/5 lg:bg-white lg:rounded-3xl lg:p-6 lg:shadow-lg lg:shadow-gray-300/60 md:hidden'>
                 <Slider {...settings} dots dotsClass="meus-dots">
                     {
