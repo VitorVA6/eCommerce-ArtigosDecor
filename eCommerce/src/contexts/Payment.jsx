@@ -123,6 +123,20 @@ export function usePaymentContext(){
         }
     }
 
+    async function calcelPayment(){
+        if(!!paymentId){
+            try{
+                const {data} = await axios.put(`/mercado-pago/${paymentId}`)
+                return data    
+            }catch(err){
+                if(!!err.response?.data){
+                    return err.response.data
+                }
+                 return {error: 'O servidor está com problemas, tente mais tarde.'}
+            }
+        }
+    }
+
     return {
         formikStep1,
         formikStep2,
@@ -139,6 +153,7 @@ export function usePaymentContext(){
         cepIsValid,
         blockManager,
         getPayments,
-        getPaymentById
+        getPaymentById,
+        calcelPayment
     }
 }

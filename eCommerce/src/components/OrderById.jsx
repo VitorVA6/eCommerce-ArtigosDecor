@@ -7,7 +7,7 @@ import {RiCloseCircleLine} from 'react-icons/ri'
 
 export default function ({setSelected}) {
 
-    const {getPaymentById} = usePaymentContext()
+    const {getPaymentById, calcelPayment} = usePaymentContext()
     const [payment, setPayment] = useState()
 
     useEffect(() => {
@@ -16,6 +16,112 @@ export default function ({setSelected}) {
             setPayment(data)
         })
     }, [])
+
+    function classManager(){
+      if(payment?.status === 'approved'){
+        return 'bg-green-50 text-green-500'
+      }else if(payment?.status === 'pending' || payment?.status === 'in_process'){
+        return 'bg-gray-50 text-gray-500'
+      }else if(payment?.status === 'cancelled' || payment?.status === 'rejected'){
+        return 'bg-red-50 text-red-500'
+      }else if(payment?.status === 'refunded' || payment?.status === 'charged_back'){
+        return 'bg-purple-50 text-purple-500'
+      }else if(payment?.status === 'in_mediation'){
+        return 'bg-yellow-50 text-yellow-500'
+      }else if(payment?.status === 'authorized'){
+        return 'bg-blue-50 text-blue-500'
+      }
+    }
+
+    function statusManager(){
+      if(payment?.status === 'approved'){
+        return (
+          <>
+            <p>Status: Pagamento aprovado</p>
+            <p>Descrição: O pagamento foi aprovado e creditado.</p>
+          </>
+          )
+      }
+      else if(payment?.status === 'pending'){
+        return (
+          <>
+            <p>Status: Pagamento pendente</p>
+            <p>Descrição: O cliente não concluiu o processo de pagamento.</p>
+          </>
+          )
+      }
+      else if(payment?.status === 'authorized'){
+        return (
+          <>
+            <p>Status: Pagamento autorizado</p>
+            <p>Descrição: O pagamento foi autorizado, mas ainda não foi capturado.</p>
+          </>
+          )
+      }
+      else if(payment?.status === 'in_process'){
+        return (
+          <>
+            <p>Status: Pagamento em processo</p>
+            <p>Descrição: O pagamento está em análise.</p>
+          </>
+          )
+      }
+      else if(payment?.status === 'in_mediation'){
+        return (
+          <>
+            <p>Status: Pagamento em mediação</p>
+            <p>Descrição: O usuário iniciou uma disputa.</p>
+          </>
+          )
+      }
+      else if(payment?.status === 'cancelled'){
+        return (
+          <>
+            <p>Status: Pagamento cancelado</p>
+            <p>Descrição: O pagamento foi cancelado por uma das duas partes.</p>
+          </>
+          )
+      }
+      else if(payment?.status === 'rejected'){
+        return (
+          <>
+            <p>Status: Pagamento rejeitado</p>
+            <p>Descrição: O pagamento foi rejeitado, o usuário pode tentar pagar novamente.</p>
+          </>
+          )
+      }
+      else if(payment?.status === 'refunded'){
+        return (
+          <>
+            <p>Status: Pagamento estornado</p>
+            <p>Descrição: O pagamento foi estornado ao cliente.</p>
+          </>
+          )
+      }
+      else if(payment?.status === 'charged_back'){
+        return (
+          <>
+            <p>Status: Pagamento estornado por crédito</p>
+            <p>Descrição: O pagamento foi estornado no formato de crédito no cartão do cliente.</p>
+          </>
+          )
+      }
+      
+    }
+
+    function calcelOrder(){
+      if(payment?.status !== 'cancelled'){
+        calcelPayment().then(data =>{
+          if(!!data.message){
+            setPayment( prev => ({...prev, status: 'cancelled'}) )
+            console.log(data.message)
+          }
+          else{
+            console.log(data.error)
+          }
+        })
+      }
+    }
 
     function dataConversor(data){
       const dataObj = new Date(data);
@@ -38,16 +144,16 @@ export default function ({setSelected}) {
             </div>
             <h2 className='font-medium text-[17px] text-center w-full'>Pedidos recebidos</h2>           
         </div>
-        <div className='flex justify-between px-4 lg:px-7 py-7 border-b-4 border-gray-100/80'>
+        <div className='flex flex-col px-4 lg:px-7 py-7 border-b-4 border-gray-100/80 gap-4'>
             <div className='flex flex-col gap-2'>
                 <h3 className=' uppercase text-sm'>#{payment?._id}</h3>
-                <p className='text-xs text-gray-500/90'>{!!payment && dataConversor(payment?.date_approved)}</p>
+                <p className='text-xs text-gray-500/90'>{!!payment && dataConversor(payment?.date_created)}</p>
             </div>
-            <div className='flex bg-blue-50 px-3 h-fit py-2 text-blue-500 rounded-lg text-[13px] items-center'>{
-              payment?.status === 'approved' ? 'Pago com Mercado Pago' : 'Pagamento cancelado'
+            <div className={`flex flex-col ${classManager()} px-3 h-fit py-2 rounded-lg text-[13px] gap-2`}>{
+              statusManager()
             }</div>
         </div>
-        <div className='flex flex-col px-4 lg:px-7 py-7 border-b-4 border-gray-50  gap-2'>
+        <div className='flex flex-col px-4 lg:px-7 py-7 border-b-4 border-gray-50 gap-2'>
             <div className='flex justify-between text-[13px]'>
               <p className='text-gray-500/90'>Subtotal</p>
               <p className=''>{payment?.subtotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
@@ -103,8 +209,11 @@ export default function ({setSelected}) {
               Chamar no Whatsapp 
               <BsWhatsapp className='absolute right-[17px] top-4 w-[18px] h-[18px]'/>
             </button>
-            <button className='flex justify-center font-medium items-center w-full py-4 text-red-500 bg-red-50 text-sm rounded-lg relative mb-3'>
-              Cancelar pedido
+            <button 
+              className={`flex justify-center font-medium items-center w-full py-4 text-red-500 bg-red-50 text-sm rounded-lg relative mb-3 ${payment?.status === 'cancelled' && 'opacity-40 cursor-auto'}`}
+              onClick={calcelOrder}
+            >
+              {payment?.status === 'cancelled'?'Pedido cancelado':'Cancelar pedido' }
               <RiCloseCircleLine className='absolute right-4 top-[15px] w-[22px] h-[22px]'/>
             </button>
         </div>

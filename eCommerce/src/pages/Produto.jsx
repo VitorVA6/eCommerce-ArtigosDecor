@@ -10,7 +10,7 @@ import { useVariationContext } from '../contexts/Variation';
 export default function Produto() {
 
     const {id} = useParams()
-    const [produto, setProduto] = useState({})
+    const [produto, setProduto] = useState()
     const [selectedOptions, setSelectedOptions] = useState([])
     const [carregado, setCarregado] = useState(false)
     const [quantidade, setQuantidade] = useState(1)
@@ -110,6 +110,7 @@ export default function Produto() {
         getVariations()
         getProductById(id)
         .then( (data) => {
+            console.log()
             setProduto({
                 ...data.product, 
                 preco: data.product.combinations.length > 0 ? data.product.combinations[0].price : data.product.preco,
@@ -141,7 +142,7 @@ export default function Produto() {
   return (
     
     <section className='flex flex-col' ref={refToTop}>    
-        <h3 className='hidden md:flex gap-1 items-center px-10 my-[28px] text-[13px]'>{`Página inicial`} <FiChevronRight className='w-[12px] h-[12px]'/> {`Armeiro`} <FiChevronRight className='w-[12px] h-[12px]'/> {`Kit 03 bandejas ovais com detalhe sofisticado`} </h3>    
+        <h3 className='hidden md:flex gap-1 items-center px-10 my-[28px] text-[13px]'>{`Página inicial`} <FiChevronRight className='w-[12px] h-[12px]'/> {produto?.categoria[0]?.label} <FiChevronRight className='w-[12px] h-[12px]'/> {produto?.title} </h3>    
         <section className='flex flex-col lg:h-fit justify-center overflow-hidden md:px-10 pt-6 md:pt-0 lg:py-8 lg:gap-7 lg:border-b border-gray-200 lg:flex-row md:gap-y-8 md:pb-2'>
             
             <div className='w-full lg:w-3/5 lg:bg-white lg:rounded-3xl lg:p-6 lg:shadow-lg lg:shadow-gray-300/60 md:hidden'>

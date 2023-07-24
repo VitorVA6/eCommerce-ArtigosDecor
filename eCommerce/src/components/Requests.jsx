@@ -37,7 +37,7 @@ export default function Requests({setSelected}) {
                         <h3 className='text-sm text-gray-500'>{element.name}</h3>
                         <h3 className='text-gray-400 text-xs mt-[1px]'>{element.transaction_amount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h3>
                     </div>
-                    <p className='text-xs text-gray-400'>{dataConversor(element.date_approved)}</p>
+                    <p className='text-xs text-gray-400'>{dataConversor(element.date_created)}</p>
                 </div>
                 <button 
                   className='text-[12.5px] flex items-center font-medium py-2 text-white bg-blue-500 px-3.5 rounded-lg w-fit'

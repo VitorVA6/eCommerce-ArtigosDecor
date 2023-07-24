@@ -52,7 +52,7 @@ export default function Header() {
                 }
                 <FiMenu className='w-[26px] h-[26px] md:hidden' onClick={() => setMenu(true)}/>
                 <Link to={'/'} className='text-2xl md:text-3xl font-black'>
-                    MEU PIQUETE
+                    MINHA LOGO
                 </Link >
                 
                 <div className='hidden md:flex rounded-xl w-[52%] bg-white items-center justify-between shadow-sm shadow-black/20'>
