@@ -63,8 +63,8 @@ export default function Category() {
 
   return (
     <>
-    <h3 className='hidden md:flex gap-1 items-center px-10 my-[28px] text-[13px]'>{`Página inicial`} <FiChevronRight className='w-[12px] h-[12px]'/> {`Armeiro`}</h3>
-    <section className='flex md:grid md:grid-cols-10 overflow-x-hidden lg:gap-x-[30px] w-full md:px-10 pb-2 md:mb-16'>
+    <h3 className='hidden md:flex gap-1 items-center px-5 md:px-10 xl:px-[60px] my-[28px] text-[13px]'>{`Página inicial`} <FiChevronRight className='w-[12px] h-[12px]'/> {`Armeiro`}</h3>
+    <section className='flex md:grid md:grid-cols-10 overflow-x-hidden lg:gap-x-[30px] w-full px-5 md:px-10 xl:px-[60px] pb-2 md:mb-16'>
       {
         show === true &&
         <CategoryFilter categories={categories} name={name} show={show} setShow={setShow}/>

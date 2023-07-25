@@ -6,7 +6,7 @@ export default function CategoryItem({categoria}) {
 
     const [show, setSHow] = useState(false)
     const [translate, setTranslate] = useState('')
-    const [opacity, setOpacity] = useState(0)
+    const [opacity, setOpacity] = useState('opacity-0')
 
     useEffect( () =>{
         setTranslate(show === true && '-translate-x-2')
@@ -18,11 +18,13 @@ export default function CategoryItem({categoria}) {
             className='flex flex-col items-center gap-y-3'
             onMouseOver={() => {
                 setSHow(true)
-                setOpacity(100)
+                setOpacity('opacity-100')
+                setTranslate('-translate-x-2')
             }}
             onMouseLeave={() => {
                 setSHow(false)
-                setOpacity(0)
+                setOpacity('opacity-0')
+                setTranslate('')
             }}
             >
             <div className='p-2 md:p-[11px] lg:p-2 bg-white rounded-[70px]'>
@@ -31,8 +33,8 @@ export default function CategoryItem({categoria}) {
                     style={{backgroundImage:`url(http://localhost:4000/images/categories/${categoria.image})`}}/>
             </div>
             <div className='flex gap-2.5 items-center'>
-                <h3 className={`ml-[26px] text-sm ease-in transition-all duration-300 ${translate} ${show===true&&'text-blue-500'}`}>{categoria.name}</h3>
-                <BsArrowRight className={`ease-in transition-all duration-300 ${translate} opacity-${opacity} ${show===true&&'text-blue-500'}`}/>
+                <h3 className={`ml-[26px] text-[15px] ease-in transition-all duration-300 ${translate} ${show===true&&'text-blue-500'}`}>{categoria.name}</h3>
+                <BsArrowRight className={`ease-in transition-all duration-300 ${translate} ${opacity} ${show===true&&'text-blue-500'}`}/>
             </div>
             </Link>
     )

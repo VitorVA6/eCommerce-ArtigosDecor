@@ -44,7 +44,7 @@ export default function Header() {
                 <p>Satisfação garantida</p>
             </div>
         </div>
-        <div className='h-full flex flex-col justify-between px-5 pb-2.5 lg:pb-0 pt-6 md:px-16 md:pt-12 gap-7 md:gap-0 md:pb-6'>
+        <div className='flex flex-col justify-between pb-2.5 lg:pb-0 pt-6 px-5 md:px-10 xl:px-[60px] md:pt-12 gap-7 md:gap-0 md:pb-6'>
             <nav className='flex justify-between items-center w-full'>
                 {
                     menu &&
@@ -81,7 +81,7 @@ export default function Header() {
                             {quantTotal}
                         </span>
                     </div>
-                    <h4 className='font-medium hidden md:block'>Carrinho</h4>
+                    <h4 className='font-medium hidden lg:block'>Carrinho</h4>
                 </Link>
                 
             </nav>
@@ -106,9 +106,7 @@ export default function Header() {
                     Promoções
                 </Link>
             </div>
-            <div className='h-[6px] bg-black -mx-16'>
-            </div>
-            <div className='flex md:hidden rounded-xl w-full bg-white items-center justify-between mb-2'>
+            <div className='flex md:hidden rounded-xl w-full bg-white items-center justify-between mb-2 shadow-sm shadow-black/20'>
                 <input 
                     type="text" 
                     placeholder='Busque aqui seu produto'
@@ -118,9 +116,9 @@ export default function Header() {
                     <BiSearch className='w-[26px] h-[26px] text-blue-500'/>
                 </button>
             </div>
-            
         </div>
-        
+        <div className='h-[6px] bg-black'>
+            </div>
     </header>
   )
 }

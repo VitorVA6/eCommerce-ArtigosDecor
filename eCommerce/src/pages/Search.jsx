@@ -28,9 +28,9 @@ export default function Search() {
     }, [name])
 
   return (
-    <div className='flex flex-col overflow-x-hidden px-10'>
+    <div className='flex flex-col overflow-x-hidden px-5 md:px-10 xl:px-[60px]'>
         <h3 className='hidden md:flex gap-1 items-center my-[28px] text-[13px]'>{`Página inicial`} <FiChevronRight className='w-[12px] h-[12px]'/>Página de busca</h3>
-        <div className='flex flex-col w-full md:bg-white md:col-span-10 lg:col-span-7 xl:col-span-8 md:rounded-3xl lg:shadow-md lg:shadow-gray-300/60'>
+        <div className='flex flex-col w-full md:bg-white md:col-span-10 lg:col-span-7 xl:col-span-8 md:rounded-3xl lg:shadow-md lg:shadow-gray-300/60 mb-10'>
             <div className='flex flex-col gap-1.5 px-7 py-6'>
             <h1 className='text-2xl font-medium'>{`Resultados para "${name}"`}</h1>
             <p className='text-xs text-gray-700/90'>{`${produtos.length} produtos`}</p>

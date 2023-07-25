@@ -142,11 +142,11 @@ export default function Produto() {
   return (
     
     <section className='flex flex-col' ref={refToTop}>    
-        <h3 className='hidden md:flex gap-1 items-center px-10 my-[28px] text-[13px]'>{`Página inicial`} 
+        <h3 className='hidden md:flex gap-1 items-center px-5 md:px-10 xl:px-[60px] my-[28px] text-[13px]'>{`Página inicial`} 
             <FiChevronRight className='w-[12px] h-[12px]'/> 
             {produto?.categoria[0]?.label} <FiChevronRight className='w-[12px] h-[12px]'/> {produto?.title}
         </h3>    
-        <section className='flex flex-col lg:h-fit justify-center overflow-hidden md:px-10 pt-6 md:pt-0 lg:py-8 lg:gap-7 lg:border-b border-gray-200 lg:flex-row md:gap-y-8 md:pb-2'>
+        <section className='flex flex-col lg:h-fit justify-center overflow-hidden px-5 md:px-10 xl:px-[60px] pt-6 md:pt-0 lg:py-8 lg:gap-7 lg:border-b border-gray-200 lg:flex-row md:gap-y-8 md:pb-2'>
             <div className='w-full lg:w-3/5 lg:bg-white lg:rounded-3xl lg:p-6 lg:shadow-lg lg:shadow-gray-300/60 md:hidden'>
                 <Slider {...settings} dots dotsClass="meus-dots">
                     {
@@ -291,7 +291,7 @@ export default function Produto() {
                 </div>
             </div>
         </section>
-        <div className='md:my-6 lg:my-8 md:mx-10 md:rounded-3xl px-6 md-px-8 md:bg-white md:py-8 md:shadow-md md:shadow-gray-300/60'>
+        <div className='md:my-6 lg:my-8 mx-5 md:mx-10 xl:mx-[60px] md:rounded-3xl px-6 md-px-8 md:bg-white md:py-8 md:shadow-md md:shadow-gray-300/60'>
             <h3 className='text-lg mb-2 md:text-[20px] font-medium lg:mb-4'>Informações do produto</h3>
             <p className='text-gray-500 text-sm' style={{whiteSpace: "pre-wrap"}}>{produto?.desc}</p>
         </div>       
