@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import { useCatalogContext } from '../contexts/Catalog';
 import { GrFormClose } from "react-icons/gr";
+import masks from '../utils/masks.js';
 
 export default function PersoAdmin() {
 
@@ -65,9 +66,9 @@ export default function PersoAdmin() {
             value={catalog.whats}
             onChange={(ev)=> {
               setCatalog( (prev) => {
-                return {...prev, whats: ev.target.value}
+                return {...prev, whats: masks.maskWhats(ev.target.value)}
               } )
-          }}
+            }}
           />
         </div>
       </div>
