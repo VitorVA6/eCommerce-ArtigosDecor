@@ -6,13 +6,12 @@ import ListaProdutosAdmin from './ListaProdutosAdmin'
 import ModalVariacoes from './ModalVariacoes'
 import ModalProduto from './ModalProduto'
 import { useProductContext } from '../contexts/Product'
-import { useCatalogContext } from '../contexts/Catalog'
 import {useCategoryContext} from '../contexts/Category'
 import {useVariationContext} from '../contexts/Variation'
+import notifies from '../utils/toastNotifies'
 
 export default function CatalogoAdmin() {
 
-    const {ToastContainer, notifyError, notifySucess} = useCatalogContext()
     const {produtos, getProducts, perPage} = useProductContext()
     const { getCategories, categories } = useCategoryContext()
     const { getVariations, variations } = useVariationContext()
@@ -47,12 +46,12 @@ export default function CatalogoAdmin() {
 
   return (
     <section className=' overflow-hidden'>
-        <ToastContainer />
+        <notifies.Container />
         {
             modalCategoria && 
             <ModalCategoria 
-                notifySucess = {notifySucess} 
-                notifyError = {notifyError} 
+                notifySucess = {notifies.sucess} 
+                notifyError = {notifies.error} 
                 setModalCategoria={setModalCategoria} 
                 edit={edit} 
                 placeh='Ex: Bandejas' 
@@ -62,8 +61,8 @@ export default function CatalogoAdmin() {
         {
             modalVariacoes && 
             <ModalVariacoes
-                notifySucess = {notifySucess} 
-                notifyError = {notifyError} 
+                notifySucess = {notifies.sucess} 
+                notifyError = {notifies.error} 
                 setModalVariacoes={setModalVariacoes} 
                 edit={edit} 
                 placeh1='Exemplo: "Cor"' 
@@ -74,8 +73,8 @@ export default function CatalogoAdmin() {
         {
             modalProduto && 
             <ModalProduto 
-                notifySucess = {notifySucess} 
-                notifyError = {notifyError} 
+                notifySucess = {notifies.sucess} 
+                notifyError = {notifies.error} 
                 categorias={categories} 
                 setModalProduto={setModalProduto} 
                 edit={edit} 

@@ -132,7 +132,7 @@ export function usePaymentContext(){
                 if(!!err.response?.data){
                     return err.response.data
                 }
-                 return {error: 'O servidor está com problemas, tente mais tarde.'}
+                 return {error: 'O servidor está com problemas, tente novamente mais tarde.'}
             }
         }
     }

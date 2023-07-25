@@ -1,7 +1,5 @@
 import {useContext, createContext, useState} from 'react' 
 import axios from 'axios'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 export const CatalogContext = createContext() 
 
@@ -66,36 +64,11 @@ export function useCatalogContext(){
 
     }
 
-    const notifySucess = (alerta) => {
-        toast.success(alerta, {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 1000,
-            closeButton: false,
-            pauseOnHover: false,
-            theme: 'dark',
-            className: 'mt-10'
-        });
-    };
-
-    const notifyError = (alerta) => {
-        toast.error(alerta, {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 1000,
-            closeButton: false,
-            pauseOnHover: false,
-            theme: 'dark',
-            className: 'mt-10'
-        });
-    };
-
     return {
         catalog,
         setCatalog,
         getCatalog,
         updateCatalog,
-        notifySucess,
-        notifyError,
-        ToastContainer
     }
 
 }

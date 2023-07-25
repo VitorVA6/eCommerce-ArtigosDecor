@@ -3,19 +3,16 @@ import { v4 as uuidv4 } from 'uuid';
 import { useCatalogContext } from '../contexts/Catalog';
 import { GrFormClose } from "react-icons/gr";
 import masks from '../utils/masks.js';
+import notifies from '../utils/toastNotifies'
 
 export default function PersoAdmin() {
-
   const [images, setImages] = useState([])
   const [uploadedImages, setUploadesImages] = useState([])
-
-  const { catalog, getCatalog, setCatalog, updateCatalog, ToastContainer, notifyError, notifySucess } = useCatalogContext()
+  const { catalog, getCatalog, setCatalog, updateCatalog } = useCatalogContext()
 
   useEffect( () => {
-
     getCatalog()
     setUploadesImages(catalog?.bannerdt)
-
   }, [] )
 
   function handleFiles(ev){
@@ -27,20 +24,16 @@ export default function PersoAdmin() {
 }
 
   function removeFiles(id){
-
       setImages( prev => prev.filter( image => image.id !== id ) )
-
   }
 
   function removeUploadedImages(name){
-
       setUploadesImages( prev => prev.filter( img => img !== name ) )
-
   }
 
   return (
     <section className='flex items-center flex-col w-full h-screen'>
-      <ToastContainer />
+      <notifies.Container />
       <div className='flex flex-col w-full lg:w-3/4 bg-white py-5 px-4 lg:px-7 rounded-t-xl border border-gray-300/80 lg:border-gray-200/70'>
         <h2 className='mb-3 font-medium text-lg'>Informações</h2>
         <div className='flex flex-col w-full gap-2 mb-2.5'>
@@ -127,10 +120,10 @@ export default function PersoAdmin() {
             setUploadesImages(data.dados.bannerdt)
             setImages([])
             if(!!data.message){
-              notifySucess(data.message)
+              notifies.sucess(data.message)
             }
             else{
-              notifyError(data.error)
+              notifies.error(data.error)
             }
           })
         }}

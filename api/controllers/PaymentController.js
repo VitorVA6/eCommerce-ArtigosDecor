@@ -102,7 +102,7 @@ module.exports = class PaymentController {
             console.log(status)     
             payment.status = status
             await Payment.findOneAndUpdate({_id: id}, payment)   
-            return res.status(201).json({message: 'Pagamento cancelado com sucesso.'})   
+            return res.status(201).json({message: 'Pagamento cancelado com sucesso.'})
             
         }).catch(err => {
             console.log(err)

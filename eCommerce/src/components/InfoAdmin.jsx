@@ -3,12 +3,13 @@ import {IoShareSocialOutline} from 'react-icons/io5'
 import { useCatalogContext } from '../contexts/Catalog';
 import ModalRsociais from './ModalRsociais';
 import masks from '../utils/masks.js';
+import notifies from '../utils/toastNotifies';
 
 export default function InfoAdmin() {
 
   const [modalRS, setModalRS] = useState(false);
 
-  const {getCatalog, catalog, setCatalog, updateCatalog, ToastContainer, notifyError, notifySucess} = useCatalogContext()
+  const {getCatalog, catalog, setCatalog, updateCatalog} = useCatalogContext()
 
   useEffect( ()=> {
 
@@ -18,7 +19,7 @@ export default function InfoAdmin() {
 
   return (
     <section className='flex flex-col gap-1 items-center pb-5'>
-      <ToastContainer />
+      <notifies.Container />
       {
         modalRS && <ModalRsociais setModalRS={setModalRS} catalog={catalog} setCatalog={setCatalog}/>
       }
@@ -99,10 +100,10 @@ export default function InfoAdmin() {
         onClick={() => {
           updateCatalog().then(data => {
             if(!!data.message){
-              notifySucess(data.message)
+              notifies.sucess(data.message)
             }
             else{
-              notifyError(data.error)
+              notifies.error(data.error)
             }
           })
         }}

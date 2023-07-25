@@ -4,13 +4,14 @@ import { useUserContext } from '../contexts/User';
 import {useFormik} from 'formik'
 import { emailSchema, passwordSchema } from '../schemas';
 import loadImg from '../images/load-icon.png'
+import { useCatalogContext } from '../contexts/Catalog';
+import notifies from '../utils/toastNotifies';
 
 export default function ContaAdmin() {
- 
   const { email, logout, getUser, updateUser } = useUserContext()
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
-
+  const {ToastContainer, notifyError, notifySucess} = useCatalogContext()
   const formikEmail = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -27,7 +28,6 @@ export default function ContaAdmin() {
       })
     }
   })
-
   const formikPw = useFormik({
     initialValues:{
       password: '',
@@ -35,13 +35,23 @@ export default function ContaAdmin() {
       confirmPassword: ''
     },
     validationSchema: passwordSchema,
-    onSubmit: values => {
+    onSubmit: (values, {setValues, setTouched}) => {
       updateUser({senhaAtual: values.password, novaSenha: values.newPassword})
+      .then(data => {
+        if(!!data?.message){
+          notifies.sucess(data.message)
+          setValues({password: '', newPassword: '', confirmPassword: ''})
+          setTouched({}, false)
+        }else{
+          notifies.error(data.error)
+        }
+      })
     }
   })
 
   useEffect( () => {
     getUser()
+    console.log(formikPw.errors) 
   }, [] )
 
   function classManager(){
@@ -56,6 +66,7 @@ export default function ContaAdmin() {
 
   return (
     <section className='flex items-center flex-col w-full overflow-auto pb-20'>
+      <notifies.Container />
       <div className='flex flex-col w-full lg:w-3/5'>
         <h2 className='mb-3 font-medium'>Dados cadastrais</h2>
         <form 
@@ -98,7 +109,6 @@ export default function ContaAdmin() {
             
         </form>
       </div>
-
       <div className='flex flex-col w-full lg:w-3/5 mt-4'>
         <h2 className='mb-3 font-medium'>Alterar senha</h2>
         <form 
@@ -153,11 +163,10 @@ export default function ContaAdmin() {
           <button className='bg-blue-500 text-white w-full rounded-lg py-3 text-sm font-medium'>Salvar alterações</button>
         </form>
       </div>
-
       <div className='flex flex-col w-full lg:w-3/5 mt-8'>
         <h3 className='font-medium mb-2'>Perdeu a senha?</h3>
         <p className='text-sm text-black mb-2'>Ao clicar no botão, uma nova senha será criada e enviada para o seu e-mail</p>
-        <button className='bg-gray-300 text-sm w-full py-2.5 rounded-lg font-medium'>Perdi a senha</button>
+        <button className='bg-gray-300 text-sm w-full py-3 rounded-lg font-medium'>Perdi a senha</button>
       </div>
       <div className='flex flex-col w-full lg:w-3/5 mt-8 mb-16'>
         <h3 className='font-medium mb-2'>Sair da conta</h3>
@@ -167,8 +176,7 @@ export default function ContaAdmin() {
         >
           <FiLogOut className='w-5 h-5' />Sair
         </button>
-      </div>
-      
+      </div> 
     </section>
   )
 }

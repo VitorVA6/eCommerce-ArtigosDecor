@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {BsChevronLeft} from 'react-icons/bs'
 import { usePaymentContext } from '../contexts/Payment'
+import { useCatalogContext } from '../contexts/Catalog'
 import {FiPackage} from 'react-icons/fi'
 import {BsWhatsapp} from 'react-icons/bs'
 import {RiCloseCircleLine} from 'react-icons/ri'
@@ -9,6 +10,7 @@ export default function ({setSelected}) {
 
     const {getPaymentById, calcelPayment} = usePaymentContext()
     const [payment, setPayment] = useState()
+    const {notifyError, notifySucess, ToastContainer} = useCatalogContext()
 
     useEffect(() => {
         getPaymentById()
@@ -109,15 +111,15 @@ export default function ({setSelected}) {
       
     }
 
-    function calcelOrder(){
+    function cancelOrder(){
       if(payment?.status !== 'cancelled'){
         calcelPayment().then(data =>{
           if(!!data.message){
             setPayment( prev => ({...prev, status: 'cancelled'}) )
-            console.log(data.message)
+            notifySucess(data.message)
           }
           else{
-            console.log(data.error)
+            notifyError(data.error)
           }
         })
       }
@@ -134,6 +136,7 @@ export default function ({setSelected}) {
 
   return (
     <section className='flex items-center flex-col w-full h-screen'>
+      <ToastContainer />
       <div className='flex flex-col w-full lg:w-3/4 bg-white rounded-2xl border border-gray-300 lg:border-gray-200/70'>
         <div className='flex border-b items-center relative h-16'>
             <div 
@@ -211,7 +214,7 @@ export default function ({setSelected}) {
             </button>
             <button 
               className={`flex justify-center font-medium items-center w-full py-4 text-red-500 bg-red-50 text-sm rounded-lg relative mb-3 ${payment?.status === 'cancelled' && 'opacity-40 cursor-auto'}`}
-              onClick={calcelOrder}
+              onClick={cancelOrder}
             >
               {payment?.status === 'cancelled'?'Pedido cancelado':'Cancelar pedido' }
               <RiCloseCircleLine className='absolute right-4 top-[15px] w-[22px] h-[22px]'/>
