@@ -5,8 +5,6 @@ import { useCatalogContext } from '../contexts/Catalog'
 import bannerInfo from '../images/banner-info.png'
 import SliderFooter from '../components/SliderFooter'
 import Slider from 'react-slick'
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import { useCategoryContext } from '../contexts/Category'
 
 export default function Home() {

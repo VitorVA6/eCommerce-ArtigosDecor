@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 import { useCarrinhoContext } from '../contexts/Carrinho';
 import { useProductContext } from '../contexts/Product';
@@ -8,7 +8,6 @@ import { FiChevronRight } from 'react-icons/fi';
 import { useVariationContext } from '../contexts/Variation';
 
 export default function Produto() {
-
     const {id} = useParams()
     const [produto, setProduto] = useState()
     const [selectedOptions, setSelectedOptions] = useState([])
@@ -19,8 +18,6 @@ export default function Produto() {
     const {variations, getVariations} = useVariationContext()
     const taxa = 1.2
     const [imgId, setImgId] = useState(0)
-    const refToTop = useRef();
-
     const settings = {
         dots: true,
         infinite: true,
@@ -30,7 +27,6 @@ export default function Produto() {
       };
 
     function mudaQuantidade(operador){
-
         if(operador === '-' && quantidade > 1){
             setQuantidade(quantidade-1)
         }
@@ -40,9 +36,7 @@ export default function Produto() {
     }
 
     function verifySelected( idOption ){
-        
         return selectedOptions.find( el => el.option === idOption ) !== undefined
-
     }
 
     function handleSelect( idVar, idOption ){
@@ -57,7 +51,6 @@ export default function Produto() {
     }
 
     function getPrice(){
-
         const comb2 = selectedOptions.map( el => el.option ).sort()
         produto?.combinations?.forEach(element => {
             let flag = true
@@ -75,13 +68,10 @@ export default function Produto() {
                 setProduto( prev => ({...prev, preco: element.price, desconto: element.priceoff, combinationId: element.id}) )
                 return
             }
-
         });
-
     }
 
     function getVarName(varId){
-
         const varAux = variations.find( el => el._id === varId )
         if(!!varAux){
             
@@ -125,10 +115,6 @@ export default function Produto() {
 
     }, [id]);
 
-    useEffect( () => {
-        setTimeout(() => { refToTop.current.scrollIntoView({ behavior: 'smooth' })}, 500)
-    }, [] )
-
     if (carregado && !produto){
         return <Navigate to={'/404'}/>
     }
@@ -141,7 +127,7 @@ export default function Produto() {
 
   return (
     
-    <section className='flex flex-col' ref={refToTop}>    
+    <section className='flex flex-col'>    
         <h3 className='hidden md:flex gap-1 items-center px-5 md:px-10 xl:px-[60px] my-[28px] text-[13px]'>{`Página inicial`} 
             <FiChevronRight className='w-[12px] h-[12px]'/> 
             {produto?.categoria[0]?.label} <FiChevronRight className='w-[12px] h-[12px]'/> {produto?.title}
@@ -152,7 +138,7 @@ export default function Produto() {
                     {
                         produto?.img?.map( image =>{
                             return (
-                            <div key={image} className='px-6 lg:px-0'>
+                            <div key={image} className=''>
                                 <img className='h-96 w-full lg:px-0 rounded-xl' src={`http://localhost:4000/images/products/${image}`} alt="Imagem do produto" />
                             </div>)
                         })
@@ -192,7 +178,7 @@ export default function Produto() {
             </div>
             
             
-            <div className='flex flex-col w-full lg:w-2/5 h-fit px-6 md:px-8 md:py-3 md:bg-white md:rounded-3xl md:shadow-md lg:shadow-gray-300/60'>
+            <div className='flex flex-col w-full lg:w-2/5 h-fit md:px-8 md:py-3 md:bg-white md:rounded-3xl md:shadow-md lg:shadow-gray-300/60'>
                 <div className='flex flex-col pt-3 pb-5 border-b border-gray-300'>
                     <h2 className='text-xl font-medium lg:text-[22px]'>{produto?.title}</h2>
                     <h3 className='text-xs text-blue-500'>Disponível em estoque</h3>
@@ -291,7 +277,7 @@ export default function Produto() {
                 </div>
             </div>
         </section>
-        <div className='md:my-6 lg:my-8 mx-5 md:mx-10 xl:mx-[60px] md:rounded-3xl px-6 md-px-8 md:bg-white md:py-8 md:shadow-md md:shadow-gray-300/60'>
+        <div className='md:my-6 lg:my-8 md:mx-10 xl:mx-[60px] md:rounded-3xl px-6 md-px-8 md:bg-white md:py-8 md:shadow-md md:shadow-gray-300/60'>
             <h3 className='text-lg mb-2 md:text-[20px] font-medium lg:mb-4'>Informações do produto</h3>
             <p className='text-gray-500 text-sm' style={{whiteSpace: "pre-wrap"}}>{produto?.desc}</p>
         </div>       
