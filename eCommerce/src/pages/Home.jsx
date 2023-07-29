@@ -2,10 +2,11 @@ import React, { useEffect } from 'react'
 import ListaProdutos from '../components/ListaProdutos'
 import NavLateral from '../components/NavLateral'
 import { useCatalogContext } from '../contexts/Catalog'
-import bannerInfo from '../images/banner-info.png'
 import SliderFooter from '../components/SliderFooter'
 import Slider from 'react-slick'
 import { useCategoryContext } from '../contexts/Category'
+import freeShipping from '../images/free-shipping.svg'
+import delivery from '../images/delivery.svg'
 
 export default function Home() {
 
@@ -64,11 +65,20 @@ export default function Home() {
             
         <ListaProdutos title={'Destaques'} categoria={'destaques'}/>     
 
-        <div 
-          className='w-full h-40 sm:h-72 md:96 bg-cover bg-center bg-no-repeat flex flex-col py-8 px-6 lg:px-10 mt-6 mb-8' 
-          style={{backgroundImage: `url(${bannerInfo})`}}>
-          <h2 className='font-bold md:text-3xl md:mt-5 md:ml-3 lg:-mb-1.5 lg:text-[40px] lg:mt-6'>APROVEITE</h2>
-          <h2 className='-mt-1 md:text-3xl md:ml-3 md:mt-0 lg:text-[40px] lg:mt-3'>FRETE GRÁTIS</h2>
+        <div className='w-full flex justify-around -mx-2 md:mx-0 md:px-5'>
+          <img className='w-56 md:w-64 lg:w-72 xl:w-96' src={freeShipping} alt="" />
+          <div className='flex flex-col justify-center gap-5 md:gap-10'>
+            <div className='flex flex-col'>
+              <h1 className='font-black text-[20px] md:text-[28px] lg:text-[48px] xl:text-[60px]'>APROVEITE</h1>
+              <h1 className='text-[18px] md:text-[26px] lg:text-[48px] xl:text-[60px] -mt-[6px] md:-mt-[2px] lg:-mt-5'>FRETE GRÁTIS</h1>
+            </div>
+            <div className='flex flex-col md:flex-row gap-2 md:gap-5 xl:gap-8'>
+              <p className='text-[13px] md:text-base xl:text-lg'>ENTREGA RÁPIDA</p>
+              <div className='w-8 h-[4px] md:w-[8px] lg:w-[4px] rounded-full md:h-full bg-blue-500'></div>
+              <p className='text-[13px] md:text-base xl:text-lg'>PROMOÇÕES IMPERDÍVEIS</p>
+            </div>
+          </div>
+          <img className='hidden md:block md:w-64 lg:w-72 xl:w-96' src={delivery} alt="" />
         </div>
 
         <ListaProdutos title={'Promoções'} categoria={'promocoes'}/> 
