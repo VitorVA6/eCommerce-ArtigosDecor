@@ -55,7 +55,6 @@ export default function Produto() {
         produto?.combinations?.forEach(element => {
             let flag = true
             const comb = element.combination.sort()
-
             if (comb.length !== comb2.length) {
                 flag = false;
             }
@@ -81,7 +80,6 @@ export default function Produto() {
     }
 
     function getOptionName(varId, optionId){
-
         const varAux = variations?.find( el => el._id === varId )
         if(!!varAux){
             const optionAux = varAux.options.filter( el => el.value === optionId )
@@ -93,14 +91,12 @@ export default function Produto() {
             }
         }
         return ''
-
     }
 
     useEffect(() => {
         getVariations()
         getProductById(id)
         .then( (data) => {
-            console.log()
             setProduto({
                 ...data.product, 
                 preco: data.product.combinations.length > 0 ? data.product.combinations[0].price : data.product.preco,
@@ -112,7 +108,6 @@ export default function Produto() {
             setCarregado(true)
         } )
         .catch(erro => console.log(erro))
-
     }, [id]);
 
     if (carregado && !produto){
@@ -120,11 +115,8 @@ export default function Produto() {
     }
 
     useEffect( ()=> {
-
         getPrice()
-
     }, [selectedOptions] )
-
   return (
     
     <section className='flex flex-col'>    
@@ -146,13 +138,11 @@ export default function Produto() {
                     }
                 </Slider>
             </div>
-
             <div className='w-full lg:w-3/5 h-[80vh] md:bg-white md:rounded-3xl p-6 shadow-md shadow-gray-300/60 hidden md:flex md:flex-col lg:flex-row'>
                 <div className='flex flex-row lg:flex-col gap-2.5 md:order-2 lg:order-1 md:mt-4 lg:mt-0 overflow-auto lg:mr-4 md:mr-0'>
                     {
                         produto?.img?.map( (image, index) =>{
                             return (
-                            
                                 <img 
                                     key={image} 
                                     className={`${imgId === index ? 'border-[3px] border-blue-400': ''} cursor-pointer h-16 w-16 min-w-[64px] p-0 rounded-lg`} 
@@ -172,19 +162,13 @@ export default function Produto() {
                     <div className='flex md:w-full lg:w-[calc(100%-80px)] md:h-[calc(100%-80px)] lg:h-full md:order-1 lg:order-2'>
                         <img className='rounded-lg w-full' src={`http://localhost:4000/images/products/${produto?.img[imgId]}`} alt="Imagem do produto" />
                     </div>
-                    
                 }
-                
-            </div>
-            
-            
+            </div>       
             <div className='flex flex-col w-full lg:w-2/5 h-fit md:px-8 md:py-3 md:bg-white md:rounded-3xl md:shadow-md lg:shadow-gray-300/60'>
                 <div className='flex flex-col pt-3 pb-5 border-b border-gray-300'>
                     <h2 className='text-xl font-medium lg:text-[22px]'>{produto?.title}</h2>
                     <h3 className='text-xs text-blue-500'>Disponível em estoque</h3>
                 </div>
-                
-                
                 {   
                     produto?.combinations?.length > 0 &&  
                     <div className='flex flex-col mt-6 gap-y-4'>  
@@ -208,9 +192,7 @@ export default function Produto() {
                     }
                     </div>              
                     }
-                
                 <div className='flex gap-x-12 mt-6 mb-6'>
-                    
                     <h3 className='text-sm text-gray-700'>Preço:</h3>
                     <div className=' flex flex-col text-sm lg:text-lg lg:mt-2'>
                     {
@@ -218,7 +200,11 @@ export default function Produto() {
                     <p className='inline line-through text-gray-500'>{produto?.preco?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                     }
                     <div className='flex items-center gap-x-1.5'>
-                        <p className='font-medium text-2xl text-green-500'>{produto?.desconto?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                        {
+                        produto?.desconto > 0 ?
+                        <p className='font-medium text-2xl text-green-500'>{produto?.desconto?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p> :
+                        <p className='font-medium text-2xl text-green-500'>{produto?.preco?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                        }
                         {produto?.desconto > 0 &&
                             <div className='flex text-white bg-black px items-center justify-center rounded-full h-fit px-2 gap-0.5 mb-0.5'>
                                 <AiOutlineArrowDown className='w-3 h-3' />
@@ -243,7 +229,6 @@ export default function Produto() {
                     </div>
                     <p className='text-xs text-green-500/70 font-normal'>Frete grátis</p>
                 </div>
-                
                 <div className='flex mt-1 pt-6 mb-1 gap-5 items-center lg:border-none border-t border-gray-300 pl-1'>               
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 lg:w-7 lg:h-7 text-gray-600">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
@@ -253,7 +238,6 @@ export default function Produto() {
                         <p className='text-gray-500 text-xs'>Parcelamento no cartão de crédito</p>
                     </div>
                 </div>
-                
                 <div className='flex mt-3 gap-5 items-center border-b border-gray-300 pb-6 lg:border-none pl-1'>              
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 lg:w-7 lg:h-7 text-gray-600">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
@@ -263,7 +247,6 @@ export default function Produto() {
                         <p className='text-gray-500 text-xs'>Sua compra é 100% protegida</p>
                     </div>
                 </div>
-
                 <div className='flex gap-2 mt-6 mb-6'>
                     <div className='flex bg-gray-300 rounded-md items-center'>
                         <button className='px-6 py-3 mb-1' onClick={() => mudaQuantidade('-')}>-</button>

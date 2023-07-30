@@ -19,7 +19,6 @@ export default function Base() {
 
   useEffect( () => {
     setTimeout(() => { refToTop.current.scrollTo(0, 0)}, 50)
-    console.log('09')
   }, [location] )
 
   return (
