@@ -50,14 +50,16 @@ export default function Card({produto, categoryPage, layout}) {
             }
             
         </div>
-        <div className={`flex flex-col py-1.5 lg:py-3 w-full ${layout === 'grid' ? 'mt-2' : ''}`}>
-            <p className='text-xs text-gray-700 mb-4'>{produto?.title}</p>
-            <p className={`inline font-medium mr-2 text-green-500`}>{priceoff > 0 ? priceoff.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }</p> 
-            {
-                priceoff > 0 &&
-                <p className='inline line-through text-gray-500 text-xs'>{price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
-            }
-            <p className='text-xs text-gray-700 -mt-1.5'>Em até <strong className='text-black text-sm'>12x</strong> de {priceoff > 0 ? (priceoff * taxa/12).toFixed(2) : (price*taxa/12).toFixed(2)}</p>
+        <div className={`flex flex-col py-1.5 lg:py-3 w-full ${layout === 'grid' ? 'mt-[5px]' : ''}`}>
+            <p className='text-sm mb-3'>{produto?.title}</p>
+            <div className='flex items-center'>
+                <p className={`inline font-medium mr-2 text-green-500 text-lg`}>{priceoff > 0 ? priceoff.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }</p> 
+                {
+                    priceoff > 0 &&
+                    <p className='inline line-through text-gray-400 text-[13px] -mb-[2px] lg:-mb-[1px] xl:-mb-[2px]'>{price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                }
+            </div>
+            <p className='text-[13px] text-gray-700 -mt-[7px]'>Em até <strong className='text-black text-sm'>12x</strong> de {priceoff > 0 ? (priceoff * taxa/12).toFixed(2) : (price*taxa/12).toFixed(2)}</p>
             {
                 layout === 'list' &&
                 <Link to={`/produto/${produto?._id}`} className='flex justify-center w-full py-2 text-white rounded-md text-medium bg-green-500 mt-3'>
