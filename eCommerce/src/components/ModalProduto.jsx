@@ -234,7 +234,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                 <div className='flex flex-col  w-8/12 mb-6'>
                     <p className='mb-2 mt-2 text-sm font-medium'>Nome</p>
                     <input 
-                        className='px-4 py-2.5 w-full outline-0 rounded-lg bg-gray-100 focus:border border-blue-400' 
+                        className='px-4 py-2.5 w-full focus:outline outline-1 outline-blue-500 rounded-lg bg-gray-100' 
                         type="text" 
                         placeholder='Ex: Camisa preta' 
                         value={name}
@@ -244,7 +244,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                 <div className='flex flex-col'>
                     <p className='mb-2 mt-2 text-sm font-medium'>Preço</p>
                     <input 
-                        className='px-4 py-2.5 w-full outline-0 rounded-lg bg-gray-100 focus:border border-blue-400' 
+                        className='px-4 py-2.5 w-full rounded-lg bg-gray-100 focus:outline outline-1 outline-blue-500' 
                         type='number' 
                         value={price}
                         onChange={event => setPrice(event.target.value) }    
@@ -254,7 +254,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
             <div className='flex flex-col w-full mb-6'>
                 <p className='mb-2 text-sm font-medium'>Descrição</p>
                 <textarea 
-                    className='px-4 py-2.5 w-full outline-0 rounded-lg bg-gray-100 focus:border border-blue-400' 
+                    className='px-4 py-2.5 w-full rounded-lg bg-gray-100 focus:outline outline-1 outline-blue-500' 
                     type="text" 
                     placeholder='Ex: Camiseta preta de algodão. Tamanhos P, M e G.' 
                     value={desc}
@@ -281,7 +281,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                 <div className='flex flex-col w-1/3 mb-3'>
                     <p className='mb-2 mt-2 text-sm font-medium'>Desconto</p>
                     <input 
-                        className='px-4 py-2.5 w-full outline-0 rounded-lg bg-gray-100 focus:border border-blue-400' 
+                        className='px-4 py-2.5 w-full rounded-lg bg-gray-100 focus:outline outline-1 outline-blue-500' 
                         type='number' 
                         value={priceoff}
                         onChange={event => setPriceoff(event.target.value) }    
