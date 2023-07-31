@@ -5,6 +5,7 @@ import whats from '../assets/whats.png'
 import {FaFacebookSquare} from 'react-icons/fa'
 import {useCatalogContext} from '../contexts/Catalog'
 import {AiOutlinePlus, AiOutlineMinus} from 'react-icons/ai'
+import {BsYoutube} from 'react-icons/bs'
 import american from '../images/american.png'
 import diners from '../images/diners.png'
 import elo from '../images/elo.png'
@@ -107,18 +108,42 @@ export default function Footer() {
                         />
                     </div>
                     <div className={`flex flex-col text-[13px] transition-all duration-500 ${show3 === false ? 'max-h-0':'max-h-16'}`}>
-                        <Link 
-                            to={'https://www.instagram.com/artigos.decoracoes/'} 
-                            target={'_blank'} 
-                            className='gap-2 flex items-center rounded-full text-gray-200 py-1'>
-                                <img className='w-4 h-4' src={insta} alt="Logo do instagram" /> Instagram
-                        </Link>
-                        <Link 
-                            to={'https://www.instagram.com/artigos.decoracoes/'} 
-                            target={'_blank'} 
-                            className='gap-2 flex items-start rounded-full text-gray-200  py-1'>
-                                <FaFacebookSquare className='w-[16px] h-[16px] text-white'/> Facebook
-                        </Link>
+                        {
+                            !!catalog.rsociais.insta && 
+                            <Link 
+                                to={catalog.rsociais.insta} 
+                                target={'_blank'} 
+                                className='gap-2 flex items-center rounded-full text-gray-200 py-1'>
+                                    <img className='w-4 h-4' src={insta} alt="Logo do instagram" /> Instagram
+                            </Link>
+                        }
+                        {
+                            !!catalog.rsociais.face &&
+                            <Link 
+                                to={catalog.rsociais.face} 
+                                target={'_blank'} 
+                                className='gap-2 flex items-start rounded-full text-gray-200  py-1'>
+                                    <FaFacebookSquare className='w-[16px] h-[16px] text-white'/> Facebook
+                            </Link>
+                        }
+                        {
+                            !!catalog.rsociais.yt &&
+                            <Link 
+                                to={catalog.rsociais.yt} 
+                                target={'_blank'} 
+                                className='gap-2 flex items-center rounded-full text-gray-200  py-1'>
+                                    <BsYoutube className='w-[17px] h-[17px] text-white'/> YouTube
+                            </Link>
+                        }
+                        {
+                            !!catalog.rsociais.tt &&
+                            <Link 
+                                to={catalog.rsociais.face} 
+                                target={'_blank'} 
+                                className='gap-2 flex items-start rounded-full text-gray-200  py-1'>
+                                    <FaFacebookSquare className='w-[16px] h-[16px] text-white'/> Facebook
+                            </Link>
+                        }
                     </div>
                     
                 </div>

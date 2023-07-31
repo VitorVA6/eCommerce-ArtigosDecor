@@ -9,10 +9,8 @@ import freeShipping from '../images/free-shipping.svg'
 import delivery from '../images/delivery.svg'
 
 export default function Home() {
-
     const {catalog} = useCatalogContext()
     const {getCategories, categories} = useCategoryContext()
-
     const settings = {
       dots: true,
       infinite: true,
@@ -22,7 +20,6 @@ export default function Home() {
       autoplay: true,
       autoplaySpeed: 3000
     };
-
     const sliderStyle = {
       borderRadius: '10px',
       overflow: 'hidden'
@@ -33,7 +30,6 @@ export default function Home() {
     }, [] )
 
   return (
-
     <section className='flex flex-col overflow-x-hidden gap-y-8'>
       {
         catalog?.bannerdt?.length !== 0 ?
@@ -42,21 +38,15 @@ export default function Home() {
           {
               catalog?.bannerdt?.map( image =>{
                   return (     
-                    
-                    <img key={image} className='w-full h-[25vh] md:h-[23vh] lg:h-[61vh]' src={`http://localhost:4000/images/carrosel/${image}`} alt="Imagem do produto" />
-                             
+                    <img key={image} className='w-full h-[25vh] md:h-[23vh] lg:h-[61vh]' src={`http://localhost:4000/images/carrosel/${image}`} alt="Imagem do produto" />          
                   )
               })
-              
           }
         </Slider>
         </div>
         :
-        <div className='10'></div>
-        
-        
+        <div className='10'></div>  
       }
-      
       <div className='flex flex-col'>
         <div className='hidden md:flex flex-col w-fit gap-0.5 mb-6 px-5 md:px-10 xl:px-[60px]'>
             <h2 className='font-medium text-[21px]'>Categorias</h2>
@@ -65,10 +55,8 @@ export default function Home() {
         <NavLateral 
           setCategoria={valor => setFiltroCategoria(valor)} 
           categorias={categories}
-        />
-            
+        /> 
         <ListaProdutos title={'Destaques'} categoria={'destaques'}/>     
-
         <div className='w-full flex justify-around -mx-2 md:mx-0 md:px-5'>
           <img className='w-56 md:w-64 lg:w-72 xl:w-96' src={freeShipping} alt="" />
           <div className='flex flex-col justify-center gap-5 md:gap-10'>
@@ -84,14 +72,9 @@ export default function Home() {
           </div>
           <img className='hidden md:block md:w-64 lg:w-72 xl:w-96' src={delivery} alt="" />
         </div>
-
         <ListaProdutos title={'Promoções'} categoria={'promocoes'}/> 
-
         <SliderFooter />
-
       </div>
-        
     </section>
-
   )
 }

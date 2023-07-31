@@ -8,20 +8,17 @@ import notifies from '../utils/toastNotifies';
 export default function InfoAdmin() {
 
   const [modalRS, setModalRS] = useState(false);
-
   const {getCatalog, catalog, setCatalog, updateCatalog} = useCatalogContext()
 
   useEffect( ()=> {
-
     getCatalog()
-
   }, [] )
 
   return (
     <section className='flex flex-col gap-1 items-center pb-5'>
       <notifies.Container />
       {
-        modalRS && <ModalRsociais setModalRS={setModalRS} catalog={catalog} setCatalog={setCatalog}/>
+        modalRS && <ModalRsociais setModalRS={setModalRS} catalog={catalog} setCatalog={setCatalog} sucesso={notifies.sucess} erro={notifies.error}/>
       }
       <h2 className='mb-5 font-medium w-full text-xl'>Informações</h2>
       <div className='flex flex-col w-full gap-y-3 bg-white border border-gray-300/80 lg:border-gray-200/70 rounded-lg p-5'>

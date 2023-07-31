@@ -3,14 +3,12 @@ import Select from 'react-select'
 import { useProductContext } from '../contexts/Product';
 import { v4 as uuidv4 } from 'uuid';
 import { GrFormClose } from "react-icons/gr";
-import { useCategoryContext } from '../contexts/Category';
 import { useVariationContext } from '../contexts/Variation';
 import combine from '../utils/combine';
 
 export default function ModalProduto({setModalProduto, edit, categorias, idProduto, notifySucess, notifyError}) {
 
     const {addProduct, getProductById, updateProduct} = useProductContext()
-    const {getCategories} = useCategoryContext()
     const {getVariations, variations} = useVariationContext()
     const [verMais, setVerMais] = useState(false);
     const [animate, setAnimate] = useState(true)

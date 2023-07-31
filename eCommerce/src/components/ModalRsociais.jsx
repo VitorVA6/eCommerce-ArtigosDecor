@@ -5,14 +5,23 @@ import {AiFillYoutube} from 'react-icons/ai'
 import {AiFillTwitterSquare} from 'react-icons/ai'
 import { useCatalogContext } from '../contexts/Catalog'
 
-export default function ModalRsociais({setModalRS, catalog, setCatalog}) {
+export default function ModalRsociais({setModalRS, catalog, setCatalog, sucesso, erro}) {
 
     const {updateCatalog} = useCatalogContext()
     const [animate, setAnimate] = useState(true)
 
-    async function handleSubmit(ev){
+    function handleSubmit(ev){
         ev.preventDefault()
-        updateCatalog()
+        updateCatalog().then( data => {
+            if(!!data.message){
+                console.log(data.message)
+                setAnimate(false)
+                setTimeout(() => setModalRS(false), 200) 
+                sucesso(data.message)
+            }else{
+                erro(data.error)
+            }
+        } )
     }
 
   return (
