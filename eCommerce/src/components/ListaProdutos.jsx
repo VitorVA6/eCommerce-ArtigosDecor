@@ -4,18 +4,15 @@ import Card from './Card'
 import { useProductContext } from '../contexts/Product'
 
 export default function ListaProdutos({title, categoria}) {
-
     const { getProducts } = useProductContext()
     const [produtos, setProdutos] = useState([])
 
-    useEffect( ()=>{
-        
+    useEffect( ()=>{    
         getProducts(5, 1, categoria)
         .then( data => {
             setProdutos(data?.docs)
         })
         .catch(err => console.log(err))
-
     }, [] )
 
   return (
@@ -27,8 +24,7 @@ export default function ListaProdutos({title, categoria}) {
             </div>
             <Link to={`/category/${categoria}`} className ='text-blue-500 text-sm font-medium'>Ver todos</Link>
         </div>
-        
-        <div className='flex gap-3.5 overflow-x-auto scrollbar-hide pb-0.5 pl-5 md:pl-10 xl:pl-[60px]'>
+        <div className='flex xl:grid grid-cols-5 gap-3.5 overflow-x-auto scrollbar-hide pb-0.5 pl-5 md:pl-10 xl:px-[60px]'>
             {produtos?.map( produto => (
                 <Card key={produto._id} categoryPage={false} produto={produto} layout={'grid'}/>
             ) )} 

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import { useCarrinhoContext } from '../contexts/Carrinho';
 import {AiOutlineArrowDown} from 'react-icons/ai'
 
 export default function Card({produto, categoryPage, layout}) {
@@ -22,17 +21,10 @@ export default function Card({produto, categoryPage, layout}) {
         }
     }
 
-    function handlePrice( valueProd, valueComb ){
-        if(produto?.combinations?.length > 0){
-            return valueComb
-        }
-        return valueProd
-    }
-
   return (
     <div className={`flex ${layout === 'grid' ? 'flex-col' : 'flex-row'} bg-white rounded-2xl shadow-md shadow-gray-300/60 ${categoryPage ? 'p-3' : 'my-5 p-5'} relative`}>
         <div 
-            className={`relative ${handleClass()} lg:h-[30vh] xl:h-[27vh] p-2 gap-2 rounded-lg cursor-pointer`}
+            className={`relative ${handleClass()} lg:h-[30vh] xl:h-[15vw] xl:w-full p-2 gap-2 rounded-lg cursor-pointer`}
             style={{ backgroundImage: `url(http://localhost:4000/images/products/${produto?.img[0]})`, boxSizing: 'border-box', backgroundSize: 'cover'}}
             onClick={(e) => {
                 if(e.currentTarget != e.target ) return;
