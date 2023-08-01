@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import {BsChevronLeft} from 'react-icons/bs'
-import { usePaymentContext } from '../contexts/Payment'
-import { useCatalogContext } from '../contexts/Catalog'
+import { usePaymentContext } from '../contexts/Payment' 
 import {FiPackage} from 'react-icons/fi'
 import {BsWhatsapp} from 'react-icons/bs'
 import {RiCloseCircleLine} from 'react-icons/ri'
+import notifies from '../utils/toastNotifies'
 
 export default function ({setSelected}) {
 
     const {getPaymentById, calcelPayment} = usePaymentContext()
     const [payment, setPayment] = useState()
-    const {notifyError, notifySucess, ToastContainer} = useCatalogContext()
 
     useEffect(() => {
         getPaymentById()
@@ -116,10 +115,10 @@ export default function ({setSelected}) {
         calcelPayment().then(data =>{
           if(!!data.message){
             setPayment( prev => ({...prev, status: 'cancelled'}) )
-            notifySucess(data.message)
+            notifies.sucess(data.message)
           }
           else{
-            notifyError(data.error)
+            notifies.error(data.error)
           }
         })
       }
@@ -136,7 +135,7 @@ export default function ({setSelected}) {
 
   return (
     <section className='flex items-center flex-col w-full h-screen'>
-      <ToastContainer />
+      <notifies.Container />
       <div className='flex flex-col w-full lg:w-3/4 bg-white rounded-2xl border border-gray-300 lg:border-gray-200/70'>
         <div className='flex border-b items-center relative h-16'>
             <div 
