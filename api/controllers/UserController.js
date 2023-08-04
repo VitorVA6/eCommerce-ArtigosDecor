@@ -1,4 +1,5 @@
 const User = require('../models/UserModel')
+const Catalog = require('../models/CatalogModel')
 const Token = require('../models/TokenModel')
 const bcrypt = require('bcrypt')
 const createUserToken = require('../utils/createUserToken')
@@ -8,6 +9,50 @@ const templates = require('../utils/templates')
 const crypto = require('crypto')
 
 module.exports = class UserController{
+
+    static async createFirst(){
+
+        const user = await User.find()
+        const catalog = await Catalog.find()
+        if(user.length > 0) return
+        const salt = await bcrypt.genSalt(12)
+        const passwordHash = await bcrypt.hash('admin', salt)
+
+        try{
+            const newUser = await User.create({
+                name: 'admin',
+                email: 'admin@admin.com',
+                password: passwordHash
+            })
+            if(catalog.length === 0){
+                await Catalog.create({
+                    admin: newUser._id,
+                    sobre: '',
+                    telefone: '',
+                    rsociais: {insta: '', face: '', yt: '', tt: ''},
+                    nome: '',
+                    whats: '',
+                    email: ''
+                })
+            }else{
+                await Catalog.deleteMany({})
+                await Catalog.create({
+                    admin: newUser._id,
+                    sobre: '',
+                    telefone: '',
+                    rsociais: {insta: '', face: '', yt: '', tt: ''},
+                    nome: '',
+                    whats: '',
+                    email: ''
+                })
+            }
+        }catch(err){
+            console.log(err)
+        }
+        
+        
+
+    }
 
     static async register( req, res ){
         

@@ -5,8 +5,6 @@ const  removeImages  = require('../utils/removeImages')
 
 const checkToken = require('../utils/checkToken')
 
-CatalogController.createFirst()
-
 router.get('/settings', CatalogController.getSettings)
 router.patch('/update', checkToken, imageUpload.array('images'), removeImages, CatalogController.updateCatalog)
 

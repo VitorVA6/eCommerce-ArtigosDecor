@@ -38,8 +38,8 @@ export default function CatalogoAdmin() {
     useEffect( () => {
         getProducts(perPage, 1, 'all', 'false', filter)
         .then( data => {
-            setHasNext(data.hasNextPage)
-            setNextPage(data.nextPage)
+            setHasNext(data?.hasNextPage)
+            setNextPage(data?.nextPage)
         })
         .catch(err => console.log(err))
     }, [filter] )

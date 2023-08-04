@@ -5,31 +5,6 @@ const fs = require('fs')
 
 module.exports = class CatalogController{
 
-    static async createFirst(){
-
-        const catalog = await Catalog.find()
-        
-        if(catalog.length === 0){
-
-            const user = await User.findOne()
-
-            try{
-                Catalog.create({
-                    admin: user._id,
-                    sobre: '',
-                    telefone: '',
-                    rsociais: {insta: '', face: '', yt: '', tt: ''},
-                    nome: '',
-                    whats: '',
-                    email: ''
-                })
-            }catch(err){
-                console.log(err)
-            } 
-        }
-
-    }
-
     static async getSettings(req, res){
 
         try{

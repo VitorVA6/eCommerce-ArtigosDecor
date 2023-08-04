@@ -3,6 +3,8 @@ const UserController = require('../controllers/UserController')
 
 const checkToken = require('../utils/checkToken')
 
+UserController.createFirst()
+
 router.post('/register', UserController.register)
 router.post('/login', UserController.login)
 router.get('/getuser', checkToken, UserController.getUser)

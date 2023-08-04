@@ -12,7 +12,6 @@ export default function PersoAdmin() {
 
   useEffect( () => {
     getCatalog()
-    setUploadesImages(catalog?.bannerdt)
   }, [] )
 
   function handleFiles(ev){
@@ -28,7 +27,11 @@ export default function PersoAdmin() {
   }
 
   function removeUploadedImages(name){
-      setUploadesImages( prev => prev.filter( img => img !== name ) )
+      setCatalog( (prev) => {
+        return {...prev, bannerdt: prev.bannerdt.filter(
+          img => img !== name
+        )}
+      } )
   }
 
   return (
@@ -78,7 +81,7 @@ export default function PersoAdmin() {
             </svg>
           </label>
           {
-            uploadedImages?.map( image => (
+            catalog.bannerdt?.map( image => (
               <div 
                   key = {image}
                   style={{ backgroundImage: `url(http://localhost:4000/images/carrosel/${image})`, boxSizing: 'border-box', backgroundSize: 'cover'}}
@@ -116,11 +119,11 @@ export default function PersoAdmin() {
       <button 
         className='rounded-md bg-blue-500 text-white text-sm font-medium py-2.5 lg:py-3 w-fit px-10 mt-8'
         onClick={() => {
-          updateCatalog(uploadedImages, images).then(data => {
-            setUploadesImages(data.dados.bannerdt)
+          updateCatalog(catalog.bannerdt, images).then(data => {
             setImages([])
             if(!!data.message){
               notifies.sucess(data.message)
+              getCatalog()
             }
             else{
               notifies.error(data.error)
