@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { initMercadoPago } from '@mercadopago/sdk-react';
 import { StatusScreen } from '@mercadopago/sdk-react';
-import { Link, useParams } from 'react-router-dom';
-import loading from '../images/carregando.png'
+import {useParams} from 'react-router-dom';
+import Loading from '../components/Loading';
 
 export default function PaymentStatus() {
 
@@ -40,10 +40,7 @@ export default function PaymentStatus() {
                 onError={onError}
             />
         </div>
-        
-        <div className={`w-full h-full justify-center items-center py-32 ${loaded===true?'hidden':'flex'}`}>
-            <img src={loading} className='w-20 h-20 animate-spin'/>
-        </div>
+        <Loading loaded={loaded}/>
     </div>
   )
 }

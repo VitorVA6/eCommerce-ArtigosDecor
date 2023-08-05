@@ -51,7 +51,6 @@ export default function ContaAdmin() {
 
   useEffect( () => {
     getUser()
-    console.log(formikPw.errors) 
   }, [] )
 
   function classManager(){

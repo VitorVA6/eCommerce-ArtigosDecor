@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useUserContext } from '../contexts/User'
-import {Link, Navigate, useNavigate} from 'react-router-dom'
+import {Link, Navigate} from 'react-router-dom'
 import loginSVG from '../images/login-img.svg'
 import {AiFillCheckCircle} from 'react-icons/ai'
 import {BsCircle} from 'react-icons/bs'
@@ -21,13 +21,12 @@ export default function Login() {
     onSubmit: values => {
         login(values.email, values.password)
         .then(data => {
-          if(!!data.error){
-            console.log(data)
+          if(!!data?.error){
             notifies.error(data.error)
           }
         })
     }
-})
+  })
 
   useEffect( ()=>{
     checkAuth()

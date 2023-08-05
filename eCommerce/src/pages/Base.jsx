@@ -28,9 +28,7 @@ export default function Base() {
         <div className='pb-16 bg-gray-200/40'>
           <Outlet />
         </div>
-        
         <Footer />
-      
     </section>
   )
 }

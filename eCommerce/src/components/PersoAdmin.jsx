@@ -7,7 +7,6 @@ import notifies from '../utils/toastNotifies'
 
 export default function PersoAdmin() {
   const [images, setImages] = useState([])
-  const [uploadedImages, setUploadesImages] = useState([])
   const { catalog, getCatalog, setCatalog, updateCatalog } = useCatalogContext()
 
   useEffect( () => {
