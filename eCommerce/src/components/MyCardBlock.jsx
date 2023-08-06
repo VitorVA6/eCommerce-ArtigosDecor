@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
-import Card from '@mercadopago/sdk-react/bricks/cardPayment'
-import { initMercadoPago } from '@mercadopago/sdk-react';
+import { initMercadoPago, Payment } from '@mercadopago/sdk-react';
 import axios from 'axios';
 import { useCarrinhoContext } from '../contexts/Carrinho';
 import { usePaymentContext } from '../contexts/Payment';
@@ -18,45 +17,21 @@ export default function MyCardBlock() {
 
   return (
     <div className='mt-3 -mx-[18px]'>
-        <Card
+        <Payment
             initialization={{ 
                 amount: total
             }}
             customization={{
-                visual: {
-                    texts: {
-                        formTitle: "",
-                        emailSectionTitle: "Receba a confirmação",
-                        installmentsSectionTitle: "",
-                        cardholderName: {
-                            label: "",
-                            placeholder: "",
-                        },
-                        email: {
-                            label: "",
-                            placeholder: "",
-                        },
-                        cardholderIdentification: {
-                            label: "",
-                        },
-                        cardNumber: {
-                            label: "",
-                        },
-                        expirationDate: {
-                            label: "",
-                        },
-                        securityCode: {
-                            label: "",
-                        },
-                        selectInstallments: "",
-                        selectIssuerBank: "",
-                        formSubmit: "",
-                    }
-                }}}
-            onSubmit={async (param) => {
+                paymentMethods: {
+                    bankTransfer: "all",
+                    creditCard: "all",
+                  },
+                }}
+            onSubmit={async ({ selectedPaymentMethod, formData }) => {
                 try{
                     const {data} = await axios.post('/mercado-pago/process_payment', {
-                        ...param,
+                        ...formData,
+                        method: selectedPaymentMethod,
                         name: formikStep1.values.name,
                         cpf: formikStep1.values.cpf,
                         whats: formikStep1.values.whats,

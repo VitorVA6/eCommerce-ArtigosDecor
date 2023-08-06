@@ -4,13 +4,12 @@ const ObjectId = require('mongoose')
 
 module.exports = class PaymentController {
     static async processPayment(req, res){
+        let paymentData = {}
         const {
-            token, 
-            issuer_id, 
             payment_method_id, 
             transaction_amount, 
-            installments, 
             payer,
+            method,
             name,
             cpf,
             whats,
@@ -20,10 +19,30 @@ module.exports = class PaymentController {
             delivery_rate,
             products
         } = req.body
+
+        if(method === 'credit_card'){
+            paymentData = {
+                installments: req.body.installments,
+                token: req.body.token, 
+                issuer_id: req.body.issuer_id, 
+                payment_method_id, 
+                transaction_amount, 
+                payer,
+            }
+        }
+        else if(method === 'bank_transfer'){
+            paymentData = {
+                payment_method_id, 
+                transaction_amount, 
+                payer,
+            }
+        }
+        else {
+            res.status(422).json({ error: 'Método de pagamento da shopee.' });
+        }
+        console.log(paymentData)
         mercadopago.configurations.setAccessToken('TEST-462015067611172-063011-b3e5d6ffd1265f43497f38b1a4341944-517694611')
-        mercadopago.payment.save({
-            token, issuer_id, payment_method_id, transaction_amount, installments, payer
-        })
+        mercadopago.payment.save(paymentData)
         .then(async function(response) {
             const { status, status_detail, id, payment_type_id, date_created } = response.body;
             await Payment.create({
@@ -36,7 +55,7 @@ module.exports = class PaymentController {
                 email: payer.email,
                 cpf,
                 endereco,
-                cep,
+                cep, 
                 payment_type_id,
                 status,
                 payment_id: id,
