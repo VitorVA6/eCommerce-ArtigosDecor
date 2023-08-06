@@ -6,7 +6,7 @@ import { useCatalogContext } from '../contexts/Catalog';
 
 export default function ModalCategoria({setModalCategoria, edit, placeh, idCustom, notifySucess, notifyError}) {
 
-  const {getCategoriesById, addCategory, categories, updateCategory} = useCategoryContext()
+  const {getCategoriesById, addCategory, categories, updateCategory, removeCategory} = useCategoryContext()
   const {baseURL} = useCatalogContext()
   const [category, setCategory] = useState('')
   const [image, setImage] = useState([])
@@ -48,8 +48,21 @@ function removeUploadedImages(name){
 
 }
 
-  function add(){
+  function remove(){
+    removeCategory(idCustom)
+    .then(data => {
+        if(!!data.message){
+          setAnimate(false)
+          setTimeout(() => setModalCategoria(false), 200) 
+          notifySucess(data.message)
+        }
+        else{
+          notifyError(data.error)
+        }
+    })
+  }
 
+  function add(){
     if(edit){
       if(category.trim().length > 0 && categories.find(el => el.name === category) === undefined){
         updateCategory(idCustom, category, image, uploadedImage)
@@ -101,7 +114,11 @@ function removeUploadedImages(name){
         className={`${animate ? 'slide-in-bottom':'slide-out-bottom'} w-full lg:w-[450px] left-0 lg:left-[calc(50%-225px)] bottom-0 lg:top-[calc(50%-100px)] h-fit bg-white flex flex-col items-center z-20 absolute rounded-t-3xl lg:rounded-2xl`}
            
     >
-        <h2 className='text-center py-4 border-b w-full font-medium'>{`${edit?'Editar':'Inserir'} categoria`}</h2>
+        <h2 className='text-center py-4 border-b w-full font-medium relative'>{`${edit?'Editar':'Inserir'} categoria`}</h2>
+        <button 
+            className={`${!edit && 'hidden'} text-red-500 font-normal absolute p-1 top-3 right-5`}
+            onClick={() => remove()}
+        >Excluir</button>
         <div className='flex flex-col py-2 px-7 w-full'>
             <p className='mb-2 mt-2 text-sm font-medium'>Nome da categoria</p>
             <input 

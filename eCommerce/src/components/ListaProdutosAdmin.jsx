@@ -5,10 +5,12 @@ import {AiFillStar} from 'react-icons/ai'
 import {AiOutlineStar} from 'react-icons/ai'
 import { useProductContext } from '../contexts/Product';
 import {VscTrash} from 'react-icons/vsc'
+import { useCatalogContext } from '../contexts/Catalog';
 
 export default function ListaProdutosAdmin({produtos, setModalProduto, setEdit, setIdProduto}) {
 
     const { deleteProduct, favoriteProduct } = useProductContext()
+    const { baseURL } = useCatalogContext()
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   
     const [checkedSwitch, setCheckedSwitch] = useState(false);
@@ -75,7 +77,7 @@ export default function ListaProdutosAdmin({produtos, setModalProduto, setEdit, 
                     }}
                 >
                     <div className='flex items-center gap-2.5'>
-                        <img className='w-11 h-11 lg:w-14 lg:h-14 rounded-md' src={`http://localhost:4000/images/products/${produto?.img[0]}`} alt="Foto do produto" />
+                        <img className='w-11 h-11 lg:w-14 lg:h-14 rounded-md' src={`${baseURL}/images/products/${produto?.img[0]}`} alt="Foto do produto" />
                         <div className='flex flex-col'>
                             <p className='text-sm lg:text-base'>{produto.title}</p>
                             <p className='text-xs lg:text-sm text-gray-400'>{produto.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>

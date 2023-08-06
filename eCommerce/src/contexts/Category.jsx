@@ -18,24 +18,29 @@ export function useCategoryContext(){
     const {categories, setCategories} = useContext(CategoryContext)
 
     async function getCategories(){
-
         try{
             const {data} = await axios.get('/category/get-all')
             setCategories(data)
         }catch(err){
             console.log(err)
         }
-
     }
     async function getCategoriesById(id){
-
         try{
             const {data} = await axios.get(`/category/${id}`)
             return data
         }catch(err){
             console.log(err)
         }
-
+    }
+    async function removeCategory(id){
+        try{
+            const {data} = await axios.delete(`/category/${id}`)
+            getCategories()
+            return data
+        }catch(err){
+            return err.response ? err.response.data : {error: 'Ocorreu um erro no servidor!'}
+        }
     }
     
     async function addCategory(name, image){
@@ -84,7 +89,8 @@ export function useCategoryContext(){
         addCategory,
         getCategories,
         getCategoriesById,
-        updateCategory
+        updateCategory,
+        removeCategory
     }
 }
 

@@ -153,7 +153,7 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
         
         <h2 className='text-center py-4 border-b w-full font-medium relative'>{`${edit ? 'Editar' : 'Adicionar'} variações`}
         <button 
-            className='text-red-500 font-normal absolute p-1 top-3 right-5'
+            className={`${!edit && 'hidden'} text-red-500 font-normal absolute p-1 top-3 right-5`}
             onClick={() => remove()}
         >Excluir</button>
         </h2>
