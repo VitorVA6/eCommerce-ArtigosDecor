@@ -15,8 +15,10 @@ export default function CatalogProvider({children}){
         bannerdt: []
     })
 
+    const baseURL = 'https://artigos-decor.onrender.com'
+
     return (
-        <CatalogContext.Provider value={{catalog, setCatalog}}>
+        <CatalogContext.Provider value={{catalog, setCatalog, baseURL}}>
             {children}
         </CatalogContext.Provider>
     )
@@ -25,7 +27,7 @@ export default function CatalogProvider({children}){
 
 export function useCatalogContext(){
 
-    const {catalog, setCatalog} = useContext(CatalogContext)
+    const {catalog, setCatalog, baseURL} = useContext(CatalogContext)
 
     async function getCatalog(){
         try{
@@ -69,6 +71,7 @@ export function useCatalogContext(){
         setCatalog,
         getCatalog,
         updateCatalog,
+        baseURL
     }
 
 }

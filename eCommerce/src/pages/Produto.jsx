@@ -6,6 +6,7 @@ import Slider from 'react-slick'
 import { AiOutlineArrowDown } from 'react-icons/ai';
 import { FiChevronRight } from 'react-icons/fi';
 import { useVariationContext } from '../contexts/Variation';
+import { useCatalogContext } from '../contexts/Catalog';
 
 export default function Produto() {
     const {id} = useParams()
@@ -18,6 +19,7 @@ export default function Produto() {
     const {variations, getVariations} = useVariationContext()
     const taxa = 1.2
     const [imgId, setImgId] = useState(0)
+    const {baseURL} = useCatalogContext()
     const settings = {
         dots: true,
         infinite: true,
@@ -131,7 +133,7 @@ export default function Produto() {
                         produto?.img?.map( image =>{
                             return (
                             <div key={image} className=''>
-                                <img className='h-96 w-full lg:px-0 rounded-xl' src={`http://localhost:4000/images/products/${image}`} alt="Imagem do produto" />
+                                <img className='h-96 w-full lg:px-0 rounded-xl' src={`${baseURL}/images/products/${image}`} alt="Imagem do produto" />
                             </div>)
                         })
                         
@@ -146,7 +148,7 @@ export default function Produto() {
                                 <img 
                                     key={image} 
                                     className={`${imgId === index ? 'border-[3px] border-blue-400': ''} cursor-pointer h-16 w-16 min-w-[64px] p-0 rounded-lg`} 
-                                    src={`http://localhost:4000/images/products/${image}`} 
+                                    src={`${baseURL}/images/products/${image}`} 
                                     alt="Imagem do produto" 
                                     onMouseOver={() => {
                                         setImgId(index)
@@ -160,7 +162,7 @@ export default function Produto() {
                 {
                     produto?.img !== undefined &&
                     <div className='flex md:w-full lg:w-[calc(100%-80px)] md:h-[calc(100%-80px)] lg:h-full md:order-1 lg:order-2'>
-                        <img className='rounded-lg w-full' src={`http://localhost:4000/images/products/${produto?.img[imgId]}`} alt="Imagem do produto" />
+                        <img className='rounded-lg w-full' src={`${baseURL}/images/products/${produto?.img[imgId]}`} alt="Imagem do produto" />
                     </div>
                 }
             </div>       

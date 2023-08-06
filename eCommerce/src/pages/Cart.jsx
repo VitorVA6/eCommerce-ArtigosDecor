@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react'
+import React, {  useEffect } from 'react'
 import {useCarrinhoContext} from '../contexts/Carrinho'
 import {Link} from 'react-router-dom'
 import {AiOutlineMinus, AiOutlinePlus} from 'react-icons/ai'
 import {IoMdClose} from 'react-icons/io'
 import {FiChevronRight} from 'react-icons/fi'
 import { useVariationContext } from '../contexts/Variation'
+import { useCatalogContext } from '../contexts/Catalog'
 
 export default function Cart() {
 
     const {carrinho, listaCarrinho, removeCarrinho, alteraQuantidade, total} = useCarrinhoContext()
     const {variations, getVariations} = useVariationContext()
+    const {baseURL} = useCatalogContext()
 
     useEffect(() => {
         getVariations()
@@ -49,7 +51,7 @@ export default function Cart() {
                     <div key={elemento?._id} 
                         className={`flex md:grid md:grid-cols-5 xl:grid-cols-6 py-5 md:items-center ${index<(carrinho.length-1)&&'border-b border-gray-300'}`}>
                         <div className='flex gap-5 col-span-3'>
-                            <img src={`http://localhost:4000/images/products/${elemento?.img[0]}`} alt="Imagem do produto" className='rounded-sm w-20 h-20 md:w-[72px] md:h-[72px] lg:w-20 lg:h-20 xl:w-24 xl:h-24'/>
+                            <img src={`${baseURL}/images/products/${elemento?.img[0]}`} alt="Imagem do produto" className='rounded-sm w-20 h-20 md:w-[72px] md:h-[72px] lg:w-20 lg:h-20 xl:w-24 xl:h-24'/>
                             <div className='flex flex-col md:justify-center'>    
                                 <p className='md:font-medium text-black/80 text-sm md:text-base w-full'>{elemento?.title}</p>
                                 <p className='hidden md:block text-xs font-medium text-gray-500/80'>{`#${elemento?._id}`}</p>

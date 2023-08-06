@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { useCategoryContext } from '../contexts/Category'
 import { v4 as uuidv4 } from 'uuid';
 import { GrFormClose } from "react-icons/gr";
+import { useCatalogContext } from '../contexts/Catalog';
 
 export default function ModalCategoria({setModalCategoria, edit, placeh, idCustom, notifySucess, notifyError}) {
 
   const {getCategoriesById, addCategory, categories, updateCategory} = useCategoryContext()
+  const {baseURL} = useCatalogContext()
   const [category, setCategory] = useState('')
   const [image, setImage] = useState([])
   const [uploadedImage, setUploadesImage] = useState([])
@@ -115,7 +117,7 @@ function removeUploadedImages(name){
                     uploadedImage.map( image => (
                         <div 
                             key = {image}
-                            style={{ backgroundImage: `url(http://localhost:4000/images/categories/${image})`, boxSizing: 'border-box', backgroundSize: 'cover'}}
+                            style={{ backgroundImage: `url(${baseURL}/images/categories/${image})`, boxSizing: 'border-box', backgroundSize: 'cover'}}
                             className='w-14 h-14 rounded-lg relative'
                             >
                             <button 

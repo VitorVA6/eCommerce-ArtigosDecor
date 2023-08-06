@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import {AiOutlineArrowDown} from 'react-icons/ai'
+import { useCatalogContext } from '../contexts/Catalog';
 
 export default function Card({produto, categoryPage, layout}) {
 
@@ -8,6 +9,7 @@ export default function Card({produto, categoryPage, layout}) {
     const taxa = 1.2
     const [price, setPrice] = useState(produto?.combinations?.length > 0 ? produto.combinations[0]?.price : produto.preco)
     const [priceoff, setPriceoff] = useState(produto?.combinations?.length > 0 ? produto.combinations[0]?.priceoff : produto.desconto)
+    const {baseURL} = useCatalogContext()
 
     const handleClass = () => {
         if(categoryPage){
@@ -25,7 +27,7 @@ export default function Card({produto, categoryPage, layout}) {
     <div className={`flex ${layout === 'grid' ? 'flex-col' : 'flex-row'} bg-white rounded-2xl shadow-md shadow-gray-300/60 ${categoryPage ? 'p-3' : 'my-5 p-5'} relative`}>
         <div 
             className={`relative ${handleClass()} lg:h-[30vh] xl:h-[15vw] xl:w-full p-2 gap-2 rounded-lg cursor-pointer`}
-            style={{ backgroundImage: `url(http://localhost:4000/images/products/${produto?.img[0]})`, boxSizing: 'border-box', backgroundSize: 'cover'}}
+            style={{ backgroundImage: `url(${baseURL}/images/products/${produto?.img[0]})`, boxSizing: 'border-box', backgroundSize: 'cover'}}
             onClick={(e) => {
                 if(e.currentTarget != e.target ) return;
                 navigate(`/produto/${produto?._id}`)
