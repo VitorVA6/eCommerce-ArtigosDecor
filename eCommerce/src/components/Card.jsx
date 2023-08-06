@@ -6,7 +6,7 @@ import { useCatalogContext } from '../contexts/Catalog';
 export default function Card({produto, categoryPage, layout}) {
 
     const navigate = useNavigate()
-    const taxa = 1.2
+    const taxa = 1.2161
     const [price, setPrice] = useState(produto?.combinations?.length > 0 ? produto.combinations[0]?.price : produto.preco)
     const [priceoff, setPriceoff] = useState(produto?.combinations?.length > 0 ? produto.combinations[0]?.priceoff : produto.desconto)
     const {baseURL} = useCatalogContext()
@@ -53,7 +53,7 @@ export default function Card({produto, categoryPage, layout}) {
                     <p className='inline line-through text-gray-400 text-[13px] -mb-[2px] lg:-mb-[1px] xl:-mb-[2px]'>{price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                 }
             </div>
-            <p className='text-[13px] text-gray-700 -mt-[7px]'>Em até <strong className='text-black text-sm'>12x</strong> de {priceoff > 0 ? (priceoff * taxa/12).toFixed(2) : (price*taxa/12).toFixed(2)}</p>
+            <p className='text-[13px] text-gray-700 -mt-[7px]'>Em até <strong className='text-black text-sm'>12x</strong> de {priceoff > 0 ? (Math.ceil((priceoff * taxa/12)*100)/100).toFixed(2) : (Math.ceil((price*taxa/12)*100)/100).toFixed(2)}</p>
             {
                 layout === 'list' &&
                 <Link to={`/produto/${produto?._id}`} className='flex justify-center w-full py-2 text-white rounded-md text-medium bg-green-500 mt-3'>

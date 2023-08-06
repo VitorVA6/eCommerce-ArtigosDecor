@@ -15,7 +15,7 @@ export default function CatalogProvider({children}){
         bannerdt: []
     })
 
-    const baseURL = 'https://artigos-decor.onrender.com'
+    const baseURL = 'http://[::1]:4000'
 
     return (
         <CatalogContext.Provider value={{catalog, setCatalog, baseURL}}>
