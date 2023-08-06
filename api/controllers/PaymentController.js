@@ -95,7 +95,7 @@ module.exports = class PaymentController {
     static async getAll(req, res){
         try{
             const payments = await Payment.find()
-            return res.status(200).json(payments)
+            return res.status(200).json(payments.reverse())
         }catch(err){
             return res.status(400).json({error: "Não foi possível carregar os dados dos pedidos."})
         }

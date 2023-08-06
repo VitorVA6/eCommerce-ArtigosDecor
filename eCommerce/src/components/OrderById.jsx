@@ -20,17 +20,17 @@ export default function ({setSelected}) {
 
     function classManager(){
       if(payment?.status === 'approved'){
-        return 'bg-green-50 text-green-500'
+        return 'bg-green-50'
       }else if(payment?.status === 'pending' || payment?.status === 'in_process'){
-        return 'bg-gray-50 text-gray-500'
+        return 'bg-gray-50'
       }else if(payment?.status === 'cancelled' || payment?.status === 'rejected'){
-        return 'bg-red-50 text-red-500'
+        return 'bg-red-50'
       }else if(payment?.status === 'refunded' || payment?.status === 'charged_back'){
-        return 'bg-purple-50 text-purple-500'
+        return 'bg-purple-50'
       }else if(payment?.status === 'in_mediation'){
-        return 'bg-yellow-50 text-yellow-500'
+        return 'bg-yellow-50'
       }else if(payment?.status === 'authorized'){
-        return 'bg-blue-50 text-blue-500'
+        return 'bg-blue-50'
       }
     }
 
@@ -151,6 +151,11 @@ export default function ({setSelected}) {
                 <h3 className=' uppercase text-sm'>#{payment?._id}</h3>
                 <p className='text-xs text-gray-500/90'>{!!payment && dataConversor(payment?.date_created)}</p>
             </div>
+            <p className='font-medium text-sm border-l-4 border-blue-500 pl-2 mb-2 mt-1'>{
+                payment?.payment_type_id === 'credit_card' ?
+                'Pagamento com cartão de crédito':
+                'Pagamento no PIX'
+              }</p>
             <div className={`flex flex-col ${classManager()} px-3 h-fit py-2 rounded-lg text-[13px] gap-2`}>{
               statusManager()
             }</div>
