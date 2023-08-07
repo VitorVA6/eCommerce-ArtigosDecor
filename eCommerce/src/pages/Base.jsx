@@ -25,7 +25,7 @@ export default function Base() {
     <section className='flex flex-col h-screen overflow-auto' ref={refToTop}>
       {modalCarrinho?<Modal />:<></>}       
         <Header/> 
-        <div className='pb-16 bg-gray-200/40'>
+        <div className='pb-16 bg-[#f1f1f1]'>
           <Outlet />
         </div>
         <Footer />

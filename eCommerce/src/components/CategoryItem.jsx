@@ -17,7 +17,7 @@ export default function CategoryItem({categoria}) {
     return (
         <Link  
             to={`/category/${categoria._id}`} 
-            className='flex flex-col items-center gap-y-3'
+            className='flex flex-col items-center gap-y-2'
             onMouseOver={() => {
                 setSHow(true)
                 setOpacity('opacity-100')
@@ -35,7 +35,7 @@ export default function CategoryItem({categoria}) {
                     style={{backgroundImage:`url(${baseURL}/images/categories/${categoria.image})`}}/>
             </div>
             <div className='flex gap-2.5 items-center'>
-                <h3 className={`ml-[26px] text-[15px] ease-in transition-all duration-300 ${translate} ${show===true&&'text-blue-500'}`}>{categoria.name}</h3>
+                <h3 className={`ml-[26px] font-bold ease-in transition-all duration-300 ${translate} ${show===true?'text-blue-500':'text-gray-600/80'}`}>{categoria.name}</h3>
                 <BsArrowRight className={`ease-in transition-all duration-300 ${translate} ${opacity} ${show===true&&'text-blue-500'}`}/>
             </div>
             </Link>

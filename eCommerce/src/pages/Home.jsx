@@ -48,10 +48,6 @@ export default function Home() {
         <div className='10'></div>  
       }
       <div className='flex flex-col'>
-        <div className='hidden md:flex flex-col w-fit gap-0.5 mb-6 px-5 md:px-10 xl:px-[60px]'>
-            <h2 className='font-medium text-[21px]'>Categorias</h2>
-            <div className='w-11/12 h-1.5 bg-blue-500 rounded-full'></div>
-        </div>
         <NavLateral 
           setCategoria={valor => setFiltroCategoria(valor)} 
           categorias={categories}
