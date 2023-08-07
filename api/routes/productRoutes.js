@@ -12,8 +12,8 @@ router.patch('/favorite/:id', checkToken, ProductController.favoriteProduct)
 router.get('/:id', ProductController.getProductById)
 router.patch('/:id', checkToken, imageUpload.array('images'), removeImages, ProductController.updateProduct)
 router.delete('/:id', checkToken, ProductController.deleteProduct)
-router.put('/select/:id', ProductController.selectOption)
-router.put('/unselect/:id', ProductController.unSelectOption)
+router.put('/select/:id', checkToken, ProductController.selectOption)
+router.put('/unselect/:id', checkToken, ProductController.unSelectOption)
 
 
 module.exports = router

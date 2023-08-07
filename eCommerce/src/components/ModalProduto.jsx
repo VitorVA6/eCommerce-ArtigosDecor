@@ -6,6 +6,7 @@ import { GrFormClose } from "react-icons/gr";
 import { useVariationContext } from '../contexts/Variation';
 import combine from '../utils/combine';
 import { useCatalogContext } from '../contexts/Catalog';
+import masks from '../utils/masks';
 
 export default function ModalProduto({setModalProduto, edit, categorias, idProduto, notifySucess, notifyError}) {
 
@@ -17,10 +18,9 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
 
     //estados dos inputs: nome, preço e etc
     const [name, setName] = useState('') 
-    const [price, setPrice] = useState(0)
+    const [price, setPrice] = useState(parseFloat(0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }))
+    const [priceoff, setPriceoff] = useState(parseFloat(0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }))
     const [desc, setDesc] = useState('')
-    const [ids, setIds] = useState([])
-    const [priceoff, setPriceoff] = useState(0)
     const [images, setImages] = useState([])
     const [uploadedImages, setUploadesImages] = useState([])
     const [variationsProd, setVariationsProd] = useState([])
@@ -34,10 +34,10 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
             .then( (data) => {
                 const aux = categorias.filter((element) => data.product.categoria.some((other) => other.value === element._id))
                 setName(data.product.title) 
-                setPrice(data.product.preco)
+                setPrice(parseFloat(data?.product?.preco?.toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }))
                 setDesc(data.product.desc) 
                 setCategory(aux.map( element => ({value:element._id, label:element.name}) ))
-                setPriceoff(data.product.desconto)
+                setPriceoff(parseFloat(data?.product?.desconto?.toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }))
                 setUploadesImages(data.product.img)
                 setVariationsProd(data.product.variations)
                 setCombinations(data.product.combinations)
@@ -45,6 +45,12 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
             .catch(err => console.log(err))
         }
     },[idProduto] )
+
+    function inverseCurrency(value){
+        let stringValue = value.replace(/,/, '.').replace(/./, '').replace(/[\D]/g, '')
+        return stringValue/100
+    }
+
     const [category, setCategory] = useState([])
 
     function handleFiles(ev){
@@ -68,17 +74,19 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
     }
 
     async function handleSubmit() {
-
+        if(inverseCurrency(price) === 0){
+            notifyError('Valor de preço inválido')
+            return
+        }
+        if(inverseCurrency(price) <= inverseCurrency(priceoff)){
+            notifyError('Valor de desconto inválido')
+            return
+        }
         if(edit){
-            updateProduct(idProduto, name, price, priceoff, category, desc, images, uploadedImages, combinations, variationsProd)
+            updateProduct(idProduto, name, inverseCurrency(price), inverseCurrency(priceoff), category, desc, images, uploadedImages, combinations, variationsProd)
             .then( (data) => {
                 if(!!data.product){
-                    setName(data.product.title) 
-                    setPrice(data.product.preco)
-                    setDesc(data.product.desc) 
-                    setCategory(data.product.categoria)
-                    setPriceoff(data.product.desconto)
-                    setUploadesImages(data.product.img)
+                    setUploadesImages(data?.product?.img)
                     setImages([])
                     setAnimate(false)
                     setTimeout(() => setModalProduto(false), 200) 
@@ -91,7 +99,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
             } )
         }
         else{
-            addProduct(name, price, priceoff, category, desc, images, combinations, variationsProd).then(data => {
+            addProduct(name, inverseCurrency(price), inverseCurrency(priceoff), category, desc, images, combinations, variationsProd).then(data => {
                 if(!!data.message){
                   setAnimate(false)
                   setTimeout(() => setModalProduto(false), 200) 
@@ -247,9 +255,9 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                     <p className='mb-2 mt-2 text-sm font-medium'>Preço</p>
                     <input 
                         className='px-4 py-2.5 w-full rounded-lg bg-gray-100 focus:outline outline-1 outline-blue-500' 
-                        type='number' 
+                        type='text'
                         value={price}
-                        onChange={event => setPrice(event.target.value) }    
+                        onChange={event => setPrice(masks.maskCurrency(event.target.value)) }    
                     />    
                 </div>
             </div>
@@ -284,9 +292,9 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                     <p className='mb-2 mt-2 text-sm font-medium'>Desconto</p>
                     <input 
                         className='px-4 py-2.5 w-full rounded-lg bg-gray-100 focus:outline outline-1 outline-blue-500' 
-                        type='number' 
+                        type='text' 
                         value={priceoff}
-                        onChange={event => setPriceoff(event.target.value) }    
+                        onChange={event => setPriceoff(masks.maskCurrency(event.target.value)) }    
                     />    
                 </div>
                 <div className='flex flex-col'>

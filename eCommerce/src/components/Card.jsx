@@ -33,7 +33,6 @@ export default function Card({produto, categoryPage, layout}) {
                 navigate(`/produto/${produto?._id}`)
                 }}
             >
-        
             {
                 priceoff > 0 ?
                 <div className='flex absolute -left-1.5 -top-1.5 gap-0.5 bg-black w-fit py-0.5 px-1.5 items-center text-white rounded-lg'>
@@ -42,7 +41,6 @@ export default function Card({produto, categoryPage, layout}) {
                 </div>
                 :<></>
             }
-            
         </div>
         <div className={`flex flex-col py-1.5 lg:py-3 w-full ${layout === 'grid' ? 'mt-[5px]' : ''}`}>
             <p className='text-sm mb-3'>{produto?.title}</p>
