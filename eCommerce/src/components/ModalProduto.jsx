@@ -9,14 +9,11 @@ import { useCatalogContext } from '../contexts/Catalog';
 import masks from '../utils/masks';
 
 export default function ModalProduto({setModalProduto, edit, categorias, idProduto, notifySucess, notifyError}) {
-
     const {addProduct, getProductById, updateProduct} = useProductContext()
     const {getVariations, variations} = useVariationContext()
     const {baseURL} = useCatalogContext()
     const [verMais, setVerMais] = useState(false);
     const [animate, setAnimate] = useState(true)
-
-    //estados dos inputs: nome, preço e etc
     const [name, setName] = useState('') 
     const [price, setPrice] = useState(parseFloat(0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }))
     const [priceoff, setPriceoff] = useState(parseFloat(0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }))
@@ -26,6 +23,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
     const [variationsProd, setVariationsProd] = useState([])
     const [combinations, setCombinations] = useState([])
     const [modalVariations, setModalVariations] = useState(false)
+    const [category, setCategory] = useState([])
 
     useEffect( () => {
         if (edit){
@@ -35,12 +33,12 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                 const aux = categorias.filter((element) => data.product.categoria.some((other) => other.value === element._id))
                 setName(data.product.title) 
                 setPrice(parseFloat(data?.product?.preco?.toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }))
+                setPriceoff(parseFloat(data?.product?.desconto?.toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }))
                 setDesc(data.product.desc) 
                 setCategory(aux.map( element => ({value:element._id, label:element.name}) ))
-                setPriceoff(parseFloat(data?.product?.desconto?.toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }))
                 setUploadesImages(data.product.img)
                 setVariationsProd(data.product.variations)
-                setCombinations(data.product.combinations)
+                setCombinations(numberToCurrency(data.product.combinations))
             } )
             .catch(err => console.log(err))
         }
@@ -51,8 +49,6 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
         return stringValue/100
     }
 
-    const [category, setCategory] = useState([])
-
     function handleFiles(ev){
         const newImages = Array.from(ev.target.files).map( image => ({
             id: uuidv4(),
@@ -62,15 +58,33 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
     }
 
     function removeFiles(id){
-
         setImages( prev => prev.filter( image => image.id !== id ) )
-
     }
 
     function removeUploadedImages(name){
-
         setUploadesImages( prev => prev.filter( img => img !== name ) )
+    }
 
+    function currencyToNumber(){
+        let aux = combinations.map(el => {
+            return {
+                ...el,
+                price: inverseCurrency(el.price),
+                priceoff: inverseCurrency(el.priceoff)
+            }
+        })
+        return aux
+    }
+
+    function numberToCurrency(comb){
+        let aux = comb.map(el => {
+            return {
+                ...el,
+                price: parseFloat(el.price.toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
+                priceoff: parseFloat(el.priceoff.toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+            }
+        })
+        return aux
     }
 
     async function handleSubmit() {
@@ -83,7 +97,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
             return
         }
         if(edit){
-            updateProduct(idProduto, name, inverseCurrency(price), inverseCurrency(priceoff), category, desc, images, uploadedImages, combinations, variationsProd)
+            updateProduct(idProduto, name, inverseCurrency(price), inverseCurrency(priceoff), category, desc, images, uploadedImages, currencyToNumber(), variationsProd)
             .then( (data) => {
                 if(!!data.product){
                     setUploadesImages(data?.product?.img)
@@ -99,7 +113,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
             } )
         }
         else{
-            addProduct(name, inverseCurrency(price), inverseCurrency(priceoff), category, desc, images, combinations, variationsProd).then(data => {
+            addProduct(name, inverseCurrency(price), inverseCurrency(priceoff), category, desc, images, currencyToNumber(), variationsProd).then(data => {
                 if(!!data.message){
                   setAnimate(false)
                   setTimeout(() => setModalProduto(false), 200) 
@@ -144,7 +158,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
             return {
                 id: uuidv4(),
                 price: price,
-                priceoff: 0,
+                priceoff: priceoff,
                 combination: el.split(' ')
             }
         } )
@@ -155,7 +169,6 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
         const variationSel = variationsProd.find(el => el.idVariacao === idVar)
         
         if (!!variationSel){    
-                   
             const variationsAux = variationsProd.map(el =>{
                 if(el.idVariacao === idVar){
                     if(el.idOptions.includes(idOption)){
@@ -230,9 +243,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
             }
             </div>
         </div>
-
     </div>
-
     }
     
     <div 
@@ -318,15 +329,16 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                                 <div key={el?.id} className='grid grid-cols-4 w-full text-[14px] px-6 py-2 border-b items-center'>
                                     <p className='col-span-2'>{genNames(el?.combination)}</p>
                                     <div className='flex bg-gray-200 items-center col-span-1 w-[80%] rounded-lg'>
-                                        <p className='px-2.5 py-2 text-[12px] font-medium'>R$</p> 
                                         <input 
-                                            type='number' 
+                                            type='text' 
                                             className='py-2 px-2 bg-gray-100 text-[13px] w-full rounded-r-lg outline-0'
-                                            value={el === undefined ? 0 : el.price}
+                                            value={el === undefined ? 
+                                                0 :
+                                                el.price}
                                             onChange={(e) => {
                                                 setCombinations( prev => prev.map( elem => {
                                                     if(elem.id === el.id){
-                                                        return { ... el, price: e.target.value }
+                                                        return { ... el, price: masks.maskCurrency(e.target.value) }
                                                     }
                                                     return elem
                                                 } ) )
@@ -334,18 +346,19 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                                         />
                                     </div>
                                     <div className='flex bg-gray-200 items-center col-span-1 w-[80%] rounded-lg'>
-                                        <p className='px-2.5 py-2 text-[12px] font-medium'>R$</p> 
                                         <input 
-                                            type='number' 
+                                            type='text' 
                                             className='py-2 px-2 bg-gray-100 text-[13px] w-full rounded-r-lg outline-0'
-                                            value={el === undefined ? '' : el?.priceoff}
+                                            value={el === undefined ? 
+                                                0 : 
+                                                el?.priceoff}
                                             onChange={(e) => {
                                                 setCombinations( prev => prev.map( elem => {
                                                     if(elem.id === el.id){
-                                                        return { ... el, priceoff: e.target.value }
+                                                        return { ... el, priceoff: masks.maskCurrency(e.target.value) }
                                                     }
                                                     return elem
-                                                } ) )
+                                                }))
                                             }}
                                         />
                                     </div>
