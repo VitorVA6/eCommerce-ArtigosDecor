@@ -33,7 +33,7 @@ export default function Home() {
     <section className='flex flex-col overflow-x-hidden gap-y-8'>
       {
         catalog?.bannerdt?.length !== 0 ?
-        <div className='w-full md:px-10 xl:px-[60px] self-center md:my-10 rounded-lg box-border'>
+        <div className='w-full md:px-10 xl:px-32 self-center md:my-10 rounded-lg box-border'>
           <Slider className='md:rounded-lg overflow-hidden relative' {...settings} dots dotsClass="meus-dots__banner">
           {
               catalog?.bannerdt?.map( image =>{
