@@ -55,28 +55,28 @@ export default function SliderFooter() {
         </div> 
       </Slider>
 
-      <div className='hidden lg:grid lg:grid-cols-3 xl:grid-cols-4  px-[80px] xl:px-[40px] xl:gap-6 justify-center'>
-        <div className='flex mt-5 px-[20px] py-[15px] gap-4 items-center'>
+      <div className='hidden lg:grid lg:grid-cols-3 xl:grid-cols-4  px-[40px] xl:px-32 xl:gap-20 justify-center'>
+        <div className='flex mt-5  py-[15px] gap-4 items-center'>
           <div className='flex justify-center mb-2'>
             <BsFillArrowLeftCircleFill className='w-[33px] h-[33px] text-gray-700'/>            
           </div>
           <div className='flex flex-col'>
-            <h3 className='font-medium text-sm mb-1.5 text-blue-500'>Satisfação ou Reembolso</h3>
+            <h3 className='font-medium text-sm mb-1.5 text-blue-500'>Reembolso</h3>
             <p className='text-xs'>Caso haja algum problema, devolvemos seu dinheiro</p>
           </div>
           
         </div>
-        <div className='flex mt-5 px-[20px] py-[15px] gap-4 items-center'>
+        <div className='flex mt-5  py-[15px] gap-4 items-center'>
           <div className='flex justify-center mb-2'>
             <BsShieldFillCheck className='w-8 h-8 text-gray-700'/>
           </div>
           <div className='flex flex-col'>
             <h3 className='font-medium text-sm mb-1.5 text-blue-500'>Compra segura</h3>
-            <p className='text-xs'>Ambiente segura para pagamentos online</p>
+            <p className='text-xs'>Ambiente seguro para pagamentos online</p>
           </div>
           
         </div>
-        <div className='flex mt-5 px-[20px] py-[15px] gap-4 items-center'>
+        <div className='flex mt-5  py-[15px] gap-4 items-center'>
           <div className='flex justify-center mb-2'>
             <FaShuttleVan className='w-9 h-9 text-gray-700'/>
           </div>
@@ -86,7 +86,7 @@ export default function SliderFooter() {
           </div>
           
         </div> 
-        <div className='flex mt-5 px-[20px] py-[15px] gap-4 items-center lg:col-start-2 lg:grid-end-2 xl:col-auto'>
+        <div className='flex mt-5  py-[15px] gap-4 items-center lg:col-start-2 lg:grid-end-2 xl:col-auto'>
           <div className='flex justify-center mb-2'>
             <IoMail className='w-9 h-9 text-gray-700'/>
           </div>

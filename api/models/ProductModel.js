@@ -40,8 +40,7 @@ const ProductSchema = new Schema({
             combination: {type: Array}
         }
     ]
-
-})
+    }, {timestamps: true})
 
 ProductSchema.plugin(mongoosePaginate)
 

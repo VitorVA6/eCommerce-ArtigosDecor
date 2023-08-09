@@ -31,7 +31,7 @@ export default function Header() {
 
   return (
     <header className='flex flex-col bg-white justify-between w-full md:justify-center h-fit'>
-        <div className='flex w-full justify-center md:justify-between md:px-10 xl:px-32 py-2 text-xs md:text-sm text-black/80 font-medium border-b-[2px]'>
+        <div className='flex w-full justify-center md:justify-between md:px-10 xl:px-32 py-2 text-xs md:text-sm text-black/70 font-medium border-b-[2px]'>
             <div className='flex gap-2 items-center'>
                 <FiPackage className='w-5 h-5 md:w-6 md:h-6'/>
                 <p>Frete frátis para todo o Brasil</p>
@@ -45,7 +45,7 @@ export default function Header() {
                 <p>Satisfação garantida</p>
             </div>
         </div>
-        <div className='flex flex-col justify-between px-5 md:px-10 xl:px-32 text-black/80 gap-4 md:gap-0 items-center pb-6 pt-4 md:py-8'>
+        <div className='flex flex-col justify-between px-5 md:px-10 xl:px-32 text-black/70 gap-4 md:gap-0 items-center pb-4 md:pb-6 pt-4 md:py-8'>
             <nav className='flex justify-between items-center w-full'>
                 {
                     menu &&
@@ -72,7 +72,7 @@ export default function Header() {
                         className='px-[30px] justify-center h-full rounded-full items-center flex bg-gray-200'
                         onClick={handleSearch}
                     >
-                        <GoSearch className='w-[26px] h-[26px] text-black/80'/>
+                        <GoSearch className='w-[26px] h-[26px] text-black/70'/>
                     </button>
                 </div>
                 <div className='flex items-center gap-4'>
@@ -98,19 +98,19 @@ export default function Header() {
                 
             </nav>
             <div className='flex md:hidden rounded-full h-full w-full bg-white items-center text-black-80  justify-between border-[3px]'>
-                <div className='flex pl-4 pr-2 gap-2 items-center border-r-[2px] cursor-pointer text-sm'>
+                <div className='flex pl-4 pr-2 gap-1 items-center border-r-[2px] cursor-pointer text-sm'>
                     Todos 
                     <BiChevronDown className='w-5 h-5'/>
                 </div>
                 <input 
                     type="text" 
-                    placeholder='O que está procurando?'
+                    placeholder='Busque um produto'
                     className='py-[7px] pl-2 rounded-full w-full flex items-center outline-none text-sm placeholder-gray-400'
                     value={key}
                     onChange={(ev) => setKey(ev.target.value)}
                 />
                 <button 
-                    className='px-[20px] justify-center h-full rounded-full items-center flex bg-gray-200'
+                    className='px-[24px] justify-center h-full rounded-full items-center flex bg-gray-200'
                     onClick={handleSearch}
                 >
                     <GoSearch className='w-[20px] h-[20px] text-black/80'/>
@@ -139,6 +139,7 @@ export default function Header() {
                 Promoções
             </Link>
         </div>
+        <div className='h-[6px] bg-black/80 block lg:hidden' />
         
     </header>
   )

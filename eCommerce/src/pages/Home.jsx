@@ -38,7 +38,7 @@ export default function Home() {
           {
               catalog?.bannerdt?.map( image =>{
                   return (     
-                    <img key={image} className='w-full h-[25vh] md:h-[23vh] lg:h-[61vh]' src={`${baseURL}/images/carrosel/${image}`} alt="Imagem do produto" />          
+                    <img key={image} className='w-full h-[25vh] md:h-[23vh] lg:h-[61vh]' src={`${baseURL}/images/carrosel/${image}`} alt="Imagem do produto"/>          
                   )
               })
           }
@@ -52,7 +52,7 @@ export default function Home() {
           setCategoria={valor => setFiltroCategoria(valor)} 
           categorias={categories}
         /> 
-        <ListaProdutos title={'Destaques'} categoria={'destaques'}/>     
+        <ListaProdutos title={'Destaques'} categoria={'destaques'} ordination={'false'}/>     
         <div className='w-full flex justify-around -mx-2 md:mx-0 md:px-5'>
           <img className='w-56 md:w-64 lg:w-72 xl:w-96' src={freeShipping} alt="" />
           <div className='flex flex-col justify-center gap-5 md:gap-10'>
@@ -68,7 +68,8 @@ export default function Home() {
           </div>
           <img className='hidden md:block md:w-64 lg:w-72 xl:w-96' src={delivery} alt="" />
         </div>
-        <ListaProdutos title={'Promoções'} categoria={'promocoes'}/> 
+        <ListaProdutos title={'Promoções'} categoria={'promocoes'} ordination={'false'}/> 
+        <ListaProdutos title={'Novidades'} categoria={'all'} ordination={'7'}/> 
         <SliderFooter />
       </div>
     </section>
