@@ -7,7 +7,7 @@ import {BsCart2, BsTelephone} from 'react-icons/bs'
 import {FiPackage} from 'react-icons/fi'
 import {IoReturnDownBackSharp} from 'react-icons/io5'
 import {AiOutlineHeart} from 'react-icons/ai'
-import {BiSearch, BiChevronDown} from 'react-icons/bi'
+import { BiChevronDown} from 'react-icons/bi'
 import {GoSearch} from 'react-icons/go'
 import { useCategoryContext } from '../contexts/Category'
 
@@ -45,7 +45,7 @@ export default function Header() {
                 <p>Satisfação garantida</p>
             </div>
         </div>
-        <div className='flex flex-col justify-between px-5 md:px-10 xl:px-32 text-black/70 gap-4 md:gap-0 items-center pb-4 md:pb-6 pt-4 md:py-8'>
+        <div className='flex flex-col justify-between px-5 md:px-10 xl:px-32 text-black/70 gap-4 md:gap-0 items-center pb-4 pt-4 md:pt-8 md:pb-8'>
             <nav className='flex justify-between items-center w-full'>
                 {
                     menu &&
@@ -117,26 +117,30 @@ export default function Header() {
                 </button>
             </div>
         </div>
-        <div className='hidden w-full py-4 items-center lg:flex justify-center bg-blue-500 text-gray-100'>
-            <Link to={'/'} className='flex gap-2 items-center text-sm cursor-pointer border-r px-6 leading-none'>
-                <FiMenu className='w-3 h-3'/>
-                Home
-            </Link>
-            
-            {
-                categories?.map(categoria => (
-                    <Link 
-                        key={categoria._id} 
-                        className='cursor-pointer text-sm px-6 border-r p-0 leading-none'
-                        to={`/category/${categoria._id}`}
-                    >{categoria.name}</Link>
-                ))
-            }
-            <Link to={'/category/destaques'} className='flex items-center text-sm cursor-pointer px-6 border-r leading-none'>
-                Destaques
-            </Link>
-            <Link to={'/category/promocoes'} className='flex items-center text-sm cursor-pointer px-6 leading-none'>
-                Promoções
+        <div className='relative hidden w-full py-4 items-center lg:flex justify-between bg-blue-500 text-gray-100 lg:px-10 xl:px-32'>
+            <div className='gap-3 lg:text-[13px] xl:text-sm font-medium bg-gray-600 text-gray-100 h-[calc(100%+8px)] absolute lg:left-10 xl:left-32 bottom-0 rounded-t-lg flex items-center px-10 cursor-pointer'>
+                <FiMenu className='w-5 h-5'/>
+                TODAS CATEGORIAS
+            </div>
+            <div className='flex items-center lg:ml-[42vh] xl:ml-[38vh] lg:text-[13px] xl:text-sm'>
+                <Link to={'/'} className='flex gap-2 items-center cursor-pointer border-r px-6 leading-none'>
+                    Início
+                </Link>
+                <Link to={'/category/destaques'} className='flex items-center cursor-pointer px-6 border-r leading-none'>
+                    Destaques
+                </Link>
+                <Link to={'/category/promocoes'} className='flex items-center cursor-pointer px-6 border-r leading-none'>
+                    Promoções
+                </Link>
+                <Link to={'/category/lancamentos'} className='flex items-center cursor-pointer px-6 border-r leading-none'>
+                    Lançamentos
+                </Link>
+                <Link to={'/contact'} className='flex items-center cursor-pointer px-6 leading-none'>
+                    Contato
+                </Link>
+            </div>
+            <Link to={'/'} className='flex gap-2 items-center font-medium text-sm cursor-pointer leading-none'>
+                SOBRE A LOJA
             </Link>
         </div>
         <div className='h-[6px] bg-black/80 block lg:hidden' />
