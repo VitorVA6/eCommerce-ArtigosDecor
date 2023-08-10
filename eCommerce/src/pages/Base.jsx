@@ -5,16 +5,19 @@ import Header from '../components/Header'
 import Modal from '../components/Modal'
 import { useCarrinhoContext } from '../contexts/Carrinho'
 import {useCatalogContext} from '../contexts/Catalog'
+import { useCategoryContext } from '../contexts/Category'
 
 export default function Base() {
 
   const refToTop = useRef();
   const {modalCarrinho} = useCarrinhoContext()
   const {getCatalog} = useCatalogContext()
+  const {getCategories} = useCategoryContext()
   let location = useLocation()
   
   useEffect(()=>{
     getCatalog()
+    getCategories()
   }, [])
 
   useEffect( () => {

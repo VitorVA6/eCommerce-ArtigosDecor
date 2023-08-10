@@ -10,6 +10,7 @@ import {AiOutlineHeart} from 'react-icons/ai'
 import { BiChevronDown} from 'react-icons/bi'
 import {GoSearch} from 'react-icons/go'
 import { useCategoryContext } from '../contexts/Category'
+import DropdownCategories from './DropDownCategories'
 
 export default function Header() {
     const {getCategories, categories} = useCategoryContext()
@@ -118,10 +119,7 @@ export default function Header() {
             </div>
         </div>
         <div className='relative hidden w-full py-4 items-center lg:flex justify-between bg-blue-500 text-gray-100 lg:px-10 xl:px-32'>
-            <div className='gap-3 lg:text-[13px] xl:text-sm font-medium bg-gray-600 text-gray-100 h-[calc(100%+8px)] absolute lg:left-10 xl:left-32 bottom-0 rounded-t-lg flex items-center px-10 cursor-pointer'>
-                <FiMenu className='w-5 h-5'/>
-                TODAS CATEGORIAS
-            </div>
+            <DropdownCategories />
             <div className='flex items-center lg:ml-[42vh] xl:ml-[38vh] lg:text-[13px] xl:text-sm'>
                 <Link to={'/'} className='flex gap-2 items-center cursor-pointer border-r px-6 leading-none'>
                     Início
@@ -144,7 +142,6 @@ export default function Header() {
             </Link>
         </div>
         <div className='h-[6px] bg-black/80 block lg:hidden' />
-        
     </header>
   )
 }

@@ -10,7 +10,7 @@ import delivery from '../images/delivery.svg'
 
 export default function Home() {
     const {catalog, baseURL} = useCatalogContext()
-    const {getCategories, categories} = useCategoryContext()
+    const { categories} = useCategoryContext()
     const settings = {
       dots: true,
       infinite: true,
@@ -24,10 +24,6 @@ export default function Home() {
       borderRadius: '10px',
       overflow: 'hidden'
     };
-
-    useEffect( ()=>{
-      getCategories()
-    }, [] )
 
   return (
     <section className='flex flex-col overflow-x-hidden gap-y-8'>
