@@ -14,19 +14,19 @@ export default function Card({produto, categoryPage, layout}) {
     const handleClass = () => {
         if(categoryPage){
             if(layout === 'grid'){
-                return 'h-[18vh] w-full'
+                return 'w-full h-[38vw] md:h-[25vw] lg:h-[17vw] xl:h-[12vw]'
             }else{
-                return 'h-full w-48 mr-5'
+                return 'h-[44vw] w-[80vw] md:h-[25vw] md:w-[40vw] lg:h-[18vw] lg:w-[27vw] xl:h-[15vw] xl:w-[23vw] mr-5'
             }
         }else{
-            return 'h-52 w-52'
+            return 'h-52 w-52 xl:w-full'
         }
     }
 
   return (
     <div className={`flex ${layout === 'grid' ? 'flex-col' : 'flex-row'} bg-white rounded-xl shadow-lg shadow-gray-300/60 ${categoryPage ? 'p-3' : 'my-5 p-5'} relative`}>
         <div 
-            className={`relative ${handleClass()} lg:h-[18vw] lg:w-[18vw] xl:h-[15vw] xl:w-full p-2 gap-2 rounded-lg cursor-pointer`}
+            className={`relative ${handleClass()} p-2 gap-2 rounded-lg cursor-pointer`}
             style={{ backgroundImage: `url(${baseURL}/images/products/${produto?.img[0]})`, boxSizing: 'border-box', backgroundSize: 'cover'}}
             onClick={(e) => {
                 if(e.currentTarget != e.target ) return;
@@ -42,8 +42,8 @@ export default function Card({produto, categoryPage, layout}) {
                 :<></>
             }
         </div>
-        <div className={`flex flex-col py-1.5 lg:py-3 w-full ${layout === 'grid' ? 'mt-[5px]' : ''}`}>
-            <p className='mb-3 font-medium text-black/80'>{produto?.title}</p>
+        <div className={`flex flex-col justify-center lg:py-3 w-full ${layout === 'grid' ? 'mt-[5px]' : ''}`}>
+            <p className='mb-1.5 md:mb-3 font-medium text-black/80'>{produto?.title}</p>
             <div className='flex flex-col items-start'>
                 <p className={`inline font-bold mr-2 text-black/80 text-lg`}>{priceoff > 0 ? priceoff.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }</p> 
                 {
@@ -54,7 +54,7 @@ export default function Card({produto, categoryPage, layout}) {
             <p className='text-[13px] text-gray-700'>Em até <strong className='text-black text-sm'>12x</strong> de {priceoff > 0 ? (Math.ceil((priceoff * taxa/12)*100)/100).toFixed(2) : (Math.ceil((price*taxa/12)*100)/100).toFixed(2)}</p>
             {
                 layout === 'list' &&
-                <Link to={`/produto/${produto?._id}`} className='flex justify-center w-full py-2 text-white rounded-md text-medium bg-green-500 mt-3'>
+                <Link to={`/produto/${produto?._id}`} className='flex justify-center w-full text-sm md:text-base py-2 text-white rounded-md text-medium bg-green-500 mt-1 md:mt-3'>
                     Ver produto
                 </Link>
             }        

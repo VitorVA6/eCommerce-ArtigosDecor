@@ -99,11 +99,11 @@ export default function Category() {
           modalOrder && 
           <ModalOrder setModalOrder={setModalOrder} selOrder={selOrder} setSelOrder={setSelOrder}/>
         }
-        <div className='flex flex-col gap-1.5 px-5 py-6'>
+        <div className='flex flex-col gap-1.5 px-3 md:px-[25px] py-6'>
           <h1 className='text-2xl font-medium'>{defineTitle()}</h1>
           <p className='text-xs text-gray-700/90'>{`${produtos.length} produtos`}</p>
         </div>      
-        <div className='flex justify-between border-y border-gray-300/80 lg:border-t-transparent px-5 py-3 md:py-4 items-center text-[13px]'>
+        <div className='flex justify-between border-y border-gray-300/80 lg:border-t-transparent px-3 md:px-[25px] py-3 md:py-4 items-center text-[13px]'>
           <div 
             className='flex lg:hidden gap-2 items-center cursor-pointer'
             onClick={() => setShow(true)}
@@ -138,7 +138,7 @@ export default function Category() {
             />
           </div>
         </div>
-        <div className={`grid ${layout === 'grid' ? 'grid-cols-2 md:grid-cols-3 xl:grid-cols-4' : 'grid-cols-1'} flex-col px-4 w-full gap-x-3 gap-y-4 py-6`}>
+        <div className={`grid ${layout === 'grid' ? 'grid-cols-2 md:grid-cols-3 xl:grid-cols-4' : 'grid-cols-1'} flex-col px-3 md:px-[25px] w-full gap-x-3 gap-y-4 py-6`}>
           {
             produtos?.map( produto => (
               <Card key={produto._id} produto={produto} categoryPage={true} layout = {layout}/>
