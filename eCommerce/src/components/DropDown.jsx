@@ -26,7 +26,7 @@ function Dropdown() {
   }, [showDropdown, dropdownRef]);
 
   return (
-    <div className="hidden md:flex flex-col bg-transparent w-fit relative" ref={dropdownRef}>
+    <div className="hidden md:flex flex-col bg-transparent w-fit relative z-30" ref={dropdownRef}>
       <button className='flex items-center' onClick={() =>setShowDropdown(!showDropdown)}>Ordenar por <BiChevronDown className='w-6 h-6 text-black'/></button>
       {showDropdown && (
         <div className="flex flex-col bg-white w-fit px-3 top-[34px] -right-[70%] rounded-sm shadow-md shadow-gray-400/70 absolute z-10 whitespace-nowrap ">

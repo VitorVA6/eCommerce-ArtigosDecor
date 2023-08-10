@@ -15,7 +15,7 @@ import CategoryFilter from '../components/CategoryFilter'
 
 export default function Category() {
 
-  const {getProducts, selCategory, setSelCategory} = useProductContext()
+  const {getProducts} = useProductContext()
   const {getCategories, categories} = useCategoryContext()
   const [layout, setLayout] = useState('grid')
   const [produtos, setProdutos] = useState([])
@@ -34,11 +34,17 @@ export default function Category() {
     }).catch(err => console.log(err))
 
     if(!!name){          
-      getProducts(5, 1, name, selOrder)
+      getProducts(8, 1, name, selOrder)
       .then( data => {
-        setProdutos(data.docs)
-        setHasNext(data.hasNextPage)
-        setNextPage(data.nextPage)
+        if(name === 'lancamentos'){
+          setProdutos(data.docs)
+          setHasNext(null)
+          setNextPage(null)
+        }else{
+          setProdutos(data.docs)
+          setHasNext(data.hasNextPage)
+          setNextPage(data.nextPage)
+        }
       })
       .catch(err => console.log(err))
     }
@@ -51,13 +57,15 @@ export default function Category() {
       return 'Destaques'
     }else if(name === 'promocoes'){
       return 'Promoções'
+    }else if(name === 'lancamentos'){
+      return 'Lançamentos'
     }
     else {
       return categories?.find( element => element?._id === name )?.name
     }
   }
 
-  if((name !== 'destaques' && name !== 'promocoes') && (categories.find(el => el._id === name) === undefined) && carregado){
+  if((name !== 'destaques' && name !== 'promocoes' && name !== 'lancamentos') && (categories.find(el => el._id === name) === undefined) && carregado){
     return <Navigate to={'/404'}/>
   }   
 
@@ -83,6 +91,7 @@ export default function Category() {
         }
         <Link to={'/category/destaques'} className={`${name === 'destaques' ? 'text-blue-500': ''}`}>Destaques</Link>
         <Link to={'/category/promocoes'} className={`${name === 'promocoes' ? 'text-blue-500': ''}`}>Promocoes</Link>
+        <Link to={'/category/lancamentos'} className={`${name === 'lancamentos' ? 'text-blue-500': ''}`}>Lançamentos</Link>
         </ul>
         </div>
       <div className='flex flex-col w-full md:bg-white md:col-span-10 lg:col-span-7 xl:col-span-9 md:rounded-3xl lg:shadow-lg lg:shadow-gray-300/40'>
@@ -109,7 +118,10 @@ export default function Category() {
             <p>Ordenar por</p>
             <BiChevronDown className='w-6 h-6 text-black'/>
           </div>
+          {
+          name !== 'lancamentos' &&
           <Dropdown />
+          }
           <div className='flex gap-2.5 items-center'>
             <p className='hidden md:block'>Visualização</p>
             <BsGridFill 

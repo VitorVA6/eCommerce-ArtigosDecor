@@ -19,7 +19,7 @@ export default function ListaProdutos({title, categoria, ordination}) {
     <section className='flex flex-col border border-y-0 overflow-x-hidden py-4 gap-y-2'>
         <div className='flex justify-between items-center px-5 md:px-10 xl:px-32'>
             <div className='flex flex-col w-fit gap-0.5'>
-                <h2 className='font-medium text-[21px]'>{title}</h2>
+                <h2 className='font-bold text-[24px] text-black/70'>{title}</h2>
                 <div className='w-11/12 h-1.5 bg-blue-500 rounded-full'></div>
             </div>
             <Link to={`/category/${categoria}`} className ='text-blue-500 text-sm font-medium'>Ver todos</Link>

@@ -53,7 +53,7 @@ export default function Home() {
           categorias={categories}
         /> 
         <ListaProdutos title={'Destaques'} categoria={'destaques'} ordination={'false'}/>     
-        <div className='w-full flex justify-around -mx-2 md:mx-0 md:px-5'>
+        <div className='w-full flex justify-around -mx-2 md:mx-0 md:px-5 text-black/80'>
           <img className='w-56 md:w-64 lg:w-72 xl:w-96' src={freeShipping} alt="" />
           <div className='flex flex-col justify-center gap-5 md:gap-10'>
             <div className='flex flex-col'>
@@ -69,7 +69,7 @@ export default function Home() {
           <img className='hidden md:block md:w-64 lg:w-72 xl:w-96' src={delivery} alt="" />
         </div>
         <ListaProdutos title={'Promoções'} categoria={'promocoes'} ordination={'false'}/> 
-        <ListaProdutos title={'Novidades'} categoria={'all'} ordination={'7'}/> 
+        <ListaProdutos title={'Lançamentos'} categoria={'lancamentos'} ordination={'false'}/> 
         <SliderFooter />
       </div>
     </section>

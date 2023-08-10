@@ -87,8 +87,13 @@ module.exports = class ProductController{
         
         let filter = {}
         let order = {}
-         
-        if(category === 'destaques'){
+
+        if(category === 'lancamentos'){
+            order = {
+                createdAt: -1
+            }
+        }
+        else if(category === 'destaques'){
             filter = {
                 destaque: true
             }
@@ -109,28 +114,28 @@ module.exports = class ProductController{
             filter = { 'categoria.value': category }
         }
         if(ordination === '0'){
-            order = {destaque: -1}
+            order = {...order, destaque: -1}
         }
         else if(ordination === '1'){
-            order = {desconto: -1}
+            order = {...order, desconto: -1}
         }
         else if(ordination === '2'){
-            order = {title: 1}
+            order = {...order, title: 1}
         }
         else if(ordination === '3'){
-            order = {title: -1}
+            order = {...order, title: -1}
         }
         else if(ordination === '4'){
-            order = {preco: 1}
+            order = {...order, preco: 1}
         }
         else if(ordination === '5'){
-            order = {preco: -1}
+            order = {...order, preco: -1}
         }
         else if(ordination === '6'){
-            order = {createdAt: 1}
+            order = {...order, createdAt: 1}
         }
         else if(ordination === '7'){
-            order = {createdAt: -1}
+            order = {...order, createdAt: -1}
         }
 
         const options = {

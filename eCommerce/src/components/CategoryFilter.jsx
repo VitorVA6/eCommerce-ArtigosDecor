@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {IoMdClose} from 'react-icons/io'
 
-export default function CategoryFilter({categories, name, show, setShow}) {
+export default function CategoryFilter({categories, name, setShow}) {
 
     const [animate, setAnimate] = useState(true)
     const [opacity, setOpacity] = useState(0)
@@ -47,6 +47,7 @@ export default function CategoryFilter({categories, name, show, setShow}) {
             }
             <Link to={'/category/destaques'} className={`${name === 'destaques' ? 'text-blue-500': ''}`}>Destaques</Link>
             <Link to={'/category/promocoes'} className={`${name === 'promocoes' ? 'text-blue-500': ''}`}>Promocoes</Link>
+            <Link to={'/category/lancamentos'} className={`${name === 'lancamentos' ? 'text-blue-500': ''}`}>Lançamentos</Link>
             </ul>
         </div>
     </>
