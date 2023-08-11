@@ -32,17 +32,17 @@ export default function Header() {
 
   return (
     <header className='flex flex-col bg-white justify-between w-full md:justify-center h-fit'>
-        <div className='flex w-full justify-center md:justify-between md:px-10 xl:px-32 py-2 text-xs md:text-sm text-black/70 font-medium border-b-[2px]'>
+        <div className='flex w-full justify-center md:justify-between md:px-10 xl:px-32 py-2 text-xs md:text-[13px] text-black/70 font-medium border-b-[2px]'>
             <div className='flex gap-2 items-center'>
-                <FiPackage className='w-5 h-5 md:w-6 md:h-6'/>
-                <p>Frete frátis para todo o Brasil</p>
+                <FiPackage className='w-4 h-4 md:w-5 md:h-5'/>
+                <p>Frete grátis para todo o Brasil</p>
             </div>
             <div className='hidden md:flex gap-2 items-center'>
-                <IoReturnDownBackSharp className='w-6 h-6'/>
+                <IoReturnDownBackSharp className='w-5 h-5'/>
                 <p>Trocas e devoluções em até 7 dias</p>
             </div>
             <div className='hidden md:flex gap-2 items-center'>
-                <AiOutlineHeart className='w-6 h-6'/>
+                <AiOutlineHeart className='w-5 h-5'/>
                 <p>Satisfação garantida</p>
             </div>
         </div>
@@ -53,8 +53,8 @@ export default function Header() {
                     <MenuMobile setMenu={setMenu} categories={categories}/>
                 }
                 <FiMenu className='w-[26px] h-[26px] md:hidden' onClick={() => setMenu(true)}/>
-                <Link to={'/'} className='text-2xl md:text-3xl font-black'>
-                    MinhaLoja
+                <Link to={'/'} className='text-2xl md:text-[32px] font-black flex'>
+                    <p className='text-blue-500'>Minha</p> <p className=''>Loja</p>
                 </Link >
                 
                 <div className='hidden md:flex rounded-full h-full w-[55%] lg:w-[50%] bg-white items-center text-black-80  justify-between border-[3px]'>
@@ -137,7 +137,7 @@ export default function Header() {
                     Contato
                 </Link>
             </div>
-            <Link to={'/'} className='flex gap-2 items-center font-medium text-sm cursor-pointer leading-none'>
+            <Link to={'/about-us'} className='flex gap-2 items-center font-medium text-sm cursor-pointer leading-none'>
                 SOBRE A LOJA
             </Link>
         </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import insta from '../assets/insta-logo.png'
 import whats from '../assets/whats.png'

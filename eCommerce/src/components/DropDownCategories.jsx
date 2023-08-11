@@ -28,7 +28,7 @@ function DropdownCategories() {
   }, [showDropdown, dropdownRef]);
 
   return (
-    <div className="lg:text-[13px] xl:text-sm font-medium bg-gray-600 text-gray-100 h-[calc(100%+8px)] absolute lg:left-10 xl:left-32 bottom-0 rounded-t-lg flex items-center" ref={dropdownRef}>
+    <div className="lg:text-[13px] xl:text-sm font-medium bg-blue-600 text-gray-100 h-[calc(100%+8px)] absolute lg:left-10 xl:left-32 bottom-0 rounded-t-lg flex items-center" ref={dropdownRef}>
       <button 
         className='flex items-center relative px-10 h-full rounded-t-lg gap-3' 
         onClick={() =>setShowDropdown(!showDropdown)}
@@ -37,7 +37,7 @@ function DropdownCategories() {
         TODAS CATEGORIAS
     </button>
         {showDropdown && (
-        <div className="flex flex-col border-b border-l border-r border-gray-600 bg-white left-0 top-[calc(100%)] w-full absolute whitespace-nowrap rounded-b-lg text-black/80 font-normal z-40"> 
+        <div className="flex flex-col border-b border-l border-r border-gray-400 bg-white left-0 top-[calc(100%)] w-full absolute whitespace-nowrap rounded-b-lg text-black/80 font-normal z-40"> 
            {
                 categories.map( category => (
                     <Link 

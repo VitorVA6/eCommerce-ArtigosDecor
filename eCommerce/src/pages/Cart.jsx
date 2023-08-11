@@ -34,7 +34,7 @@ export default function Cart() {
     }
 
   return (
-    <section className='bg-white px-5 md:px-10 xl:px-[60px] pb-20 -mb-16'>
+    <section className='bg-white px-5 md:px-10 xl:px-32 pb-20 -mb-16'>
         <h2 className='pt-10 md:pt-12 lg:pt-16 mb-10 lg:mb-8 font-bold text-[30px] md:text-[36px] text-black/80'>Meu Carrinho</h2>
         <div className = 'grid lg:grid-cols-12 xl:grid-cols-7 gap-12'>
             <div className='flex flex-col lg:col-span-8 xl:col-span-5 w-full border-y border-gray-300 md:border-none'>

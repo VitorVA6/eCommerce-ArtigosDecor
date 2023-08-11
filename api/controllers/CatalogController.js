@@ -65,8 +65,6 @@ module.exports = class CatalogController{
                     });
                 }
             } )
-            
-            
             let aux_files =  req.files?.length > 0 ? req.files.map(image => image.filename) : []
             catalog.bannerdt = aux_files.concat(uploadedImages)
             

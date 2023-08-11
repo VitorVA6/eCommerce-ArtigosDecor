@@ -24,9 +24,9 @@ export default function Card({produto, categoryPage, layout}) {
     }
 
   return (
-    <div className={`flex ${layout === 'grid' ? 'flex-col' : 'flex-row'} bg-white rounded-xl shadow-lg shadow-gray-300/60 ${categoryPage ? 'p-3' : 'my-5 p-5'} relative`}>
+    <div className={`flex ${layout === 'grid' ? 'flex-col' : 'flex-row'} bg-white rounded-md shadow-lg shadow-gray-300/60 ${categoryPage ? 'p-3' : 'my-5 p-5'} relative`}>
         <div 
-            className={`relative ${handleClass()} p-2 gap-2 rounded-lg cursor-pointer`}
+            className={`relative ${handleClass()} p-2 gap-2 rounded-[4px] cursor-pointer`}
             style={{ backgroundImage: `url(${baseURL}/images/products/${produto?.img[0]})`, boxSizing: 'border-box', backgroundSize: 'cover'}}
             onClick={(e) => {
                 if(e.currentTarget != e.target ) return;
@@ -45,7 +45,7 @@ export default function Card({produto, categoryPage, layout}) {
         <div className={`flex flex-col justify-center lg:py-3 w-full ${layout === 'grid' ? 'mt-[5px]' : ''}`}>
             <p className='mb-1.5 md:mb-3 font-medium text-black/80'>{produto?.title}</p>
             <div className='flex flex-col items-start'>
-                <p className={`inline font-bold mr-2 text-black/80 text-lg`}>{priceoff > 0 ? priceoff.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }</p> 
+                <p className={`inline font-bold mr-2 text-green-500 text-lg`}>{priceoff > 0 ? priceoff.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }</p> 
                 {
                     priceoff > 0 &&
                     <p className='inline line-through text-gray-400 text-[13px] -mb-[2px] lg:-mb-[1px] xl:mb-2 xl:-mt-0.5'>{price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
