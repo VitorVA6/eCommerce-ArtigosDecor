@@ -6,7 +6,6 @@ import {FaList} from 'react-icons/fa'
 import {FiChevronRight} from 'react-icons/fi'
 import { useProductContext } from '../contexts/Product'
 import Card from '../components/Card'
-import SliderFooter from '../components/SliderFooter'
 import { Link, useParams, Navigate } from 'react-router-dom'
 import ModalOrder from '../components/ModalOrder'
 import Dropdown from '../components/DropDown'
@@ -169,7 +168,6 @@ export default function Category() {
           } 
       </div>
     </section>
-    <SliderFooter />
     </>
   )
 }

@@ -4,7 +4,6 @@ import {FaList} from 'react-icons/fa'
 import {FiChevronRight} from 'react-icons/fi'
 import { useProductContext } from '../contexts/Product'
 import Card from '../components/Card'
-import SliderFooter from '../components/SliderFooter'
 import { useParams } from 'react-router-dom'
 
 export default function Search() {
@@ -82,7 +81,6 @@ export default function Search() {
                 </div>
             } 
         </div>
-        <SliderFooter />
       </div>
   )
 }

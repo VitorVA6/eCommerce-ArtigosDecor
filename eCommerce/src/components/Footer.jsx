@@ -12,6 +12,7 @@ import elo from '../images/elo.png'
 import hiper from '../images/hiper.png'
 import master from '../images/master.png'
 import visa from '../images/visa.png'
+import SliderFooter from './SliderFooter'
 
 export default function Footer() {
 
@@ -25,8 +26,8 @@ export default function Footer() {
     const [showIcon3, setShowIcon3] = useState(false)    
 
   return (
-    <section className='flex flex-col w-full bg-black text-white h-fit'>
-        <div className='h-[7px] bg-gradient-to-r from-sky-500 to-indigo-500'></div>
+    <section className='flex flex-col w-full bg-white text-black h-fit'>
+        <SliderFooter />
         <div className='flex flex-col pt-8 pb-2 lg:py-12 md:gap-y-10'>
 
             <div className='grid md:grid-cols-3 w-full px-8 md:px-20 xl:px-32'>
@@ -57,7 +58,7 @@ export default function Footer() {
                     
                 </div>
 
-                <div className='flex flex-col bg-black'>
+                <div className='flex flex-col'>
                     <div className='flex justify-between items-center pb-2 pt-4 md:pt-2'>
                         <h3 className='font-medium md:text-lg'>Atendimento</h3>
                         <AiOutlineMinus 
@@ -89,7 +90,7 @@ export default function Footer() {
                     
                 </div>
             
-                <div className='flex flex-col bg-black'>
+                <div className='flex flex-col bg-white'>
                     <div className='flex justify-between items-center pb-2 pt-4 md:pt-2'>
                         <h3 className='font-medium md:text-lg'>Redes sociais</h3>
                         <AiOutlineMinus 
@@ -148,7 +149,7 @@ export default function Footer() {
                     
                 </div>
             </div>
-            <div className='flex gap-3 justify-center items-center bg-black py-8 md:py-0'>
+            <div className='flex gap-3 justify-center items-center bg-white py-8 md:py-0'>
                 <div className='rounded-[3px] px-3 lg:px-3.5 py-[9px] bg-white'>
                     <img className=' w-[18px] h-3 lg:w-6 lg:h-3.5' src={master} alt="" />
                 </div>

@@ -1,9 +1,8 @@
 import React from 'react'
 import Slider from 'react-slick'
-import {BsFillArrowLeftCircleFill} from 'react-icons/bs'
-import {BsShieldFillCheck} from 'react-icons/bs'
-import {FaShuttleVan} from 'react-icons/fa'
-import {IoMail} from 'react-icons/io5'
+import {BsArrowCounterclockwise, BsShieldCheck} from 'react-icons/bs'
+import {CiDeliveryTruck} from 'react-icons/ci'
+import {GoShieldCheck, GoMail} from 'react-icons/go'
 
 export default function SliderFooter() {
 
@@ -18,83 +17,92 @@ export default function SliderFooter() {
 
   return (
     <>
-    <Slider className='lg:hidden' {...settings} dots dotsClass="meus-dots">
-        <div className='text-center mt-5'>
+    <Slider className='lg:hidden py-8 border-b-2' {...settings} dots dotsClass="meus-dots">
+        <div className='flex flex-col items-center'>
           <div className='flex justify-center mb-2'>
-            
-            <BsFillArrowLeftCircleFill className='w-9 h-9 text-gray-700'/>
-            
+            <div className='flex justify-center items-center w-12 h-12 border-2 border-gray-300 rounded-full'>
+              <BsArrowCounterclockwise className='w-6 h-6 text-gray-500'/>
+            </div>
           </div>
-          
-          <h3 className='font-medium text-sm mb-1.5 text-gray-700'>Satisfação ou Reembolso</h3>
-          <p className='text-xs'>Caso haja algum problema, devolvemos seu dinheiro</p>
+          <div className='flex flex-col items-center gap-0.5'>
+            <h3 className='font-medium text-base text-black/70'>Satisfação ou Reembolso</h3>
+            <p className='text-[13px] text-gray-500 text-center'>Reembolso em até 7 dias após o recebimento</p>
+          </div>
         </div>
-        <div className='text-center mt-5'>
+        <div className='flex flex-col items-center'>
           <div className='flex justify-center mb-2'>
-            <BsShieldFillCheck className='w-8 h-8 text-gray-700'/>
+            <div className='flex justify-center items-center w-12 h-12 border-2 border-gray-300 rounded-full'>
+              <GoShieldCheck className='w-[22px] h-[22px] text-gray-500 mt-0.5'/>
+            </div>
           </div>
-          
-          <h3 className='font-medium text-sm mb-1.5 text-gray-700'>Compra segura</h3>
-          <p className='text-xs'>Ambiente segura para pagamentos online</p>
+          <div className='flex flex-col items-center gap-0.5'>
+            <h3 className='font-medium text-base text-black/70'>Compra segura</h3>
+            <p className='text-[13px] text-gray-500 text-center'>Ambiente seguro para pagamentos online</p>
+          </div>
         </div>
-        <div className='text-center mt-5'>
+        <div className='flex flex-col items-center'>
           <div className='flex justify-center mb-2'>
-            <FaShuttleVan className='w-9 h-9 text-gray-700'/>
+            <div className='flex justify-center items-center w-12 h-12 border-2 border-gray-300 rounded-full'>
+              <CiDeliveryTruck className='w-[25px] h-[25px] text-gray-500'/>
+            </div>
           </div>
-          
-          <h3 className='font-medium text-sm mb-1.5 text-gray-700'>Frete grátis</h3>
-          <p className='text-xs'>Envio gratuito para todo o Brasil</p>
+          <div className='flex flex-col items-center gap-0.5'>
+            <h3 className='font-medium text-base text-black/70'>Frete grátis</h3>
+            <p className='text-[13px] text-gray-500 text-center'>Envio gratuito para todo o Brasil</p>
+          </div>
         </div> 
-        <div className='text-center mt-5'>
+        <div className='flex flex-col items-center'>
           <div className='flex justify-center mb-2'>
-            <IoMail className='w-9 h-9 text-gray-700'/>
+            <div className='flex justify-center items-center w-12 h-12 border-2 border-gray-300 rounded-full'>
+              <GoMail className='w-5 h-5 text-gray-500'/>
+            </div>
           </div>
-          
-          <h3 className='font-medium text-sm mb-1.5 text-gray-700'>Suporte profissional</h3>
-          <p className='text-xs'>Uma equipe para te atender a semana inteira</p>
+          <div className='flex flex-col items-center gap-0.5'>
+            <h3 className='font-medium text-base text-black/70'>Suporte profissional</h3>
+            <p className='text-[13px] text-gray-500 text-center'>Uma equipe para te atender a semana inteira</p>
+          </div>
         </div> 
       </Slider>
 
-      <div className='hidden lg:grid lg:grid-cols-3 xl:grid-cols-4  px-[40px] xl:px-32 xl:gap-20 justify-center'>
-        <div className='flex mt-5  py-[15px] gap-4 items-center'>
-          <div className='flex justify-center mb-2'>
-            <BsFillArrowLeftCircleFill className='w-[33px] h-[33px] text-gray-700'/>            
+      <div className='hidden lg:grid lg:grid-cols-4 px-[40px] xl:px-32 lg:gap-5 xl:gap-12 justify-center py-6 border-b-2'>
+        <div className='flex flex-col gap-4 items-center'>
+          <div className='flex justify-center items-center w-16 h-16 border-2 border-gray-300 rounded-full'>
+            <BsArrowCounterclockwise className='w-[31px] h-[31px] text-gray-500/70'/>            
           </div>
-          <div className='flex flex-col'>
-            <h3 className='font-medium text-sm mb-1.5 text-blue-500'>Reembolso</h3>
-            <p className='text-xs'>Caso haja algum problema, devolvemos seu dinheiro</p>
+          <div className='flex flex-col items-center gap-1'>
+            <h3 className='font-medium text-base text-black/80'>Reembolso Garantido</h3>
+            <p className='text-[13px] text-gray-500 text-center'>Reembolso em até 7 dias após o recebimento</p>
           </div>
-          
         </div>
-        <div className='flex mt-5  py-[15px] gap-4 items-center'>
-          <div className='flex justify-center mb-2'>
-            <BsShieldFillCheck className='w-8 h-8 text-gray-700'/>
+
+        <div className='flex flex-col gap-4 items-center'>
+          <div className='flex justify-center items-center w-16 h-16 border-2 border-gray-300 rounded-full'>
+            <BsShieldCheck className='w-7 h-7 text-gray-500/80'/>
           </div>
-          <div className='flex flex-col'>
-            <h3 className='font-medium text-sm mb-1.5 text-blue-500'>Compra segura</h3>
-            <p className='text-xs'>Ambiente seguro para pagamentos online</p>
+          <div className='flex flex-col items-center gap-1'>
+            <h3 className='font-medium text-base text-black/80'>Compra Segura</h3>
+            <p className='text-[13px] text-gray-500 text-center'>Ambiente seguro para pagamentos online</p>
           </div>
-          
         </div>
-        <div className='flex mt-5  py-[15px] gap-4 items-center'>
-          <div className='flex justify-center mb-2'>
-            <FaShuttleVan className='w-9 h-9 text-gray-700'/>
+
+        <div className='flex flex-col gap-4 items-center'>
+          <div className='flex justify-center items-center w-16 h-16 border-2 border-gray-300 rounded-full'>
+            <CiDeliveryTruck className='w-9 h-9 text-gray-500/80'/>
           </div>
-          <div className='flex flex-col'>
-            <h3 className='font-medium text-sm mb-1.5 text-blue-500'>Frete grátis</h3>
-            <p className='text-xs'>Envio gratuito pelos correios para todo o Brasil</p>
+          <div className='flex flex-col items-center gap-1'>
+            <h3 className='font-medium text-base text-black/80'>Frete Grátis</h3>
+            <p className='text-[13px] text-gray-500 text-center'>Envio gratuito pelos correios para todo o Brasil</p>
           </div>
-          
         </div> 
-        <div className='flex mt-5  py-[15px] gap-4 items-center lg:col-start-2 lg:grid-end-2 xl:col-auto'>
-          <div className='flex justify-center mb-2'>
-            <IoMail className='w-9 h-9 text-gray-700'/>
+
+        <div className='flex flex-col gap-4 items-center'>
+          <div className='flex justify-center items-center w-16 h-16 border-2 border-gray-300 rounded-full'>
+            <GoMail className='w-7 h-7 text-gray-500/80'/>
           </div>
-          <div className='flex flex-col'>
-            <h3 className='font-medium text-sm mb-1.5 text-blue-500'>Suporte profissional</h3>
-            <p className='text-xs'>Uma equipe para te atender a semana inteira</p>
+          <div className='flex flex-col items-center gap-1'>
+            <h3 className='font-medium text-base text-black/80'>Suporte Profissional</h3>
+            <p className='text-[13px] text-gray-500 text-center'>Uma equipe para te atender a semana inteira</p>
           </div>
-          
         </div> 
       </div>
     </>

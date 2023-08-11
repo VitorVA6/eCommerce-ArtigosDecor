@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import ListaProdutos from '../components/ListaProdutos'
 import NavLateral from '../components/NavLateral'
 import { useCatalogContext } from '../contexts/Catalog'
-import SliderFooter from '../components/SliderFooter'
 import Slider from 'react-slick'
 import { useCategoryContext } from '../contexts/Category'
 import freeShipping from '../images/free-shipping.svg'
@@ -65,8 +64,7 @@ export default function Home() {
           <img className='hidden md:block md:w-64 lg:w-72 xl:w-96' src={delivery} alt="" />
         </div>
         <ListaProdutos title={'Promoções'} categoria={'promocoes'} ordination={'false'}/> 
-        <ListaProdutos title={'Lançamentos'} categoria={'lancamentos'} ordination={'false'}/> 
-        <SliderFooter />
+        <ListaProdutos title={'Lançamentos'} categoria={'lancamentos'} ordination={'false'}/>
       </div>
     </section>
   )
