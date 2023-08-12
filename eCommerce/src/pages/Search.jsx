@@ -12,11 +12,11 @@ export default function Search() {
     const [produtos, setProdutos] = useState([])
     const [hasNext, setHasNext] = useState(false)
     const [nextPage, setNextPage] = useState(1)
-    const {name} = useParams()
+    const {name, category} = useParams()
 
     useEffect(() => {
-        if(!!name){          
-            getProducts(8, 1, 'all', 'false', name)
+        if(!!name && !!category){          
+            getProducts(8, 1, category, 'false', name)
             .then( data => {
                 setProdutos(data.docs)
                 setHasNext(data.hasNextPage)
@@ -24,12 +24,12 @@ export default function Search() {
             })
             .catch(err => console.log(err))
         }   
-    }, [name])
+    }, [name, category])
 
   return (
-    <div className='flex flex-col overflow-x-hidden px-5 md:px-10 xl:px-[60px]'>
+    <div className='flex flex-col overflow-x-hidden md:px-10 xl:px-32'>
         <h3 className='hidden md:flex gap-1 items-center my-[28px] text-[13px]'>{`Página inicial`} <FiChevronRight className='w-[12px] h-[12px]'/>Página de busca</h3>
-        <div className='flex flex-col w-full md:bg-white md:col-span-10 lg:col-span-7 xl:col-span-8 md:rounded-3xl lg:shadow-md lg:shadow-gray-300/60 mb-10'>
+        <div className='flex flex-col w-full md:bg-white md:col-span-10 lg:col-span-7 xl:col-span-8 md:rounded-md lg:shadow-md lg:shadow-gray-300/60 mb-10'>
             <div className='flex flex-col gap-1.5 px-7 py-6'>
             <h1 className='text-2xl font-medium'>{`Resultados para "${name}"`}</h1>
             <p className='text-xs text-gray-700/90'>{`${produtos.length} produtos`}</p>
@@ -64,7 +64,7 @@ export default function Search() {
                     <button 
                     className='bg-blue-500 py-3 w-1/2 text-white font-medium rounded-lg text-sm mb-6 mt-10'
                     onClick = {()=> {
-                        getProducts(8, nextPage, 'all', 'false', name)
+                        getProducts(8, nextPage, category, 'false', name)
                         .then( data => {
                         setHasNext(data.hasNextPage)
                         setNextPage(data.nextPage)

@@ -103,15 +103,15 @@ module.exports = class ProductController{
                 desconto: { $gt: 0 }
             }
         }
-        else if (key !== ''){
+        else if(category !== 'all'){
+            filter = { 'categoria.value': category }
+        }
+        if (key !== ''){
             var specialChars = "!@#$^&%*()+=-[]\/{}|:<>?,."
             for (var i = 0; i < specialChars.length; i++) {
                 key = key.replace(new RegExp("\\" + specialChars[i], "gi"), `\\${specialChars[i]}`);
             }            
-            filter = { "title": { "$regex": key, "$options": "i" }}           
-        }
-        else if(category !== 'all'){
-            filter = { 'categoria.value': category }
+            filter = { ...filter, "title": { "$regex": key, "$options": "i" }}           
         }
         if(ordination === '0'){
             order = {...order, destaque: -1}

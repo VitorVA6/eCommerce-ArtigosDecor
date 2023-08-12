@@ -11,6 +11,7 @@ import { BiChevronDown} from 'react-icons/bi'
 import {GoSearch} from 'react-icons/go'
 import { useCategoryContext } from '../contexts/Category'
 import DropdownCategories from './DropDownCategories'
+import DropDownSearchbar from './DropDownSearchbar'
 
 export default function Header() {
     const {getCategories, categories} = useCategoryContext()
@@ -18,6 +19,7 @@ export default function Header() {
     const [menu, setMenu] = useState(false)
     const navigate = useNavigate()
     const [key, setKey] = useState('')
+    const [selCategory, setSelCategory] = useState('all')
 
     useEffect( () => {
         getCategories()
@@ -25,7 +27,13 @@ export default function Header() {
 
     function handleSearch(){
         if(key.length > 0){
-            navigate(`/search/${key}`)
+            navigate(`/search/${selCategory==='all'?'all':selCategory._id}/${key}`)
+            setKey('')
+        }
+    }
+    function handleSearchMobile(){
+        if(key.length > 0){
+            navigate(`/search/all/${key}`)
             setKey('')
         }
     }
@@ -46,7 +54,7 @@ export default function Header() {
                 <p>Satisfação garantida</p>
             </div>
         </div>
-        <div className='flex flex-col justify-between px-5 md:px-10 xl:px-32 text-black/70 gap-4 md:gap-0 items-center pb-4 pt-4 md:pt-8 md:pb-8'>
+        <div className='flex flex-col justify-between px-5 md:px-10 xl:px-32 text-black/70 gap-5 md:gap-0 items-center pb-5 pt-4 md:pt-8 md:pb-8'>
             <nav className='flex justify-between items-center w-full'>
                 {
                     menu &&
@@ -57,23 +65,20 @@ export default function Header() {
                     <p className='text-blue-500'>Minha</p> <p className=''>Loja</p>
                 </Link >
                 
-                <div className='hidden md:flex rounded-full h-full w-[55%] lg:w-[50%] bg-white items-center text-black-80  justify-between border-[3px]'>
-                    <div className='flex pl-5 lg:pl-8 pr-3 lg:pr-5 gap-2 lg:gap-6 items-center border-r-[2px] cursor-pointer'>
-                        Todos 
-                        <BiChevronDown className='w-5 h-5'/>
-                    </div>
+                <div className='hidden md:flex rounded-full h-full w-[55%] lg:w-[50%] pl-3 lg:pl-0 bg-white items-center text-black-80  justify-between border-[3px]'>
+                    <DropDownSearchbar categories={categories} selCategory={selCategory} setSelCategory={setSelCategory}/>
                     <input 
                         type="text" 
                         placeholder='O que está procurando?'
-                        className='py-[10px] pl-3 lg:pl-5 rounded-full w-full flex items-center outline-none text-sm placeholder-gray-400'
+                        className='py-[0px] xl:py-[8px] pl-3 lg:pl-5 rounded-full w-full flex items-center outline-none text-base placeholder-gray-400'
                         value={key}
                         onChange={(ev) => setKey(ev.target.value)}
                     />
                     <button 
                         className='px-[30px] justify-center h-full rounded-full items-center flex bg-gray-200'
-                        onClick={handleSearch}
+                        onClick={handleSearch }
                     >
-                        <GoSearch className='w-[26px] h-[26px] text-black/70'/>
+                        <GoSearch className='w-[22px] h-[22px] text-black/70'/>
                     </button>
                 </div>
                 <div className='flex items-center gap-4'>
@@ -98,21 +103,17 @@ export default function Header() {
                 </div>
                 
             </nav>
-            <div className='flex md:hidden rounded-full h-full w-full bg-white items-center text-black-80  justify-between border-[3px]'>
-                <div className='flex pl-4 pr-2 gap-1 items-center border-r-[2px] cursor-pointer text-sm'>
-                    Todos 
-                    <BiChevronDown className='w-5 h-5'/>
-                </div>
+            <div className='flex md:hidden rounded-full h-full w-full bg-white items-center text-black-80 justify-between border-[3px]'>
                 <input 
                     type="text" 
                     placeholder='Busque um produto'
-                    className='py-[7px] pl-2 rounded-full w-full flex items-center outline-none text-sm placeholder-gray-400'
+                    className='py-[6px] pl-5 rounded-full w-full flex items-center outline-none text-sm placeholder-gray-400'
                     value={key}
                     onChange={(ev) => setKey(ev.target.value)}
                 />
                 <button 
                     className='px-[24px] justify-center h-full rounded-full items-center flex bg-gray-200'
-                    onClick={handleSearch}
+                    onClick={handleSearchMobile}
                 >
                     <GoSearch className='w-[20px] h-[20px] text-black/80'/>
                 </button>
