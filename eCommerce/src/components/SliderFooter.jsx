@@ -64,23 +64,23 @@ export default function SliderFooter() {
         </div> 
       </Slider>
 
-      <div className='hidden lg:grid lg:grid-cols-4 px-[40px] xl:px-32 lg:gap-5 xl:gap-12 justify-center py-6 border-b-2'>
+      <div className='hidden lg:grid lg:grid-cols-4 px-[40px] xl:px-32 lg:gap-5 xl:gap-12 justify-center py-7 border-b-2'>
         <div className='flex flex-col gap-4 items-center'>
           <div className='flex justify-center items-center w-16 h-16 border-2 border-gray-300 rounded-full'>
             <BsArrowCounterclockwise className='w-[31px] h-[31px] text-gray-500/70'/>            
           </div>
           <div className='flex flex-col items-center gap-1'>
-            <h3 className='font-medium text-base text-black/80'>Reembolso Garantido</h3>
+            <h3 className='font-semibold text-base text-black/70'>Reembolso Garantido</h3>
             <p className='text-[13px] text-gray-500 text-center'>Reembolso em até 7 dias após o recebimento</p>
           </div>
         </div>
 
         <div className='flex flex-col gap-4 items-center'>
           <div className='flex justify-center items-center w-16 h-16 border-2 border-gray-300 rounded-full'>
-            <BsShieldCheck className='w-7 h-7 text-gray-500/80'/>
+            <BsShieldCheck className='w-7 h-7 text-gray-500/80 xl:ml-[1px]'/>
           </div>
           <div className='flex flex-col items-center gap-1'>
-            <h3 className='font-medium text-base text-black/80'>Compra Segura</h3>
+            <h3 className='font-semibold text-base text-black/70'>Compra Segura</h3>
             <p className='text-[13px] text-gray-500 text-center'>Ambiente seguro para pagamentos online</p>
           </div>
         </div>
@@ -90,7 +90,7 @@ export default function SliderFooter() {
             <CiDeliveryTruck className='w-9 h-9 text-gray-500/80'/>
           </div>
           <div className='flex flex-col items-center gap-1'>
-            <h3 className='font-medium text-base text-black/80'>Frete Grátis</h3>
+            <h3 className='font-semibold text-base text-black/70'>Frete Grátis</h3>
             <p className='text-[13px] text-gray-500 text-center'>Envio gratuito pelos correios para todo o Brasil</p>
           </div>
         </div> 
@@ -100,7 +100,7 @@ export default function SliderFooter() {
             <GoMail className='w-7 h-7 text-gray-500/80'/>
           </div>
           <div className='flex flex-col items-center gap-1'>
-            <h3 className='font-medium text-base text-black/80'>Suporte Profissional</h3>
+            <h3 className='font-semibold text-base text-black/70'>Suporte Profissional</h3>
             <p className='text-[13px] text-gray-500 text-center'>Uma equipe para te atender a semana inteira</p>
           </div>
         </div> 
