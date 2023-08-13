@@ -28,33 +28,37 @@ export default function Search() {
 
   return (
     <div className='flex flex-col overflow-x-hidden md:px-10 xl:px-32'>
-        <h3 className='hidden md:flex gap-1 items-center my-[28px] text-[13px]'>{`Página inicial`} <FiChevronRight className='w-[12px] h-[12px]'/>Página de busca</h3>
-        <div className='flex flex-col w-full md:bg-white md:col-span-10 lg:col-span-7 xl:col-span-8 md:rounded-md lg:shadow-md lg:shadow-gray-300/60 mb-10'>
-            <div className='flex flex-col gap-1.5 px-7 py-6'>
-            <h1 className='text-2xl font-medium'>{`Resultados para "${name}"`}</h1>
-            <p className='text-xs text-gray-700/90'>{`${produtos.length} produtos`}</p>
+        <h3 className='hidden md:flex gap-1 items-center my-[28px] text-sm text-black/80'>
+            <p>Página iInicial</p> 
+            <FiChevronRight className='w-3.5 h-3.5 text-gray-500 mt-0.5'/>
+            Busca
+        </h3>
+        <div className='flex flex-col w-full md:bg-white md:col-span-10 lg:col-span-7 xl:col-span-8 md:rounded-md lg:shadow-md lg:shadow-gray-300/60 mb-10 text-black/80'>
+            <div className='flex flex-col gap-1.5 px-4 md:px-[25px] py-6'>
+                <h1 className='text-2xl font-medium'>{`Resultados para "${name}"`}</h1>
+                <p className='text-xs text-gray-700/90'>{`${produtos.length} produtos`}</p>
             </div>      
-            <div className='flex justify-between border-y border-gray-300/80 lg:border-t-transparent px-7 py-3 md:py-4 items-center text-[13px]'>
+            <div className='flex justify-between border-y border-gray-300/80 lg:border-t-transparent px-4 md:px-[25px] py-3 md:py-4 items-center text-[13px]'>
             <div className='flex gap-2.5 items-center'>
                 <p>Visualização</p>
                 <BsGridFill 
-                className={`w-5 h-5 ${layout === 'grid' ? 'text-black' : 'text-gray-600'}`}
+                className={`w-5 h-5 cursor-pointer ${layout === 'grid' ? 'text-black/80' : 'text-gray-400'}`}
                 onClick={() => {
                     setLayout('grid')
                 }}
                 />
                 <FaList 
-                className={`w-5 h-5 ${layout === 'list' ? 'text-black' : 'text-gray-600'}`}
+                className={`w-5 h-5 cursor-pointer ${layout === 'list' ? 'text-black' : 'text-gray-400'}`}
                 onClick={() => {
                     setLayout('list')
                 }}  
                 />
             </div>
             </div>
-            <div className={`grid ${layout === 'grid' ? 'grid-cols-2 md:grid-cols-3 xl:grid-cols-4' : 'grid-cols-1'} flex-col px-4 w-full gap-x-3 gap-y-4 py-6`}>
+            <div className={`grid ${layout === 'grid' ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5' : 'grid-cols-1'} flex-col px-4 md:px-[25px] w-full gap-x-3 gap-y-6 py-10`}>
             {
                 produtos?.map( produto => (
-                <Card key={produto._id} produto={produto} categoryPage={true} layout = {layout}/>
+                <Card key={produto._id} produto={produto} page='s' layout = {layout}/>
                 ) )
             }
             </div>

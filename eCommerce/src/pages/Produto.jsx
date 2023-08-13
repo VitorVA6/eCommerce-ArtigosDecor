@@ -5,7 +5,6 @@ import { useProductContext } from '../contexts/Product';
 import Slider from 'react-slick'
 import { BsCreditCard2Back, BsShieldCheck, BsArrowCounterclockwise } from 'react-icons/bs';
 import { FiChevronRight } from 'react-icons/fi';
-import {BsPlus} from 'react-icons/bs'
 import { useVariationContext } from '../contexts/Variation';
 import { useCatalogContext } from '../contexts/Catalog';
 
@@ -176,8 +175,7 @@ export default function Produto() {
                     <h3 className='text-sm text-blue-500'>Disponível em estoque</h3>
                 </div>
                 
-                <div className='flex mt-6 mb-6'>
-                    <div className=' flex flex-col'>
+                <div className='flex flex-col mt-6 mb-6'>
                     {
                     produto?.desconto > 0 &&
                     <p className='inline line-through text-gray-500/90 text-[16px] font-light'>{produto?.preco?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
@@ -185,24 +183,22 @@ export default function Produto() {
                     <div className='flex items-center gap-x-1.5'>
                         {
                         produto?.desconto > 0 ?
-                        <p className='text-[36px] text-black/90 leading-none'>{produto?.desconto?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p> :
-                        <p className='text-[36px] text-black/90 leading-none'>{produto?.preco?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                        <p className='text-[36px] text-black/80 leading-none'>{produto?.desconto?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p> :
+                        <p className='text-[36px] text-black/80 leading-none'>{produto?.preco?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                         }
                         {produto?.desconto > 0 &&                           
                         <p className='text-green-500 font-medium'>{ Math.ceil((produto?.preco - produto?.desconto)*100/produto?.preco)}% OFF</p>                          
                         }
                     </div>
                     <div className='flex gap-1 mt-1'>
-                        <p className='text-black/90'>em até</p>
+                        <p className='text-black/80'>em até</p>
                         <p className='text-green-500 font-medium'>12x de {produto?.desconto > 0 ? parseFloat((produto?.desconto* taxa /12).toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : parseFloat((produto?.preco*taxa/12).toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                     </div>
                     {
-                        produto?.desconto > 0 &&
-                        <p className='bg-blue-100 text-blue-500 px-2 py-[7px] rounded-sm flex w-fit mt-3.5 text-sm font-semibold'>R$ {(produto?.preco - produto?.desconto).toFixed(0)} de desconto</p>
+                    produto?.desconto > 0 &&
+                    <p className='bg-blue-100 text-blue-500 px-2 py-[7px] rounded-sm flex w-fit mt-3.5 text-sm font-semibold'>R$ {(produto?.preco - produto?.desconto).toFixed(0)} de desconto</p>
                     }
-                    </div>
                 </div>
-                
                 <div className='flex gap-x-4 items-center'>
                     <img className='w-16 h-10' src="../src/images/logo-correios.png" alt="logo correio" />
                     <div className='flex flex-col'>

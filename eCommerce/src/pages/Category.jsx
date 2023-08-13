@@ -70,16 +70,19 @@ export default function Category() {
 
   return (
     <>
-    <h3 className='hidden md:flex gap-1 items-center px-5 md:px-10 xl:px-32 my-[28px] text-[13px]'>{`Página inicial`} <FiChevronRight className='w-[12px] h-[12px]'/> {`Armeiro`}</h3>
-    <section className='flex md:grid md:grid-cols-10 xl:grid-cols-12 overflow-x-hidden lg:gap-x-[30px] w-full px-0 md:px-10 xl:px-32 pb-10 md:mb-8'>
+    <h3 className='hidden md:flex gap-1 items-center px-5 md:px-10 xl:px-32 my-[28px] text-sm text-black/80'>
+      <p>Página Inicial</p> 
+      <FiChevronRight className='w-3.5 h-3.5 text-gray-500 mt-0.5'/> 
+      <p>Resultado de Busca</p></h3>
+    <section className='flex md:grid md:grid-cols-10 lg:grid-cols-12 overflow-x-hidden lg:gap-x-7 w-full px-0 md:px-10 xl:px-32 pb-10 md:mb-8 text-black/80'>
       {
         show === true &&
         <CategoryFilter categories={categories} name={name} show={show} setShow={setShow}/>
       }
-      <div className={`hidden top-0 right-0 h-full absolute lg:static lg:flex flex-col lg:h-fit lg:rounded-3xl px-[25px] py-[20px] bg-white shadow-lg lg:shadow-gray-300/40 lg:col-span-3 xl:col-span-3 z-30 lg:w-full`}>
-        <h2 className='hidden lg:block text-center text-xl font-medium mb-2'>Menu principal</h2>
+      <div className={`hidden top-0 right-0 h-full absolute lg:static lg:flex flex-col lg:h-fit lg:rounded-md px-[25px] py-6 bg-white shadow-lg lg:shadow-gray-300/40 lg:col-span-3 xl:col-span-3 z-30 lg:w-full`}>
+        <h2 className='hidden lg:block text-center text-[22px] xl:text-[24px] font-medium mb-2'>Menu principal</h2>
         <h2 className='block lg:hidden pl-6 text-xs font-bold border-y -mx-6 bg-gray-100 py-2'>CATEGORIAS</h2>
-        <ul className='flex flex-col gap-y-3 text-gray-900 text-sm my-3'>
+        <ul className='flex flex-col gap-y-3 text-gray-500 text-sm my-3'>
         <Link to={'/'} className='hidden lg:block'>Início</Link>
         {
             categories?.map(
@@ -93,14 +96,14 @@ export default function Category() {
         <Link to={'/category/lancamentos'} className={`${name === 'lancamentos' ? 'text-blue-500': ''}`}>Lançamentos</Link>
         </ul>
         </div>
-      <div className='flex flex-col w-full md:bg-white md:col-span-10 lg:col-span-7 xl:col-span-9 md:rounded-3xl lg:shadow-lg lg:shadow-gray-300/40'>
+      <div className='flex flex-col w-full md:bg-white md:col-span-10 lg:col-span-9 xl:col-span-9 md:rounded-md lg:shadow-lg lg:shadow-gray-300/40'>
         {
           modalOrder && 
           <ModalOrder setModalOrder={setModalOrder} selOrder={selOrder} setSelOrder={setSelOrder}/>
         }
-        <div className='flex flex-col gap-1.5 px-3 md:px-[25px] py-6'>
-          <h1 className='text-2xl font-medium'>{defineTitle()}</h1>
-          <p className='text-xs text-gray-700/90'>{`${produtos.length} produtos`}</p>
+        <div className='flex flex-col gap-0.5 px-3 md:px-[25px] py-6'>
+          <h1 className='text-[22px] xl:text-2xl font-medium'>{defineTitle()}</h1>
+          <p className='text-base text-gray-500'>{`${produtos.length} produtos`}</p>
         </div>      
         <div className='flex justify-between border-y border-gray-300/80 lg:border-t-transparent px-3 md:px-[25px] py-3 md:py-4 items-center text-[13px]'>
           <div 
@@ -122,25 +125,25 @@ export default function Category() {
           <Dropdown />
           }
           <div className='flex gap-2.5 items-center'>
-            <p className='hidden md:block'>Visualização</p>
+            <p className='hidden md:block text-sm'>Visualização</p>
             <BsGridFill 
-              className={`w-5 h-5 ${layout === 'grid' ? 'text-black' : 'text-gray-600'}`}
+              className={`w-5 h-5 ${layout === 'grid' ? 'text-black/80' : 'text-gray-400'} cursor-pointer`}
               onClick={() => {
                 setLayout('grid')
               }}
             />
             <FaList 
-              className={`w-5 h-5 ${layout === 'list' ? 'text-black' : 'text-gray-600'}`}
+              className={`w-5 h-5 ${layout === 'list' ? 'text-black/80' : 'text-gray-400'} cursor-pointer`}
               onClick={() => {
                 setLayout('list')
               }}  
             />
           </div>
         </div>
-        <div className={`grid ${layout === 'grid' ? 'grid-cols-2 md:grid-cols-3 xl:grid-cols-4' : 'grid-cols-1'} flex-col px-3 md:px-[25px] w-full gap-x-3 gap-y-4 py-6`}>
+        <div className={`grid ${layout === 'grid' ? 'grid-cols-2 md:grid-cols-3 2xl:grid-cols-4' : 'grid-cols-1'} flex-col px-3 md:px-[25px] w-full gap-x-3 gap-y-6 py-10`}>
           {
             produtos?.map( produto => (
-              <Card key={produto._id} produto={produto} categoryPage={true} layout = {layout}/>
+              <Card key={produto._id} produto={produto} page='c' layout = {layout}/>
             ) )
           }
         </div>

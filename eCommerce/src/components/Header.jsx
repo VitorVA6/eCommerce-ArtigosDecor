@@ -119,22 +119,22 @@ export default function Header() {
                 </button>
             </div>
         </div>
-        <div className='relative hidden w-full py-4 items-center lg:flex justify-between bg-blue-500 text-gray-100 lg:px-10 xl:px-32'>
+        <div className='relative hidden w-full py-4 items-center lg:flex justify-between bg-blue-500 text-gray-50 lg:px-10 xl:px-32'>
             <DropdownCategories />
             <div className='flex items-center lg:ml-[42vh] xl:ml-[38vh] lg:text-[13px] xl:text-sm'>
-                <Link to={'/'} className='flex gap-2 items-center cursor-pointer border-r px-6 leading-none'>
+                <Link to={'/'} className='flex transition-all duration-500 gap-2 items-center cursor-pointer border-r px-6 leading-none hover:text-gray-300'>
                     Início
                 </Link>
-                <Link to={'/category/destaques'} className='flex items-center cursor-pointer px-6 border-r leading-none'>
+                <Link to={'/category/destaques'} className='flex transition-all duration-500 items-center cursor-pointer px-6 border-r leading-none hover:text-gray-300'>
                     Destaques
                 </Link>
-                <Link to={'/category/promocoes'} className='flex items-center cursor-pointer px-6 border-r leading-none'>
+                <Link to={'/category/promocoes'} className='flex items-center cursor-pointer px-6 border-r leading-none hover:text-gray-300'>
                     Promoções
                 </Link>
-                <Link to={'/category/lancamentos'} className='flex items-center cursor-pointer px-6 border-r leading-none'>
+                <Link to={'/category/lancamentos'} className='flex items-center cursor-pointer px-6 border-r leading-none hover:text-gray-300'>
                     Lançamentos
                 </Link>
-                <Link to={'/contact'} className='flex items-center cursor-pointer px-6 leading-none'>
+                <Link to={'/contact'} className='flex items-center cursor-pointer px-6 leading-none hover:text-gray-300'>
                     Contato
                 </Link>
             </div>
