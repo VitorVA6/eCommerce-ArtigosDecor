@@ -73,7 +73,7 @@ export default function Category() {
     <h3 className='hidden md:flex gap-1 items-center px-5 md:px-10 xl:px-32 my-[28px] text-sm text-black/80'>
       <p>Página Inicial</p> 
       <FiChevronRight className='w-3.5 h-3.5 text-gray-500 mt-0.5'/> 
-      <p>Resultado de Busca</p></h3>
+      <p>Categorias</p></h3>
     <section className='flex md:grid md:grid-cols-10 lg:grid-cols-12 overflow-x-hidden lg:gap-x-7 w-full px-0 md:px-10 xl:px-32 pb-10 md:mb-8 text-black/80'>
       {
         show === true &&

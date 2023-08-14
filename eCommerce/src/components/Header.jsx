@@ -4,7 +4,7 @@ import { useCarrinhoContext } from '../contexts/Carrinho'
 import {FiMenu} from "react-icons/fi"
 import MenuMobile from './MenuMobile'
 import {BsCart2, BsTelephone} from 'react-icons/bs'
-import {FiPackage} from 'react-icons/fi'
+import {FiPackage, FiPhoneCall} from 'react-icons/fi'
 import {IoReturnDownBackSharp} from 'react-icons/io5'
 import {AiOutlineHeart} from 'react-icons/ai'
 import { BiChevronDown} from 'react-icons/bi'
@@ -12,14 +12,17 @@ import {GoSearch} from 'react-icons/go'
 import { useCategoryContext } from '../contexts/Category'
 import DropdownCategories from './DropDownCategories'
 import DropDownSearchbar from './DropDownSearchbar'
+import {useCatalogContext} from '../contexts/Catalog'
 
 export default function Header() {
     const {getCategories, categories} = useCategoryContext()
+    const {catalog} = useCatalogContext()
     const {quantTotal, total} = useCarrinhoContext ()
     const [menu, setMenu] = useState(false)
     const navigate = useNavigate()
     const [key, setKey] = useState('')
     const [selCategory, setSelCategory] = useState('all')
+    const [showContact, setShowContact] = useState(false)
 
     useEffect( () => {
         getCategories()
@@ -33,6 +36,18 @@ export default function Header() {
     }
     function handleSearchMobile(){
         if(key.length > 0){
+            navigate(`/search/all/${key}`)
+            setKey('')
+        }
+    }
+    function handleKeyDown(event){
+        if(event.key === 'Enter'){
+            navigate(`/search/${selCategory==='all'?'all':selCategory._id}/${key}`)
+            setKey('')
+        }
+    }
+    function handleKeyDownMobile(event){
+        if(event.key === 'Enter'){
             navigate(`/search/all/${key}`)
             setKey('')
         }
@@ -73,6 +88,7 @@ export default function Header() {
                         className='py-[0px] xl:py-[8px] pl-3 lg:pl-5 rounded-full w-full flex items-center outline-none text-base placeholder-gray-400'
                         value={key}
                         onChange={(ev) => setKey(ev.target.value)}
+                        onKeyDown={handleKeyDown}
                     />
                     <button 
                         className='px-[30px] justify-center h-full rounded-full items-center flex bg-gray-200'
@@ -110,6 +126,7 @@ export default function Header() {
                     className='py-[6px] pl-5 rounded-full w-full flex items-center outline-none text-sm placeholder-gray-400'
                     value={key}
                     onChange={(ev) => setKey(ev.target.value)}
+                    onKeyDown={handleKeyDownMobile}
                 />
                 <button 
                     className='px-[24px] justify-center h-full rounded-full items-center flex bg-gray-200'
@@ -119,24 +136,41 @@ export default function Header() {
                 </button>
             </div>
         </div>
-        <div className='relative hidden w-full py-4 items-center lg:flex justify-between bg-blue-500 text-gray-50 lg:px-10 xl:px-32'>
+        <div className='relative hidden w-full py-[6px] 2xl:py-[7px] items-center lg:flex justify-between bg-blue-500 text-gray-50 lg:px-10 xl:px-32'>
             <DropdownCategories />
-            <div className='flex items-center lg:ml-[42vh] xl:ml-[38vh] lg:text-[13px] xl:text-sm'>
-                <Link to={'/'} className='flex transition-all duration-500 gap-2 items-center cursor-pointer border-r px-6 leading-none hover:text-gray-300'>
+            <div className='flex items-center lg:ml-[42vh] xl:ml-[38vh] lg:text-[13px] xl:text-sm font-medium gap-3.5'>
+                <Link to={'/'} className='flex transition-all duration-500 gap-2 items-center cursor-pointer px-3 py-2 leading-none rounded-md 2xl:hover:bg-blue-600'>
                     Início
                 </Link>
-                <Link to={'/category/destaques'} className='flex transition-all duration-500 items-center cursor-pointer px-6 border-r leading-none hover:text-gray-300'>
+                <Link to={'/category/destaques'} className='flex transition-all duration-500 items-center cursor-pointer px-3 py-2 leading-none rounded-md hover:bg-blue-600'>
                     Destaques
                 </Link>
-                <Link to={'/category/promocoes'} className='flex items-center cursor-pointer px-6 border-r leading-none hover:text-gray-300'>
+                <Link to={'/category/promocoes'} className='flex transition-all duration-500 items-center cursor-pointer px-3 py-2 leading-none rounded-md hover:bg-blue-600'>
                     Promoções
                 </Link>
-                <Link to={'/category/lancamentos'} className='flex items-center cursor-pointer px-6 border-r leading-none hover:text-gray-300'>
+                <Link to={'/category/lancamentos'} className='flex transition-all duration-500 items-center cursor-pointer px-3 py-2 2xl leading-none rounded-md hover:bg-blue-600'>
                     Lançamentos
                 </Link>
-                <Link to={'/contact'} className='flex items-center cursor-pointer px-6 leading-none hover:text-gray-300'>
+                <div 
+                    to={'/contact'} 
+                    className='hidden gap-0.5 2xl:flex transition-all duration-500 items-center cursor-pointer pl-3 pr-6 py-2 leading-none rounded-md hover:bg-blue-600 relative'
+                    onMouseOver={() => setShowContact(true)}
+                    onMouseOut={() => setShowContact(false)}
+                >
                     Contato
-                </Link>
+                    <BiChevronDown className='w-5 h-5 absolute top-[20%] right-0.5'/>
+                    <div className={`cursor-default bg-transparent absolute top-[calc(100%+8px)] left-0 ${showContact===true?'flex':'hidden'} flex-col transition-opacity duration-300 z-40`}>
+                        <div className='w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[12px] border-b-white ml-4'/>
+                        <div className='bg-white px-4 pt-4 pb-6 w-64 flex gap-4 items-center rounded-md shadow-md'>
+                            <FiPhoneCall className='w-[36px] h-[36px] text-gray-500 mt-1'/>
+                            <div className='flex flex-col text-black/70 w-min'>
+                                <h3 className='text-base font-semibold mb-1'>Chame-nos 24/7</h3>
+                                <h4 className='text-[13px] text-gray-400 mb-0.5'>{catalog.telefone}</h4>
+                                <h4 className='text-[13px] text-gray-400 font-medium'>{catalog.email}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <Link to={'/about-us'} className='flex gap-2 items-center font-medium text-sm cursor-pointer leading-none'>
                 SOBRE A LOJA

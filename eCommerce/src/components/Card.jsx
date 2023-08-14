@@ -30,14 +30,13 @@ export default function Card({produto, page, layout}) {
     }
 
   return (
-    <div className={`flex w-full ${layout === 'grid' ? 'flex-col' : 'flex-row'} bg-white rounded-md shadow-lg shadow-gray-300/60 ${(page==='s'||page==='c') ? 'p-3 md:p-4' : 'my-5 p-4'} relative`}>
+    <div 
+        className={`flex w-full ${layout === 'grid' ? 'flex-col' : 'flex-row'} bg-white rounded-md cursor-pointer shadow-md shadow-gray-300/80 ${(page==='s'||page==='c') ? 'p-3 md:p-4' : 'my-5 p-4'} relative hover:shadow-lg hover:shadow-gray-400/60`}
+        onClick={() =>navigate(`/produto/${produto?._id}`)}
+    >
         <div 
-            className={`relative ${handleClass()} p-2 gap-2 rounded-sm cursor-pointer`}
-            style={{ backgroundImage: `url(${baseURL}/images/products/${produto?.img[0]})`, boxSizing: 'border-box', backgroundSize: 'cover'}}
-            onClick={(e) => {
-                if(e.currentTarget != e.target ) return;
-                navigate(`/produto/${produto?._id}`)
-                }}
+            className={`relative ${handleClass()} p-2 gap-2 rounded-sm box-border`}
+            style={{ backgroundImage: `url(${baseURL}/images/products/${produto?.img[0]})`, backgroundSize: 'cover'}}
             >
             {
                 priceoff > 0 ?
@@ -51,7 +50,10 @@ export default function Card({produto, page, layout}) {
         <div className={`flex flex-col justify-center lg:py-3 w-full ${layout === 'grid' ? 'mt-[5px]' : ''}`}>
             <p className='mb-1.5 md:mb-3 font-medium text-black/80 text-[18px]'>{produto?.title}</p>
             <div className='flex flex-col'>
-                
+                {
+                produto?.desconto > 0 &&
+                <p className='inline line-through text-gray-500/90 text-[16px] font-light'>{produto?.preco?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                }
                 <div className='flex items-center gap-x-1.5'>
                     {
                     produto?.desconto > 0 ?
