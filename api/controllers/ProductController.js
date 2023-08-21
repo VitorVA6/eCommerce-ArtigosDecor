@@ -4,6 +4,7 @@ const crypto = require('crypto')
 const combine = require('../utils/combine')
 const ObjectId = require('mongoose')
 const fs = require('fs')
+const uploadS3 = require('../utils/uploadS3')
 
 module.exports = class ProductController{
 
@@ -38,9 +39,8 @@ module.exports = class ProductController{
             return res.status(422).json({error: 'Imagem é obrigatório'})
         }
 
-        const images = req.files.map( image => image.filename )
-
         try{
+            const images = await uploadS3(req.files)
             const newProduct = await Product.create({
                 title, 
                 preco,
@@ -56,7 +56,6 @@ module.exports = class ProductController{
         }catch(err){
             res.status(500).json({error: 'Ocorreu um erro na criação do produto.'})
         }
-
     } 
 
     static async filter(req, res){
