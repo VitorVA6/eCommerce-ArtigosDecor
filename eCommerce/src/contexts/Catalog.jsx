@@ -14,11 +14,12 @@ export default function CatalogProvider({children}){
         email: '',
         bannerdt: []
     })
+    const [loading, setLoading] = useState(false)
 
     const baseURL = 'http://[::1]:4000'
 
     return (
-        <CatalogContext.Provider value={{catalog, setCatalog, baseURL}}>
+        <CatalogContext.Provider value={{catalog, setCatalog, baseURL, loading, setLoading}}>
             {children}
         </CatalogContext.Provider>
     )
@@ -27,14 +28,17 @@ export default function CatalogProvider({children}){
 
 export function useCatalogContext(){
 
-    const {catalog, setCatalog, baseURL} = useContext(CatalogContext)
+    const {catalog, setCatalog, baseURL, loading, setLoading} = useContext(CatalogContext)
 
     async function getCatalog(){
         try{
+            setLoading(true)
             const {data} = await axios.get('/catalog/settings')
+            setLoading(false)
             setCatalog(data) 
         }
         catch(err){
+            setLoading(false)
             console.log(err)
         }
         
@@ -69,9 +73,9 @@ export function useCatalogContext(){
     return {
         catalog,
         setCatalog,
+        loading,
         getCatalog,
         updateCatalog,
-        baseURL
     }
 
 }

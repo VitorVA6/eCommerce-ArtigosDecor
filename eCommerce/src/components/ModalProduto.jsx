@@ -277,16 +277,6 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                 </div>
             </div>
             <div className='flex flex-col w-full mb-6'>
-                <p className='mb-2 text-sm font-medium'>Descrição</p>
-                <textarea 
-                    className='px-4 py-2.5 w-full rounded-lg bg-gray-100 focus:outline outline-1 outline-blue-500' 
-                    type="text" 
-                    placeholder='Ex: Camiseta preta de algodão. Tamanhos P, M e G.' 
-                    value={desc}
-                    onChange={event => setDesc(event.target.value) }    
-                />    
-            </div>
-            <div className='flex flex-col w-full'>
                 <p className='mb-2 text-sm font-medium'>Categoria</p>
                 <Select 
                     className='text-sm'                    
@@ -299,6 +289,16 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                     onChange = {setCategory}
                     value={category}
                     /> 
+            </div>
+            <div className='flex flex-col w-full'>
+                <p className='mb-2 text-sm font-medium'>Descrição</p>
+                <textarea 
+                    className='px-4 py-2.5 w-full rounded-lg bg-gray-100 focus:outline outline-1 outline-blue-500' 
+                    type="text" 
+                    placeholder='Ex: Camiseta preta de algodão. Tamanhos P, M e G.' 
+                    value={desc}
+                    onChange={event => setDesc(event.target.value) }    
+                />    
             </div>
             {
                 verMais && 
