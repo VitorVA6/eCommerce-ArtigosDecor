@@ -19,7 +19,6 @@ export default function Produto() {
     const {variations, getVariations} = useVariationContext()
     const taxa = 1.2
     const [imgId, setImgId] = useState(0)
-    const {baseURL} = useCatalogContext()
     const settings = {
         dots: true,
         infinite: true,
@@ -136,7 +135,10 @@ export default function Produto() {
                         produto?.img?.map( image =>{
                             return (
                             <div key={image} className=''>
-                                <img className='h-96 w-full lg:px-0 rounded-md' src={`${baseURL}/images/products/${image}`} alt="Imagem do produto" />
+                                <img 
+                                    className='h-96 w-full lg:px-0 rounded-md' 
+                                    src={`${import.meta.env.VITE_AWS_URL}${image}`}
+                                    alt="Imagem do produto" />
                             </div>)
                         })
                         
@@ -151,7 +153,7 @@ export default function Produto() {
                                 <img 
                                     key={image} 
                                     className={`${imgId === index ? 'border-[2px] border-blue-500': ''} cursor-pointer h-16 w-16 min-w-[64px] p-0 rounded-md`} 
-                                    src={`${baseURL}/images/products/${image}`} 
+                                    src={`${import.meta.env.VITE_AWS_URL}${image}`} 
                                     alt="Imagem do produto" 
                                     onMouseOver={() => {
                                         setImgId(index)
@@ -165,7 +167,7 @@ export default function Produto() {
                 {
                     produto?.img !== undefined &&
                     <div className='flex md:w-full lg:w-[calc(100%-80px)] md:h-[calc(100%-80px)] lg:h-full md:order-1 lg:order-2'>
-                        <img className='rounded-lg w-full' src={`${baseURL}/images/products/${produto?.img[imgId]}`} alt="Imagem do produto" />
+                        <img className='rounded-lg w-full' src={`${import.meta.env.VITE_AWS_URL}${produto?.img[imgId]}`} alt="Imagem do produto" />
                     </div>
                 }
             </div>       

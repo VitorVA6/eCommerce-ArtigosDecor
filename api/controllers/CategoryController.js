@@ -1,8 +1,7 @@
 const Category = require('../models/CategoryModel')
-const User = require('../models/UserModel')
 const fs = require('fs')
-const getUserByToken = require('../utils/getUserByToken')
 const ObjectId = require('mongoose')
+const uploadS3 = require('../utils/uploadS3')
 
 module.exports = class CategoryController {
 
@@ -15,20 +14,17 @@ module.exports = class CategoryController {
         if(!req.file){
             return res.status(422).json({error: 'Imagem é obrigatório'})
         }
-        const image = req.file.filename
 
         try{
-
-            const newCategory = Category.create({
+            const image = await uploadS3([req.file])
+            await Category.create({
                 name,
-                image
+                image: image[0]
             })
             return res.status(201).json({message: 'Categoria criada com sucesso'})
-
         }catch(err){
             return res.status(500).json({error: 'Ocorreu um erro na criação da categoria.'})
         }
-
     }
 
     static async getAll(req, res){

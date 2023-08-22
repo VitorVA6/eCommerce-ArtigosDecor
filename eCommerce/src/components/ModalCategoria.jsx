@@ -7,7 +7,6 @@ import { useCatalogContext } from '../contexts/Catalog';
 export default function ModalCategoria({setModalCategoria, edit, placeh, idCustom, notifySucess, notifyError}) {
 
   const {getCategoriesById, addCategory, categories, updateCategory, removeCategory} = useCategoryContext()
-  const {baseURL} = useCatalogContext()
   const [category, setCategory] = useState('')
   const [image, setImage] = useState([])
   const [uploadedImage, setUploadesImage] = useState([])
@@ -134,7 +133,7 @@ function removeUploadedImages(name){
                     uploadedImage.map( image => (
                         <div 
                             key = {image}
-                            style={{ backgroundImage: `url(${baseURL}/images/categories/${image})`, boxSizing: 'border-box', backgroundSize: 'cover'}}
+                            style={{ backgroundImage: `url(${import.meta.env.VITE_AWS_URL}${image})`, boxSizing: 'border-box', backgroundSize: 'cover'}}
                             className='w-14 h-14 rounded-lg relative'
                             >
                             <button 

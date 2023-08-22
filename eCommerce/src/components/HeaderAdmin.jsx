@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useCatalogContext } from '../contexts/Catalog'
-import {BiNotepad} from 'react-icons/bi'
 import {FiMenu} from "react-icons/fi"
 import {HiOutlineExternalLink} from 'react-icons/hi'
 import noteIcon from '../images/caderno.png'

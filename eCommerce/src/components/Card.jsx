@@ -9,7 +9,6 @@ export default function Card({produto, page, layout}) {
     const taxa = 1.2161
     const [price, setPrice] = useState(produto?.combinations?.length > 0 ? produto.combinations[0]?.price : produto.preco)
     const [priceoff, setPriceoff] = useState(produto?.combinations?.length > 0 ? produto.combinations[0]?.priceoff : produto.desconto)
-    const {baseURL} = useCatalogContext()
 
     const handleClass = () => {
         if(page === 'c'){
@@ -36,7 +35,7 @@ export default function Card({produto, page, layout}) {
     >
         <div 
             className={`relative ${handleClass()} p-2 gap-2 rounded-sm box-border`}
-            style={{ backgroundImage: `url(${baseURL}/images/products/${produto?.img[0]})`, backgroundSize: 'cover'}}
+            style={{ backgroundImage: `url(${import.meta.env.VITE_AWS_URL}${produto?.img[0]})`, backgroundSize: 'cover'}}
             >
             {
                 priceoff > 0 ?

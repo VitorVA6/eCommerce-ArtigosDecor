@@ -6,14 +6,12 @@ const fs = require('fs')
 module.exports = class CatalogController{
 
     static async getSettings(req, res){
-
         try{
             const catalog = await Catalog.findOne()
             res.status(200).json(catalog)
         }catch(err){
             res.status(404).json({error: 'Catálogo não encontrado'})
         }        
-
     }
 
     static async updateCatalog(req, res){

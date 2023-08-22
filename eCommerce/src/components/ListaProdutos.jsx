@@ -31,7 +31,7 @@ export default function ListaProdutos({title, categoria, ordination}) {
             ) )} 
             <div className='flex xl:hidden 2xl:flex w-full mr-10 xl:mr-0'>
             {
-                produtos.length === 5 && 
+                produtos?.length === 5 && 
                 <Card key={produtos[4]._id} page='h' produto={produtos[4]} layout={'grid'}/>
             }
             </div>

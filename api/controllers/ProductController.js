@@ -5,6 +5,7 @@ const combine = require('../utils/combine')
 const ObjectId = require('mongoose')
 const fs = require('fs')
 const uploadS3 = require('../utils/uploadS3')
+const removeS3 = require('../utils/removeS3')
 
 module.exports = class ProductController{
 
@@ -227,25 +228,25 @@ module.exports = class ProductController{
             return res.status(422).json({error: 'Imagem é obrigatório'})
         }
 
+        let filesName = []
+
         product.img.forEach( elem => {
             if(!uploadedImages.includes(elem)){
-                fs.stat(`./public/images/products/${elem}`, function (err, stats) {
-                 
-                    if (err) {
-                        return console.error(err);
-                    }
-                 
-                    fs.unlink(`./public/images/products/${elem}`,function(err){
-                         if(err) return console.log(err);
-                    });
-                 });
+                filesName.push(elem)
             }
-        } )
+        })
         
         let aux_files =  req.files?.length > 0 ? req.files.map(image => image.filename) : []
         product.img = aux_files.concat(uploadedImages)
 
         try{
+            if(filesName.length > 0){
+                const files = filesName.map(img => ({Key: img}))
+                await removeS3(files)
+            }
+            if(aux_files.length > 0){
+                await uploadS3(req.files)
+            }
             const updatedProd = await Product.findOneAndUpdate({_id: id}, product, {new: true})
             res.status(200).json({product: updatedProd})
         }
@@ -269,19 +270,9 @@ module.exports = class ProductController{
         }
 
         try {
+            const files = product.img.map(img => ({Key: img}))
+            const deleted = await removeS3(files)
             await Product.findOneAndDelete({_id: id})
-            product.img.forEach( elem => {                
-                fs.stat(`./public/images/products/${elem}`, function (err, stats) {
-                    
-                    if (err) {
-                        return console.error(err);
-                    }
-                    
-                    fs.unlink(`./public/images/products/${elem}`,function(err){
-                            if(err) return console.log(err);
-                    });
-                    });
-            } )
             
             res.status(200).json({message: 'Produto removido com sucesso!'})
         }

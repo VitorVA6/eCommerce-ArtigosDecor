@@ -5,13 +5,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { GrFormClose } from "react-icons/gr";
 import { useVariationContext } from '../contexts/Variation';
 import combine from '../utils/combine';
-import { useCatalogContext } from '../contexts/Catalog';
 import masks from '../utils/masks';
 
 export default function ModalProduto({setModalProduto, edit, categorias, idProduto, notifySucess, notifyError}) {
     const {addProduct, getProductById, updateProduct} = useProductContext()
     const {getVariations, variations} = useVariationContext()
-    const {baseURL} = useCatalogContext()
     const [verMais, setVerMais] = useState(false);
     const [animate, setAnimate] = useState(true)
     const [name, setName] = useState('') 
@@ -385,8 +383,10 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                     uploadedImages.map( image => (
                         <div 
                             key = {image}
-                            style={{ backgroundImage: `url(${baseURL}/images/products/${image})`, boxSizing: 'border-box', backgroundSize: 'cover'}}
-                            className='w-14 h-14 rounded-lg relative'
+                            style={{ 
+                                backgroundImage: `url(${import.meta.env.VITE_AWS_URL}${image})`, 
+                                boxSizing: 'border-box', backgroundSize: 'cover'}}
+                                className='w-14 h-14 rounded-lg relative'
                             >
                             <button 
                                 className='bg-white p-0.5 absolute -top-1.5 -right-1.5 rounded-full'
