@@ -3,9 +3,11 @@ import Select from 'react-select'
 import { useProductContext } from '../contexts/Product';
 import { v4 as uuidv4 } from 'uuid';
 import { GrFormClose } from "react-icons/gr";
+import { BsCardImage } from "react-icons/bs";
 import { useVariationContext } from '../contexts/Variation';
 import combine from '../utils/combine';
 import masks from '../utils/masks';
+import LoadingButton from './LoadingButton';
 
 export default function ModalProduto({setModalProduto, edit, categorias, idProduto, notifySucess, notifyError}) {
     const {addProduct, getProductById, updateProduct} = useProductContext()
@@ -22,6 +24,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
     const [combinations, setCombinations] = useState([])
     const [modalVariations, setModalVariations] = useState(false)
     const [category, setCategory] = useState([])
+    const [loading, setLoading] = useState(false)
 
     useEffect( () => {
         if (edit){
@@ -85,7 +88,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
         return aux
     }
 
-    async function handleSubmit() {
+    function handleSubmit() {
         if(inverseCurrency(price) === 0){
             notifyError('Valor de preço inválido')
             return
@@ -95,8 +98,10 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
             return
         }
         if(edit){
+            setLoading(true)
             updateProduct(idProduto, name, inverseCurrency(price), inverseCurrency(priceoff), category, desc, images, uploadedImages, currencyToNumber(), variationsProd)
             .then( (data) => {
+                setLoading(false)
                 if(!!data.product){
                     setUploadesImages(data?.product?.img)
                     setImages([])
@@ -107,11 +112,12 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                 }else{
                     notifyError(data.error)
                 }
-
             } )
         }
         else{
+            setLoading(true)
             addProduct(name, inverseCurrency(price), inverseCurrency(priceoff), category, desc, images, currencyToNumber(), variationsProd).then(data => {
+                setLoading(false)
                 if(!!data.message){
                   setAnimate(false)
                   setTimeout(() => setModalProduto(false), 200) 
@@ -248,7 +254,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
         className={`${animate ? 'slide-in-bottom':'slide-out-bottom'} w-full lg:w-[650px] left-0 lg:left-[calc(50%-325px)] bottom-0 lg:top-[calc(50%-330px)] h-fit bg-white flex flex-col items-center z-30 absolute rounded-t-3xl lg:rounded-2xl`}
     >
         <h2 className='text-center py-4 border-b w-full font-medium'>{`${edit?'Editar':'Adicionar'} Produto`}</h2>
-        <div className='flex flex-col py-2 px-7 w-full overflow-auto h-[470px]'>
+        <div className='flex flex-col py-2 px-7 w-full overflow-auto h-[400px]'>
             <div className='flex gap-x-6'>
                 <div className='flex flex-col  w-8/12 mb-6'>
                     <p className='mb-2 mt-2 text-sm font-medium'>Nome</p>
@@ -415,18 +421,12 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                 }
             </div>
             <div className='flex justify-between items-center w-full mb-6 lg:mb-0'>
-
                 <label className='border border-dashed border-gray-400/70 w-fit h-fit p-2.5 rounded-md cursor-pointer' 
                 >
                     <input className='hidden' multiple={true} type='file' onChange={(ev) => handleFiles(ev)} />
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-gray-400/70">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                    </svg>
+                    <BsCardImage className="w-[22px] h-[22px] text-gray-400/70"/>
                 </label>
-                <button 
-                    className='bg-blue-500 py-2.5 w-72 text-white text-medium rounded-lg'
-                    onClick={(ev) => handleSubmit(ev)}
-                >Confirmar</button>
+                <LoadingButton loading={loading} handleSubmit={handleSubmit} text={'Confirmar'} full={false} />
             </div>
         </div>
     </div>

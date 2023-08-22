@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useCategoryContext } from '../contexts/Category'
 import { v4 as uuidv4 } from 'uuid';
 import { GrFormClose } from "react-icons/gr";
+import LoadingButton from './LoadingButton';
 
 export default function ModalCategoria({setModalCategoria, edit, placeh, idCustom, notifySucess, notifyError}) {
 
@@ -10,6 +11,7 @@ export default function ModalCategoria({setModalCategoria, edit, placeh, idCusto
   const [image, setImage] = useState([])
   const [uploadedImage, setUploadesImage] = useState([])
   const [animate, setAnimate] = useState(true)
+  const [loading, setLoading] = useState(false)
 
   useEffect( () => {
     if(edit){
@@ -61,8 +63,10 @@ function removeUploadedImages(name){
   function add(){
     if(edit){
       if(category.trim().length > 0 && categories.find(el => el.name === category) === undefined){
+        setLoading(true)
         updateCategory(idCustom, category, image, uploadedImage)
         .then( data => {
+          setLoading(false)
           if(!!data.message){
             setAnimate(false)
             setTimeout(() => setModalCategoria(false), 200) 
@@ -79,7 +83,9 @@ function removeUploadedImages(name){
       return
     }
     if(category.trim().length > 0 && categories.find(el => el.name === category) === undefined){
+      setLoading(true)
       addCategory(category, image).then(data => {
+        setLoading(false)
         if(!!data.message){
           setAnimate(false)
           setTimeout(() => setModalCategoria(false), 200) 
@@ -167,10 +173,7 @@ function removeUploadedImages(name){
                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                 </svg>
               </label>
-              <button 
-                className='bg-blue-500 py-2 w-fit px-3 text-white text-medium rounded-lg'
-                onClick={() => add()}
-              >Confirmar</button>
+              <LoadingButton loading={loading} text={'Confirmar'} handleSubmit={add} full={false}/>
             </div>
             
         </div>

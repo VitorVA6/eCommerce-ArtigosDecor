@@ -3,15 +3,14 @@ import { FiLogOut } from "react-icons/fi";
 import { useUserContext } from '../contexts/User';
 import {useFormik} from 'formik'
 import { emailSchema, passwordSchema } from '../schemas';
-import loadImg from '../images/load-icon.png'
-import { useCatalogContext } from '../contexts/Catalog';
 import notifies from '../utils/toastNotifies';
+import LoadingButton from './LoadingButton';
 
 export default function ContaAdmin() {
   const { email, logout, getUser, updateUser } = useUserContext()
   const [loading, setLoading] = useState(false)
+  const [loading2, setLoading2] = useState(false)
   const [message, setMessage] = useState('')
-  const {ToastContainer, notifyError, notifySucess} = useCatalogContext()
   const formikEmail = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -36,8 +35,10 @@ export default function ContaAdmin() {
     },
     validationSchema: passwordSchema,
     onSubmit: (values, {setValues, setTouched}) => {
+      setLoading2(true)
       updateUser({senhaAtual: values.password, novaSenha: values.newPassword})
       .then(data => {
+        setLoading2(false)
         if(!!data?.message){
           notifies.sucess(data.message)
           setValues({password: '', newPassword: '', confirmPassword: ''})
@@ -87,21 +88,7 @@ export default function ContaAdmin() {
               formikEmail.errors.email && formikEmail.touched.email && <p className='text-red-400 text-xs'>{`${formikEmail.errors.email}`}</p>
             }
           </div>
-          <button 
-            type='submit'
-            className='bg-blue-500 text-white w-full rounded-lg py-3 text-sm font-medium flex items-center justify-center gap-3'
-          >
-              {
-                loading === true ?
-                <>
-                <img className='w-5 h-5 animate-spin' src={loadImg} alt="" />
-                Processando
-                </>:
-                <>
-                Alterar e-mail
-                </>
-              }
-            </button>
+            <LoadingButton loading={loading} text={'Alterar e-mail'} handleSubmit={undefined} full={true}/>
             {
               classManager()
             }
@@ -159,7 +146,7 @@ export default function ContaAdmin() {
               formikPw.errors.confirmPassword && formikPw.touched.confirmPassword && <p className='text-red-400 text-xs'>{`${formikPw.errors.confirmPassword}`}</p>
             }
           </div>
-          <button className='bg-blue-500 text-white w-full rounded-lg py-3 text-sm font-medium'>Salvar alterações</button>
+          <LoadingButton loading={loading2} text={'Salvar alterações'} handleSubmit={undefined} full={true}/>
         </form>
       </div>
       <div className='flex flex-col w-full lg:w-3/5 mt-8'>

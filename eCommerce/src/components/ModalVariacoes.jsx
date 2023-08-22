@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import { useVariationContext } from '../contexts/Variation';
+import LoadingButton from './LoadingButton';
 
 export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edit, idCustom, notifySucess, notifyError }) {
 
@@ -8,6 +9,7 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
     const [nome, setNome] = useState('')
     const {getVariationById, addVariation, variations, updateVariation, removeVariation, removeOption} = useVariationContext()
     const [animate, setAnimate] = useState(true)
+    const [loading, setLoading] = useState(false)
 
     useEffect( () => {
         if(edit){
@@ -21,7 +23,6 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
     }, [] )
 
     function add(){
-
         let optionsAux = options
         if (options.length > 0 ){
             let vazios = options.filter( elemento => elemento.label.trim() === '' )            
@@ -35,16 +36,15 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
             )
             setOptions(optionsAux)           
         }
-        
         let checkRepeat = variations.filter( (element) => element._id !== idCustom)
-        
         checkRepeat = checkRepeat.find(element => element.name === nome)
 
         if(edit){
             if(nome.trim().length > 0 && !checkRepeat){
-
+                setLoading(true)
                 updateVariation( idCustom, nome, options )
                 .then(data => {
+                    setLoading(false)
                     if(!!data.message){
                       setAnimate(false)
                       setTimeout(() => setModalVariacoes(false), 200) 
@@ -60,12 +60,12 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
 
             return
         }
-
         checkRepeat = variations.find(element => element.name === nome)
 
         if(nome.trim().length > 0 && !checkRepeat){
-            
+            setLoading(true)
             addVariation(nome, options).then(data => {
+                setLoading(false)
                 if(!!data.message){
                   setAnimate(false)
                   setTimeout(() => setModalVariacoes(false), 200) 
@@ -79,7 +79,6 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
         else{
             notifyError('Variação inválida')
         }
-
     }
 
     function handleChange(index, e){
@@ -108,7 +107,6 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
     }
 
     function removeOpt(index){
-
         removeOption( idCustom, index )
         .then(data => {
             if(!!data.message){
@@ -119,7 +117,6 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
                 notifyError(data.error)
             }
         })
-
     }
 
     function remove(){
@@ -150,7 +147,6 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
     <div 
         className={`${animate ? 'slide-in-bottom':'slide-out-bottom'} w-full lg:w-[530px] left-0 lg:left-[calc(50%-265px)] bottom-0 lg:top-[calc(50%-260px)] h-fit bg-white flex flex-col items-center z-20 absolute rounded-t-3xl lg:rounded-2xl`}  
     >
-        
         <h2 className='text-center py-4 border-b w-full font-medium relative'>{`${edit ? 'Editar' : 'Adicionar'} variações`}
         <button 
             className={`${!edit && 'hidden'} text-red-500 font-normal absolute p-1 top-3 right-5`}
@@ -195,11 +191,8 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
                 }
             </div>
         </div>
-        <div className='p-4 border-t w-full'>
-            <button 
-                className='bg-blue-500 py-3 w-full text-white text-medium rounded-lg mb-6 lg:mb-0'
-                onClick={() => add()}
-            >Salvar</button>
+        <div className='p-4 border-t w-full flex justify-end'>
+            <LoadingButton loading={loading} handleSubmit={add} text={'Salvar'} full={false}/>
         </div>
     </div>
 </>

@@ -4,18 +4,33 @@ import { useCatalogContext } from '../contexts/Catalog';
 import ModalRsociais from './ModalRsociais';
 import masks from '../utils/masks.js';
 import notifies from '../utils/toastNotifies';
+import LoadingButton from './LoadingButton';
 
 export default function InfoAdmin() {
 
   const [modalRS, setModalRS] = useState(false);
   const {getCatalog, catalog, setCatalog, updateCatalog} = useCatalogContext()
+  const [loading, setLoading] = useState(false)
 
   useEffect( ()=> {
     getCatalog()
   }, [] )
 
+  function handleSubmit(){
+    setLoading(true)
+    updateCatalog().then(data => {
+      setLoading(false)
+      if(!!data.message){
+        notifies.sucess(data.message)
+      }
+      else{
+        notifies.error(data.error)
+      }
+    })
+  }
+
   return (
-    <section className='flex flex-col gap-1 items-center pb-5'>
+    <section className='flex flex-col gap-1 items-center pb-5 xl:mx-20'>
       <notifies.Container />
       {
         modalRS && <ModalRsociais setModalRS={setModalRS} catalog={catalog} setCatalog={setCatalog} sucesso={notifies.sucess} erro={notifies.error}/>
@@ -72,7 +87,7 @@ export default function InfoAdmin() {
         />
       </div>
 
-      <div className='flex flex-col w-full gap-y-3 bg-white border border-gray-300/80 lg:border-gray-200/70 rounded-lg p-5'>
+      <div className='flex flex-col w-full gap-y-3 bg-white border border-gray-300/80 lg:border-gray-200/70 rounded-lg p-5 mb-6'>
         <h2 className='flex gap-2 font-medium items-center'>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
           <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
@@ -91,23 +106,7 @@ export default function InfoAdmin() {
           }}
         />
       </div>
-
-      <button 
-        className='rounded-lg bg-blue-500 text-white text-sm font-medium py-2.5 lg:py-3 lg:w-fit px-10 mt-8'
-        onClick={() => {
-          updateCatalog().then(data => {
-            if(!!data.message){
-              notifies.sucess(data.message)
-            }
-            else{
-              notifies.error(data.error)
-            }
-          })
-        }}
-      >
-        Salvar alterações
-      </button>
-    
+      <LoadingButton loading={loading} text={'Salvar alterações'} handleSubmit={handleSubmit} full={false} />
     </section>
   )
 }

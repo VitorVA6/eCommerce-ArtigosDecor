@@ -4,10 +4,12 @@ import { useCatalogContext } from '../contexts/Catalog';
 import { GrFormClose } from "react-icons/gr";
 import masks from '../utils/masks.js';
 import notifies from '../utils/toastNotifies'
+import LoadingButton from './LoadingButton';
 
 export default function PersoAdmin() {
   const [images, setImages] = useState([])
-  const { catalog, getCatalog, setCatalog, updateCatalog, baseURL } = useCatalogContext()
+  const { catalog, getCatalog, setCatalog, updateCatalog } = useCatalogContext()
+  const [loading, setLoading] = useState(false)
 
   useEffect( () => {
     getCatalog()
@@ -31,6 +33,21 @@ export default function PersoAdmin() {
           img => img !== name
         )}
       } )
+  }
+
+  function handleSubmit(){
+    setLoading(true)
+    updateCatalog(catalog.bannerdt, images).then(data => {
+      setLoading(false)
+      setImages([])
+      if(!!data.message){
+        notifies.sucess(data.message)
+        getCatalog()
+      }
+      else{
+        notifies.error(data.error)
+      }
+    })
   }
 
   return (
@@ -67,7 +84,7 @@ export default function PersoAdmin() {
           />
         </div>
       </div>
-      <div className='flex flex-col w-full lg:w-3/4 bg-white py-5 px-7 border border-gray-300/80 lg:border-gray-200/70'>
+      <div className='flex flex-col w-full lg:w-3/4 bg-white py-5 px-7 border border-gray-300/80 lg:border-gray-200/70 mb-10'>
         <h3 className='font-medium mb-1.5'>Banners</h3>
         <p className='text-sm text-gray-400 mb-2.5'>Adicione banners para destacar sua marca, promoções e mais.</p>
         <p className='text-sm mb-5'>Imagens dos banners</p>
@@ -113,25 +130,8 @@ export default function PersoAdmin() {
           }
         </div>
       </div>
-
-
-      <button 
-        className='rounded-md bg-blue-500 text-white text-sm font-medium py-2.5 lg:py-3 w-fit px-10 mt-8'
-        onClick={() => {
-          updateCatalog(catalog.bannerdt, images).then(data => {
-            setImages([])
-            if(!!data.message){
-              notifies.sucess(data.message)
-              getCatalog()
-            }
-            else{
-              notifies.error(data.error)
-            }
-          })
-        }}
-      >
-        Salvar alterações
-      </button>
+      
+        <LoadingButton loading={loading} text={'Salvar alterações'} handleSubmit={handleSubmit} full={false} />    
       
     </section>
   )
