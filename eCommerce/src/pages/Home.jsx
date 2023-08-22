@@ -8,7 +8,7 @@ import freeShipping from '../images/free-shipping.svg'
 import delivery from '../images/delivery.svg'
 
 export default function Home() {
-    const {catalog, baseURL} = useCatalogContext()
+    const {catalog} = useCatalogContext()
     const { categories} = useCategoryContext()
     const settings = {
       dots: true,
@@ -33,7 +33,11 @@ export default function Home() {
           {
               catalog?.bannerdt?.map( image =>{
                   return (     
-                    <img key={image} className='w-full h-[25vh] md:h-[23vh] lg:h-[61vh]' src={`${baseURL}/images/carrosel/${image}`} alt="Imagem do produto"/>          
+                    <img 
+                      key={image} 
+                      className='w-full h-[25vh] md:h-[23vh] lg:h-[61vh]' 
+                      src={`${import.meta.env.VITE_AWS_URL}${image}`} 
+                      alt="Imagem do produto"/>          
                   )
               })
           }

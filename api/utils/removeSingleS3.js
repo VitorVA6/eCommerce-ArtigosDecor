@@ -1,6 +1,6 @@
-const {S3Client, DeleteObjectsCommand} = require('@aws-sdk/client-s3')
+const {S3Client, DeleteObjectCommand} = require('@aws-sdk/client-s3')
 
-function removeS3 (files) {
+function removeSingleS3 (file) {
     return new Promise( async (resolve, reject) => {
         try{
             const client = new S3Client({
@@ -10,16 +10,13 @@ function removeS3 (files) {
                     secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
                 },
             });
-            const { Deleted } = await client.send(
-                new DeleteObjectsCommand({
+            await client.send(
+                new DeleteObjectCommand({
                     Bucket: 'artigos-decor',
-                    Delete: {
-                        Objects: files,
-                    },
-                    Quiet: false
+                    Key: file
                 })
             );
-            resolve(Deleted)
+            resolve()
         }catch(err){
             console.log(err)
             reject(err)
@@ -27,4 +24,4 @@ function removeS3 (files) {
     } )
 }
 
-module.exports = removeS3
+module.exports = removeSingleS3

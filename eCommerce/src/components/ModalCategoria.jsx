@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useCategoryContext } from '../contexts/Category'
 import { v4 as uuidv4 } from 'uuid';
 import { GrFormClose } from "react-icons/gr";
-import { useCatalogContext } from '../contexts/Catalog';
 
 export default function ModalCategoria({setModalCategoria, edit, placeh, idCustom, notifySucess, notifyError}) {
 
@@ -13,7 +12,6 @@ export default function ModalCategoria({setModalCategoria, edit, placeh, idCusto
   const [animate, setAnimate] = useState(true)
 
   useEffect( () => {
-
     if(edit){
       getCategoriesById(idCustom)
       .then( data =>  {
@@ -21,7 +19,6 @@ export default function ModalCategoria({setModalCategoria, edit, placeh, idCusto
         setUploadesImage([data.image])
       })
       .catch(err => console.log(err))
-      
     }
 
   }, [] )

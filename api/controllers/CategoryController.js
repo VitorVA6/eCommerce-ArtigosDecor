@@ -2,6 +2,7 @@ const Category = require('../models/CategoryModel')
 const fs = require('fs')
 const ObjectId = require('mongoose')
 const uploadS3 = require('../utils/uploadS3')
+const removeSingleS3 = require('../utils/removeSingleS3')
 
 module.exports = class CategoryController {
 
@@ -39,7 +40,6 @@ module.exports = class CategoryController {
     }
 
     static async getById(req, res){
-
         const id = req.params.id 
 
         if (!ObjectId.isValidObjectId(id)){
@@ -53,11 +53,9 @@ module.exports = class CategoryController {
         }
 
         res.status(200).json(category)
-
     }
 
     static async update(req, res){
-
         const {name, uploadedImages} = req.body
 
         const id = req.params.id
@@ -78,17 +76,9 @@ module.exports = class CategoryController {
         if(!req.file && uploadedImages?.length === 0){
             return res.status(422).json({error: 'Imagem é obrigatório'})
         }
-
+        let toDelete = false
         if(!uploadedImages || uploadedImages?.length === 0){
-            fs.stat(`./public/images/categories/${imageDelete}`, function (err, stats) {
-                if (err) {
-                    return console.error(err);
-                }
-                
-                fs.unlink(`./public/images/categories/${imageDelete}`,function(err){
-                    if(err) return console.log(err);
-                });         
-            } )
+            toDelete = true
         }
         
         let auxFile = !!req.file ? req.file.filename : ''
@@ -97,6 +87,12 @@ module.exports = class CategoryController {
         category.name = name
 
         try{
+            if(toDelete === true){
+                await removeSingleS3(imageDelete)
+            }
+            if(!!req.file){
+                await uploadS3([req.file])
+            }
             await Category.findOneAndUpdate({_id: id}, category, {new: true})
             res.status(200).json({message: 'Categoria atualizada com sucesso'})
         }
@@ -121,19 +117,9 @@ module.exports = class CategoryController {
         }
 
         try{
+            await removeSingleS3(category.image)
             await Category.findOneAndDelete({_id: id})
-                      
-            fs.stat(`./public/images/categories/${category.image}`, function (err, stats) {
-                
-                if (err) {
-                    return console.error(err);
-                }
-                
-                fs.unlink(`./public/images/categories/${category.image}`,function(err){
-                    if(err) return console.log(err);
-                });
-            });
-            
+
             res.status(200).json({message: 'Categoria removida com sucesso!'})
         }catch(err){
             res.status(500).json({error: 'Ocorreu um erro na deleção da categoria.'})

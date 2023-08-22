@@ -83,7 +83,7 @@ export default function PersoAdmin() {
             catalog.bannerdt?.map( image => (
               <div 
                   key = {image}
-                  style={{ backgroundImage: `url(${baseURL}/images/carrosel/${image})`, boxSizing: 'border-box', backgroundSize: 'cover'}}
+                  style={{ backgroundImage: `url(${import.meta.env.VITE_AWS_URL}${image})`, boxSizing: 'border-box', backgroundSize: 'cover'}}
                   className='w-32 h-20 lg:w-40 lg:h-24 rounded-xl relative'
                   >
                   <button 
