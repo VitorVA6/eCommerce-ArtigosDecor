@@ -1,18 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import { useCatalogContext } from '../contexts/Catalog'
 import {FiMenu} from "react-icons/fi"
 import {HiOutlineExternalLink} from 'react-icons/hi'
 import noteIcon from '../images/caderno.png'
 
 export default function HeaderAdmin({setMenuMobile, setSelected}) {
-    const {catalog} = useCatalogContext()
 
   return (
     <header className='flex bg-white justify-between items-center px-6 lg:px-10 h-16 md:h-20 fixed w-full z-10 border-b'>
         <nav className='flex justify-between items-center w-full'>
             <Link to={'/admin'}>
-                <h1 className='lg:text-2xl font-bold'>{'Sua Logo'}</h1>
+                <h1 className='text-xl lg:text-2xl font-bold'>{'Sua Logo'}</h1>
             </Link >
             <div className='flex items-center gap-4'>
                 <div className='md:flex items-center gap-2 hidden'>

@@ -58,9 +58,11 @@ export function useCarrinhoContext(){
         const novoProduto = carrinho.find( element => element._id === elemento._id )
         if (novoProduto){
             const aux = carrinho.map( element => {
-                if (element._id === novoProduto.id){
-
-                    element.quantidade= element.quantidade+n
+                if (element._id === novoProduto._id){
+                    return {
+                        ...element,
+                        quantidade: element.quantidade+n
+                    }
                 }
                 return element
             } ) 

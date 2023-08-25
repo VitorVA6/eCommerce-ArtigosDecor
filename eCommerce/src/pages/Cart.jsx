@@ -93,7 +93,10 @@ export default function Cart() {
                         </div>
                         <div className='hidden md:flex justify-between items-center w-full'>
                             <p className='font-medium xl:text-lg text-black/80'>{((elemento?.desconto>0?elemento?.desconto:elemento?.preco)*elemento?.quantidade).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
-                            <IoMdClose className='w-4 h-4 text-black/80 cursor-pointer m-1' onClick={() => removeCarrinho(elemento._id)} />
+                            <IoMdClose 
+                                className='w-5 h-5 text-black/80 cursor-pointer m-1' 
+                                onClick={() => removeCarrinho(elemento._id)} 
+                            />
                         </div>
                     </div>
                 ) )}</>: <div className='flex flex-col py-5 h-[240px]'>

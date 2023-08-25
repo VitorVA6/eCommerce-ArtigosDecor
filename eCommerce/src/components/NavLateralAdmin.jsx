@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {GrFormClose} from 'react-icons/gr'
+import {IoMdClose} from 'react-icons/io'
 import {BsFillInfoCircleFill, BsGridFill} from 'react-icons/bs'
 import {FaPaintBrush} from 'react-icons/fa'
 import {MdAccountCircle} from 'react-icons/md'
@@ -10,8 +10,10 @@ export default function NavLateralAdmin({selected, setSelected, setMenuMobile, m
     const [animate, setAnimate] = useState(true)
 
     useEffect(()=>{
-        setTimeout(() => setOpacity(100), 50)
-    }, [])
+        if(menuMobile){
+            setOpacity(100)
+        }
+    }, [menuMobile])
 
     function handleClassPage(option){
         if (option === selected){
@@ -47,14 +49,14 @@ export default function NavLateralAdmin({selected, setSelected, setMenuMobile, m
   return (
     <>
         <div 
-            className={`${(menuMobile ) ? 'flex' : 'hidden'} transition-opacity ease-in duration-400 opacity-${opacity} w-screen h-screen bg-black/50 absolute left-0 top-0 flex justify-center items-center z-10 overflow-hidden lg:hidden`} 
+            className={`${menuMobile ? 'flex' : 'hidden'} transition-opacity ease-in duration-400 opacity-${opacity} w-screen h-screen bg-black/50 absolute left-0 top-0 flex justify-center items-center z-10 overflow-hidden lg:hidden`} 
             onClick={() => closeMenu()}
             ></div>
         <section className={`${menuMobile ? 'flex flex-col' : 'hidden'} ${handleClass()} absolute -top-0 right-0 md:static md:animate-none md:flex flex-col border-x  md:py-8 md:pl-10 w-72 gap-y-6 h-full bg-white z-10`}>
             <div className='flex items-center justify-between md:hidden h-16 pl-5 pr-3 border-b border-gray-200'>
                 <h3 className='text-lg font-medium'><nobr>Artigos Decor</nobr></h3>
-                <GrFormClose 
-                    className='w-10 h-10 cursor-pointer'
+                <IoMdClose 
+                    className='w-7 h-7 cursor-pointer text-gray-500'
                     onClick={() => {
                         closeMenu()
                     }}    

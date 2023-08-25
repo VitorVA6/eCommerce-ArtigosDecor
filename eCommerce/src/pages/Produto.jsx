@@ -3,7 +3,7 @@ import { Navigate, useParams } from 'react-router-dom'
 import { useCarrinhoContext } from '../contexts/Carrinho';
 import { useProductContext } from '../contexts/Product';
 import Slider from 'react-slick'
-import { BsCreditCard2Back, BsShieldCheck, BsArrowCounterclockwise } from 'react-icons/bs';
+import { BsCreditCard2Back, BsShieldCheck, BsArrowCounterclockwise, BsCart2 } from 'react-icons/bs';
 import { FiChevronRight } from 'react-icons/fi';
 import { useVariationContext } from '../contexts/Variation';
 
@@ -172,7 +172,7 @@ export default function Produto() {
             </div>       
             <div className='flex flex-col w-full lg:w-2/5 h-fit md:px-8 md:py-3 md:bg-white md:rounded-md md:shadow-md lg:shadow-gray-300/60'>
                 <div className='flex flex-col pt-3 pb-5 border-b border-gray-300'>
-                    <h2 className='text-xl font-medium lg:text-[22px]'>{produto?.title}</h2>
+                    <h2 className='text-xl font-medium lg:text-[22px] text-black/90'>{produto?.title}</h2>
                     <h3 className='text-sm text-blue-500'>Disponível em estoque</h3>
                 </div>
                 
@@ -253,7 +253,7 @@ export default function Produto() {
                     </div>
                 </div>
                 <div className='flex gap-2 mt-6 mb-6'>
-                    <div className='flex bg-gray-200 rounded-md items-center text-black/90'>
+                    <div className='flex border-2 border-gray-300 rounded-md items-center text-black/80'>
                         <button className='px-4 py-3' onClick={() => mudaQuantidade('-')}>
                             <svg 
                                 xmlns="http://www.w3.org/2000/svg" 
@@ -280,9 +280,12 @@ export default function Produto() {
                         </button>
                     </div>
                     <button 
-                        className='bg-blue-500 text-white py-2 w-full rounded-md font-medium text-base'
+                        className='bg-blue-500 text-white py-2 w-full rounded-md font-medium text-base flex items-center justify-center gap-3'
                         onClick={() => addCarrinho(produto, quantidade)}
-                    >Comprar agora</button>
+                    >
+                        <BsCart2 className='text-white w-5 h-5'/>
+                        Comprar
+                    </button>
                 </div>
             </div>
         </section>
