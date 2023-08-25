@@ -8,7 +8,7 @@ export default function InputPayment({title, placeholder, field, setField, id, b
         <input 
             type="text" 
             placeholder={placeholder} 
-            className=' rounded-md border border-gray-300 outline-none py-3 px-5 text-xs mt-0.5'
+            className=' rounded-md border border-gray-300 outline-none py-3 px-4 text-xs mt-0.5'
             value={field}
             id = {id}
             onBlur={blur}

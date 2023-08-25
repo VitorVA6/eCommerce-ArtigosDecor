@@ -30,5 +30,7 @@ export const block2Schema = yup.object().shape({
     endereco: yup.string().required('Campo obrigatório'),
     numero: yup.string().required('Campo obrigatório'),
     bairro: yup.string().required('Campo obrigatório'),
+    cidade: yup.string().required('Campo obrigatório'),
+    estado: yup.string().required('Campo obrigatório'),
     complemento: yup.string(),
 })

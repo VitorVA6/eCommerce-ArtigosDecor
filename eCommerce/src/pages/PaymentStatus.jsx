@@ -31,7 +31,7 @@ export default function PaymentStatus() {
 
   return (
     <div className='px-4 lg:px-10 pt-8 lg:pt-12 flex flex-col items-center'>
-        <h1 className='flex text-2xl lg:text-[32px] font-black mb-10 lg:mb-[56px]'>Status de pagamento</h1>
+        <h1 className='flex text-2xl lg:text-[32px] font-bold mb-10 lg:mb-[56px] text-black/80'>Status de pagamento</h1>
         <div className={`w-full lg:w-1/2 gap-8 ${loaded===true?'flex':'hidden'} flex-col min-h-[400px] md:min-h-[405px] lg:min-h-[410px] xl:min-h-[410px]`}>
             <StatusScreen
                 initialization={initialization}

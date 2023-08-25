@@ -8,7 +8,7 @@ import notifies from '../utils/toastNotifies'
 
 export default function ({setSelected}) {
 
-    const {getPaymentById, calcelPayment} = usePaymentContext()
+    const {getPaymentById, calcelPayment, notifyShipment} = usePaymentContext()
     const [payment, setPayment] = useState()
 
     useEffect(() => {
@@ -207,7 +207,10 @@ export default function ({setSelected}) {
         </div>
         <div className='flex flex-col px-4 lg:px-7 py-7 border-b-4 border-gray-100/80'>
             <h3 className='font-medium text-[15px] mb-4'>Acompanhamento do cliente</h3>
-            <button className='mb-6 flex justify-center font-medium items-center w-full py-4 text-blue-500 bg-blue-50 text-sm rounded-lg relative'>
+            <button 
+              className='mb-6 flex justify-center font-medium items-center w-full py-4 text-blue-500 bg-blue-50 text-sm rounded-lg relative'
+              onClick={() => notifyShipment(payment.name, payment.products, payment.endereco, payment.cep).then(data => console.log(data))}
+            >
               Notificar envio do pedido 
               <FiPackage className= 'absolute right-4 top-4 w-[21px] h-[21px]'/>
             </button>

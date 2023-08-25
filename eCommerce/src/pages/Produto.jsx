@@ -6,7 +6,6 @@ import Slider from 'react-slick'
 import { BsCreditCard2Back, BsShieldCheck, BsArrowCounterclockwise } from 'react-icons/bs';
 import { FiChevronRight } from 'react-icons/fi';
 import { useVariationContext } from '../contexts/Variation';
-import { useCatalogContext } from '../contexts/Catalog';
 
 export default function Produto() {
     const {id} = useParams()

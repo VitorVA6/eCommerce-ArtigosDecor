@@ -1,6 +1,10 @@
 const mercadopago = require('mercadopago')
 const Payment = require('../models/PaymentModel')
 const ObjectId = require('mongoose')
+const sendEmail = require('../utils/sendEmail')
+const templateOrder = require('../emailTemplates/templateOrder')
+const templateShipment = require('../emailTemplates/templateShipment')
+//const templateOrderAdmin = require('../emailTemplates/templateOrderAdmin')
 
 module.exports = class PaymentController {
     static async processPayment(req, res){
@@ -40,12 +44,11 @@ module.exports = class PaymentController {
         else {
             res.status(422).json({ error: 'Método de pagamento da shopee.' });
         }
-        console.log(paymentData)
         mercadopago.configurations.setAccessToken('TEST-462015067611172-063011-b3e5d6ffd1265f43497f38b1a4341944-517694611')
-        mercadopago.payment.save(paymentData)
-        .then(async function(response) {
+        try{
+            const response = await mercadopago.payment.save(paymentData)        
             const { status, status_detail, id, payment_type_id, date_created } = response.body;
-            await Payment.create({
+            const newPayment = await Payment.create({
                 name,
                 subtotal,
                 delivery_rate,
@@ -59,13 +62,22 @@ module.exports = class PaymentController {
                 payment_type_id,
                 status,
                 payment_id: id,
-                date_created
-            })
-            return res.status(response.status).json({ status, status_detail, id });
-        })
-        .catch(function(error) {
-            res.status(400).json(error);
-        });
+                date_created })
+                
+                sendEmail(
+                    "mandradejunior.vva@gmail.com", 
+                    "Novo Pedido", 
+                    templateOrder( name, newPayment._id, date_created, products, endereco, cep, payer.email, 
+                        whats, cpf, payment_type_id, subtotal, transaction_amount, delivery_rate
+                )).then(data=> {}).catch(err => console.log(err)) 
+
+                return res.status(response.status).json({ status, status_detail, id });
+        }
+        catch(err){
+            console.log(err)
+            return res.status(400).json(err);
+        }
+        
     }
 
     static async getPaymentById(req, res){
@@ -127,5 +139,18 @@ module.exports = class PaymentController {
             console.log(err)
             return res.status(400).json({error: 'Não foi possível cancelar o pagamento.'})
         })
+    }
+
+    static async notifyShipment(req, res){
+        const {name, products, address, cep} = req.body
+        try{
+            await sendEmail(
+                "mandradejunior.vva@gmail.com", 
+                "Seu pedido tá a caminho!", 
+                templateShipment(name, products, address, cep))
+            return res.status(201).json({message: "E-mail enviado com sucesso."})
+        }catch(err){
+            return res.status(400).json({error: "Ocorreu um erro no envio do e-mail."})
+        }
     }
 }

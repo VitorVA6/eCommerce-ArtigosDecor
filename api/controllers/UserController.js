@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt')
 const createUserToken = require('../utils/createUserToken')
 const getUserByToken = require('../utils/getUserByToken')
 const sendEmail = require('../utils/sendEmail')
-const templates = require('../utils/templates')
+const templateVerifyEmail = require('../emailTemplates/templateVerifyEmail')
 const crypto = require('crypto')
 
 module.exports = class UserController{
@@ -132,9 +132,10 @@ module.exports = class UserController{
                     email: email
                 }).save()                
                 const url = `${process.env.BASE_URL}users/verify/${token.token}`
-                await sendEmail(email, "Verificação de e-mail", templates(url, user.name), res, user)
+                await sendEmail(email, "Verificação de e-mail", templateVerifyEmail(url, user.name))
                 return res.status(200).json({message: 'Foi enviado um e-mail de confirmação para o endereço informado, verique-o'})
             }catch(err){
+                await Token.findOneAndDelete({userId: user._id})
                 return res.status(400).json({error: "Oops! Ocorreu um erro no envio do e-mail de verificação. Caso já tenha enviado uma solitação de alteração para esse e-mail, espere alguns minutos e tente novamente."})
             }      
         }

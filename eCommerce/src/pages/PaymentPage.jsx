@@ -21,7 +21,7 @@ export default function PaymentPage() {
     useEffect(()=>{
       blockManager()
     }, [changeBlock])
-
+    
   return (
     <div className='grid xl:grid-cols-3 md:px-36 lg:px-64 xl:px-32 py-10 gap-5'>
         <ProgressbarPayment />
@@ -178,6 +178,34 @@ export default function PaymentPage() {
                         />
                         {
                           formikStep2.touched.bairro && formikStep2.errors.bairro && <p className='text-red-400 text-xs'>{`${formikStep2.errors.bairro}`}</p>
+                        }
+                      </div>
+                    </div>
+                    <div className='grid grid-cols-3 gap-3'>
+                      <div className='flex flex-col col-span-2'>
+                        <InputPayment 
+                          title={'Cidade'} 
+                          placeholder={''}
+                          field={ formikStep2.values.cidade}
+                          setField = {formikStep2.handleChange}
+                          id='cidade'
+                          blur={formikStep2.handleBlur}
+                        />
+                        {
+                          formikStep2.touched.cidade && formikStep2.errors.cidade && <p className='text-red-400 text-xs'>{`${formikStep2.errors.cidade}`}</p>
+                        }
+                      </div>                      
+                      <div className=''>
+                        <InputPayment 
+                          title={'Estado'} 
+                          placeholder={''}
+                          field={formikStep2.values.estado}
+                          setField = {formikStep2.handleChange}
+                          id='estado'
+                          blur={formikStep2.handleBlur}
+                        />
+                        {
+                          formikStep2.touched.estado && formikStep2.errors.estado && <p className='text-red-400 text-xs'>{`${formikStep2.errors.estado}`}</p>
                         }
                       </div>
                     </div>

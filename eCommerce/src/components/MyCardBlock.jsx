@@ -12,6 +12,7 @@ export default function MyCardBlock() {
     const navigate = useNavigate()
 
     useEffect(()=> {
+        console.log(formikStep1)
         initMercadoPago('TEST-8baf6102-c707-4284-a248-a0ac11256c46', { locale: 'pt-BR' });
     }, [] )
 
@@ -35,14 +36,15 @@ export default function MyCardBlock() {
                         name: formikStep1.values.name,
                         cpf: formikStep1.values.cpf,
                         whats: formikStep1.values.whats,
-                        endereco: `${formikStep2.values.endereco}, ${formikStep2.values.numero}, ${formikStep2.values.bairro}`,
+                        endereco: `${formikStep2.values.endereco}, ${formikStep2.values.numero}, ${formikStep2.values.bairro}, ${formikStep2.values.cidade} - ${formikStep2.values.estado}`,
                         cep: formikStep2.values.cep,
                         subtotal: total,
                         delivery_rate: 0,
                         products: carrinho.map( el => {
                             return {
                                 qty: el.quantidade,
-                                name: el.title 
+                                name: el.title,
+                                link: `${import.meta.env.VITE_MY_URL}produto/${el._id}`
                             }
                         } )
                     })

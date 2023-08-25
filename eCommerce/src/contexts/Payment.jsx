@@ -40,6 +40,8 @@ export default function PaymentProvider ( {children} ){
             endereco: '',
             numero: '',
             bairro: '',
+            cidade: '',
+            estado: '',
             complemento: ''
         },
         validationSchema: block2Schema,
@@ -74,6 +76,8 @@ export function usePaymentContext(){
             if(response.status === true){
                 formikStep2.setFieldValue('endereco', response.info?.logradouro)
                 formikStep2.setFieldValue('bairro', response.info?.bairro)
+                formikStep2.setFieldValue('cidade', response.info?.localidade)
+                formikStep2.setFieldValue('estado', response.info?.uf)
                 setValidCEP(true)
             }
             else{
@@ -137,6 +141,18 @@ export function usePaymentContext(){
         }
     }
 
+    async function notifyShipment(name, products, address, cep){
+        try{
+            const {data} = await axios.post('/mercado-pago/notify-shipment', {name, products, address, cep})
+            return data
+        }catch(err){
+            if(!!err.response?.data){
+                return err.response.data
+            }
+             return {error: 'O servidor está com problemas, tente novamente mais tarde.'}
+        }
+    }
+
     return {
         formikStep1,
         formikStep2,
@@ -154,6 +170,7 @@ export function usePaymentContext(){
         blockManager,
         getPayments,
         getPaymentById,
-        calcelPayment
+        calcelPayment,
+        notifyShipment
     }
 }
