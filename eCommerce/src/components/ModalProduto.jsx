@@ -8,6 +8,8 @@ import { useVariationContext } from '../contexts/Variation';
 import combine from '../utils/combine';
 import masks from '../utils/masks';
 import LoadingButton from './LoadingButton';
+import BaseModal from './BaseModal';
+import ModalProdutoVariacoes from './ModalProdutoVariacoes';
 
 export default function ModalProduto({setModalProduto, edit, categorias, idProduto, notifySucess, notifyError}) {
     const {addProduct, getProductById, updateProduct} = useProductContext()
@@ -44,6 +46,11 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
             .catch(err => console.log(err))
         }
     },[idProduto] )
+
+    function closeModal(){
+        setAnimate(false)
+        setTimeout(() => setModalProduto(false), 200)
+    }
 
     function inverseCurrency(value){
         let stringValue = value.replace(/,/, '.').replace(/./, '').replace(/[\D]/g, '')
@@ -105,8 +112,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                 if(!!data.product){
                     setUploadesImages(data?.product?.img)
                     setImages([])
-                    setAnimate(false)
-                    setTimeout(() => setModalProduto(false), 200) 
+                    closeModal() 
                     notifySucess('Produto atualizado com sucesso.')
                 
                 }else{
@@ -119,8 +125,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
             addProduct(name, inverseCurrency(price), inverseCurrency(priceoff), category, desc, images, currencyToNumber(), variationsProd).then(data => {
                 setLoading(false)
                 if(!!data.message){
-                  setAnimate(false)
-                  setTimeout(() => setModalProduto(false), 200) 
+                  closeModal() 
                   notifySucess(data.message)
                 }
                 else{
@@ -151,9 +156,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
         if (!!variationSel){
             return variationSel.idOptions.includes( idOption)
         }
-        else {
-            return false
-        }
+        return false
     }
 
     function genCombinations(vars){
@@ -196,63 +199,13 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
         }
         
     }
-
   return (
-
-    <>
-    <div 
-      className=' w-screen h-screen bg-gray-400/50 absolute left-0 top-0 flex justify-center items-center z-10' 
-      onClick={() => {
-        setModalVariations(false)
-        setAnimate(false)
-        setTimeout(() => setModalProduto(false), 200) 
-      }}
-    >
-        
-    </div>
-    {
-    modalVariations &&
-    <div className='w-full lg:w-[650px] left-0 lg:left-[calc(50%-325px)] bottom-0 lg:top-[calc(50%-330px)] h-fit bg-white flex flex-col items-center z-40 absolute rounded-t-3xl lg:rounded-2xl'>
-
-        <h2 className='text-center py-4 border-b w-full font-medium relative'>{`${combinations.length === 0 ? 'Adicionar variações': 'Editar variações'}`}
-            <GrFormClose 
-                className='absolute w-8 h-8 text-black left-2 top-3 cursor-pointer'
-                onClick={() => setModalVariations(false)}
-            />
-        </h2>
-
-        <div className='flex flex-col py-2 px-4 w-full overflow-auto h-[470px]'>
-            <p className='text-[13px] text-gray-500 text-center my-3'>Adicione ao seu produto variantes como "cores", "tamanhos", e outros.</p>
-            <div className='flex flex-col gap-3 mt-2'>
-            {             
-                variations.length > 0 &&   
-                variations.map( (variation, index) => (
-                    <div key={variation._id} className='flex flex-col w-full border rounded-lg px-[16px] py-5'>
-                        <h3 className='text-[14px] font-medium mb-2'>{variation.name}</h3>
-                        <p className='text-[13px] mb-1'>Selecione as opções</p>
-                        <div className='flex flex-wrap gap-2'>
-                            {variation.options.map( option => (
-                            <button 
-                                key={option.value}
-                                className={`${verifySelected(variation._id, option.value) === true ? 'bg-black text-white': 'bg-white border'} py-2 px-3 rounded-lg text-[14px]`}
-                                onClick={() => handleSelect(variation._id, option.value)}
-                            >
-                                {option.label}                                
-                            </button>
-                            ) )}
-                        </div>
-                    </div>
-                ) )
-               
-            }
-            </div>
-        </div>
-    </div>
-    }
-    
-    <div 
-        className={`${animate ? 'slide-in-bottom':'slide-out-bottom'} w-full lg:w-[650px] left-0 lg:left-[calc(50%-325px)] bottom-0 lg:top-[calc(50%-330px)] h-fit bg-white flex flex-col items-center z-30 absolute rounded-t-3xl lg:rounded-2xl`}
-    >
+      <BaseModal animate={animate} closeModal={closeModal} width={'1/2'} top={'lg:top-14'}>
+         {
+            modalVariations &&
+            <ModalProdutoVariacoes combinations={combinations} setModalVariations={setModalVariations} 
+                variations={variations} verifySelected={verifySelected} handleSelect={handleSelect}/>
+        }
         <h2 className='text-center py-4 border-b w-full font-medium'>{`${edit?'Editar':'Adicionar'} Produto`}</h2>
         <div className='flex flex-col py-2 px-7 w-full overflow-auto h-[400px]'>
             <div className='flex gap-x-6'>
@@ -273,7 +226,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                         type='text'
                         value={price}
                         onChange={event => setPrice(masks.maskCurrency(event.target.value)) }    
-                    />    
+                        />    
                 </div>
             </div>
             <div className='flex flex-col w-full mb-6'>
@@ -284,8 +237,8 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                     isMulti 
                     options={categorias.map( element => {
                         return {value: element._id, label: element.name}               
-                        })}
-                        
+                    })}
+                    
                     onChange = {setCategory}
                     value={category}
                     /> 
@@ -298,7 +251,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                     placeholder='Ex: Camiseta preta de algodão. Tamanhos P, M e G.' 
                     value={desc}
                     onChange={event => setDesc(event.target.value) }    
-                />    
+                    />    
             </div>
             {
                 verMais && 
@@ -310,7 +263,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                         type='text' 
                         value={priceoff}
                         onChange={event => setPriceoff(masks.maskCurrency(event.target.value)) }    
-                    />    
+                        />    
                 </div>
                 <div className='flex flex-col'>
                     <p className='mb-3 mt-2 text-sm font-medium'>Variações</p>
@@ -339,11 +292,11 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                                             value={el === undefined ? 
                                                 0 :
                                                 el.price}
-                                            onChange={(e) => {
-                                                setCombinations( prev => prev.map( elem => {
-                                                    if(elem.id === el.id){
-                                                        return { ... el, price: masks.maskCurrency(e.target.value) }
-                                                    }
+                                                onChange={(e) => {
+                                                    setCombinations( prev => prev.map( elem => {
+                                                        if(elem.id === el.id){
+                                                            return { ... el, price: masks.maskCurrency(e.target.value) }
+                                                        }
                                                     return elem
                                                 } ) )
                                             }}
@@ -356,15 +309,15 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                                             value={el === undefined ? 
                                                 0 : 
                                                 el?.priceoff}
-                                            onChange={(e) => {
-                                                setCombinations( prev => prev.map( elem => {
+                                                onChange={(e) => {
+                                                    setCombinations( prev => prev.map( elem => {
                                                     if(elem.id === el.id){
                                                         return { ... el, priceoff: masks.maskCurrency(e.target.value) }
                                                     }
                                                     return elem
                                                 }))
                                             }}
-                                        />
+                                            />
                                     </div>
                                 </div>)
                             )
@@ -388,16 +341,16 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                 {   edit ?
                     uploadedImages.map( image => (
                         <div 
-                            key = {image}
-                            style={{ 
-                                backgroundImage: `url(${import.meta.env.VITE_AWS_URL}${image})`, 
-                                boxSizing: 'border-box', backgroundSize: 'cover'}}
-                                className='w-14 h-14 rounded-lg relative'
+                        key = {image}
+                        style={{ 
+                            backgroundImage: `url(${import.meta.env.VITE_AWS_URL}${image})`, 
+                            boxSizing: 'border-box', backgroundSize: 'cover'}}
+                            className='w-14 h-14 rounded-lg relative'
                             >
                             <button 
                                 className='bg-white p-0.5 absolute -top-1.5 -right-1.5 rounded-full'
                                 onClick={() => {removeUploadedImages(image)}}
-                            >
+                                >
                                 <GrFormClose className='w-3.5 h-3.5'/>
                             </button>
                         </div>
@@ -406,14 +359,14 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                 {
                     images.map( image => (
                         <div 
-                            key = {image.id}
-                            style={{ backgroundImage: `url(${URL.createObjectURL(image.file)})`, boxSizing: 'border-box', backgroundSize: 'cover'}}
-                            className='w-14 h-14 rounded-lg relative'
-                            >
+                        key = {image.id}
+                        style={{ backgroundImage: `url(${URL.createObjectURL(image.file)})`, boxSizing: 'border-box', backgroundSize: 'cover'}}
+                        className='w-14 h-14 rounded-lg relative'
+                        >
                             <button 
                                 className='bg-white p-0.5 absolute -top-1.5 -right-1.5 rounded-full'
                                 onClick={() => removeFiles(image.id)}
-                            >
+                                >
                                 <GrFormClose className='w-3.5 h-3.5'/>
                             </button>
                         </div>
@@ -429,7 +382,6 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                 <LoadingButton loading={loading} handleSubmit={handleSubmit} text={'Confirmar'} full={false} />
             </div>
         </div>
-    </div>
-</>
-  )
+    </BaseModal>
+)
 }
