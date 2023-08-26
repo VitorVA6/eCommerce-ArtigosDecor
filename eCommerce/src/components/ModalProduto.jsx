@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import Select from 'react-select'
 import { useProductContext } from '../contexts/Product';
 import { v4 as uuidv4 } from 'uuid';
-import { GrFormClose } from "react-icons/gr";
 import { BsCardImage } from "react-icons/bs";
 import { useVariationContext } from '../contexts/Variation';
 import combine from '../utils/combine';
@@ -10,6 +9,8 @@ import masks from '../utils/masks';
 import LoadingButton from './LoadingButton';
 import BaseModal from './BaseModal';
 import ModalProdutoVariacoes from './ModalProdutoVariacoes';
+import InputAdmin from './InputAdmin';
+import UploadImagesBlock from './UploadImagesBlock';
 
 export default function ModalProduto({setModalProduto, edit, categorias, idProduto, notifySucess, notifyError}) {
     const {addProduct, getProductById, updateProduct} = useProductContext()
@@ -114,7 +115,6 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                     setImages([])
                     closeModal() 
                     notifySucess('Produto atualizado com sucesso.')
-                
                 }else{
                     notifyError(data.error)
                 }
@@ -185,7 +185,6 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                     else{
                         return {idVariacao: idVar, idOptions: [...el.idOptions, idOption]}
                     }
-                    
                 }
                 return el
             })       
@@ -197,7 +196,6 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
             setVariationsProd( variationsAux )
             genCombinations(variationsAux)
         }
-        
     }
   return (
       <BaseModal animate={animate} closeModal={closeModal} width={'1/2'} top={'lg:top-14'}>
@@ -209,39 +207,17 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
         <h2 className='text-center py-4 border-b w-full font-medium'>{`${edit?'Editar':'Adicionar'} Produto`}</h2>
         <div className='flex flex-col py-2 px-7 w-full overflow-auto h-[400px]'>
             <div className='flex gap-x-6'>
-                <div className='flex flex-col  w-8/12 mb-6'>
-                    <p className='mb-2 mt-2 text-sm font-medium'>Nome</p>
-                    <input 
-                        className='px-4 py-2.5 w-full focus:outline outline-1 outline-blue-500 rounded-lg bg-gray-100' 
-                        type="text" 
-                        placeholder='Ex: Camisa preta' 
-                        value={name}
-                        onChange = {(event) => setName(event.target.value)}    
-                    />    
-                </div>
-                <div className='flex flex-col'>
-                    <p className='mb-2 mt-2 text-sm font-medium'>Preço</p>
-                    <input 
-                        className='px-4 py-2.5 w-full rounded-lg bg-gray-100 focus:outline outline-1 outline-blue-500' 
-                        type='text'
-                        value={price}
-                        onChange={event => setPrice(masks.maskCurrency(event.target.value)) }    
-                        />    
-                </div>
+                <InputAdmin width={'w-8/12'} title={'Nome'} value={name} setValue={setName} placeholder='Ex: Camisa preta' type='text'/>
+                <InputAdmin width={'w-4/12'} title={'Preço'} value={price} setValue={v=>setPrice(masks.maskCurrency(v))} placeholder='' type='text'/>
             </div>
             <div className='flex flex-col w-full mb-6'>
                 <p className='mb-2 text-sm font-medium'>Categoria</p>
                 <Select 
-                    className='text-sm'                    
-                    placeholder='Ex: Camisas, calças, meias'
-                    isMulti 
+                    className='text-sm' placeholder='Ex: Camisas, calças, meias' value={category} onChange = {setCategory}
                     options={categorias.map( element => {
                         return {value: element._id, label: element.name}               
                     })}
-                    
-                    onChange = {setCategory}
-                    value={category}
-                    /> 
+                /> 
             </div>
             <div className='flex flex-col w-full'>
                 <p className='mb-2 text-sm font-medium'>Descrição</p>
@@ -254,17 +230,9 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                     />    
             </div>
             {
-                verMais && 
-                <>
-                <div className='flex flex-col w-1/3 mb-3'>
-                    <p className='mb-2 mt-2 text-sm font-medium'>Desconto</p>
-                    <input 
-                        className='px-4 py-2.5 w-full rounded-lg bg-gray-100 focus:outline outline-1 outline-blue-500' 
-                        type='text' 
-                        value={priceoff}
-                        onChange={event => setPriceoff(masks.maskCurrency(event.target.value)) }    
-                        />    
-                </div>
+            verMais && 
+            <>
+                <InputAdmin width={'w-1/3'} title='Desconto' value={priceoff} setValue={v=>setPriceoff(masks.maskCurrency(v))} placeholder='' type='text'/>
                 <div className='flex flex-col'>
                     <p className='mb-3 mt-2 text-sm font-medium'>Variações</p>
                     <button 
@@ -324,9 +292,8 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                         }
                         </div>
                     }
-                    
                 </div>
-                </>
+            </>
             }
             <div className='align-text-top text-center py-4'>
                 <button 
@@ -337,45 +304,12 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
         </div>
 
         <div className='flex flex-col items-center justify-between bg-gray-100 w-full px-6 py-4 rounded-b-2xl border-t'>
-            <div className='flex gap-2  w-full mb-4'>
-                {   edit ?
-                    uploadedImages.map( image => (
-                        <div 
-                        key = {image}
-                        style={{ 
-                            backgroundImage: `url(${import.meta.env.VITE_AWS_URL}${image})`, 
-                            boxSizing: 'border-box', backgroundSize: 'cover'}}
-                            className='w-14 h-14 rounded-lg relative'
-                            >
-                            <button 
-                                className='bg-white p-0.5 absolute -top-1.5 -right-1.5 rounded-full'
-                                onClick={() => {removeUploadedImages(image)}}
-                                >
-                                <GrFormClose className='w-3.5 h-3.5'/>
-                            </button>
-                        </div>
-                    ) ):<></>
-                }
-                {
-                    images.map( image => (
-                        <div 
-                        key = {image.id}
-                        style={{ backgroundImage: `url(${URL.createObjectURL(image.file)})`, boxSizing: 'border-box', backgroundSize: 'cover'}}
-                        className='w-14 h-14 rounded-lg relative'
-                        >
-                            <button 
-                                className='bg-white p-0.5 absolute -top-1.5 -right-1.5 rounded-full'
-                                onClick={() => removeFiles(image.id)}
-                                >
-                                <GrFormClose className='w-3.5 h-3.5'/>
-                            </button>
-                        </div>
-                    ) )
-                }
-            </div>
+            <UploadImagesBlock 
+                uploadedImages={uploadedImages} removeUploadedImages={removeUploadedImages} 
+                images={images} removeFiles={removeFiles}
+            />
             <div className='flex justify-between items-center w-full mb-6 lg:mb-0'>
-                <label className='border border-dashed border-gray-400/70 w-fit h-fit p-2.5 rounded-md cursor-pointer' 
-                >
+                <label className='border border-dashed border-gray-400/70 w-fit h-fit p-2.5 rounded-md cursor-pointer'>
                     <input className='hidden' multiple={true} type='file' onChange={(ev) => handleFiles(ev)} />
                     <BsCardImage className="w-[22px] h-[22px] text-gray-400/70"/>
                 </label>
