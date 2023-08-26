@@ -4,7 +4,6 @@ import axios from 'axios'
 export const ProductContext = createContext() 
 
 export default function ProductProvider( {children} ){
-
     const [produtos, setProdutos] = useState([])
     const perPage = 8
     const [selCategory, setSelCategory] = useState('')
@@ -18,7 +17,6 @@ export default function ProductProvider( {children} ){
 }
 
 export function useProductContext(){
-
     const { produtos, setProdutos, perPage, selCategory, setSelCategory} = useContext(ProductContext)
 
     async function addProduct(name, price, priceoff, category, desc, images, combinations, variations){
@@ -31,6 +29,7 @@ export function useProductContext(){
         formData.append('desc', desc)
         formData.append('combinations', JSON.stringify(combinations))
         formData.append('variations', JSON.stringify(variations))
+
         for(let i = 0; i < images.length ;i++){
             formData.append('images', images[i].file)
         }
@@ -47,7 +46,6 @@ export function useProductContext(){
     }
 
     async function updateProduct(id, name, price, priceoff, category, desc, images, uploadedImages, combinations, variations){
-        
         const formData = new FormData()
         formData.append('title', name)
         formData.append('preco', price)
@@ -57,6 +55,7 @@ export function useProductContext(){
         formData.append('combinations', JSON.stringify(combinations))
         formData.append('variations', JSON.stringify(variations))
         formData.append('uploadedImages', uploadedImages)
+
         for(let i = 0; i < images.length ;i++){
             formData.append('images', images[i].file)
         }
@@ -73,7 +72,6 @@ export function useProductContext(){
     }
     
     async function favoriteProduct(id, destaque){
-
         try{
             await axios.patch(`/products/favorite/${id}`, {destaque: !destaque})
             const limit = Math.ceil(produtos.length/perPage)*perPage
@@ -119,7 +117,6 @@ export function useProductContext(){
     }
 
     async function getProductById(id){
-
         try{
             const {data} = await axios.get(`/products/${id}`)
             return data
@@ -130,7 +127,6 @@ export function useProductContext(){
     }
 
     async function deleteProduct(id){
-
         try{
             await axios.delete(`/products/${id}`)
             const limit = Math.ceil(produtos.length/perPage)*perPage
@@ -139,7 +135,6 @@ export function useProductContext(){
         catch(err){
             console.log(err)
         }
-
     }
 
     return {

@@ -11,6 +11,7 @@ import BaseModal from './BaseModal';
 import ModalProdutoVariacoes from './ModalProdutoVariacoes';
 import InputAdmin from './InputAdmin';
 import UploadImagesBlock from './UploadImagesBlock';
+import {inverseCurrency, currencyToNumber, numberToCurrency} from '../utils/currency'
 
 export default function ModalProduto({setModalProduto, edit, categorias, idProduto, notifySucess, notifyError}) {
     const {addProduct, getProductById, updateProduct} = useProductContext()
@@ -53,11 +54,6 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
         setTimeout(() => setModalProduto(false), 200)
     }
 
-    function inverseCurrency(value){
-        let stringValue = value.replace(/,/, '.').replace(/./, '').replace(/[\D]/g, '')
-        return stringValue/100
-    }
-
     function handleFiles(ev){
         const newImages = Array.from(ev.target.files).map( image => ({
             id: uuidv4(),
@@ -74,28 +70,6 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
         setUploadesImages( prev => prev.filter( img => img !== name ) )
     }
 
-    function currencyToNumber(){
-        let aux = combinations.map(el => {
-            return {
-                ...el,
-                price: inverseCurrency(el.price),
-                priceoff: inverseCurrency(el.priceoff)
-            }
-        })
-        return aux
-    }
-
-    function numberToCurrency(comb){
-        let aux = comb.map(el => {
-            return {
-                ...el,
-                price: parseFloat(el.price.toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
-                priceoff: parseFloat(el.priceoff.toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
-            }
-        })
-        return aux
-    }
-
     function handleSubmit() {
         if(inverseCurrency(price) === 0){
             notifyError('Valor de preço inválido')
@@ -107,7 +81,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
         }
         if(edit){
             setLoading(true)
-            updateProduct(idProduto, name, inverseCurrency(price), inverseCurrency(priceoff), category, desc, images, uploadedImages, currencyToNumber(), variationsProd)
+            updateProduct(idProduto, name, inverseCurrency(price), inverseCurrency(priceoff), category, desc, images, uploadedImages, currencyToNumber(combinations), variationsProd)
             .then( (data) => {
                 setLoading(false)
                 if(!!data.product){
@@ -122,7 +96,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
         }
         else{
             setLoading(true)
-            addProduct(name, inverseCurrency(price), inverseCurrency(priceoff), category, desc, images, currencyToNumber(), variationsProd).then(data => {
+            addProduct(name, inverseCurrency(price), inverseCurrency(priceoff), category, desc, images, currencyToNumber(combinations), variationsProd).then(data => {
                 setLoading(false)
                 if(!!data.message){
                   closeModal() 
