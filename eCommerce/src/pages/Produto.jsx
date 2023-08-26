@@ -30,7 +30,7 @@ export default function Produto() {
         if(operador === '-' && quantidade > 1){
             setQuantidade(quantidade-1)
         }
-        else {
+        else if(operador === '+' && quantidade < 99) {
             setQuantidade(quantidade+1)
         }
     }
@@ -120,7 +120,7 @@ export default function Produto() {
   return (
     
     <section className='flex flex-col'>    
-        <h3 className='hidden md:flex gap-1 items-center px-5 md:px-10 xl:px-32 my-[28px] text-sm text-blue-500'>
+        <h3 className='hidden md:flex gap-1 items-center px-5 md:px-10 xl:px-32 my-[28px] text-sm text-gray-600'>
             <p>Página inicial</p> 
             <FiChevronRight className='w-3.5 h-3.5 text-gray-500 mt-0.5'/> 
             <p>{produto?.categoria[0]?.label}</p>
@@ -253,27 +253,28 @@ export default function Produto() {
                     </div>
                 </div>
                 <div className='flex gap-2 mt-6 mb-6'>
-                    <div className='flex border-2 border-gray-300 rounded-md items-center text-black/80'>
-                        <button className='px-4 py-3' onClick={() => mudaQuantidade('-')}>
+                    <div className='flex border border-gray-300 rounded-md items-center text-gray-700'>
+                        <button className='px-2.5 md:px-3 py-2.5 lg:px-2.5  xl:py-3' onClick={() => mudaQuantidade('-')}>
                             <svg 
                                 xmlns="http://www.w3.org/2000/svg" 
                                 fill="none" 
                                 viewBox="0 0 24 24" 
                                 strokeWidth={1.5} 
                                 stroke="currentColor" 
-                                className="w-6 h-6">
+                                className="w-5 h-5 md:w-6 md:h-6 lg:w-5 lg:h-5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M18 12H6" />
                             </svg>
 
                         </button>
-                        <p className='font-medium'>{quantidade}</p>
-                        <button className='px-4' onClick={() => mudaQuantidade('+')}>
+                        <p className='font-medium w-6 text-center'>{quantidade}</p>
+                        <button className='px-2.5 md:px-3 py-2.5 lg:px-2.5 xl:py-3' onClick={() => mudaQuantidade('+')}>
                             <svg 
                                 xmlns="http://www.w3.org/2000/svg" 
                                 fill="none" 
                                 viewBox="0 0 24 24" 
                                 strokeWidth={1.5} 
-                                stroke="currentColor" className="w-6 h-6">
+                                stroke="currentColor" 
+                                className="w-5 h-5 md:w-6 md:h-6 lg:w-5 lg:h-5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
                             </svg>
 

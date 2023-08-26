@@ -61,7 +61,7 @@ export function useCarrinhoContext(){
                 if (element._id === novoProduto._id){
                     return {
                         ...element,
-                        quantidade: element.quantidade+n
+                        quantidade: element.quantidade+n > 99 ? 99 : element.quantidade+n
                     }
                 }
                 return element
@@ -96,7 +96,7 @@ export function useCarrinhoContext(){
         }
         else {
             setCarrinho(carrinho.map( element => {
-                if(element._id === id){
+                if(element._id === id && element.quantidade<99){
                     element.quantidade++
                 }
                 return element
