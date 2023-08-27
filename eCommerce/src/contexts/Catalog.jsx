@@ -14,12 +14,17 @@ export default function CatalogProvider({children}){
         email: '',
         bannerdt: []
     })
+    const shipOptions = {
+        pickup: 'PICKUP',
+        delivery: 'DELIVERY',
+        both: 'BOTH'
+    }
     const [loading, setLoading] = useState(false)
 
     const baseURL = 'http://[::1]:4000'
 
     return (
-        <CatalogContext.Provider value={{catalog, setCatalog, baseURL, loading, setLoading}}>
+        <CatalogContext.Provider value={{catalog, setCatalog, baseURL, loading, setLoading, shipOptions}}>
             {children}
         </CatalogContext.Provider>
     )
@@ -28,7 +33,7 @@ export default function CatalogProvider({children}){
 
 export function useCatalogContext(){
 
-    const {catalog, setCatalog, baseURL, loading, setLoading} = useContext(CatalogContext)
+    const {catalog, setCatalog, loading, setLoading, shipOptions} = useContext(CatalogContext)
 
     async function getCatalog(){
         try{
@@ -76,6 +81,7 @@ export function useCatalogContext(){
         loading,
         getCatalog,
         updateCatalog,
+        shipOptions
     }
 
 }

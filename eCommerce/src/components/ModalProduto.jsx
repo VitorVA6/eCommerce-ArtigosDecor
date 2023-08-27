@@ -11,10 +11,10 @@ import BaseModal from './BaseModal';
 import ModalProdutoVariacoes from './ModalProdutoVariacoes';
 import InputAdmin from './InputAdmin';
 import UploadImagesBlock from './UploadImagesBlock';
-import {inverseCurrency, currencyToNumber, numberToCurrency} from '../utils/currency'
+import {inverseCurrency} from '../utils/currency'
 
 export default function ModalProduto({setModalProduto, edit, categorias, idProduto, notifySucess, notifyError}) {
-    const {addProduct, getProductById, updateProduct} = useProductContext()
+    const {addProduct, getProductById, updateProduct, numberToCurrency, currencyToNumber} = useProductContext()
     const {getVariations, variations} = useVariationContext()
     const [verMais, setVerMais] = useState(false);
     const [animate, setAnimate] = useState(true)

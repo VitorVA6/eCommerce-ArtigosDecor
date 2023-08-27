@@ -5,6 +5,7 @@ import NavLateralAdmin from '../components/NavLateralAdmin'
 import InfoAdmin from '../components/InfoAdmin'
 import PersoAdmin from '../components/PersoAdmin'
 import ContaAdmin from '../components/ContaAdmin'
+import ShipmentAdmin from '../components/ShipmentAdmin'
 import { useUserContext } from '../contexts/User'
 import { Navigate, useNavigate } from 'react-router-dom'
 import Requests from '../components/Requests'
@@ -35,6 +36,7 @@ export default function Admin() {
                 { selected === 'info' && <InfoAdmin /> }
                 { selected === 'custom' && <PersoAdmin /> }
                 { selected === 'acc' && <ContaAdmin /> }
+                { selected === 'ship' && <ShipmentAdmin /> }
                 { selected === 'req' && <Requests setSelected={setSelected}/> }
                 { selected === 'order-id' && <OrderById setSelected={setSelected}/> }
             </div>

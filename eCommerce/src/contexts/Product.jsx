@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import axios from 'axios'
+import {inverseCurrency} from '../utils/currency'
 
 export const ProductContext = createContext() 
 
@@ -137,6 +138,28 @@ export function useProductContext(){
         }
     }
 
+    function currencyToNumber(elements){
+        let aux = elements.map(el => {
+            return {
+                ...el,
+                price: inverseCurrency(el.price),
+                priceoff: inverseCurrency(el.priceoff)
+            }
+        })
+        return aux
+    }
+    
+    function numberToCurrency(elements){
+        let aux = elements.map(el => {
+            return {
+                ...el,
+                price: parseFloat(el.price.toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
+                priceoff: parseFloat(el.priceoff.toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+            }
+        })
+        return aux
+    }
+
     return {
         produtos,
         setProdutos,
@@ -149,7 +172,9 @@ export function useProductContext(){
         updateProduct,
         deleteProduct,
         favoriteProduct,
-        filterProduct
+        filterProduct,
+        currencyToNumber,
+        numberToCurrency
     }
 
 }
