@@ -181,8 +181,10 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
         <h2 className='text-center py-4 border-b w-full font-medium'>{`${edit?'Editar':'Adicionar'} Produto`}</h2>
         <div className='flex flex-col py-2 px-7 w-full overflow-auto h-[400px]'>
             <div className='flex gap-x-6'>
-                <InputAdmin width={'w-8/12'} title={'Nome'} value={name} setValue={setName} placeholder='Ex: Camisa preta' type='text'/>
-                <InputAdmin width={'w-4/12'} title={'Preço'} value={price} setValue={v=>setPrice(masks.maskCurrency(v))} placeholder='' type='text'/>
+                <InputAdmin width={'w-8/12'} title={'Nome'} value={name} 
+                    setValue={v => setName(v.target.value)} placeholder='Ex: Camisa preta' type='text'/>
+                <InputAdmin width={'w-4/12'} title={'Preço'} value={price} 
+                    setValue={v=>setPrice(masks.maskCurrency(v.target.value))} placeholder='' type='text'/>
             </div>
             <div className='flex flex-col w-full mb-6'>
                 <p className='mb-2 text-sm font-medium'>Categoria</p>
@@ -206,7 +208,8 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
             {
             verMais && 
             <>
-                <InputAdmin width={'w-1/3'} title='Desconto' value={priceoff} setValue={v=>setPriceoff(masks.maskCurrency(v))} placeholder='' type='text'/>
+                <InputAdmin width={'w-1/3'} title='Desconto' value={priceoff} 
+                    setValue={v=>setPriceoff(masks.maskCurrency(v.target.value))} placeholder='' type='text'/>
                 <div className='flex flex-col'>
                     <p className='mb-3 mt-2 text-sm font-medium'>Variações</p>
                     <button 

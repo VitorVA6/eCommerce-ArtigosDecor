@@ -3,8 +3,8 @@ import React from 'react'
 export default function InputPayment({title, placeholder, field, setField, id, blur}) {
 
   return (
-    <div className='flex flex-col mt-3 mb-1'>
-        <h3 className='text-[13px]'>{title}</h3>
+    <div className='flex flex-col'>
+        {!!title && <h3 className='text-[13px]'>{title}</h3>}
         <input 
             type="text" 
             placeholder={placeholder} 

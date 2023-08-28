@@ -32,7 +32,16 @@ module.exports = class UserController{
                     rsociais: {insta: '', face: '', yt: '', tt: ''},
                     nome: '',
                     whats: '',
-                    email: ''
+                    email: '',
+                    address: {
+                        cep: '',
+                        endereco: '',
+                        numero: '',
+                        bairro: '',
+                        cidade: '',
+                        estado: '',
+                        complemento: ''
+                    }
                 })
             }else{
                 await Catalog.deleteMany({})

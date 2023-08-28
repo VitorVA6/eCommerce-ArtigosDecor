@@ -16,7 +16,7 @@ module.exports = class CatalogController{
     }
 
     static async updateCatalog(req, res){
-        const {sobre, rsociais, telefone, email, nome, whats, uploadedImages} = req.body
+        const {sobre, rsociais, telefone, email, nome, whats, uploadedImages, address, ship_option} = req.body
         const user = await getUserByToken(req.headers.authorization)
         
         if(!user){
@@ -46,6 +46,12 @@ module.exports = class CatalogController{
         if(!!whats){
             catalog.whats = whats
         }
+        if(!!address){
+            catalog.address = address
+        }
+        if(!!ship_option){
+            catalog.ship_option = ship_option
+        }
         let filesName = []
         let aux_files = []
         if(!!req.files || (!!uploadedImages && uploadedImages.length > 0) ){
@@ -67,7 +73,6 @@ module.exports = class CatalogController{
             }
             await Catalog.findOneAndUpdate({admin: user._id}, catalog)
             res.status(200).json({message: 'Catálogo atualizado com sucesso!', dados: catalog})
-
         }catch(err){
             console.log(err)
             return res.status(500).json({error: 'Erro na atualização do catálogo.'})

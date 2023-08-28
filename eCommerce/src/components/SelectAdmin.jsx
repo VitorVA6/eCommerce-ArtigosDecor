@@ -1,20 +1,19 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {BsCheckLg} from 'react-icons/bs'
+import { useCatalogContext } from '../contexts/Catalog'
 
 
-export default function SelectAdmin({setOption, option, text, shipOption}) {
+export default function SelectAdmin({ option, text}) {
 
-    useEffect(() => {
-        console.log(option, text, shipOption)
-    }, [])
+  const {setCatalog, catalog} = useCatalogContext()
 
   return (
     <div className='flex gap-2 items-center'>
         <button 
-            className={`w-[18px] h-[18px] flex justify-center items-center rounded-full bg-gray-100 border-2 ${shipOption === option ? 'border-blue-500' : 'border-gray-400'}`}
-            onClick={() =>setOption(option)}
+            className={`w-[16px] h-[16px] flex justify-center items-center rounded-full bg-gray-100 border-2 ${catalog.ship_option === option ? 'border-blue-500' : 'border-gray-400'}`}
+            onClick={() =>setCatalog( prev => ({...prev, ship_option: option}))}
         >
-            { shipOption === option && <BsCheckLg className='text-blue-500 w-3.5 h-3.5 mr-[1px]'/>}
+            { catalog.ship_option === option && <BsCheckLg className='text-blue-500 w-3.5 h-3.5 mr-[1px] mt-[1px]'/>}
         </button>
         <p className='text-black/90 text-[15px]'>{text}</p>
     </div>

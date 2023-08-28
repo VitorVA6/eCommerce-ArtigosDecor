@@ -92,16 +92,6 @@ export default function NavLateralAdmin({selected, setSelected, setMenuMobile, m
                 Personalizar
             </button>
             <button 
-                className={`cursor-pointer  flex gap-3 items-center ${handleClassPage('acc')} pl-5 md:pl-0`}
-                onClick = {() => {
-                    closeMenu()
-                    setSelected('acc')
-                }}
-            >
-                <MdAccountCircle className='w-[22px] h-[22px] -ml-1'/>
-                Conta
-            </button>
-            <button 
                 className={`cursor-pointer  flex gap-3 items-center ${handleClassPage('ship')} pl-5 md:pl-0`}
                 onClick = {() => {
                     closeMenu()
@@ -111,6 +101,17 @@ export default function NavLateralAdmin({selected, setSelected, setMenuMobile, m
                 <ImTruck className='w-5 h-5 -ml-[1px]'/>
                 Editar frete
             </button>
+            <button 
+                className={`cursor-pointer  flex gap-3 items-center ${handleClassPage('acc')} pl-5 md:pl-0`}
+                onClick = {() => {
+                    closeMenu()
+                    setSelected('acc')
+                }}
+            >
+                <MdAccountCircle className='w-[22px] h-[22px] -ml-1'/>
+                Conta
+            </button>
+            
         </section>
     </>
   )

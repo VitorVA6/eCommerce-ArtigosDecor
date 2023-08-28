@@ -28,11 +28,11 @@ export default function PersoAdmin() {
   }
 
   function removeUploadedImages(name){
-      setCatalog( (prev) => {
-        return {...prev, bannerdt: prev.bannerdt.filter(
-          img => img !== name
-        )}
-      } )
+    setCatalog( (prev) => {
+      return {...prev, bannerdt: prev.bannerdt.filter(
+        img => img !== name
+      )}
+    })
   }
 
   function handleSubmit(){
@@ -88,7 +88,6 @@ export default function PersoAdmin() {
         <h3 className='font-medium mb-1.5'>Banners</h3>
         <p className='text-sm text-gray-400 mb-2.5'>Adicione banners para destacar sua marca, promoções e mais.</p>
         <p className='text-sm mb-5'>Imagens dos banners</p>
-        
         <div className='flex flex-wrap w-full gap-2'>
           <label className='bg-gray-100 w-32 h-20 lg:w-40 lg:h-24 rounded-xl flex items-center justify-center cursor-pointer'>
             <input className='hidden' multiple={true} type='file' onChange={(ev) => handleFiles(ev)} />
@@ -130,9 +129,7 @@ export default function PersoAdmin() {
           }
         </div>
       </div>
-      
         <LoadingButton loading={loading} text={'Salvar alterações'} handleSubmit={handleSubmit} full={false} />    
-      
     </section>
   )
 }

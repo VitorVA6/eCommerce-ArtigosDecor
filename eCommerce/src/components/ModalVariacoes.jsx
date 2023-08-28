@@ -145,7 +145,8 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
         >Excluir</button>
         </h2>
         <div className='flex flex-col py-2 px-4 w-full'>
-            <InputAdmin width={'w-full'} title='Nome da variação' value={nome} setValue={v=>setNome(v)} placeholder={placeh1} type='text'/>
+            <InputAdmin width={'w-full'} title='Nome da variação' value={nome} 
+                setValue={v=>setNome(v.target.value)} placeholder={placeh1} type='text'/>
             <p className='mb-1 mt-2 text-sm font-medium'>Opções</p>
             <p className='text-xs text-gray-400 mb-2'>{placeh2}</p>
             <button 

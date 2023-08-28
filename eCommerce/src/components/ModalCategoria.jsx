@@ -108,7 +108,7 @@ function removeUploadedImages(name){
           onClick={() => remove()}
       >Excluir</button>
       <div className='flex flex-col py-2 px-7 w-full'>
-        <InputAdmin width={'w-full'} title='Nome da categoria' value={category} setValue={v=>setCategory(v)} placeholder={placeh} type='text'/>
+        <InputAdmin width={'w-full'} title='Nome da categoria' value={category} setValue={v=>setCategory(v.target.value)} placeholder={placeh} type='text'/>
         <UploadImagesBlock uploadedImages={uploadedImage} removeUploadedImages={removeUploadedImages} 
             images={image} removeFiles={removeFiles}/>
           

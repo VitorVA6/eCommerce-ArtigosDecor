@@ -41,7 +41,7 @@ export default function PaymentPage() {
               block1.selected === true && 
               <>
                 <form 
-                  className='flex flex-col mt-3'
+                  className='flex flex-col mt-3 gap-2'
                   onSubmit={formikStep1.handleSubmit}
                 >
                   <InputPayment 
@@ -115,7 +115,7 @@ export default function PaymentPage() {
             {
               block2.selected === true &&
               <form 
-                className='flex flex-col mt-2 w-full'
+                className='flex flex-col mt-2 w-full gap-2'
                 onSubmit={formikStep2.handleSubmit}
               >
                 <div className='grid grid-cols-2'>

@@ -83,6 +83,8 @@ export function usePaymentContext(){
             else{
                 formikStep2.setFieldValue('endereco', '')
                 formikStep2.setFieldValue('bairro', '')
+                formikStep2.setFieldValue('cidade', '')
+                formikStep2.setFieldValue('estado', '')
                 setErrorCEP(response.errorAPI)
                 setValidCEP(false)
             }
