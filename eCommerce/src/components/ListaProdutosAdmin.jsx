@@ -3,7 +3,7 @@ import {AiFillStar} from 'react-icons/ai'
 import {AiOutlineStar} from 'react-icons/ai'
 import { useProductContext } from '../contexts/Product';
 import {VscTrash} from 'react-icons/vsc'
-import MUISwitch from './Switch';
+import Switch from '@mui/material/Switch'
 
 export default function ListaProdutosAdmin({produtos, setModalProduto, setEdit, setIdProduto}) {
 
@@ -64,7 +64,7 @@ export default function ListaProdutosAdmin({produtos, setModalProduto, setEdit, 
                           screenWidth < 1024 ?
                           <></>
                           :
-                          <MUISwitch defaultChecked />
+                          <Switch />
                         }
                     </div>
                 </div>

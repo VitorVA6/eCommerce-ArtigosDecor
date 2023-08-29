@@ -1,5 +1,6 @@
 import {useContext, createContext, useState} from 'react' 
 import axios from 'axios'
+import { inverseCurrency } from '../utils/currency'
 
 export const CatalogContext = createContext() 
 
@@ -22,7 +23,12 @@ export default function CatalogProvider({children}){
             estado: '',
             complemento: ''
         },
-        ship_option: 'BOTH'
+        ship_option: 'BOTH',
+        shipFree: {
+            status: false,
+            minValue: 0,
+            validLocals: 'CITY'
+        }
     })
     const shipOptions = {
         pickup: 'PICKUP',
@@ -79,7 +85,9 @@ export function useCatalogContext(){
                 const {data} = await axios.patch('/catalog/update', {...catalog, address})
                  return data    
             }
-            const {data} = await axios.patch('/catalog/update', catalog)
+            const {data} = await axios.patch(
+                '/catalog/update', 
+                {...catalog, shipFree: {...catalog.shipFree, minValue: inverseCurrency(catalog.shipFree.minValue)}})
             return data
         }
         catch(err){
@@ -92,9 +100,9 @@ export function useCatalogContext(){
         catalog,
         setCatalog,
         loading,
+        shipOptions,
         getCatalog,
         updateCatalog,
-        shipOptions
     }
 
 }

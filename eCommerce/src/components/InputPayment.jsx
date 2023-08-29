@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function InputPayment({title, placeholder, field, setField, id, blur}) {
+export default function InputPayment({title, placeholder, field, setField, id, blur, width}) {
 
   return (
-    <div className='flex flex-col'>
+    <div className={`flex flex-col ${!!width && `${width}`}`}>
         {!!title && <h3 className='text-[13px]'>{title}</h3>}
         <input 
             type="text" 

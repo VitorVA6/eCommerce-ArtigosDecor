@@ -16,7 +16,7 @@ module.exports = class CatalogController{
     }
 
     static async updateCatalog(req, res){
-        const {sobre, rsociais, telefone, email, nome, whats, uploadedImages, address, ship_option} = req.body
+        const {sobre, rsociais, telefone, email, nome, whats, uploadedImages, address, ship_option, shipFree} = req.body
         const user = await getUserByToken(req.headers.authorization)
         
         if(!user){
@@ -51,6 +51,9 @@ module.exports = class CatalogController{
         }
         if(!!ship_option){
             catalog.ship_option = ship_option
+        }
+        if(!!shipFree){
+            catalog.shipFree = shipFree
         }
         let filesName = []
         let aux_files = []

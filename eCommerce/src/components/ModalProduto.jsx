@@ -172,7 +172,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
         }
     }
   return (
-      <BaseModal animate={animate} closeModal={closeModal} width={'1/2'} top={'lg:top-14'}>
+      <BaseModal animate={animate} closeModal={closeModal} width={'lg:w-1/2'} top={'lg:top-14'}>
          {
             modalVariations &&
             <ModalProdutoVariacoes combinations={combinations} setModalVariations={setModalVariations} 
@@ -188,10 +188,10 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
             </div>
             <div className='flex flex-col w-full mb-6'>
                 <p className='mb-2 text-sm font-medium'>Categoria</p>
-                <Select 
+                <Select
                     className='text-sm' placeholder='Ex: Camisas, calças, meias' value={category} onChange = {setCategory}
                     options={categorias.map( element => {
-                        return {value: element._id, label: element.name}               
+                        return {value: element._id, label: element.name}   
                     })}
                 /> 
             </div>

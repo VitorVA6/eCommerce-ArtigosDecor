@@ -41,6 +41,12 @@ module.exports = class UserController{
                         cidade: '',
                         estado: '',
                         complemento: ''
+                    },
+                    ship_option: 'BOTH',
+                    shipFree: {
+                        status: false,
+                        minValue: 0,
+                        validLocals: 'CITY'
                     }
                 })
             }else{

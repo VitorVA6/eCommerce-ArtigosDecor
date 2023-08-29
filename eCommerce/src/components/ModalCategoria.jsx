@@ -101,7 +101,7 @@ function removeUploadedImages(name){
   }
 
   return (
-    <BaseModal animate={animate} closeModal={closeModal} width={'2/5'} top={'lg:top-1/4'}>
+    <BaseModal animate={animate} closeModal={closeModal} width={'lg:w-2/5'} top={'lg:top-1/4'}>
       <h2 className='text-center py-4 border-b w-full font-medium relative'>{`${edit?'Editar':'Inserir'} categoria`}</h2>
       <button 
           className={`${!edit && 'hidden'} text-red-500 font-normal absolute p-1 top-3 right-5`}

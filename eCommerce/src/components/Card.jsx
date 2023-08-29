@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import {AiOutlineArrowDown} from 'react-icons/ai'
-import { useCatalogContext } from '../contexts/Catalog';
 
 export default function Card({produto, page, layout}) {
 

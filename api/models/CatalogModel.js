@@ -20,7 +20,12 @@ const CatalogSchema = new Schema({
         estado: { type: String },
         complemento: { type: String }
     },
-    ship_option: String
+    ship_option: String,
+    shipFree: {
+        status: Boolean,
+        minValue: Number,
+        validLocals: String
+    }
 })
 
 module.exports = mongoose.model('Catalog', CatalogSchema)
