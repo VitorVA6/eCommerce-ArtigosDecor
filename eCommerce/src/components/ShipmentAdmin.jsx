@@ -45,27 +45,35 @@ export default function ShipmentAdmin() {
     })
   }
 
-  useEffect(() => {
-    console.log(catalog.shipFree)
-  }, [catalog])
+  /* useEffect(() => {
+    console.log(catalog.shipCorreios)
+  }, [catalog]) */
 
   return (
     <div className='flex items-center flex-col w-full h-screen'>
       <notifies.Container />
         {modalFree && <ModalFreeShip setModalFree={setModalFree} notifyError={notifies.error} notifySucess={notifies.sucess}/>}
-        {modalCorreios && <ModalCorreios setModalCorreios={setModalCorreios}/>}
+        {modalCorreios && <ModalCorreios setModalCorreios={setModalCorreios} notifyError={notifies.error} notifySucess={notifies.sucess}/>}
         {modalAddress && <ModalAddress setModalAddress={setModalAddress} notifyError={notifies.error} notifySucess={notifies.sucess}/>}
         <div className='flex flex-col w-full lg:w-3/4 bg-white py-10 px-4 lg:px-7 rounded-xl border border-gray-300/80 lg:border-gray-200/70'>
             <h1 className='text-black/90 font-medium'>Tipo de entrega</h1>
             <p className='text-gray-500/80 text-sm mb-5'>Selecione os tipos de entrega que você irá utilizar</p>
             <div className='flex flex-col gap-2 w-full mb-6'>
               <ShipType 
+                title='Correios' 
+                status={catalog.shipCorreios.status} 
+                setStatus={(ev) => setCatalog(prev => ({...prev, shipCorreios: {...prev.shipCorreios, status: ev.target.checked}}))} 
+                setModal={setModalCorreios}/>
+              <ShipType 
                 title='Frete grátis' 
                 status={catalog.shipFree.status} 
                 setStatus={(ev) => setCatalog(prev => ({...prev, shipFree: {...prev.shipFree, status: ev.target.checked}}))} 
                 setModal={setModalFree}/>
-              <ShipType title='Frete personalizado' status={statusCustom} setStatus={setStatusCustom} setModal={setModalCorreios}/>
-              <ShipType title='Correios' status={statusCorreios} setStatus={setStatusCorreios} setModal={setModalCorreios}/>
+              <ShipType 
+                title='Frete personalizado' 
+                status={statusCustom} 
+                setStatus={setStatusCustom} 
+                setModal={setModalCorreios}/>
             </div>  
             <h1 className='text-black/90 font-medium mb-3'>Como seus clientes podem receber seus produtos?</h1>
             <div className='flex flex-col gap-3 text-black-90 mb-5'>
@@ -103,7 +111,11 @@ export default function ShipmentAdmin() {
               onClick={() => setModalAddress(true)}  
             >{catalog.address.cep !== ''?'Alterar endereço':'Adicionar endereço'}</button>
             <div className='mt-10 w-full flex justify-center'>
-              <LoadingButton text={'Salvar alterações'} loading={loading} full={false} handleSubmit={handleSubmit}/>
+              <LoadingButton 
+                text={'Salvar alterações'} 
+                loading={loading} 
+                full={false} 
+                handleSubmit={handleSubmit}/>
             </div>
         </div>
 

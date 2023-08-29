@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Switch from '@mui/material/Switch'
 
 export default function ShipType({title, status, setStatus, setModal}) {
+
+
   return (
     <div className='flex justify-between items-center p-3 rounded-lg border w-full'>
         <div className='flex flex-col'>
@@ -13,7 +15,7 @@ export default function ShipType({title, status, setStatus, setModal}) {
               className='text-blue-500 bg-transparent text-sm font-medium'
               onClick={() => setModal(true)}  
             >Editar</button>
-            <Switch value={status} onChange={setStatus}/>
+            <Switch checked={status} onChange={setStatus}/>
         </div>
     </div>
   )

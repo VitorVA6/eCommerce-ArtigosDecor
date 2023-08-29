@@ -47,6 +47,15 @@ module.exports = class UserController{
                         status: false,
                         minValue: 0,
                         validLocals: 'CITY'
+                    },
+                    shipCorreios: {
+                        status: false,
+                        sedex: false,
+                        pacMyCity: false,
+                        days: {
+                            value: 1,
+                            label: '1 dia'
+                        }
                     }
                 })
             }else{

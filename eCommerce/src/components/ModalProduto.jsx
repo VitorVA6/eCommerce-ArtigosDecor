@@ -189,7 +189,9 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
             <div className='flex flex-col w-full mb-6'>
                 <p className='mb-2 text-sm font-medium'>Categoria</p>
                 <Select
-                    className='text-sm' placeholder='Ex: Camisas, calças, meias' value={category} onChange = {setCategory}
+                    className='text-sm' placeholder='Ex: Camisas, calças, meias' 
+                    value={category} 
+                    onChange = {setCategory}
                     options={categorias.map( element => {
                         return {value: element._id, label: element.name}   
                     })}

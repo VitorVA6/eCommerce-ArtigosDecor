@@ -25,6 +25,15 @@ const CatalogSchema = new Schema({
         status: Boolean,
         minValue: Number,
         validLocals: String
+    },
+    shipCorreios: {
+        status: Boolean,
+        sedex: Boolean,
+        pacMyCity: Boolean,
+        days: {
+            value: Number,
+            label: String
+        }
     }
 })
 

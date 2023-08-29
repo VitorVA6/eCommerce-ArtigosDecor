@@ -28,6 +28,15 @@ export default function CatalogProvider({children}){
             status: false,
             minValue: 0,
             validLocals: 'CITY'
+        },
+        shipCorreios: {
+            status: false,
+            sedex: false,
+            pacMyCity: false,
+            days: {
+                value: 1,
+                label: '1 dia'
+            }
         }
     })
     const shipOptions = {
@@ -91,6 +100,7 @@ export function useCatalogContext(){
             return data
         }
         catch(err){
+            console.log(err)
             return err.response ? err.response.data : {error:'Ocorreu um erro no servidor.'}
         }
 
