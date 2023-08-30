@@ -7,6 +7,8 @@ import { useCatalogContext } from '../contexts/Catalog'
 import LoadingButton from './LoadingButton'
 import ModalFreeShip from './ModalFreeShip'
 import ModalCorreios from './ModalCorreios'
+import axios from 'axios'
+import ModalShipCustom from './ModalShipCustom'
 
 export default function ShipmentAdmin() {
 
@@ -14,20 +16,14 @@ export default function ShipmentAdmin() {
     pickup: 'PICKUP',
     delivery: 'DELIVERY',
     both: 'BOTH'
-}
+  }
   
   const {getCatalog, catalog, updateCatalog, setCatalog} = useCatalogContext()
-
-  useEffect(() => {
-    getCatalog()
-  }, [])
-
-  const [statusCustom, setStatusCustom] = useState(false)
-  const [statusCorreios, setStatusCorreios] = useState(false)
 
   const [modalAddress, setModalAddress] = useState(false)
   const [modalFree, setModalFree] = useState(false)
   const [modalCorreios, setModalCorreios] = useState(false)
+  const [modalCustom, setModalCustom] = useState(false)
   
   const [loading, setLoading] = useState(false)
 
@@ -45,16 +41,25 @@ export default function ShipmentAdmin() {
     })
   }
 
-  /* useEffect(() => {
-    console.log(catalog.shipCorreios)
-  }, [catalog]) */
+  useEffect(() => {
+    getCatalog()
+  }, [])
 
   return (
     <div className='flex items-center flex-col w-full h-screen'>
       <notifies.Container />
-        {modalFree && <ModalFreeShip setModalFree={setModalFree} notifyError={notifies.error} notifySucess={notifies.sucess}/>}
-        {modalCorreios && <ModalCorreios setModalCorreios={setModalCorreios} notifyError={notifies.error} notifySucess={notifies.sucess}/>}
-        {modalAddress && <ModalAddress setModalAddress={setModalAddress} notifyError={notifies.error} notifySucess={notifies.sucess}/>}
+        {modalFree && 
+          <ModalFreeShip setModalFree={setModalFree} notifyError={notifies.error} notifySucess={notifies.sucess}/>
+        }
+        {modalCustom && 
+          <ModalShipCustom setModalCustom={setModalCustom} notifyError={notifies.error} notifySucess={notifies.sucess}/>
+        }
+        {modalCorreios && 
+          <ModalCorreios setModalCorreios={setModalCorreios} notifyError={notifies.error} notifySucess={notifies.sucess}/>
+        }
+        {modalAddress && 
+          <ModalAddress setModalAddress={setModalAddress} notifyError={notifies.error} notifySucess={notifies.sucess}/>
+        }
         <div className='flex flex-col w-full lg:w-3/4 bg-white py-10 px-4 lg:px-7 rounded-xl border border-gray-300/80 lg:border-gray-200/70'>
             <h1 className='text-black/90 font-medium'>Tipo de entrega</h1>
             <p className='text-gray-500/80 text-sm mb-5'>Selecione os tipos de entrega que você irá utilizar</p>
@@ -71,9 +76,9 @@ export default function ShipmentAdmin() {
                 setModal={setModalFree}/>
               <ShipType 
                 title='Frete personalizado' 
-                status={statusCustom} 
-                setStatus={setStatusCustom} 
-                setModal={setModalCorreios}/>
+                status={catalog.shipCustom.status} 
+                setStatus={(ev) => setCatalog(prev => ({...prev, shipCustom: {...prev.shipCustom, status: ev.target.checked}}))} 
+                setModal={setModalCustom}/>
             </div>  
             <h1 className='text-black/90 font-medium mb-3'>Como seus clientes podem receber seus produtos?</h1>
             <div className='flex flex-col gap-3 text-black-90 mb-5'>

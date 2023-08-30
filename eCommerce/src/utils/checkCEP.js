@@ -2,7 +2,7 @@ import axios from "axios"
 
 export default async function checkCEP(cep){
     if(cep.length === 9){
-        const {data} = await axios.get(`https://viacep.com.br/ws/${cep}/json/`)      
+        const {data} = await axios.get(`https://viacep.com.br/ws/${cep}/json/`)
         if(!!data.erro){  
             return {status:false, errorAPI: 'CEP inválido'}
         }else{

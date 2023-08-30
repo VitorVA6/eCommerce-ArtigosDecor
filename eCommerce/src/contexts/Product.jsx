@@ -60,6 +60,7 @@ export function useProductContext(){
         for(let i = 0; i < images.length ;i++){
             formData.append('images', images[i].file)
         }
+        console.log(formData)
 
         try{
             const {data} = await axios.patch(`/products/${id}`, formData,  {headers: {'Content-Type': 'multipart/form-data'}})

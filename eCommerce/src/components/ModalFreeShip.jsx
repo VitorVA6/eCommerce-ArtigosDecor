@@ -29,7 +29,7 @@ export default function ModalFreeShip({setModalFree, notifyError, notifySucess})
             setCatalog(prev => ({
                 ...prev, 
                 shipFree: {...prev.shipFree, 
-                    minValue: parseFloat(prev.shipFree.minValue.toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+                    minValue: masks.maskCurrency(prev.shipFree.minValue)
                 }
             }
             ))
@@ -62,7 +62,7 @@ export default function ModalFreeShip({setModalFree, notifyError, notifySucess})
 
   return (
     <BaseModal animate={animate} closeModal={closeModal} width={'lg:w-2/5'} top={'lg:top-20'}>
-        <h2 className='text-center py-4 border-b w-full font-medium relative border-gray-300'>Frete grátis</h2>
+        <h2 className='text-center py-3 border-b w-full font-medium relative border-gray-300'>Frete grátis</h2>
         <div className='flex flex-col pt-8 pb-5 px-7 w-full'>
             <h3 className='text-[15px] font-medium'>Valor mínimo em compras</h3>
             <p className='text-gray-500 text-sm mb-2'>Defina o valor mínimo em compras para habilitar o frete grátis. Deixe em branco para habilitar para qualquer valor.</p>

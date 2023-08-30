@@ -35,7 +35,7 @@ export default function ModalCorreios({setModalCorreios, notifyError, notifySuce
 
   return (
     <BaseModal animate={animate} closeModal={closeModal} width={'lg:w-2/5'} top={'lg:top-20'}>
-        <h2 className='text-center py-4 border-b w-full font-medium relative border-gray-300'>Correios</h2>
+        <h2 className='text-center py-3 border-b w-full font-medium relative border-gray-300'>Correios</h2>
         <div className='flex flex-col pt-8 pb-5 px-7 w-full'>
             <h3 className='text-[15px] font-medium mb-3'>Selecione as formas de entrega</h3>
             <div className='flex flex-col gap-2'>

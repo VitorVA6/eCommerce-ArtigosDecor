@@ -56,6 +56,11 @@ module.exports = class UserController{
                             value: 1,
                             label: '1 dia'
                         }
+                    },
+                    shipCustom: {
+                        status: false,
+                        deliveryName: '',
+                        cities: []
                     }
                 })
             }else{

@@ -75,7 +75,7 @@ export default function ModalAddress({setModalAddress, notifySucess, notifyError
 
   return (
     <BaseModal animate={animate} closeModal={closeModal} width={'lg:w-2/5'} top={'lg:top-20'}>
-        <h2 className='text-center py-4 border-b w-full font-medium relative'>{'Endereço da loja'}</h2>
+        <h2 className='text-center py-3 border-b w-full font-medium relative'>{'Endereço da loja'}</h2>
         <p className='text-gray-400 py-3 text-sm mb-1'>Digite abaixo o endereço de origem das entregas e/ou retirada</p>
         <form 
             className='flex flex-col gap-2 w-full px-6 mb-7'

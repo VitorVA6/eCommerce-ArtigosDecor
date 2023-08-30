@@ -1,6 +1,7 @@
 import {useContext, createContext, useState} from 'react' 
 import axios from 'axios'
 import { inverseCurrency } from '../utils/currency'
+import masks from '../utils/masks'
 
 export const CatalogContext = createContext() 
 
@@ -37,6 +38,11 @@ export default function CatalogProvider({children}){
                 value: 1,
                 label: '1 dia'
             }
+        },
+        shipCustom: {
+            status: false,
+            deliveryName: '',
+            cities: []
         }
     })
     const shipOptions = {
@@ -53,7 +59,6 @@ export default function CatalogProvider({children}){
             {children}
         </CatalogContext.Provider>
     )
-
 }
 
 export function useCatalogContext(){
@@ -69,7 +74,6 @@ export function useCatalogContext(){
         }
         catch(err){
             setLoading(false)
-            console.log(err)
         }
         
     }
@@ -96,7 +100,20 @@ export function useCatalogContext(){
             }
             const {data} = await axios.patch(
                 '/catalog/update', 
-                {...catalog, shipFree: {...catalog.shipFree, minValue: inverseCurrency(catalog.shipFree.minValue)}})
+                {...catalog, 
+                    shipFree: {
+                        ...catalog.shipFree, 
+                        minValue: inverseCurrency(catalog.shipFree.minValue)},
+                    shipCustom: {
+                        ...catalog.shipCustom,
+                        cities: catalog.shipCustom.cities.map(el => (
+                            {
+                                price: inverseCurrency(el.price),
+                                city: el.city
+                            }
+                        ))
+                    }
+                })
             return data
         }
         catch(err){

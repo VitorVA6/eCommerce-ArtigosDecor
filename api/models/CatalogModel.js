@@ -34,6 +34,19 @@ const CatalogSchema = new Schema({
             value: Number,
             label: String
         }
+    },
+    shipCustom: {
+        status: Boolean,
+        deliveryName: String,
+        cities: [
+            {
+                price: Number,
+                city: {
+                    value: String,
+                    label: String
+                }
+            }
+        ]
     }
 })
 

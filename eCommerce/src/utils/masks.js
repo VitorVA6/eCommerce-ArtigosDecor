@@ -19,9 +19,12 @@ const masks = {
         .replace(/(-\d{3})(\d+?)/, '$1')
     },
     maskCurrency: (value) => {
-        value = value.replace(/[\D]/g, '')
-        value = parseFloat((value/100).toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
-        return value
+        if(typeof(value) === 'string'){
+            value = value.replace(/[\D]/g, '')
+            value = parseFloat((value/100).toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+            return value
+        }
+        return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
     }
 }
 

@@ -17,9 +17,10 @@ module.exports = class CatalogController{
 
     static async updateCatalog(req, res){
         const {sobre, rsociais, telefone, email, nome, whats, uploadedImages, 
-            address, ship_option, shipFree, shipCorreios} = req.body
+            address, ship_option, shipFree, shipCorreios, shipCustom} = req.body
+
         const user = await getUserByToken(req.headers.authorization)
-        
+
         if(!user){
             return res.status(422).json({error: 'Você não tem autorização pra essa operação'})
         }
@@ -59,8 +60,13 @@ module.exports = class CatalogController{
         if(!!shipCorreios){
             catalog.shipCorreios = shipCorreios
         }
+        if(!!shipCustom){
+            catalog.shipCustom = shipCustom
+        }
+
         let filesName = []
         let aux_files = []
+
         if(!!req.files || (!!uploadedImages && uploadedImages.length > 0) ){
             catalog.bannerdt.forEach( elem => {
                 if(!uploadedImages.includes(elem)){
@@ -70,6 +76,7 @@ module.exports = class CatalogController{
             aux_files =  req.files?.length > 0 ? req.files.map(image => image.filename) : []
             catalog.bannerdt = aux_files.concat(uploadedImages)
         }
+
         try{
             if(filesName.length > 0){
                 const files = filesName.map(img => ({Key: img}))
@@ -79,12 +86,11 @@ module.exports = class CatalogController{
                 await uploadS3(req.files)
             }
             await Catalog.findOneAndUpdate({admin: user._id}, catalog)
-            res.status(200).json({message: 'Catálogo atualizado com sucesso!', dados: catalog})
+            return res.status(200).json({message: 'Catálogo atualizado com sucesso!', dados: catalog})
         }catch(err){
             console.log(err)
             return res.status(500).json({error: 'Erro na atualização do catálogo.'})
         }
-
     }
 
 }
