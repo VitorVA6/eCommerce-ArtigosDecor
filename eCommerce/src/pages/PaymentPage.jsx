@@ -25,7 +25,7 @@ export default function PaymentPage() {
   return (
     <div className='grid xl:grid-cols-3 md:px-36 lg:px-64 xl:px-32 py-10 gap-5'>
         <ProgressbarPayment />
-        <div className='order-2 xl:order-1 flex flex-col gap-5'>
+        <div className='order-2 xl:order-1 flex flex-col gap-3'>
           <PaymentBlock 
             step={'1'} 
             title={'Identifique-se'} 
@@ -44,9 +44,8 @@ export default function PaymentPage() {
                   className='flex flex-col mt-3 gap-2'
                   onSubmit={formikStep1.handleSubmit}
                 >
-                  <InputPayment 
-                    title={'Nome completo'} 
-                    placeholder={'ex.: Paulo Henrique Martins'}
+                  <InputPayment
+                    placeholder={'Nome completo'}
                     field={ formikStep1.values.name}
                     setField = {formikStep1.handleChange}
                     id='name'
@@ -56,9 +55,8 @@ export default function PaymentPage() {
                       formikStep1.touched.name && formikStep1.errors.name && <p className='text-red-500 text-xs'>{`${formikStep1.errors.name}`}</p>
                     }
                     
-                  <InputPayment 
-                    title={'CPF'} 
-                    placeholder={'000.000.000-00'}
+                  <InputPayment
+                    placeholder={'CPF'}
                     field={ formikStep1.values.cpf}
                     setField = {(ev) => {
                       formikStep1.setFieldValue('cpf', masks.maskCPF(ev.target.value))
@@ -69,9 +67,8 @@ export default function PaymentPage() {
                     {
                       formikStep1.touched.cpf && formikStep1.errors.cpf && <p className='text-red-500 text-xs'>{`${formikStep1.errors.cpf}`}</p>
                     }
-                  <InputPayment 
-                    title={'Ceular / Whatsapp'} 
-                    placeholder={'(00) 00000-0000'}
+                  <InputPayment
+                    placeholder={'Número de celular'}
                     field={ formikStep1.values.whats}
                     setField = { (ev) => {
                       formikStep1.setFieldValue('whats', masks.maskWhats(ev.target.value))
@@ -91,8 +88,8 @@ export default function PaymentPage() {
             {
               block1.completed === true && 
               <>
-                <div className='flex flex-col mt-3'>
-                  <h3 className='font-medium mb-3'>{`${formikStep1.values.name}`}</h3>
+                <div className='flex flex-col'>
+                  <h3 className='font-medium mb-1'>{`${formikStep1.values.name}`}</h3>
                   <h3 className='text-sm text-gray-600'>{`${formikStep1.values.cpf}`}</h3>
                   <h3 className='text-sm text-gray-600'>{`${formikStep1.values.whats}`}</h3> 
                 </div>
@@ -120,9 +117,8 @@ export default function PaymentPage() {
               >
                 <div className='grid grid-cols-2'>
                   <div className='flex flex-col'>
-                    <InputPayment 
-                      title={'CEP'} 
-                      placeholder={''}
+                    <InputPayment
+                      placeholder={'CEP'}
                       field={ formikStep2.values.cep}
                       setField = {(ev) => {
                         formikStep2.setFieldValue('cep', masks.maskCEP(ev.target.value))
@@ -142,9 +138,8 @@ export default function PaymentPage() {
                 {
                   validCEP && 
                   <>
-                    <InputPayment 
-                      title={'Endereço'} 
-                      placeholder={''}
+                    <InputPayment
+                      placeholder={'Endereço. Ex: Rua Machado de Assis'}
                       field={ formikStep2.values.endereco}
                       setField = {formikStep2.handleChange}
                       id='endereco'
@@ -155,9 +150,8 @@ export default function PaymentPage() {
                     }
                     <div className='grid grid-cols-3 gap-3'>
                       <div className='flex flex-col'>
-                        <InputPayment 
-                          title={'Número'} 
-                          placeholder={''}
+                        <InputPayment
+                          placeholder={'Número'}
                           field={ formikStep2.values.numero}
                           setField = {formikStep2.handleChange}
                           id='numero'
@@ -168,9 +162,8 @@ export default function PaymentPage() {
                         }
                       </div>                      
                       <div className=' col-span-2'>
-                        <InputPayment 
-                          title={'Bairro'} 
-                          placeholder={''}
+                        <InputPayment
+                          placeholder={'Bairro'}
                           field={ formikStep2.values.bairro}
                           setField = {formikStep2.handleChange}
                           id='bairro'
@@ -183,9 +176,8 @@ export default function PaymentPage() {
                     </div>
                     <div className='grid grid-cols-3 gap-3'>
                       <div className='flex flex-col col-span-2'>
-                        <InputPayment 
-                          title={'Cidade'} 
-                          placeholder={''}
+                        <InputPayment
+                          placeholder={'Cidade'}
                           field={ formikStep2.values.cidade}
                           setField = {formikStep2.handleChange}
                           id='cidade'
@@ -196,9 +188,8 @@ export default function PaymentPage() {
                         }
                       </div>                      
                       <div className=''>
-                        <InputPayment 
-                          title={'Estado'} 
-                          placeholder={''}
+                        <InputPayment
+                          placeholder={'Estado'}
                           field={formikStep2.values.estado}
                           setField = {formikStep2.handleChange}
                           id='estado'

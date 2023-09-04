@@ -4,20 +4,31 @@ import { createContext, useContext, useState } from "react";
 export const CarrinhoContext = createContext()
 
 export default function CarrinhoProvider ( {children} ){
+    const deliveryOptions = {
+        sedex: 'SEDEX',
+        pac: 'PAC',
+        custom: 'CUSTOM',
+        retired: 'RETIRED',
+        unselected: 'UNSELECTED'
+    }
+
     const [carrinho, setCarrinho] = useState([])
     const [total, setTotal] = useState(0)
+    const [freight, setFreight] = useState({delivery: 'UNSELECTED', price: 0})
     const [quantTotal, setQuantTotal] = useState(0)
     const [modalCarrinho, setModalCarrinho] = useState(false)
 
     return (
-        <CarrinhoContext.Provider value={{carrinho, setCarrinho, total, setTotal, quantTotal, setQuantTotal, modalCarrinho, setModalCarrinho}}>
+        <CarrinhoContext.Provider value={{carrinho, setCarrinho, total, setTotal, quantTotal, setQuantTotal, 
+            modalCarrinho, setModalCarrinho, freight, setFreight, deliveryOptions}}>
             {children}
         </CarrinhoContext.Provider>
     )
 } 
 
 export function useCarrinhoContext(){
-    const {carrinho, setCarrinho, total, setTotal, quantTotal, setQuantTotal, modalCarrinho, setModalCarrinho} = useContext(CarrinhoContext)
+    const {carrinho, setCarrinho, total, setTotal, quantTotal, setQuantTotal, 
+        modalCarrinho, setModalCarrinho, freight, setFreight, deliveryOptions} = useContext(CarrinhoContext)
 
     function listaCarrinho(){
         let url = '/products/get-cart?'
@@ -116,6 +127,9 @@ export function useCarrinhoContext(){
         quantTotal,
         modalCarrinho, 
         setModalCarrinho,
+        freight,
+        setFreight,
+        deliveryOptions,
         listaCarrinho,         
         addCarrinho,
         removeCarrinho,

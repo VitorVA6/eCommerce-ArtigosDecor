@@ -53,7 +53,7 @@ export default function PaymentBlock({step, title, desc, children, selected, com
 
   return (
     <div 
-        className={`${step==='3'?'order-2':''} ${change===step?'flex':'hidden'} xl:flex flex-col bg-white px-4 xl:px-6 py-7 md:rounded-md shadow-md/90 h-fit ${cursorClass()} ${disabled===true&&'opacity-40'}`}
+        className={`${step==='3'?'order-2':''} ${change===step?'flex':'hidden'} xl:flex flex-col bg-white px-4 xl:px-5 py-5 md:rounded-md shadow-md/90 h-fit ${cursorClass()} ${disabled===true&&'opacity-40'}`}
         onClick={() => {
             if(disabled===false && selected===false){
                 setChange(step)
@@ -62,14 +62,14 @@ export default function PaymentBlock({step, title, desc, children, selected, com
     >
         <div className='flex gap-2 items-center'>
             <span className={`${classStep()} w-6 h-6 rounded-full text-sm flex justify-center items-center text-white font-bold mb-0.5`}>{step}</span>
-            <h2 className={`text-[20px] font-bold ${classTitle()}`}>{title}</h2>
+            <h2 className={`text-[20px] font-bold ${classTitle()} text-black/90`}>{title}</h2>
             {
                 completed === true &&
                 <FaCheck className='text-[#36b376] w-4 h-4 ml-1'/>
             }
         </div>
         
-        <p className='text-[13px] mt-2 text-gray-600'>
+        <p className='text-sm mt-2 text-gray-600'>
             {
                 selectDesc()
             }

@@ -6,16 +6,83 @@ import {IoMdClose} from 'react-icons/io'
 import {FiChevronRight} from 'react-icons/fi'
 import { useVariationContext } from '../contexts/Variation'
 import bagImg from '../images/bolsa-de-compras.png'
+import InputPayment from '../components/InputPayment'
+import { usePaymentContext } from '../contexts/Payment'
+import masks from '../utils/masks'
+import { useCatalogContext } from '../contexts/Catalog'
+import ShipOption from '../components/ShipOption'
 
 export default function Cart() {
-    const {carrinho, listaCarrinho, removeCarrinho, alteraQuantidade, total} = useCarrinhoContext()
+    const {carrinho, listaCarrinho, removeCarrinho, alteraQuantidade, total, freight, setFreight, deliveryOptions} = useCarrinhoContext()
     const {variations, getVariations} = useVariationContext()
+    const {formikStep2, validCEP, errorCEP, cepIsValid} = usePaymentContext()
+    const {catalog} = useCatalogContext()
 
     useEffect(() => {
-        console.log(carrinho)
         getVariations()
         listaCarrinho()
     }, []);
+
+    useEffect(() => {
+        cepIsValid()
+    }, [formikStep2.values.cep])
+
+    
+
+    function handleCustomShip(){
+        const city = catalog.shipCustom.cities.find(el => el.city.label === formikStep2.values.cidade)
+        if(catalog.shipCustom.status === true && !!city){
+            return (
+            <ShipOption
+                name = {catalog.shipCustom.deliveryName} 
+                time = '1 a 2 dias'
+                price = {city.price}
+                freight={freight}
+                setFreight={setFreight}
+                myFreight = {deliveryOptions.custom}
+                width='w-full md:w-3/5'
+            />
+            )
+        }
+    }
+
+    function handleCorreiosShip(){
+        if(catalog.shipCorreios.status === true){
+            if(catalog.shipCorreios.sedex === true){
+                return (
+                    <>
+                        <ShipOption 
+                            name='Correios - PAC' 
+                            time='9 a 12 dias' 
+                            price={24.5}
+                            freight={freight}
+                            setFreight={setFreight}
+                            myFreight = {deliveryOptions.pac}
+                            width='w-full md:w-3/5'
+                        />
+                        <ShipOption 
+                            name='Correios - Sedex' 
+                            time='7 a 10 dias' 
+                            price={29.5}
+                            freight={freight}
+                            setFreight={setFreight}
+                            myFreight = {deliveryOptions.sedex}
+                            width='w-full md:w-3/5'
+                        />
+                    </>
+                )
+            }
+            return <ShipOption 
+                name='Correios - PAC' 
+                time='9 a 12 dias' 
+                price={masks.maskCurrency(checkShipFree(24.5))}
+                freight={freight}
+                setFreight={setFreight}
+                myFreight = {deliveryOptions.pac}
+                width='w-full md:w-3/5'
+                />
+        }
+    }
 
     function fillVarAndOptions(element){
         let description = ''
@@ -35,7 +102,7 @@ export default function Cart() {
   return (
     <section className=' px-5 md:px-10 xl:px-32 pb-20 -mb-16'>
         <h2 className='pt-10 md:pt-12 lg:pt-12 mb-10 lg:mb-12 font-semibold text-[24px] md:text-[32px] text-black/80'>Meu Carrinho</h2>
-        <div className = 'grid lg:grid-cols-12 xl:grid-cols-7 gap-12'>
+        <div className = 'grid lg:grid-cols-12 xl:grid-cols-7 gap-6'>
             <div className={`h-fit flex flex-col lg:col-span-8 xl:col-span-5 w-full ${carrinho.length > 0 && 'bg-white rounded-md shadow-md shadow-gray-400/60'}`}>
                               
                 { carrinho.length > 0 ? 
@@ -105,7 +172,61 @@ export default function Cart() {
                             />
                         </div>
                     </div>
-                ) )}</>: 
+                ) )}
+                <div className='flex w-full flex-col px-4 md:px-6 border-t py-4'>
+                    <h2 className='text-black-80 text-[18px] font-mdium mb-3'>
+                        Frete
+                    </h2>
+                    <div>
+                        <div className='grid grid-cols-2 items-center gap-10'>
+                            <div className='flex flex-col'>
+                                <InputPayment
+                                    title={'Informe seu CEP'}
+                                    placeholder={'99999-999'}
+                                    field={ formikStep2.values.cep}
+                                    setField = {(ev) => {
+                                    formikStep2.setFieldValue('cep', masks.maskCEP(ev.target.value))
+                                }}
+                                id='cep'
+                                blur={formikStep2.handleBlur}
+                                />
+                                {
+                                formikStep2.touched.cep && formikStep2.errors.cep && <p className='text-red-500 text-xs ml-1 mt-0.5'>{`${formikStep2.errors.cep}`}</p>
+                                }
+                                {
+                                errorCEP !== '' && <p className='text-red-500 text-xs  ml-1 mt-0.5'>{`${errorCEP}`}</p>
+                                }
+                            </div>
+                            {
+                            validCEP && 
+                                <div className='flex flex-col'>
+                                    <h3 className='font-medium text-gray-500 mt-1'>
+                                        {formikStep2.values.cidade} - {formikStep2.values.estado}
+                                    </h3>
+                                    {
+                                        formikStep2.values.endereco !== '' &&
+                                        <p className='text-gray-500 -mt-1'>{formikStep2.values.endereco}</p>
+                                    }
+                                </div>
+                            }
+                        </div>
+                        {
+                        validCEP && 
+                        <div className='flex flex-col gap-2'>
+                            <h3 className='font-medium text-gray-500 text-[15px] mt-4 mb-2'>
+                                Selecione uma forma de envio:
+                            </h3>
+                            {
+                            handleCustomShip()
+                            }
+                            {
+                            handleCorreiosShip()
+                            }
+                        </div>
+                        }
+                    </div> 
+                </div>
+                </>: 
                 <div className='flex flex-col py-16 md:py-28 h-fit items-center justify-center md:bg-gray-50 rounded-md md:shadow-md md:shadow-gray-400/60'>
                     <img src={bagImg} alt='' className='w-20 h-20 mb-4'/>
                     <h1 className='my-2 font-medium text-base md:text-[20px] text-black/80'>Monte um carrinho de compras!</h1>
@@ -126,11 +247,15 @@ export default function Cart() {
                 <div className='flex flex-col gap-4 border-b py-5 px-6'>
                     <div className='flex justify-between text-sm md:text-base lg:text-sm'>
                         <p className=''>Produtos</p>
-                        <p className=''>{total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                        <p className=''>{masks.maskCurrency(total)}</p>
                     </div>
                     <div className='flex justify-between'>
                         <p className='lg:text-sm'>Frete</p>
-                        <p className='lg:text-sm'>Grátis</p>
+                        <p className='lg:text-sm'>
+                            {freight.delivery === 'UNSELECTED' ? 
+                            <AiOutlineMinus className='w-5 h-5 text-black'/> : 
+                            masks.maskCurrency(freight.price)}
+                        </p>
                     </div>
                     <button className='flex items-center gap-1 font-medium text-sm md:text-base lg:text-sm'>
                         Adicionar Cupom 
@@ -138,9 +263,9 @@ export default function Cart() {
                     </button>
                     
                 </div>
-                <div className='flex justify-between pt-5 pb-6 px-6 text-[16xx] md:text-[18px] font-medium'>
+                <div className='flex justify-between pt-5 pb-6 px-6 text-base md:text-[18px] font-medium text-black/80'>
                     <p>Total</p>
-                    <p>{total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                    <p>{masks.maskCurrency(total + freight.price)}</p>
                 </div>
                 <Link to={'/payment'} className='flex justify-center w-[calc(100%-48px)] py-3 bg-blue-600 text-white mx-6 rounded-sm'>CHECKOUT</Link>
                 </>
