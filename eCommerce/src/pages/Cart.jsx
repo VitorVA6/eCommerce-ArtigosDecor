@@ -80,7 +80,7 @@ export default function Cart() {
                 setFreight={setFreight}
                 myFreight = {deliveryOptions.pac}
                 width='w-full md:w-3/5'
-                />
+            />
         }
     }
 
@@ -173,11 +173,20 @@ export default function Cart() {
                         </div>
                     </div>
                 ) )}
+                
                 <div className='flex w-full flex-col px-4 md:px-6 border-t py-4'>
-                    <h2 className='text-black-80 text-[18px] font-mdium mb-3'>
-                        Frete
-                    </h2>
-                    <div>
+                    <div className='flex justify-between items-center'>
+                        <h2 className='text-black-80 text-[18px] font-mdium'>
+                            Frete
+                        </h2>
+                        {
+                            (catalog.shipCustom.status === false || catalog.shipCorreios.status === false) &&
+                            <p>Grátis</p>
+                        }
+                    </div>
+                    {
+                    (catalog.shipCustom.status === true || catalog.shipCorreios.status === true) &&
+                    <div className='mt-3'>
                         <div className='grid grid-cols-2 items-center gap-10'>
                             <div className='flex flex-col'>
                                 <InputPayment
@@ -225,6 +234,7 @@ export default function Cart() {
                         </div>
                         }
                     </div> 
+                    }
                 </div>
                 </>: 
                 <div className='flex flex-col py-16 md:py-28 h-fit items-center justify-center md:bg-gray-50 rounded-md md:shadow-md md:shadow-gray-400/60'>

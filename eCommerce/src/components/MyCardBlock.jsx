@@ -12,7 +12,6 @@ export default function MyCardBlock() {
     const navigate = useNavigate()
 
     useEffect(()=> {
-        console.log(formikStep1)
         initMercadoPago('TEST-8baf6102-c707-4284-a248-a0ac11256c46', { locale: 'pt-BR' });
     }, [] )
 

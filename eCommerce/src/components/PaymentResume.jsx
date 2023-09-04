@@ -3,10 +3,12 @@ import {IoTicketOutline} from 'react-icons/io5'
 import { useCarrinhoContext } from '../contexts/Carrinho'
 import { Navigate } from 'react-router-dom'
 import {BiChevronDown, BiChevronUp} from 'react-icons/bi'
+import {AiOutlineMinus} from 'react-icons/ai'
+import masks from '../utils/masks'
 
 export default function PaymentResume() {
 
-    const {total} = useCarrinhoContext()
+    const {total, freight} = useCarrinhoContext()
     const [show, setShow] = useState(false)
 
     if(total === 0){
@@ -50,14 +52,22 @@ export default function PaymentResume() {
                 </div>
                 <button className='text-[13.5px] text-blue-500 rounded-md w-[30%]'>Adicionar</button>
             </div>
-            <div className='flex flex-col bg-gray-100/90 rounded-md px-5 py-6 mt-5 gap-4'>
+            <div className='flex flex-col bg-gray-100/90 rounded-md px-5 py-6 mt-5 gap-2 font-bold'>
                 <div className='flex justify-between items-center text-[13px] xl:text-sm'>
-                    <h3 className='font-bold'>Produtos</h3>
-                    <h3 className='font-bold'>{`R$ ${total}`}</h3>
+                    <h3>Produtos</h3>
+                    <h3>{masks.maskCurrency(total)}</h3>
+                </div>
+                <div className='flex justify-between'>
+                    <p className='lg:text-sm'>Frete</p>
+                    <p className='lg:text-sm'>
+                        {freight.delivery === 'UNSELECTED' ? 
+                        <AiOutlineMinus className='w-5 h-5 text-black'/> : 
+                        masks.maskCurrency(freight.price)}
+                    </p>
                 </div>
                 <div className='flex justify-between items-center text-[#28be09]'>
-                    <h3 className='font-bold text-[13px] xl:text-base'>Total</h3>
-                    <h3 className='font-bold text-base xl:text-lg'>{`R$ ${total}`}</h3>
+                    <h3 className='text-[13px] xl:text-base'>Total</h3>
+                    <h3 className='text-base xl:text-lg'>{masks.maskCurrency(total + freight.price)}</h3>
                 </div>
             </div>
         </div>

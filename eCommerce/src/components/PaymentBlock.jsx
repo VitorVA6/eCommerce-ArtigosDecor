@@ -61,7 +61,9 @@ export default function PaymentBlock({step, title, desc, children, selected, com
         }}
     >
         <div className='flex gap-2 items-center'>
-            <span className={`${classStep()} w-6 h-6 rounded-full text-sm flex justify-center items-center text-white font-bold mb-0.5`}>{step}</span>
+            <span className={`${classStep()} w-6 h-6 rounded-full text-[15px] flex justify-center items-center text-white font-bold`}>
+                {step}
+            </span>
             <h2 className={`text-[20px] font-bold ${classTitle()} text-black/90`}>{title}</h2>
             {
                 completed === true &&

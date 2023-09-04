@@ -7,12 +7,17 @@ import MyCardBlock from '../components/MyCardBlock';
 import masks from '../utils/masks.js';
 import { usePaymentContext } from '../contexts/Payment';
 import ProgressbarPayment from '../components/ProgressbarPayment';
+import { useCatalogContext } from '../contexts/Catalog';
+import { useCarrinhoContext } from '../contexts/Carrinho';
+import ShipOption from '../components/ShipOption';
 
 export default function PaymentPage() {
 
     const {
       formikStep1, formikStep2, validCEP, errorCEP, cepIsValid, blockManager, block1, block2, block3, setChangeBlock, changeBlock
     } = usePaymentContext()
+    const {catalog} = useCatalogContext()
+    const {freight, setFreight, deliveryOptions} = useCarrinhoContext()
 
     useEffect(() => {
         cepIsValid()
@@ -21,6 +26,61 @@ export default function PaymentPage() {
     useEffect(()=>{
       blockManager()
     }, [changeBlock])
+
+    function handleCustomShip(){
+      const city = catalog.shipCustom.cities.find(el => el.city.label === formikStep2.values.cidade)
+      if(catalog.shipCustom.status === true && !!city){
+          return (
+          <ShipOption
+              name = {catalog.shipCustom.deliveryName} 
+              time = '1 a 2 dias'
+              price = {city.price}
+              freight={freight}
+              setFreight={setFreight}
+              myFreight = {deliveryOptions.custom}
+              width='w-full'
+          />
+          )
+      }
+  }
+
+  function handleCorreiosShip(){
+      if(catalog.shipCorreios.status === true){
+          if(catalog.shipCorreios.sedex === true){
+              return (
+                  <>
+                      <ShipOption 
+                          name='Correios - PAC' 
+                          time='9 a 12 dias' 
+                          price={24.5}
+                          freight={freight}
+                          setFreight={setFreight}
+                          myFreight = {deliveryOptions.pac}
+                          width='w-full'
+                      />
+                      <ShipOption 
+                          name='Correios - Sedex' 
+                          time='7 a 10 dias' 
+                          price={29.5}
+                          freight={freight}
+                          setFreight={setFreight}
+                          myFreight = {deliveryOptions.sedex}
+                          width='w-full'
+                      />
+                  </>
+              )
+          }
+          return <ShipOption 
+              name='Correios - PAC' 
+              time='9 a 12 dias' 
+              price={masks.maskCurrency(checkShipFree(24.5))}
+              freight={freight}
+              setFreight={setFreight}
+              myFreight = {deliveryOptions.pac}
+              width='w-full'
+          />
+      }
+  }
     
   return (
     <div className='grid xl:grid-cols-3 md:px-36 lg:px-64 xl:px-32 py-10 gap-5'>
@@ -113,7 +173,14 @@ export default function PaymentPage() {
               block2.selected === true &&
               <form 
                 className='flex flex-col mt-2 w-full gap-2'
-                onSubmit={formikStep2.handleSubmit}
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  if((catalog.shipCustom.status || catalog.shipCorreios.status) && freight.delivery === deliveryOptions.unselected){
+                    console.log('Selecione a ipção de envio')
+                    return
+                  }
+                  formikStep2.handleSubmit()
+                }}
               >
                 <div className='grid grid-cols-2'>
                   <div className='flex flex-col'>
@@ -201,6 +268,22 @@ export default function PaymentPage() {
                       </div>
                     </div>
                     <InputPayment title={'Complemento (opcional)'} placeholder={''}/>
+                    <div className='flex flex-col gap-2'>
+                      {
+                        (catalog.shipCustom.status === true || catalog.shipCorreios.status === true) &&
+                        <>
+                        <h3 className='font-medium text-gray-500 text-[15px] mt-4 mb-2'>
+                            Selecione uma forma de envio:
+                        </h3>
+                        {
+                        handleCustomShip()
+                        }
+                        {
+                        handleCorreiosShip()
+                        }
+                        </>
+                      }
+                    </div>
                     <button 
                       className='flex justify-center items-center gap-2 text-white bg-green-500 font-bold py-3 mt-2 rounded-md'>
                       Continuar
