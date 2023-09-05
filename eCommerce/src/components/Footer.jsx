@@ -200,7 +200,7 @@ export default function Footer() {
                 </div>
             </div>
         </div>
-        <div className='flex flex-col justify-between px-10 gap-y-5 py-6 bg-[#f1f1f1] border-t border-gray-300 text-xs items-center lg:px-32 lg:flex-row'>
+        <div className='flex flex-col justify-between px-10 gap-y-5 py-6 border-t border-gray-300 text-xs items-center lg:px-32 lg:flex-row'>
             <p className='text-xs font-medium'>2023 © Todos os Direitos Reservados</p>
             <p className='font-medium text-xs'>Desenvolvido por: Vitor Vaz Andrade</p>
         </div>

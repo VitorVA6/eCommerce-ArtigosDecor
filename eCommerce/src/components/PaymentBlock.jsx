@@ -59,8 +59,11 @@ export default function PaymentBlock({step, title, desc, children, selected, com
                 setChange(step)
             }
         }}
+        id={title}
     >
-        <div className='flex gap-2 items-center'>
+        <div 
+            className='flex gap-2 items-center'
+        >
             <span className={`${classStep()} w-6 h-6 rounded-full text-[15px] flex justify-center items-center text-white font-bold`}>
                 {step}
             </span>

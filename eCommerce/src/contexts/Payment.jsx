@@ -4,6 +4,7 @@ import { block1Schema, block2Schema } from '../schemas';
 import checkCEP from '../utils/checkCEP';
 import checkComplete from '../utils/checkComplete';
 import axios from "axios";
+import { scrollToDiv } from "../utils/scroll";
 
 export const PaymentContext = createContext()
 
@@ -30,6 +31,7 @@ export default function PaymentProvider ( {children} ){
                 setChangeBlock('2')
             }else{
                 setChangeBlock('3')
+                scrollToDiv('Pagamento')
             }
         }
       })
@@ -48,8 +50,10 @@ export default function PaymentProvider ( {children} ){
         onSubmit: values =>{
             if(block1.completed === false){
                 setChangeBlock('1')
+                scrollToDiv('Identifique-se')
             }else{
                 setChangeBlock('3')
+                scrollToDiv('Pagamento')
             }
         }
     })

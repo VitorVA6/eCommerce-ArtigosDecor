@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import PaymentBlock from '../components/PaymentBlock';
 import InputPayment from '../components/InputPayment';
 import {HiArrowNarrowRight} from 'react-icons/hi'
@@ -10,6 +10,7 @@ import ProgressbarPayment from '../components/ProgressbarPayment';
 import { useCatalogContext } from '../contexts/Catalog';
 import { useCarrinhoContext } from '../contexts/Carrinho';
 import ShipOption from '../components/ShipOption';
+import { scrollToDiv } from '../utils/scroll';
 
 export default function PaymentPage() {
 
@@ -18,6 +19,8 @@ export default function PaymentPage() {
     } = usePaymentContext()
     const {catalog} = useCatalogContext()
     const {freight, setFreight, deliveryOptions} = useCarrinhoContext()
+
+    const [selectError, setSelectError] = useState(false)
 
     useEffect(() => {
         cepIsValid()
@@ -36,7 +39,10 @@ export default function PaymentPage() {
               time = '1 a 2 dias'
               price = {city.price}
               freight={freight}
-              setFreight={setFreight}
+              setFreight={(value) => {
+                setFreight(value)
+                setSelectError(false)
+              }}
               myFreight = {deliveryOptions.custom}
               width='w-full'
           />
@@ -54,7 +60,10 @@ export default function PaymentPage() {
                           time='9 a 12 dias' 
                           price={24.5}
                           freight={freight}
-                          setFreight={setFreight}
+                          setFreight={(value) => {
+                            setFreight(value)
+                            setSelectError(false)
+                          }}
                           myFreight = {deliveryOptions.pac}
                           width='w-full'
                       />
@@ -63,7 +72,10 @@ export default function PaymentPage() {
                           time='7 a 10 dias' 
                           price={29.5}
                           freight={freight}
-                          setFreight={setFreight}
+                          setFreight={(value) => {
+                            setFreight(value)
+                            setSelectError(false)
+                          }}
                           myFreight = {deliveryOptions.sedex}
                           width='w-full'
                       />
@@ -75,7 +87,10 @@ export default function PaymentPage() {
               time='9 a 12 dias' 
               price={masks.maskCurrency(checkShipFree(24.5))}
               freight={freight}
-              setFreight={setFreight}
+              setFreight={(value) => {
+                setFreight(value)
+                setSelectError(false)
+              }}
               myFreight = {deliveryOptions.pac}
               width='w-full'
           />
@@ -138,7 +153,7 @@ export default function PaymentPage() {
                     {
                       formikStep1.touched.whats && formikStep1.errors.whats && <p className='text-red-500 text-xs'>{`${formikStep1.errors.whats}`}</p>
                     }
-                  <button className='flex justify-center items-center gap-2 text-white bg-green-500 font-bold py-3 mt-6 rounded-md'>
+                  <button className='flex justify-center items-center gap-2 text-white bg-blue-500 font-bold py-3 mt-6 rounded-md'>
                     Continuar
                     <HiArrowNarrowRight className='w-6 h-6'/>
                   </button>
@@ -176,10 +191,11 @@ export default function PaymentPage() {
                 onSubmit={(e) => {
                   e.preventDefault()
                   if((catalog.shipCustom.status || catalog.shipCorreios.status) && freight.delivery === deliveryOptions.unselected){
-                    console.log('Selecione a ipção de envio')
+                    setSelectError(true)
                     return
                   }
                   formikStep2.handleSubmit()
+                  scrollToDiv
                 }}
               >
                 <div className='grid grid-cols-2'>
@@ -272,9 +288,14 @@ export default function PaymentPage() {
                       {
                         (catalog.shipCustom.status === true || catalog.shipCorreios.status === true) &&
                         <>
-                        <h3 className='font-medium text-gray-500 text-[15px] mt-4 mb-2'>
-                            Selecione uma forma de envio:
-                        </h3>
+                        <div className='mt-4 mb-2'>
+                          <h3 className='font-medium text-gray-500 text-[15px]'>
+                              Selecione uma forma de envio:
+                          </h3>
+                          {
+                            selectError && <p className='text-xs text-red-400 -mt-1'>Campo obrigatório</p>
+                          }
+                        </div>
                         {
                         handleCustomShip()
                         }
@@ -285,7 +306,7 @@ export default function PaymentPage() {
                       }
                     </div>
                     <button 
-                      className='flex justify-center items-center gap-2 text-white bg-green-500 font-bold py-3 mt-2 rounded-md'>
+                      className='flex justify-center items-center gap-2 text-white bg-blue-500 font-bold py-3 mt-4 rounded-md'>
                       Continuar
                     <HiArrowNarrowRight className='w-6 h-6'/>
                   </button>

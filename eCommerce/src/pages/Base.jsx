@@ -8,11 +8,10 @@ import {useCatalogContext} from '../contexts/Catalog'
 import { useCategoryContext } from '../contexts/Category'
 
 export default function Base() {
-
-  const refToTop = useRef();
   const {modalCarrinho} = useCarrinhoContext()
   const {getCatalog} = useCatalogContext()
   const {getCategories} = useCategoryContext()
+  const refToTop = useRef()
   let location = useLocation()
   
   useEffect(()=>{
