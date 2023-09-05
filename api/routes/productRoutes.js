@@ -5,6 +5,7 @@ const { imageUpload } = require('../utils/imageUpload')
 const  removeImages  = require('../utils/removeImages')
 
 router.post('/add', checkToken, imageUpload.array('images'), ProductController.create)
+router.get('/feed', ProductController.xmlMaker)
 router.get('/all', ProductController.getAll)
 router.get('/filter', ProductController.filter)
 router.get('/get-cart', ProductController.getCart)

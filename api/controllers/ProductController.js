@@ -6,6 +6,7 @@ const ObjectId = require('mongoose')
 const fs = require('fs')
 const uploadS3 = require('../utils/uploadS3')
 const removeS3 = require('../utils/removeS3')
+const generateXML = require('../utils/generateXML')
 
 module.exports = class ProductController{
 
@@ -430,6 +431,13 @@ module.exports = class ProductController{
             res.status(500).json({error: 'Ocorreu um erro na atualização do produto.'})
         }
 
+    }
+
+    static async xmlMaker(req, res){
+        const products = await Product.find()
+        const xmlData = generateXML(products);
+        res.setHeader('Content-Type', 'text/xml');
+        res.send(xmlData);
     }
 
 }
