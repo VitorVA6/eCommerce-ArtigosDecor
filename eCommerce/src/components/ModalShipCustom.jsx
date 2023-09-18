@@ -97,7 +97,7 @@ export default function ModalShipCustom({setModalCustom, notifyError, notifySuce
                                 <h4 className='text-gray-400'>{masks.maskCurrency(el.price)}</h4>
                             </div>
                             <div className='flex gap-3 items-center'>
-                                <button className='text-[13px] text-blue-500 bg-transparent font-medium'>Editar</button>
+                                <button className='text-[13px] text-color-primary bg-transparent font-medium'>Editar</button>
                                 <FaRegTrashAlt 
                                     className='text-gray-400 w-4 h-4 cursor-pointer'
                                     onClick={() => removeCity(el.city.value)}
@@ -122,14 +122,14 @@ export default function ModalShipCustom({setModalCustom, notifyError, notifySuce
             <h3 className='text-[15px] font-medium mt-5'>Adicionar cidade</h3>
             <p className='text-gray-500/80 text-sm mb-5 leading-4'>Em quais cidades essas opção de entrega deverá ser ofertada?</p>
             <div className='w-full rounded-md border px-4 pt-2 pb-3 flex flex-col gap-1 mb-4'>
-                <h3 className='text-[13px] font-medium flex items-center'>Nome da cidade <span className='text-blue-500 ml-1.5 font-normal'>Obrigatório</span></h3>
+                <h3 className='text-[13px] font-medium flex items-center'>Nome da cidade <span className='text-color-primary ml-1.5 font-normal'>Obrigatório</span></h3>
                 <Select 
                     className='text-sm'
                     options={allCities}
                     value={selected}
                     onChange={setSelected}
                 />
-                <h3 className='text-[13px] font-medium mt-1 flex items-center'>Preço <span className='text-blue-500 ml-1.5 font-normal'>Obrigatório</span></h3>
+                <h3 className='text-[13px] font-medium mt-1 flex items-center'>Preço <span className='text-color-primary ml-1.5 font-normal'>Obrigatório</span></h3>
                 <div className='flex w-full justify-between items-center'>
                     <InputPayment
                         placeholder='' 
@@ -139,7 +139,7 @@ export default function ModalShipCustom({setModalCustom, notifyError, notifySuce
                         blur={()=>{}} width='w-1/3'
                     />
                     <button 
-                        className='rounded-md w-fit text-blue-500 bg-white px-12 text-sm py-2.5 font-medium border border-blue-500'
+                        className='rounded-md w-fit text-color-primary bg-white px-12 text-sm py-2.5 font-medium border border-color-primary'
                         onClick={() => addCity()}    
                     >
                         Adicionar

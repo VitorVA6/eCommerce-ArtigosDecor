@@ -151,7 +151,7 @@ export default function Produto() {
                             return (
                                 <img 
                                     key={image} 
-                                    className={`${imgId === index ? 'border-[2px] border-blue-500': ''} cursor-pointer h-16 w-16 min-w-[64px] p-0 rounded-sm`} 
+                                    className={`${imgId === index ? 'border-[2px] border-color-primary': ''} cursor-pointer h-16 w-16 min-w-[64px] p-0 rounded-sm`} 
                                     src={`${import.meta.env.VITE_AWS_URL}${image}`} 
                                     alt="Imagem do produto" 
                                     onMouseOver={() => {
@@ -173,7 +173,7 @@ export default function Produto() {
             <div className='flex flex-col w-full lg:w-2/5 h-fit md:px-8 md:py-3 md:bg-white md:rounded-md md:shadow-md lg:shadow-gray-300/60'>
                 <div className='flex flex-col pt-3 pb-5 border-b border-gray-300'>
                     <h2 className='text-xl font-medium lg:text-[22px] text-black/90'>{produto?.title}</h2>
-                    <h3 className='text-sm text-blue-500'>Disponível em estoque</h3>
+                    <h3 className='text-sm text-color-primary'>Disponível em estoque</h3>
                 </div>
                 
                 <div className='flex flex-col mt-6 mb-6'>
@@ -197,14 +197,14 @@ export default function Produto() {
                     </div>
                     {
                     produto?.desconto > 0 &&
-                    <p className='bg-blue-100 text-blue-500 px-2 py-[7px] rounded-sm flex w-fit mt-3.5 text-sm font-semibold'>R$ {(produto?.preco - produto?.desconto).toFixed(0)} de desconto</p>
+                    <p className='bg-color-custom-bg text-color-primary px-2 py-[7px] rounded-sm flex w-fit mt-3.5 text-sm font-semibold'>R$ {(produto?.preco - produto?.desconto).toFixed(0)} de desconto</p>
                     }
                 </div>
                 <div className='flex gap-x-4 items-center'>
                     <img className='w-16 h-10' src="../src/images/logo-correios.png" alt="logo correio" />
                     <div className='flex flex-col'>
                         <p className='text-base text-black/80'>Entrega via correios</p>
-                        <p className='text-sm text-blue-500 font-normal'>Após o pagamento confirmado</p>
+                        <p className='text-sm text-color-primary font-normal'>Após o pagamento confirmado</p>
                     </div>
                 </div>                
                 {   
@@ -218,7 +218,7 @@ export default function Produto() {
                                 {variation.idOptions.map( option => (
                                 <button 
                                     key={option}
-                                    className={`${verifySelected(option) === true ? 'text-blue-500 border-2 border-blue-500': 'border border-gray-300'} py-2 px-3 rounded-lg text-[12px]`}
+                                    className={`${verifySelected(option) === true ? 'text-color-primary border-2 border-color-primary': 'border border-gray-300'} py-2 px-3 rounded-lg text-[12px]`}
                                     onClick={() => handleSelect(variation.idVariacao, option)}
                                 >
                                     {getOptionName(variation.idVariacao ,option)}                                
@@ -234,21 +234,21 @@ export default function Produto() {
                 <div className='flex gap-5 items-center lg:border-none border-t border-gray-300 pl-1 pt-6'>               
                     <BsCreditCard2Back className="w-6 h-6  text-gray-500" />
                     <div >
-                        <p className='font-medium text-sm text-blue-500'>Parcele suas compras</p>
+                        <p className='font-medium text-sm text-color-primary'>Parcele suas compras</p>
                         <p className='text-gray-400 text-sm'>Parcelamento no cartão de crédito</p>
                     </div>
                 </div>
                 <div className='flex mt-3 gap-5 items-center pl-1'>              
                     <BsShieldCheck className="w-6 h-6 text-gray-500" />
                     <div>
-                        <p className='font-medium text-sm text-blue-500'>Compra segura</p>
+                        <p className='font-medium text-sm text-color-primary'>Compra segura</p>
                         <p className='text-gray-400 text-sm'>Sua compra é 100% protegida</p>
                     </div>
                 </div>
                 <div className='flex mt-3 gap-5 items-center border-b border-gray-300 pb-6 lg:border-none pl-1'>              
                     <BsArrowCounterclockwise className="w-6 h-6 text-gray-500" />
                     <div>
-                        <p className='font-medium text-sm text-blue-500'>Devolução grátis</p>
+                        <p className='font-medium text-sm text-color-primary'>Devolução grátis</p>
                         <p className='text-gray-400 text-sm'>Em até 7 dias a partir do recebimento</p>
                     </div>
                 </div>
@@ -281,7 +281,7 @@ export default function Produto() {
                         </button>
                     </div>
                     <button 
-                        className='bg-blue-500 text-white py-2 w-full rounded-md font-medium text-base flex items-center justify-center gap-3'
+                        className='bg-color-primary text-white py-2 w-full rounded-md font-medium text-base flex items-center justify-center gap-3'
                         onClick={() => addCarrinho(produto, quantidade)}
                     >
                         <BsCart2 className='text-white w-5 h-5'/>

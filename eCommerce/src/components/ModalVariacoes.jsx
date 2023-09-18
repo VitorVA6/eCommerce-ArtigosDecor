@@ -150,7 +150,7 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
             <p className='mb-1 mt-2 text-sm font-medium'>Opções</p>
             <p className='text-xs text-gray-400 mb-2'>{placeh2}</p>
             <button 
-                className='text-blue-500 bg-transparent text-left text-sm font-medium mb-4' 
+                className='text-color-primary bg-transparent text-left text-sm font-medium mb-4' 
                 onClick={() => addOption()}    
             >+ Adicionar nova opção</button>
             <div className='flex flex-col h-40 lg:h-36 gap-y-2 overflow-auto'>
@@ -158,7 +158,7 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
                 options.map( (element, index) => (
                 <div key={element.value} className='flex items-center gap-1'>
                     <input 
-                        className='px-4 py-2 w-full outline-0 rounded-lg bg-gray-100 focus:border border-blue-500' 
+                        className='px-4 py-2 w-full outline-0 rounded-lg bg-gray-100 focus:border border-color-primary' 
                         type="text"
                         value={element.label}
                         onChange = {(e) => handleChange(index, e) }

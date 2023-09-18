@@ -4,7 +4,7 @@ import loadImg from '../images/load-icon.png'
 export default function LoadingButton({loading, text, handleSubmit, full}) {
   return (
     <button
-        className={`bg-blue-500 text-white ${full===true?'w-full':'w-1/2'} rounded-lg py-3 text-sm font-medium flex items-center justify-center gap-3 ${loading===true&&'opacity-60'}`}
+        className={`bg-color-primary text-white ${full===true?'w-full':'w-1/2'} rounded-lg py-3 text-sm font-medium flex items-center justify-center gap-3 ${loading===true&&'opacity-60'}`}
         onClick = {(ev) => {
             ev.preventDefault()
             if(handleSubmit === undefined){}

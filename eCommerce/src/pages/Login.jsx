@@ -94,7 +94,7 @@ export default function Login() {
                 Lembrar-me
               </button>
               <Link className='text-gray-400 text-[13px] md:text-base lg:text-sm w-fit -mt-1'>Esqueceu sua senha?</Link>
-              <button type='submit' className='text-sm md:text-base w-fit py-2.5 px-24 mt-5 text-white bg-blue-600 rounded-full font-medium'>Login</button>
+              <button type='submit' className='text-sm md:text-base w-fit py-2.5 px-24 mt-5 text-white bg-color-secundary rounded-full font-medium'>Login</button>
             </form>
           </div>
       </section>

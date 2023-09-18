@@ -37,7 +37,7 @@ function DropDownSearchbar({categories, selCategory, setSelCategory}) {
         {showDropdown && (
         <div className="flex flex-col bg-white w-fit px-3 py-3 top-[34px] left-0 rounded-md shadow-md shadow-gray-400/70 absolute z-10 whitespace-nowrap">
             <button 
-                className={`px-5 py-2 flex w-fit ${selCategory === 'all' && 'text-blue-500 font-medium'}`}
+                className={`px-5 py-2 flex w-fit ${selCategory === 'all' && 'text-color-primary font-medium'}`}
                 onClick={
                     () => {
                         setSelCategory('all')
@@ -50,7 +50,7 @@ function DropDownSearchbar({categories, selCategory, setSelCategory}) {
            {
                 categories.map(item => (
                 <button 
-                    key={item._id} className={`px-5 py-2 flex w-fit ${selCategory._id === item._id && 'text-blue-500 font-medium'}`}
+                    key={item._id} className={`px-5 py-2 flex w-fit ${selCategory._id === item._id && 'text-color-primary font-medium'}`}
                     onClick={
                         () => {
                             setSelCategory(item)

@@ -36,13 +36,13 @@ export default function Modal() {
         <div className='w-full'>
             <Link 
               to={'/'}
-              className='flex justify-center text-blue-600 border border-blue-600 py-3 rounded-md w-full mb-3 font-medium'
+              className='flex justify-center text-color-secundary border border-color-secundary py-3 rounded-md w-full mb-3 font-medium'
               onClick={() => setModalCarrinho(false)}
             >Continuar comprando</Link>
             <Link 
               to={'/cart'} 
               onClick={() => setModalCarrinho(false)} 
-              className='flex justify-center text-white font-medium py-3 rounded-md bg-blue-600 w-full'
+              className='flex justify-center text-white font-medium py-3 rounded-md bg-color-secundary w-full'
             >Finalizar compra</Link>
         </div>
     </div>

@@ -77,7 +77,7 @@ export default function Header() {
                 }
                 <FiMenu className='w-[26px] h-[26px] md:hidden' onClick={() => setMenu(true)}/>
                 <Link to={'/'} className='text-2xl md:text-[32px] font-black flex'>
-                    <p className='text-blue-500'>Minha</p> <p className=''>Loja</p>
+                    <p className='text-color-primary'>Minha</p> <p className=''>Loja</p>
                 </Link >
                 
                 <div className='hidden md:flex rounded-full h-full w-[55%] lg:w-[50%] pl-3 lg:pl-0 bg-white items-center text-black-80  justify-between border-[3px]'>
@@ -107,7 +107,7 @@ export default function Header() {
                         <div className='flex relative rounded-full border-[2px] border-gray-200 h-[34px] w-[34px] md:h-[40px] md:w-[40px] justify-center items-center'>
                             <BsCart2 className="w-[22px] h-[22px] text-gray-500/80 md:w-5 md:h-5"/>
                             <div 
-                                className='flex justify-center items-center bg-blue-500 rounded-full text-white font-medium absolute -top-1 -right-1 text-[12px] leading-none w-[18px] h-[18px]'
+                                className='flex justify-center items-center bg-color-primary rounded-full text-white font-medium absolute -top-1 -right-1 text-[12px] leading-none w-[18px] h-[18px]'
                             >
                                 <span className='text-[11px] text-gray-100 mt-[1px]'>{quantTotal}</span>
                             </div>
@@ -136,24 +136,24 @@ export default function Header() {
                 </button>
             </div>
         </div>
-        <div className='relative hidden w-full py-[6px] 2xl:py-[7px] items-center lg:flex justify-between bg-blue-500 text-gray-50 lg:px-10 xl:px-32'>
+        <div className='relative hidden w-full py-[6px] 2xl:py-[7px] items-center lg:flex justify-between bg-color-primary text-gray-50 lg:px-10 xl:px-32'>
             <DropdownCategories />
             <div className='flex items-center lg:ml-[42vh] xl:ml-[38vh] lg:text-[13px] xl:text-sm font-medium gap-3.5'>
-                <Link to={'/'} className='flex transition-all duration-500 gap-2 items-center cursor-pointer px-3 py-2 leading-none rounded-md 2xl:hover:bg-blue-600'>
+                <Link to={'/'} className='flex transition-all duration-500 gap-2 items-center cursor-pointer px-3 py-2 leading-none rounded-md 2xl:hover:bg-color-secundary'>
                     Início
                 </Link>
-                <Link to={'/category/destaques'} className='flex transition-all duration-500 items-center cursor-pointer px-3 py-2 leading-none rounded-md hover:bg-blue-600'>
+                <Link to={'/category/destaques'} className='flex transition-all duration-500 items-center cursor-pointer px-3 py-2 leading-none rounded-md hover:bg-color-secundary'>
                     Destaques
                 </Link>
-                <Link to={'/category/promocoes'} className='flex transition-all duration-500 items-center cursor-pointer px-3 py-2 leading-none rounded-md hover:bg-blue-600'>
+                <Link to={'/category/promocoes'} className='flex transition-all duration-500 items-center cursor-pointer px-3 py-2 leading-none rounded-md hover:bg-color-secundary'>
                     Promoções
                 </Link>
-                <Link to={'/category/lancamentos'} className='flex transition-all duration-500 items-center cursor-pointer px-3 py-2 2xl leading-none rounded-md hover:bg-blue-600'>
+                <Link to={'/category/lancamentos'} className='flex transition-all duration-500 items-center cursor-pointer px-3 py-2 2xl leading-none rounded-md hover:bg-color-secundary'>
                     Lançamentos
                 </Link>
                 <div 
                     to={'/contact'} 
-                    className='hidden gap-0.5 2xl:flex transition-all duration-500 items-center cursor-pointer pl-3 pr-6 py-2 leading-none rounded-md hover:bg-blue-600 relative'
+                    className='hidden gap-0.5 2xl:flex transition-all duration-500 items-center cursor-pointer pl-3 pr-6 py-2 leading-none rounded-md hover:bg-color-secundary relative'
                     onMouseOver={() => setShowContact(true)}
                     onMouseOut={() => setShowContact(false)}
                 >

@@ -12,7 +12,7 @@ export default function ShipType({title, status, setStatus, setModal}) {
         </div>
         <div className='flex gap-2 items-center'>
             <button 
-              className='text-blue-500 bg-transparent text-sm font-medium'
+              className='text-color-primary bg-transparent text-sm font-medium'
               onClick={() => setModal(true)}  
             >Editar</button>
             <Switch checked={status} onChange={setStatus}/>

@@ -200,7 +200,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
             <div className='flex flex-col w-full'>
                 <p className='mb-2 text-sm font-medium'>Descrição</p>
                 <textarea 
-                    className='px-4 py-2.5 w-full rounded-lg bg-gray-100 focus:outline outline-1 outline-blue-500' 
+                    className='px-4 py-2.5 w-full rounded-lg bg-gray-100 focus:outline outline-1 outline-color-primary' 
                     type="text" 
                     placeholder='Ex: Camiseta preta de algodão. Tamanhos P, M e G.' 
                     value={desc}
@@ -215,7 +215,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                 <div className='flex flex-col'>
                     <p className='mb-3 mt-2 text-sm font-medium'>Variações</p>
                     <button 
-                        className='text-sm text-blue-500 font-medium w-full text-left'
+                        className='text-sm text-color-primary font-medium w-full text-left'
                         onClick={() => setModalVariations(true)}
                         >
                             {`${combinations.length === 0 ? 'Adicionar variações': 'Editar variações'}`}
@@ -276,7 +276,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
             }
             <div className='align-text-top text-center py-4'>
                 <button 
-                    className='text-sm text-blue-500 font-medium w-full'
+                    className='text-sm text-color-primary font-medium w-full'
                     onClick={() => setVerMais(!verMais)}
                 >{ `${verMais ? 'Menos opções' : 'Mais opções'}` }</button>
             </div>

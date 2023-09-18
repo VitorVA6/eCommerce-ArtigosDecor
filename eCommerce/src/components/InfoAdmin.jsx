@@ -62,7 +62,7 @@ export default function InfoAdmin() {
           Redes sociais
         </h2>
         <button 
-          className='text-blue-500 w-fit text-sm font-medium'
+          className='text-color-primary w-fit text-sm font-medium'
           onClick={() => setModalRS(true)}
         >+ Adicionar redes sociais</button>
       </div>

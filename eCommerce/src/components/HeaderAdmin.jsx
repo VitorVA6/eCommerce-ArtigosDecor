@@ -15,10 +15,10 @@ export default function HeaderAdmin({setMenuMobile, setSelected}) {
             <div className='flex items-center gap-4'>
                 <div className='md:flex items-center gap-2 hidden'>
                     <p className='text-sm font-medium'>Sua loja:</p>
-                    <div className='py-3 bg-gray-100 px-3 rounded-lg md:w-60 lg:w-72 text-blue-500 text-sm font-medium'>
+                    <div className='py-3 bg-gray-100 px-3 rounded-lg md:w-60 lg:w-72 text-color-primary text-sm font-medium'>
                         {'http://[::1]:5173/'}
                     </div>
-                    <Link to={'/'} className='bg-blue-500 p-[11px] rounded-lg' target='_blank'>
+                    <Link to={'/'} className='bg-color-primary p-[11px] rounded-lg' target='_blank'>
                         <HiOutlineExternalLink className='text-white h-5 w-5' />
                     </Link>
                 </div>

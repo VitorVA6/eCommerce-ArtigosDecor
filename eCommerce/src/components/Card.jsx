@@ -68,7 +68,7 @@ export default function Card({produto, page, layout}) {
                 </div>
                 {
                 produto?.desconto > 0 &&
-                <p className='bg-blue-100 text-blue-500 px-2 py-[3px] rounded-sm flex w-fit mt-2 text-xs font-semibold'>R$ {(produto?.preco - produto?.desconto).toFixed(0)} de desconto</p>
+                <p className='bg-color-custom-bg text-color-primary px-2 py-[3px] rounded-sm flex w-fit mt-2 text-xs font-semibold'>R$ {(produto?.preco - produto?.desconto).toFixed(0)} de desconto</p>
                 }
                 <p className='text-green-500 text-sm font-medium mt-1.5'>Frete grátis</p>
             </div>

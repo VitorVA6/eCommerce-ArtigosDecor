@@ -39,7 +39,7 @@ export default function ShipOption({name, time, price, freight, setFreight, myFr
 
   return (
     <div 
-      className={`cursor-pointer flex text-gray-500 ${width} rounded-r-md justify-between items-center border-l-4 ${freight.delivery === myFreight ? 'bg-blue-100 border-l-blue-500' : 'bg-gray-100 border-l-gray-300'} px-5 py-2`}
+      className={`cursor-pointer flex text-gray-500 ${width} rounded-r-md justify-between items-center border-l-4 ${freight.delivery === myFreight ? 'bg-color-custom-bg border-l-color-primary' : 'bg-gray-100 border-l-gray-300'} px-5 py-2`}
       onClick={handleClick}
     >
         <div className='flex flex-col justify-center'>

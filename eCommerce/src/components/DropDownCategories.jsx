@@ -30,7 +30,7 @@ function DropdownCategories() {
   }, [showDropdown, dropdownRef]);
 
   return (
-    <div className="lg:text-[13px] xl:text-sm font-medium bg-blue-600 text-gray-100 h-[calc(100%+8px)] absolute lg:left-10 xl:left-32 bottom-0 rounded-t-lg flex items-center" ref={dropdownRef}>
+    <div className="lg:text-[13px] xl:text-sm font-medium bg-color-secundary text-gray-100 h-[calc(100%+8px)] absolute lg:left-10 xl:left-32 bottom-0 rounded-t-lg flex items-center" ref={dropdownRef}>
       <button 
         className='flex items-center relative px-10 h-full rounded-t-lg gap-3' 
         onClick={() =>{
@@ -53,7 +53,7 @@ function DropdownCategories() {
                     <Link 
                         key={category._id} 
                         to={`/category/${category._id}`}
-                        className='px-6 py-3 border-b border-gray-300/70 gap-4 flex items-center transition-all duration-500 hover:text-blue-500'
+                        className='px-6 py-3 border-b border-gray-300/70 gap-4 flex items-center transition-all duration-500 hover:text-color-primary'
                         onClick={() => setShowDropdown(false)}
                     >
                         <BsArrowRight className='w-5 h-5'/>
@@ -63,7 +63,7 @@ function DropdownCategories() {
             }
             <Link 
               to={'/category/destaques'} 
-              className='px-6 py-3 border-b border-gray-300/70 gap-4 flex items-center transition-all duration-500  hover:text-blue-500'
+              className='px-6 py-3 border-b border-gray-300/70 gap-4 flex items-center transition-all duration-500  hover:text-color-primary'
               onClick={() => setShowDropdown(false)}
             >
                 <AiOutlineStar className='w-5 h-5'/>
@@ -71,7 +71,7 @@ function DropdownCategories() {
             </Link>
             <Link 
               to={'/category/promocoes'} 
-              className='px-6 py-3 border-b border-gray-300/70 gap-4 flex items-center transition-all duration-500 hover:text-blue-500'
+              className='px-6 py-3 border-b border-gray-300/70 gap-4 flex items-center transition-all duration-500 hover:text-color-primary'
               onClick={() => setShowDropdown(false)}
             >
                 <AiOutlineTag className='w-5 h-5'/>
@@ -79,7 +79,7 @@ function DropdownCategories() {
             </Link>
             <Link 
               to={'/category/lancamentos'} 
-              className='px-6 py-3 mb-2 gap-4 flex items-center transition-all duration-500 hover:text-blue-500'
+              className='px-6 py-3 mb-2 gap-4 flex items-center transition-all duration-500 hover:text-color-primary'
               onClick={() => setShowDropdown(false)}
             >
                 <MdOutlineNewReleases className='w-5 h-5'/>

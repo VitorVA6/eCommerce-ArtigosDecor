@@ -96,7 +96,7 @@ export default function CatalogoAdmin() {
         }
         
         <p 
-            className='text-blue-500 text-xs lg:text-sm font-medium p-0.5 cursor-pointer -mt-2 lg:-mt-3 text-center lg:text-left'
+            className='text-color-primary text-xs lg:text-sm font-medium p-0.5 cursor-pointer -mt-2 lg:-mt-3 text-center lg:text-left'
             onClick={() => setVariacoesVisible(!variacoesVisible)}
         >{`${variacoesVisible?'Menos':'Mais'} opções`}</p>
 
@@ -105,7 +105,7 @@ export default function CatalogoAdmin() {
             hasNext &&
             <div className='flex w-full justify-center'>
                 <button 
-                  className='bg-blue-500 py-3 w-1/2 text-white font-medium rounded-lg text-sm mb-20'
+                  className='bg-color-primary py-3 w-1/2 text-white font-medium rounded-lg text-sm mb-20'
                   onClick = {()=> {
                     getProducts(perPage, nextPage, 'all', 'false', filter)
                     .then( data => {

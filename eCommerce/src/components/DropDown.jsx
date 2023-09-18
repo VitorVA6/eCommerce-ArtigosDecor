@@ -34,7 +34,7 @@ function Dropdown() {
           {
                 orderList.map( (item, index) => (
                     <button 
-                        key={index} className={`px-5 py-2 flex w-fit ${selOrder === index && 'text-blue-500 font-medium'}`}
+                        key={index} className={`px-5 py-2 flex w-fit ${selOrder === index && 'text-color-primary font-medium'}`}
                         onClick={
                             () => {
                                 setSelOrder(index)

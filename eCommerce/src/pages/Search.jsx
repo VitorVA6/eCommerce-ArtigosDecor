@@ -66,7 +66,7 @@ export default function Search() {
                 hasNext &&
                 <div className='flex w-full justify-center'>
                     <button 
-                    className='bg-blue-500 py-3 w-1/2 text-white font-medium rounded-lg text-sm mb-6 mt-10'
+                    className='bg-color-primary py-3 w-1/2 text-white font-medium rounded-lg text-sm mb-6 mt-10'
                     onClick = {()=> {
                         getProducts(8, nextPage, category, 'false', name)
                         .then( data => {

@@ -41,13 +41,13 @@ export default function CategoryFilter({categories, name, setShow}) {
             {
                 categories?.map(
                 categoria => (
-                    <Link key={categoria._id} to={`/category/${categoria._id}`} className={`${name === categoria._id ? 'text-blue-500': ''}`}>{categoria.name}</Link>
+                    <Link key={categoria._id} to={`/category/${categoria._id}`} className={`${name === categoria._id ? 'text-color-primary': ''}`}>{categoria.name}</Link>
                 )
                 )
             }
-            <Link to={'/category/destaques'} className={`${name === 'destaques' ? 'text-blue-500': ''}`}>Destaques</Link>
-            <Link to={'/category/promocoes'} className={`${name === 'promocoes' ? 'text-blue-500': ''}`}>Promocoes</Link>
-            <Link to={'/category/lancamentos'} className={`${name === 'lancamentos' ? 'text-blue-500': ''}`}>Lançamentos</Link>
+            <Link to={'/category/destaques'} className={`${name === 'destaques' ? 'text-color-primary': ''}`}>Destaques</Link>
+            <Link to={'/category/promocoes'} className={`${name === 'promocoes' ? 'text-color-primary': ''}`}>Promocoes</Link>
+            <Link to={'/category/lancamentos'} className={`${name === 'lancamentos' ? 'text-color-primary': ''}`}>Lançamentos</Link>
             </ul>
         </div>
     </>

@@ -112,7 +112,7 @@ export default function ShipmentAdmin() {
             </div>
             }
             <button 
-              className='text-blue-500 bg-transparent text-sm font-medium w-fit'
+              className='text-color-primary bg-transparent text-sm font-medium w-fit'
               onClick={() => setModalAddress(true)}  
             >{catalog.address.cep !== ''?'Alterar endereço':'Adicionar endereço'}</button>
             <div className='mt-10 w-full flex justify-center'>

@@ -20,7 +20,7 @@ export default function ListaProdutosAdmin({produtos, setModalProduto, setEdit, 
         <div className='flex flex-col mt-4'>
             <h2 className='mb-3 font-medium'>Produtos</h2>
             <button
-                className='bg-blue-500 py-2.5 lg:py-3 w-full lg:w-80 text-white rounded-md font-medium text-sm'
+                className='bg-color-primary py-2.5 lg:py-3 w-full lg:w-80 text-white rounded-md font-medium text-sm'
                 onClick={() => {
                     setModalProduto(true)
                     setEdit(false)

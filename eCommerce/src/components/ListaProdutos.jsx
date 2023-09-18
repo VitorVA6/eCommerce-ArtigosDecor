@@ -20,9 +20,9 @@ export default function ListaProdutos({title, categoria, ordination}) {
         <div className='flex justify-between items-center px-5 md:px-10 xl:px-32'>
             <div className='flex flex-col w-fit gap-0.5'>
                 <h2 className='font-medium text-[24px] text-black/70'>{title}</h2>
-                <div className='w-11/12 h-[5px] bg-blue-500 rounded-full'></div>
+                <div className='w-11/12 h-[5px] bg-color-primary rounded-full'></div>
             </div>
-            <Link to={`/category/${categoria}`} className ='text-blue-500 text-base font-medium'>Ver todos</Link>
+            <Link to={`/category/${categoria}`} className ='text-color-primary text-base font-medium'>Ver todos</Link>
         </div>
         <div className='flex xl:grid grid-cols-4 2xl:grid-cols-5 gap-3.5 overflow-x-auto scrollbar-hide pb-0.5 pl-5 md:pl-10 xl:px-32'>
             {produtos?.map( (produto, index) => (

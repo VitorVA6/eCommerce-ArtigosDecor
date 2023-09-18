@@ -50,7 +50,7 @@ export default function PaymentResume() {
                     placeholder='Código do cupom'
                     />
                 </div>
-                <button className='text-[13.5px] text-blue-500 rounded-md w-[30%]'>Adicionar</button>
+                <button className='text-[13.5px] text-color-primary rounded-md w-[30%]'>Adicionar</button>
             </div>
             <div className='flex flex-col bg-gray-100/90 rounded-md px-5 py-6 mt-5 gap-2 font-bold'>
                 <div className='flex justify-between items-center text-[13px] xl:text-sm'>

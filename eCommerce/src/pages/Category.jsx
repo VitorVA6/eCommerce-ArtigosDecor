@@ -87,13 +87,13 @@ export default function Category() {
         {
             categories?.map(
             categoria => (
-                <Link key={categoria._id} to={`/category/${categoria._id}`} className={`${name === categoria._id ? 'text-blue-500': ''}`}>{categoria.name}</Link>
+                <Link key={categoria._id} to={`/category/${categoria._id}`} className={`${name === categoria._id ? 'text-color-primary': ''}`}>{categoria.name}</Link>
             )
             )
         }
-        <Link to={'/category/destaques'} className={`${name === 'destaques' ? 'text-blue-500': ''}`}>Destaques</Link>
-        <Link to={'/category/promocoes'} className={`${name === 'promocoes' ? 'text-blue-500': ''}`}>Promocoes</Link>
-        <Link to={'/category/lancamentos'} className={`${name === 'lancamentos' ? 'text-blue-500': ''}`}>Lançamentos</Link>
+        <Link to={'/category/destaques'} className={`${name === 'destaques' ? 'text-color-primary': ''}`}>Destaques</Link>
+        <Link to={'/category/promocoes'} className={`${name === 'promocoes' ? 'text-color-primary': ''}`}>Promocoes</Link>
+        <Link to={'/category/lancamentos'} className={`${name === 'lancamentos' ? 'text-color-primary': ''}`}>Lançamentos</Link>
         </ul>
         </div>
       <div className='flex flex-col w-full md:bg-white md:col-span-10 lg:col-span-9 xl:col-span-9 md:rounded-md lg:shadow-lg lg:shadow-gray-300/40'>
@@ -151,7 +151,7 @@ export default function Category() {
             hasNext &&
             <div className='flex w-full justify-center'>
                 <button 
-                  className='bg-blue-500 py-3 w-1/2 text-white font-medium rounded-lg text-sm mb-6 mt-10'
+                  className='bg-color-primary py-3 w-1/2 text-white font-medium rounded-lg text-sm mb-6 mt-10'
                   onClick = {()=> {
                     getProducts(5, nextPage, name, selOrder)
                     .then( data => {

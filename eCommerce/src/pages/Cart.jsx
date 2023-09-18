@@ -131,20 +131,20 @@ export default function Cart() {
                                     <div className='flex rounded-md items-center h-7 border border-gray-300 '>
                                         <div className='w-8 justify-center h-full flex items-center'>
                                             <AiOutlineMinus
-                                                className='w-4 h-3 cursor-pointer text-blue-500'
+                                                className='w-4 h-3 cursor-pointer text-color-primary'
                                                 onClick={()=>alteraQuantidade(elemento?._id, '-')}
                                             />
                                         </div>
                                         <p className='text-center text-[13px] px-1 font-medium flex items-center h-full text-black/90'>{elemento?.quantidade}</p>
                                         <div className='w-8 justify-center h-full flex items-center'>
                                             <AiOutlinePlus
-                                                className='w-4 h-3 cursor-pointer text-blue-500'
+                                                className='w-4 h-3 cursor-pointer text-color-primary'
                                                 onClick={()=>alteraQuantidade(elemento?._id, '+')}
                                             />
                                         </div>
                                     </div> 
                                     <button 
-                                        className='text-blue-500 text-xs font-medium'
+                                        className='text-color-primary text-xs font-medium'
                                         onClick={() => removeCarrinho(elemento._id)}     
                                     >
                                         Excluir
@@ -243,7 +243,7 @@ export default function Cart() {
                     <h2 className='mb-4 text-black/50 text-sm md:text-[18px] text-center'>Não perca tempo e preencha-o com lindos artigos de decoração.</h2>
                     <Link 
                         to={'/'} 
-                        className='flex justify-center w-full md:w-[50%] py-3 bg-blue-500 font-medium text-white mt-3 rounded-md'>
+                        className='flex justify-center w-full md:w-[50%] py-3 bg-color-primary font-medium text-white mt-3 rounded-md'>
                             Continuar comprando
                     </Link>
                 </div>}            
@@ -277,7 +277,7 @@ export default function Cart() {
                     <p>Total</p>
                     <p>{masks.maskCurrency(total + freight.price)}</p>
                 </div>
-                <Link to={'/payment'} className='flex justify-center w-[calc(100%-48px)] py-3 bg-blue-600 text-white mx-6 rounded-sm'>CHECKOUT</Link>
+                <Link to={'/payment'} className='flex justify-center w-[calc(100%-48px)] py-3 bg-color-secundary text-white mx-6 rounded-sm'>CHECKOUT</Link>
                 </>
                 :
                 <p className='px-6 text-sm pt-5'>Aqui você encontrará os valores da sua compra assim que adicionar os produtos.</p>

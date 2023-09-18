@@ -61,7 +61,7 @@ export default function Home() {
               </div>
               <div className='flex flex-col md:flex-row gap-2 md:gap-5 xl:gap-8'>
                 <p className='text-[13px] md:text-base xl:text-lg'>ENTREGA RÁPIDA</p>
-                <div className='w-8 h-[4px] md:w-[8px] lg:w-[4px] rounded-full md:h-full bg-blue-500'></div>
+                <div className='w-8 h-[4px] md:w-[8px] lg:w-[4px] rounded-full md:h-full bg-color-primary'></div>
                 <p className='text-[13px] md:text-base xl:text-lg'>PROMOÇÕES IMPERDÍVEIS</p>
               </div>
             </div>
