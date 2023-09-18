@@ -25,7 +25,7 @@ import pagestexts from './utils/pagesText'
 import Search from './pages/Search'
 import PaymentStatus from './pages/PaymentStatus'
 
-axios.defaults.baseURL = 'http://[::1]:4000'
+axios.defaults.baseURL = import.meta.env.VITE_BASE_API
 
 function App() {
 
