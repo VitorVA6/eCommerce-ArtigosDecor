@@ -149,19 +149,35 @@ module.exports = class UserController{
     }
 
     static async sendEmailRecovery(req, res){
-        const {otp, email} = req.body
-        console.log(otp, email)
-        if(!otp) return res.status(400).json({error: 'Código não foi informado'})
+        const {email} = req.body
         if(!email) return res.status(400).json({error: 'E-mail não foi informado'})
 
         try{
             const user = await User.findOne({email: email})
             if(!user) return res.status(404).json({error: 'Este e-mail não está cadastrado'})
-            await sendEmail(email, 'Recuperação de senha', templateSendOTP(otp, user.name))
-            return res.status(200).json({message: 'Código de verificação enviado, verifique seu e-mail'})
+            if(!user.passwordResetToken.token || !user.passwordResetToken.expires || Date.now() > user.passwordResetToken.expires) {
+                const resetToken = user.createResetPasswordToken()
+                await user.save()
+                const url = `${process.env.BASE_URL}users/reset-password/${resetToken}`
+                try{
+                    await sendEmail(email, "Verificação de e-mail", templateSendOTP(url, user.name))
+                }
+                catch(err){
+                    user.passwordResetToken = {}
+                    await user.save()
+                    return res.status(500).json({error: 'Ocorreu um erro no envio do e-mail de verificação'})
+                }
+                return res.status(200).json({message: 'Código de verificação enviado, verifique seu e-mail'})
+            }
+            return res.status(400).json({error: 'Você já possui uma tentativa de recuperação de senha, tente novamente em alguns minutos'})
         }catch(err){
-            res.status(500).json({error: 'Ocorreu um erro no envio do e-mail de verificação'})
+            
+            return res.status(500).json({error: 'Ocorreu um erro no servidor, tente novamente mais tarde'})
         }
+    }
+
+    static async resetPassword(req, res){
+
     }
 
     static async updateUser(req, res){

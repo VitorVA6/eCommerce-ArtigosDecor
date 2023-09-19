@@ -1,4 +1,4 @@
-const templateSendOTP = (otp, name) => {
+const templateSendOTP = (url, name) => {
     return `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -41,7 +41,7 @@ const templateSendOTP = (otp, name) => {
                 text-align: center;
             }
             .box{
-                width: 50vw;
+                width: 40vw;
                 background-color: #f3f4f6;
                 border-radius: 6px;
                 margin-left: auto;
@@ -86,12 +86,12 @@ const templateSendOTP = (otp, name) => {
                     font-size: 42px;
                 }
                 .box{
-                    width: 95vw;
+                    width: 100vw;
                 }
              }
             @media (min-width: 769px) and (max-width: 1023px) { 
                 .box{
-                    width: 75vw;
+                    width: 70vw;
                 }
              }
         </style>
@@ -105,9 +105,9 @@ const templateSendOTP = (otp, name) => {
                 <div class="content-container">
                     <h2 class="subtitle">Olá, ${name}!</h2>
                     <p class="text-email">Utilize o código abaixo para realizar a verificação da sua recuperação de senha:</p>
-                    <p class="text-email">${otp}</p>
+                    <a class="" href="${url}" target="_blank">
                         <div class="btn">
-                            Verificar e-mail
+                            Redefinir senha
                         </div>
                     </a>
                 </div>
