@@ -7,6 +7,7 @@ const getUserByToken = require('../utils/getUserByToken')
 const sendEmail = require('../utils/sendEmail')
 const templateVerifyEmail = require('../emailTemplates/templateVerifyEmail')
 const crypto = require('crypto')
+const templateSendOTP = require('../emailTemplates/templateSendOTP')
 
 module.exports = class UserController{
 
@@ -147,6 +148,22 @@ module.exports = class UserController{
         res.status(200).json(user)
     }
 
+    static async sendEmailRecovery(req, res){
+        const {otp, email} = req.body
+        console.log(otp, email)
+        if(!otp) return res.status(400).json({error: 'Código não foi informado'})
+        if(!email) return res.status(400).json({error: 'E-mail não foi informado'})
+
+        try{
+            const user = await User.findOne({email: email})
+            if(!user) return res.status(404).json({error: 'Este e-mail não está cadastrado'})
+            await sendEmail(email, 'Recuperação de senha', templateSendOTP(otp, user.name))
+            return res.status(200).json({message: 'Código de verificação enviado, verifique seu e-mail'})
+        }catch(err){
+            res.status(500).json({error: 'Ocorreu um erro no envio do e-mail de verificação'})
+        }
+    }
+
     static async updateUser(req, res){
         const user = await getUserByToken(req.headers.authorization)
         const {email, senhaAtual, novaSenha} = req.body
@@ -190,7 +207,6 @@ module.exports = class UserController{
     }
 
     static async verify(req, res){
-
         const {token} = req.params
         try{
             const user = await getUserByToken(req.headers.authorization)
@@ -213,7 +229,5 @@ module.exports = class UserController{
         catch(err){
             return res.status(400).json({error: 'Ocorreu um erro na verificação de e-mail'})
         }
-
     }
-
 }
