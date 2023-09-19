@@ -131,6 +131,7 @@ module.exports = class UserController{
             res.status(422).json({error: 'E-mail não existe'})
             return
         }
+        console.log('ola')
         const checkPassword = await bcrypt.compare(password, user.password)
         if(!checkPassword){
             res.status(422).json({error: 'Senha inválida'})

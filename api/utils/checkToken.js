@@ -1,8 +1,6 @@
 const jwt = require('jsonwebtoken') 
 
 const checkToken = (req, res, next) => {
-
-    const secret = 'lkaiofjalaoirkajvnnauiaooi'
     const token = req.headers.authorization
     
     if(!token){
@@ -11,13 +9,12 @@ const checkToken = (req, res, next) => {
 
     try{
 
-        jwt.verify(token, secret)
+        jwt.verify(token, process.env.JWT_SECRET)
         next()
 
     }catch(err){
         res.status(400).json({ error: "O Token é inválido!" });
     }
-
 }
 
 module.exports = checkToken
