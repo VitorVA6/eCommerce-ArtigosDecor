@@ -49,14 +49,12 @@ const templateSendOTP = (url, name) => {
                 text-align: left;
             }
             .box-title{
-                padding-left: 46px;
-                padding-top: 25px;
-                padding-bottom: 25px;
-                background-color: #2563eb;
+                padding-top: 20px;
+                padding-bottom: 20px;
+                background-color: #3b82f6;
                 color: white;
                 font-size: 36px;
-                border-top-left-radius: 6px;
-                border-top-right-radius: 6px;
+                text-align: center
             }
             .content-container{
                 padding: 46px;

@@ -90,7 +90,7 @@ export function useUserContext(){
     
     async function resetPassword(token, password){
         try {
-            const {data} = await axios.patch(`/users/reset-password/${token}`, password)
+            const {data} = await axios.patch(`/users/reset-password/${token}`, {password})
             return data
         }
         catch(err){

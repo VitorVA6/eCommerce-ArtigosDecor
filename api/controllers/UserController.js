@@ -159,7 +159,7 @@ module.exports = class UserController{
             if(!user.passwordResetToken.token || !user.passwordResetToken.expires || Date.now() > user.passwordResetToken.expires) {
                 const resetToken = user.createResetPasswordToken()
                 await user.save()
-                const url = `${process.env.BASE_URL}users/reset-password/${resetToken.replace(/\./g, '-')}`
+                const url = `${process.env.BASE_URL}users/reset-password/${resetToken.replace(/\./g, "1-1")}`
                 try{
                     await sendEmail(email, "Verificação de e-mail", templateSendOTP(url, user.name))
                 }
@@ -178,12 +178,15 @@ module.exports = class UserController{
     }
 
     static async resetPassword(req, res){
-        const {token} = req.params 
+        const {token} = req.params
         const {password} = req.body
         if(!token) return res.status(400).json({error: 'Token inválido'})
         if(!password || password.length < 8) return res.status(400).json({error: 'Senha inválida'})
         const user = await getUserByToken(token)
-        if(!user) return res.status(400).json({error: 'Token inválido'})
+        if(!user) return res.status(400).json({error: 'Esse link já expirou ou é inválido'})
+        if(!user.passwordResetToken.token || !user.passwordResetToken.expires){
+            return res.status(400).json({error: 'Esse link já expirou ou é inválido'})
+        }
         try{
             const salt = await bcrypt.genSalt(12)
             const passwordHash = await bcrypt.hash(password, salt)
