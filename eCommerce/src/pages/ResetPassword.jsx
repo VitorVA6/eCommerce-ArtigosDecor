@@ -14,7 +14,7 @@ export default function ResetPassword() {
     <section className='flex flex-col justify-center items-center w-screen h-screen bg-[#f1f1f1] text-black/80'>
         <div className='flex flex-col justify-center items-center w-1/3 gap-5 bg-white px-16 pt-10 pb-16 rounded-md shadow-md shadow-gray-400/60'>
             <RiLockPasswordFill className='w-36 h-36 text-color-primary'/>
-            <h1 className='font-bold text-3xl'>Redefina a senha</h1>
+            <h1 className='font-bold text-3xl'>Redefinir senha</h1>
             <p className='text-sm'>Informe sua nova senha com pelo menos 8 dígitos.</p>
             <InputPayment
                 title='Senha' 

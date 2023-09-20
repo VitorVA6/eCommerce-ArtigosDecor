@@ -74,6 +74,32 @@ export function useUserContext(){
             return {error: 'O servidor está com problemas, tente mais tarde.'}
         }
     }
+    
+    async function forgotPassword(email){
+        try {
+            const {data} = await axios.post('/users/send-email-recovery', {email})
+            return data
+        }
+        catch(err){
+            if(!!err.response?.data){
+                return err.response.data
+            }
+            return {error: 'O servidor está com problemas, tente mais tarde.'}
+        }
+    }
+    
+    async function resetPassword(token, password){
+        try {
+            const {data} = await axios.patch(`/users/reset-password/${token}`, password)
+            return data
+        }
+        catch(err){
+           if(!!err.response?.data){
+               return err.response.data
+           }
+            return {error: 'O servidor está com problemas, tente mais tarde.'}
+        }
+    }
 
     return {
         authenticated,
@@ -83,6 +109,8 @@ export function useUserContext(){
         logout,
         getUser,
         updateUser,
-        login
+        login,
+        forgotPassword,
+        resetPassword
     }
 }

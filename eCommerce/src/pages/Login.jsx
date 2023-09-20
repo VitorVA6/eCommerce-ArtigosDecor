@@ -44,7 +44,7 @@ export default function Login() {
             <img src={loginSVG} className='h-full' alt="Imagem de um administrador" />
           </div>
           <div className='flex flex-col h-full pl-12 pr-12 md:pl-20 xl:pl-24 md:pr-24 xl:pr-36 pt-10 md:pt-12 lg:pt-20 xl:pt-28'>
-            <h1 className='text-3xl md:text-[40px] font-black'>Seja Bem-vindo</h1>
+            <h1 className='text-3xl md:text-[40px] font-bold'>Seja Bem-vindo</h1>
             <h2 className='text-sm md:text-lg lg:text-base text-gray-400 md:mt-2 lg:mt-3 mb-6 xl:mb-6'>Faça login para gerenciar sua loja</h2>
             <form 
               className='flex flex-col gap-2'
@@ -93,7 +93,7 @@ export default function Login() {
                 }
                 Lembrar-me
               </button>
-              <Link className='text-gray-400 text-[13px] md:text-base lg:text-sm w-fit -mt-1'>Esqueceu sua senha?</Link>
+              <Link to={'/users/forgot-password'} className='text-gray-400 text-[13px] md:text-base lg:text-sm w-fit -mt-1'>Esqueceu sua senha?</Link>
               <button type='submit' className='text-sm md:text-base w-fit py-2.5 px-24 mt-5 text-white bg-color-secundary rounded-full font-medium'>Login</button>
             </form>
           </div>

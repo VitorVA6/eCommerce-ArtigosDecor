@@ -155,7 +155,7 @@ module.exports = class UserController{
 
         try{
             const user = await User.findOne({email: email})
-            if(!user) return res.status(404).json({error: 'Este e-mail não está cadastrado'})
+            if(!user) return res.status(404).json({error: 'E-mail não existe'})
             if(!user.passwordResetToken.token || !user.passwordResetToken.expires || Date.now() > user.passwordResetToken.expires) {
                 const resetToken = user.createResetPasswordToken()
                 await user.save()
@@ -190,7 +190,7 @@ module.exports = class UserController{
             user.password = passwordHash
             user.passwordResetToken = {}
             await user.save()
-            res.status(200).json({message: 'Senha altera com sucesso'})
+            res.status(200).json({message: 'Senha alterada com sucesso'})
         }catch(err){
             console.log(err)
             res.status(500).json({error: 'Ocorreu um erro na verificação'})
