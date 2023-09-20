@@ -1,6 +1,6 @@
 const mongoose = require('mongoose') 
 const {Schema} = mongoose 
-const crypto = require('crypto')
+const jwt = require('jsonwebtoken')
 
 const UserSchema = new Schema({
     name: String,
@@ -13,7 +13,9 @@ const UserSchema = new Schema({
 })
 
 UserSchema.methods.createResetPasswordToken = function(){
-    const resetToken = crypto.randomBytes(32).toString("hex")
+    const resetToken = jwt.sign( {
+        id: this._id
+    }, process.env.JWT_SECRET, {expiresIn: '10m'} )
     
     this.passwordResetToken = {
         expires: Date.now() + 10*60*1000,

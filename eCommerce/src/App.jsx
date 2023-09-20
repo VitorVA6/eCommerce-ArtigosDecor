@@ -14,7 +14,7 @@ import UserProvider from './contexts/User'
 import Admin from './pages/Admin'
 import Login from './pages/Login'
 import EmailVerify from './pages/EmailVerify'
-import RecoveryPw from './pages/RecoveryPw'
+import ForgotPassword from './pages/ForgotPassword'
 import Category from './pages/Category'
 import CategoryProvider from './contexts/Category'
 import VariationProvider from './contexts/Variation'
@@ -24,6 +24,7 @@ import PolicyPage from './pages/PolicyPage'
 import pagestexts from './utils/pagesText'
 import Search from './pages/Search'
 import PaymentStatus from './pages/PaymentStatus'
+import ResetPassword from './pages/ResetPassword'
 
 axios.defaults.baseURL = import.meta.env.VITE_BASE_API
 
@@ -55,7 +56,8 @@ function App() {
         <Route path='/login' element={<Login />}/>
         <Route path='/admin' element={<Admin />} />
         <Route path='/users/verify/:token' element={<EmailVerify />}/>
-        <Route path='/recovery-pw' element={<RecoveryPw />}/>
+        <Route path='/users/forgot-password' element={<ForgotPassword />}/>
+        <Route path='/users/reset-password/:token' element={<ResetPassword />}/>
       </Routes>
       </PaymentProvider>
       </CatalogProvider>

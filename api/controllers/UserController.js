@@ -159,7 +159,7 @@ module.exports = class UserController{
             if(!user.passwordResetToken.token || !user.passwordResetToken.expires || Date.now() > user.passwordResetToken.expires) {
                 const resetToken = user.createResetPasswordToken()
                 await user.save()
-                const url = `${process.env.BASE_URL}users/reset-password/${resetToken}`
+                const url = `${process.env.BASE_URL}users/reset-password/${resetToken.replace(/\./g, '-')}`
                 try{
                     await sendEmail(email, "Verificação de e-mail", templateSendOTP(url, user.name))
                 }
@@ -172,13 +172,29 @@ module.exports = class UserController{
             }
             return res.status(400).json({error: 'Você já possui uma tentativa de recuperação de senha, tente novamente em alguns minutos'})
         }catch(err){
-            
-            return res.status(500).json({error: 'Ocorreu um erro no servidor, tente novamente mais tarde'})
+            console.log(err)
+            return res.status(500).json({error: 'Ocorreu um erro na criação do token de verificação'})
         }
     }
 
     static async resetPassword(req, res){
-
+        const {token} = req.params 
+        const {password} = req.body
+        if(!token) return res.status(400).json({error: 'Token inválido'})
+        if(!password || password.length < 8) return res.status(400).json({error: 'Senha inválida'})
+        const user = await getUserByToken(token)
+        if(!user) return res.status(400).json({error: 'Token inválido'})
+        try{
+            const salt = await bcrypt.genSalt(12)
+            const passwordHash = await bcrypt.hash(password, salt)
+            user.password = passwordHash
+            user.passwordResetToken = {}
+            await user.save()
+            res.status(200).json({message: 'Senha altera com sucesso'})
+        }catch(err){
+            console.log(err)
+            res.status(500).json({error: 'Ocorreu um erro na verificação'})
+        }
     }
 
     static async updateUser(req, res){

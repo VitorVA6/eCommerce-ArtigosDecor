@@ -8,10 +8,8 @@ const checkToken = (req, res, next) => {
     }
 
     try{
-
         jwt.verify(token, process.env.JWT_SECRET)
         next()
-
     }catch(err){
         res.status(400).json({ error: "O Token é inválido!" });
     }
