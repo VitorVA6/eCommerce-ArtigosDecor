@@ -10,6 +10,7 @@ import { useUserContext } from '../contexts/User'
 import { Navigate, useNavigate } from 'react-router-dom'
 import Requests from '../components/Requests'
 import OrderById from '../components/OrderById'
+import IntegrateFacebookAdmin from '../components/IntegrateFacebookAdmin'
 
 export default function Admin() {
   const {authenticated, checkAuth} = useUserContext()
@@ -39,6 +40,7 @@ export default function Admin() {
                 { selected === 'ship' && <ShipmentAdmin /> }
                 { selected === 'req' && <Requests setSelected={setSelected}/> }
                 { selected === 'order-id' && <OrderById setSelected={setSelected}/> }
+                { selected === 'facebook' && <IntegrateFacebookAdmin/> }
             </div>
         </div>
     </div>
