@@ -149,7 +149,7 @@ module.exports = class ProductController{
         }
         Product.paginate(filter, options, function(err, result){
             if (err){
-                return res(404).json({error: 'Ocorreu um erro no servidor.'})
+                return res.status(404).json({error: 'Ocorreu um erro no servidor.'})
             }
             return res.status(200).json(result)
         })
