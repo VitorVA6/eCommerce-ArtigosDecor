@@ -11,6 +11,7 @@ import ModalOrder from '../components/ModalOrder'
 import Dropdown from '../components/DropDown'
 import { useCategoryContext } from '../contexts/Category'
 import CategoryFilter from '../components/CategoryFilter'
+import SEO from '../components/SEO'
 
 export default function Category() {
 
@@ -70,6 +71,13 @@ export default function Category() {
 
   return (
     <>
+    <SEO  
+        title={`${defineTitle()}`}
+        description={`Caso você esteja procurando por ${defineTitle()} para decorar sua festa, aqui você encontra o perfeito para você, com o menor preço`}
+        url = {`https://artigosdecor.render.com/${name}`}
+        canonical = {`https://artigosdecor.render.com/${name}`}
+        keywords = {`${defineTitle()}`}
+    />
     <h3 className='hidden md:flex gap-1 items-center px-5 md:px-10 xl:px-32 my-[28px] text-sm text-black/80'>
       <p>Página Inicial</p> 
       <FiChevronRight className='w-3.5 h-3.5 text-gray-500 mt-0.5'/> 

@@ -5,6 +5,7 @@ import { useUserContext } from '../contexts/User';
 import sucessImg from '../images/Confirmed-bro.svg'
 import errorImg from '../images/error.svg'
 import Loading from '../components/Loading'
+import SEO from '../components/SEO';
 
 export default function EmailVerify() {
     const {checkAuth} = useUserContext()
@@ -26,6 +27,14 @@ export default function EmailVerify() {
     }, [] )
 
   return (
+    <>
+    <SEO
+        title='Verificação de e-mail'
+        description='Verifique se o endereço de e-mail que deseja utilizar para login é válido.'
+        url = {`https://artigosdecor.render.com/users/verify/${token}`}
+        canonical = {`https://artigosdecor.render.com/users/verify/${token}`}
+        keywords = 'verificação, e-mail'
+    />
     <div className='h-screen'>
         {
             loaded === true ?
@@ -55,5 +64,6 @@ export default function EmailVerify() {
         <Loading />
         }
     </div>
+    </>
   )
 }

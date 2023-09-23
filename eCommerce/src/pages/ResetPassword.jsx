@@ -6,6 +6,7 @@ import notifies from '../utils/toastNotifies'
 import LoadingButton from '../components/LoadingButton'
 import { useUserContext } from '../contexts/User'
 import sucessImg from '../images/Confirmed-bro.svg'
+import SEO from '../components/SEO'
 
 
 export default function ResetPassword() {
@@ -38,6 +39,14 @@ export default function ResetPassword() {
     }
 
   return (
+    <>
+    <SEO
+        title='Redefinir Senha'
+        description='Refenina uma nova senha informando-a nos campos senha e confirmar senha.'
+        url = {`https://artigosdecor.render.com/users/reset/${token}`}
+        canonical = {`https://artigosdecor.render.com/users/reset/${token}`}
+        keywords = 'refenir, senha'
+    />
     <section className='flex flex-col justify-center items-center w-screen h-screen bg-[#f1f1f1] text-black/80'>
         <notifies.Container />
         {
@@ -83,5 +92,6 @@ export default function ResetPassword() {
         </div>
         }
     </section>
+    </>
   )
 }

@@ -6,6 +6,7 @@ import Slider from 'react-slick'
 import { BsCreditCard2Back, BsShieldCheck, BsArrowCounterclockwise, BsCart2 } from 'react-icons/bs';
 import { FiChevronRight } from 'react-icons/fi';
 import { useVariationContext } from '../contexts/Variation';
+import SEO from '../components/SEO';
 
 export default function Produto() {
     const {id} = useParams()
@@ -118,7 +119,14 @@ export default function Produto() {
         getPrice()
     }, [selectedOptions] )
   return (
-    
+    <>
+    <SEO  
+        title={`${produto?.title}`}
+        description={`${produto?.title} perfeito para deixar a sua festa mais bonita`}
+        url = {`https://artigosdecor.render.com/produto/${id}`}
+        canonical = {`https://artigosdecor.render.com/produto/${id}`}
+        keywords = {`${produto?.title}, ${produto?.categoria[0]?.label}`}
+    />
     <section className='flex flex-col'>    
         <h3 className='hidden md:flex gap-1 items-center px-5 md:px-10 xl:px-32 my-[28px] text-sm text-gray-600'>
             <p>Página inicial</p> 
@@ -295,5 +303,6 @@ export default function Produto() {
             <p className='text-gray-500 text-sm' style={{whiteSpace: "pre-wrap"}}>{produto?.desc}</p>
         </div>       
     </section>
+    </>
   )
 }

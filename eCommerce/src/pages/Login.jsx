@@ -7,6 +7,7 @@ import {BsCircle} from 'react-icons/bs'
 import { useFormik } from 'formik'
 import notifies from '../utils/toastNotifies'
 import {loginSchema} from '../schemas'
+import SEO from '../components/SEO'
 
 export default function Login() {
   const {authenticated, checkAuth, login} = useUserContext()
@@ -38,6 +39,13 @@ export default function Login() {
 
   return (
     <>
+      <SEO
+        title='Login'
+        description='Realize login para ter acesso à parte administrativa do Artigos Decor.'
+        url = 'https://artigosdecor.render.com/login'
+        canonical = 'https://artigosdecor.render.com/login'
+        keywords = 'login'
+    />
       <notifies.Container />
       <section className='flex flex-col lg:grid lg:grid-cols-2 w-screen h-screen text-black/80'>
           <div className='lg:flex justify-center items-center h-[30vh] md:h-[40vh] lg:h-full bg-gray-100 px-6'>

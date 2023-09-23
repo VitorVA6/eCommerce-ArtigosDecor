@@ -11,6 +11,7 @@ import { useCatalogContext } from '../contexts/Catalog';
 import { useCarrinhoContext } from '../contexts/Carrinho';
 import ShipOption from '../components/ShipOption';
 import { scrollToDiv } from '../utils/scroll';
+import SEO from '../components/SEO';
 
 export default function PaymentPage() {
 
@@ -98,6 +99,14 @@ export default function PaymentPage() {
   }
     
   return (
+    <>
+    <SEO
+        title='Pagamento'
+        description='Informe seus dados pessoas, endereço e dados de pagamento'
+        url = 'https://artigosdecor.render.com/payment'
+        canonical = 'https://artigosdecor.render.com/payment'
+        keywords = 'pagamento, checkout, mercado pago'
+    />
     <div className='grid xl:grid-cols-3 md:px-36 lg:px-64 xl:px-32 py-10 gap-5'>
         <ProgressbarPayment />
         <div className='order-2 xl:order-1 flex flex-col gap-3'>
@@ -343,5 +352,6 @@ export default function PaymentPage() {
         </PaymentBlock>
         <PaymentResume />
     </div>
+    </>
   )
 }

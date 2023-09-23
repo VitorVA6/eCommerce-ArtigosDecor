@@ -11,6 +11,7 @@ import { usePaymentContext } from '../contexts/Payment'
 import masks from '../utils/masks'
 import { useCatalogContext } from '../contexts/Catalog'
 import ShipOption from '../components/ShipOption'
+import SEO from '../components/SEO'
 
 export default function Cart() {
     const {carrinho, listaCarrinho, removeCarrinho, alteraQuantidade, total, freight, setFreight, deliveryOptions} = useCarrinhoContext()
@@ -100,12 +101,20 @@ export default function Cart() {
     }
 
   return (
+    <>
+    <SEO
+        title='Seu Carrinho de Compras'
+        description={`Aqui é armazenada a lista de produtos que você deseja comprar`}
+        url = 'https://artigosdecor.render.com/cart'
+        canonical = 'https://artigosdecor.render.com/cart'
+        keywords = 'carrinho, cart'
+    />
     <section className=' px-5 md:px-10 xl:px-32 pb-20 -mb-16'>
         <h2 className='pt-10 md:pt-12 lg:pt-12 mb-10 lg:mb-12 font-semibold text-[24px] md:text-[32px] text-black/80'>Meu Carrinho</h2>
         <div className = 'grid lg:grid-cols-12 xl:grid-cols-7 gap-6'>
             <div className={`h-fit flex flex-col lg:col-span-8 xl:col-span-5 w-full ${carrinho.length > 0 && 'bg-white rounded-md shadow-md shadow-gray-400/60'}`}>
                               
-                { carrinho.length > 0 ? 
+                { carrinho.length > 0 ?
                     <>
                     <div className='flex md:grid grid-cols-5 xl:grid-cols-6 text-gray-500/80 py-4 font-medium border-b px-4 md:px-6'>
                         <h3 className='md:hidden text-black/90'>Produtos</h3>
@@ -285,5 +294,6 @@ export default function Cart() {
             </div>     
         </div>
     </section>
+    </>
   )
 }

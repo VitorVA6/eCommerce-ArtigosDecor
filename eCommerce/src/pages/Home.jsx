@@ -7,6 +7,7 @@ import Slider from 'react-slick'
 import freeShipping from '../images/free-shipping.svg'
 import delivery from '../images/delivery.svg'
 import Loading from '../components/Loading'
+import SEO from '../components/SEO'
 
 export default function Home() {
     const {catalog, loading} = useCatalogContext()
@@ -23,6 +24,7 @@ export default function Home() {
 
   return (
     <>
+      <SEO keywords='festas, decoração, vasos, castiçais, palnéis de led, led, suporte de bolo, boleira '/>
       {
       loading === true ? <Loading /> :
       <section className='flex flex-col overflow-x-hidden gap-y-8'>

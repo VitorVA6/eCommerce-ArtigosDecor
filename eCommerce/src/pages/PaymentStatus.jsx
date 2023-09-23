@@ -3,6 +3,7 @@ import { initMercadoPago } from '@mercadopago/sdk-react';
 import { StatusScreen } from '@mercadopago/sdk-react';
 import {useParams} from 'react-router-dom';
 import Loading from '../components/Loading';
+import SEO from '../components/SEO';
 
 export default function PaymentStatus() {
 
@@ -30,6 +31,14 @@ export default function PaymentStatus() {
        };
 
   return (
+    <>
+    <SEO 
+        title='Status de Pagamento'
+        description='Informa o status do pagamento do seu pedido'
+        url = {`https://artigosdecor.render.com/payment-status/${id}`}
+        canonical = {`https://artigosdecor.render.com/payment-status/${id}`}
+        keywords = 'pagamento, checkout, mercado pago, status'
+    />
     <div className='px-4 lg:px-10 pt-8 lg:pt-12 flex flex-col items-center'>
         <h1 className='flex text-2xl lg:text-[32px] font-bold mb-10 lg:mb-[56px] text-black/80'>Status de pagamento</h1>
         <div className={`w-full lg:w-1/2 gap-8 ${loaded===true?'flex':'hidden'} flex-col min-h-[400px] md:min-h-[405px] lg:min-h-[410px] xl:min-h-[410px]`}>
@@ -42,5 +51,6 @@ export default function PaymentStatus() {
         </div>
         <Loading loaded={loaded}/>
     </div>
+    </>
   )
 }

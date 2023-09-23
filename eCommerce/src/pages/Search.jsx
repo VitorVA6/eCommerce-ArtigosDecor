@@ -5,6 +5,7 @@ import {FiChevronRight} from 'react-icons/fi'
 import { useProductContext } from '../contexts/Product'
 import Card from '../components/Card'
 import { useParams } from 'react-router-dom'
+import SEO from '../components/SEO'
 
 export default function Search() {
     const {getProducts} = useProductContext()
@@ -27,6 +28,14 @@ export default function Search() {
     }, [name, category])
 
   return (
+    <>
+    <SEO
+        title='Busca'
+        description='Busque por um produto'
+        url = {`https://artigosdecor.render.com/search/${category}/${name}`}
+        canonical = {`https://artigosdecor.render.com/search/${category}/${name}`}
+        keywords = 'busca, artigos decor'
+    />
     <div className='flex flex-col overflow-x-hidden md:px-10 xl:px-32'>
         <h3 className='hidden md:flex gap-1 items-center my-[28px] text-sm text-black/80'>
             <p>Página iInicial</p> 
@@ -86,5 +95,6 @@ export default function Search() {
             } 
         </div>
       </div>
+    </>
   )
 }
