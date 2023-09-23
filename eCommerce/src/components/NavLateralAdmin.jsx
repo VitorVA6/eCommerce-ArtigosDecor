@@ -3,7 +3,7 @@ import {IoMdClose} from 'react-icons/io'
 import {BsFillInfoCircleFill, BsGridFill} from 'react-icons/bs'
 import {FaPaintBrush} from 'react-icons/fa'
 import {ImTruck} from 'react-icons/im'
-import {MdAccountCircle} from 'react-icons/md'
+import {MdAccountCircle, MdFileUpload} from 'react-icons/md'
 import {AiFillInstagram} from 'react-icons/ai'
 import verifyScreen from '../utils/verifyScreen'
 
@@ -111,6 +111,16 @@ export default function NavLateralAdmin({selected, setSelected, setMenuMobile, m
             >
                 <AiFillInstagram className='w-[22px] h-[22px] -ml-1'/>
                 Instagram
+            </button>
+            <button 
+                className={`cursor-pointer  flex gap-3 items-center ${handleClassPage('upload')} pl-5 md:pl-0`}
+                onClick = {() => {
+                    closeMenu()
+                    setSelected('upload')
+                }}
+            >
+                <MdFileUpload className='w-6 h-6 -ml-1.5'/>
+                Upload
             </button>
             <button 
                 className={`cursor-pointer  flex gap-3 items-center ${handleClassPage('acc')} pl-5 md:pl-0`}
