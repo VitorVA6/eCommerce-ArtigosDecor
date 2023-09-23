@@ -158,7 +158,13 @@ export default function ModalAddress({setModalAddress, notifySucess, notifyError
                 id='complemento'
                 blur={addressForm.handleBlur}/>
             <div className='mt-4'>
-                <LoadingButton loading={loading} text='Salvar alterações' full={true} handleSubmit={() => addressForm.handleSubmit()} />
+                <LoadingButton 
+                    loading={loading} 
+                    text='Salvar alterações' 
+                    full={true} 
+                    handleSubmit={() => addressForm.handleSubmit()} 
+                    bg_color='bg-blue-500'
+                />
             </div>
         </form>
     </BaseModal>

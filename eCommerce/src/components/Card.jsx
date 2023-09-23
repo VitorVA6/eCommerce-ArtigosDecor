@@ -29,7 +29,7 @@ export default function Card({produto, page, layout}) {
 
   return (
     <div 
-        className={`flex w-full ${layout === 'grid' ? 'flex-col' : 'flex-row'} bg-white rounded-md cursor-pointer shadow-md shadow-gray-300/80 ${(page==='s'||page==='c') ? 'p-3 md:p-4' : 'my-5 p-4'} relative hover:shadow-lg hover:shadow-gray-400/60`}
+        className={`flex w-full ${layout === 'grid' ? 'flex-col' : 'flex-row'} bg-white rounded-md cursor-pointer shadow-md shadow-gray-300/80 ${(page==='s'||page==='c') ? 'p-3 md:p-4' : 'my-4 p-4'} relative hover:shadow-lg hover:shadow-gray-400/60`}
         onClick={() =>navigate(`/produto/${produto?._id}`)}
     >
         <div 
@@ -38,7 +38,7 @@ export default function Card({produto, page, layout}) {
             >
             {
                 priceoff > 0 ?
-                <div className='flex absolute -left-1 -top-1 gap-0.5 bg-green-500 w-fit py-0.5 px-1.5 items-center text-white rounded-md'>
+                <div className='flex absolute -left-1 -top-1 gap-0.5 bg-color-secundary w-fit py-0.5 px-1.5 items-center text-white rounded-md'>
                     <AiOutlineArrowDown className='w-3 h-3' />
                     <h4 className='text-white font-medium text-sm md:mb-0.5 xl:mb-[1.5px]'>{`${Math.ceil(((price - priceoff)*100)/price)}%`}</h4>
                 </div>
@@ -50,7 +50,7 @@ export default function Card({produto, page, layout}) {
             <div className='flex flex-col'>
                 {
                 produto?.desconto > 0 &&
-                <p className='inline line-through text-gray-500/90 text-[16px] font-light'>{produto?.preco?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                <p className='inline line-through text-gray-600 text-[16px] font-light'>{produto?.preco?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                 }
                 <div className='flex items-center gap-x-1.5'>
                     {
@@ -59,12 +59,12 @@ export default function Card({produto, page, layout}) {
                     <p className='text-[22px] xl:text-[23px] text-black/80 leading-none'>{produto?.preco?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                     }
                     {produto?.desconto > 0 &&                           
-                    <p className='text-green-500 text-sm'>{ Math.ceil((produto?.preco - produto?.desconto)*100/produto?.preco)}% OFF</p>                          
+                    <p className='text-color-primary text-sm'>{ Math.ceil((produto?.preco - produto?.desconto)*100/produto?.preco)}% OFF</p>                          
                     }
                 </div>
-                <div className='flex gap-1 mt-1 text-sm'>
-                    <p className='text-black/80'>em até</p>
-                    <p className='text-green-500'>12x de {produto?.desconto > 0 ? parseFloat((produto?.desconto* taxa /12).toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : parseFloat((produto?.preco*taxa/12).toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                <div className='flex gap-1 text-sm text-gray-600'>
+                    <p >em até</p>
+                    <p>12x de {produto?.desconto > 0 ? parseFloat((produto?.desconto* taxa /12).toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : parseFloat((produto?.preco*taxa/12).toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                 </div>
                 {
                 produto?.desconto > 0 &&

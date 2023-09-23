@@ -96,7 +96,7 @@ export default function CatalogoAdmin() {
         }
         
         <p 
-            className='text-color-primary text-xs lg:text-sm font-medium p-0.5 cursor-pointer -mt-2 lg:-mt-3 text-center lg:text-left'
+            className='text-blue-500 text-xs lg:text-sm font-medium p-0.5 cursor-pointer -mt-2 lg:-mt-3 text-center lg:text-left'
             onClick={() => setVariacoesVisible(!variacoesVisible)}
         >{`${variacoesVisible?'Menos':'Mais'} opções`}</p>
 

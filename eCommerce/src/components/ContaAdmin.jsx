@@ -5,6 +5,7 @@ import {useFormik} from 'formik'
 import { emailSchema, passwordSchema } from '../schemas';
 import notifies from '../utils/toastNotifies';
 import LoadingButton from './LoadingButton';
+import InputAdmin from './InputAdmin';
 
 export default function ContaAdmin() {
   const { email, logout, getUser, updateUser } = useUserContext()
@@ -73,22 +74,25 @@ export default function ContaAdmin() {
           className='bg-white py-7 px-7 rounded-xl border border-gray-300/80 lg:border-gray-200/70'
           onSubmit={formikEmail.handleSubmit}  
         >
-          <div className='flex flex-col w-full gap-2 mb-5'>
-            <h3 className='text-sm font-medium'>E-mail</h3>
-            <input 
-              type="text" 
-              className='px-2 py-2.5 outline-none bg-gray-50 text-sm rounded-lg' 
-              placeholder='E-mail de cadastro' 
-              value={ formikEmail.values.email}
-              onChange = { formikEmail.handleChange}
-              id='email'
-              onBlur={formikEmail.handleBlur}
-            />
+          <div className='flex flex-col w-full gap-1 mb-5'>
+            <InputAdmin 
+              title={'E-mail'} 
+              value={formikEmail.values.email} 
+              setValue={formikEmail.handleChange} 
+              placeholder='E-mail de cadastro'
+              handleBlur={formikEmail.handleBlur}
+              id={'email'}/>
             {
               formikEmail.errors.email && formikEmail.touched.email && <p className='text-red-400 text-xs'>{`${formikEmail.errors.email}`}</p>
             }
           </div>
-            <LoadingButton loading={loading} text={'Alterar e-mail'} handleSubmit={undefined} full={true}/>
+            <LoadingButton 
+              loading={loading} 
+              text={'Alterar e-mail'} 
+              handleSubmit={undefined} 
+              full={true}
+              bg_color='bg-blue-500'
+            />
             {
               classManager()
             }
@@ -102,57 +106,54 @@ export default function ContaAdmin() {
           onSubmit={formikPw.handleSubmit}
         >
           <div className='flex flex-col w-full gap-2 mb-5'>
-            <h3 className='text-sm font-medium'>Senha atual</h3>
-            <input 
-              type="password" 
-              className='px-2 py-2.5 outline-none bg-gray-50 text-sm rounded-lg' 
+            <InputAdmin 
+              title={'Senha atual'} 
+              value={formikPw.values.password} 
+              setValue={formikPw.handleChange} 
               placeholder='Senha atual'
-              id='password'
-              value={formikPw.values.password}
-              onChange={formikPw.handleChange}
-              onBlur={formikPw.handleBlur}
-            />
+              handleBlur={formikPw.handleBlur}
+              id={'password'}
+              type='password'/>
             {
               formikPw.errors.password && formikPw.touched.password && <p className='text-red-400 text-xs'>{`${formikPw.errors.password}`}</p>
             }
           </div>
           <div className='flex flex-col w-full gap-2 mb-5'>
-            <h3 className='text-sm font-medium'>Nova senha</h3>
-            <input 
-              type="password" 
-              className='px-2 py-2.5 outline-none bg-gray-50 text-sm rounded-lg' 
-              placeholder='Nova senha' 
-              id='newPassword'
-              value={formikPw.values.newPassword}
-              onChange={formikPw.handleChange}
-              onBlur={formikPw.handleBlur}
+          <InputAdmin 
+            title={'Nova senha'} 
+            value={formikPw.values.newPassword} 
+            setValue={formikPw.handleChange} 
+            placeholder='Nova senha'
+            handleBlur={formikPw.handleBlur}
+            id={'newPassword'}
+            type='password'
             />
             {
               formikPw.errors.newPassword && formikPw.touched.newPassword && <p className='text-red-400 text-xs'>{`${formikPw.errors.newPassword}`}</p>
             }
           </div>
           <div className='flex flex-col w-full gap-2 mb-5'>
-            <h3 className='text-sm font-medium'>Confirmar nova senha</h3>
-            <input 
-              type="password" 
-              className='px-2 py-2.5 outline-none bg-gray-50 text-sm rounded-lg' 
+            <InputAdmin 
+              title={'Confirmar nova senha'} 
+              value={formikPw.values.confirmPassword} 
+              setValue={formikPw.handleChange} 
               placeholder='Confirmar nova senha'
-              id='confirmPassword'
-              value={formikPw.values.confirmPassword}
-              onChange={formikPw.handleChange}
-              onBlur={formikPw.handleBlur}
-            />
+              handleBlur={formikPw.handleBlur}
+              id={'confirmPassword'}
+              type='password'
+              />
             {
               formikPw.errors.confirmPassword && formikPw.touched.confirmPassword && <p className='text-red-400 text-xs'>{`${formikPw.errors.confirmPassword}`}</p>
             }
           </div>
-          <LoadingButton loading={loading2} text={'Salvar alterações'} handleSubmit={undefined} full={true}/>
+          <LoadingButton 
+            loading={loading2} 
+            text={'Salvar alterações'} 
+            handleSubmit={undefined} 
+            full={true}
+            bg_color='bg-blue-500'
+          />
         </form>
-      </div>
-      <div className='flex flex-col w-full lg:w-3/5 mt-8'>
-        <h3 className='font-medium mb-2'>Perdeu a senha?</h3>
-        <p className='text-sm text-black mb-2'>Ao clicar no botão, uma nova senha será criada e enviada para o seu e-mail</p>
-        <button className='bg-gray-300 text-sm w-full py-3 rounded-lg font-medium'>Perdi a senha</button>
       </div>
       <div className='flex flex-col w-full lg:w-3/5 mt-8 mb-16'>
         <h3 className='font-medium mb-2'>Sair da conta</h3>

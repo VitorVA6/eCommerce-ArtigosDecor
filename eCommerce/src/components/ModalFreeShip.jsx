@@ -105,7 +105,9 @@ export default function ModalFreeShip({setModalFree, notifyError, notifySucess})
                 loading={loading} 
                 text='Salvar alterações' 
                 full={true} 
-                handleSubmit={() => handleSubmit()}/>
+                handleSubmit={() => handleSubmit()}
+                bg_color='bg-blue-500'
+            />
         </div>
     </BaseModal>
   )

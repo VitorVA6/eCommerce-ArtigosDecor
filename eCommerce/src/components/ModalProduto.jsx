@@ -179,14 +179,14 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                 variations={variations} verifySelected={verifySelected} handleSelect={handleSelect}/>
         }
         <h2 className='text-center py-4 border-b w-full font-medium'>{`${edit?'Editar':'Adicionar'} Produto`}</h2>
-        <div className='flex flex-col py-2 px-7 w-full overflow-auto h-[400px]'>
+        <div className='flex flex-col gap-y-3 py-2 px-7 w-full overflow-auto h-[400px]'>
             <div className='flex gap-x-6'>
                 <InputAdmin width={'w-8/12'} title={'Nome'} value={name} 
                     setValue={v => setName(v.target.value)} placeholder='Ex: Camisa preta' type='text'/>
                 <InputAdmin width={'w-4/12'} title={'Preço'} value={price} 
                     setValue={v=>setPrice(masks.maskCurrency(v.target.value))} placeholder='' type='text'/>
             </div>
-            <div className='flex flex-col w-full mb-6'>
+            <div className='flex flex-col w-full'>
                 <p className='mb-2 text-sm font-medium'>Categoria</p>
                 <Select
                     className='text-sm' placeholder='Ex: Camisas, calças, meias' 
@@ -200,7 +200,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
             <div className='flex flex-col w-full'>
                 <p className='mb-2 text-sm font-medium'>Descrição</p>
                 <textarea 
-                    className='px-4 py-2.5 w-full rounded-lg bg-gray-100 focus:outline outline-1 outline-color-primary' 
+                    className='px-4 py-2.5 w-full rounded-lg bg-gray-100 focus:outline outline-1 outline-blue-500' 
                     type="text" 
                     placeholder='Ex: Camiseta preta de algodão. Tamanhos P, M e G.' 
                     value={desc}
@@ -213,9 +213,9 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                 <InputAdmin width={'w-1/3'} title='Desconto' value={priceoff} 
                     setValue={v=>setPriceoff(masks.maskCurrency(v.target.value))} placeholder='' type='text'/>
                 <div className='flex flex-col'>
-                    <p className='mb-3 mt-2 text-sm font-medium'>Variações</p>
+                    <p className='mb-1.5 mt-2 text-sm font-medium'>Variações</p>
                     <button 
-                        className='text-sm text-color-primary font-medium w-full text-left'
+                        className='text-sm text-blue-500 font-medium w-full text-left'
                         onClick={() => setModalVariations(true)}
                         >
                             {`${combinations.length === 0 ? 'Adicionar variações': 'Editar variações'}`}
@@ -276,7 +276,7 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
             }
             <div className='align-text-top text-center py-4'>
                 <button 
-                    className='text-sm text-color-primary font-medium w-full'
+                    className='text-sm text-blue-500 font-medium w-full'
                     onClick={() => setVerMais(!verMais)}
                 >{ `${verMais ? 'Menos opções' : 'Mais opções'}` }</button>
             </div>
@@ -292,7 +292,13 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                     <input className='hidden' multiple={true} type='file' onChange={(ev) => handleFiles(ev)} />
                     <BsCardImage className="w-[22px] h-[22px] text-gray-400/70"/>
                 </label>
-                <LoadingButton loading={loading} handleSubmit={handleSubmit} text={'Confirmar'} full={false} />
+                <LoadingButton 
+                    loading={loading} 
+                    handleSubmit={handleSubmit} 
+                    text={'Confirmar'} 
+                    full={false}
+                    bg_color='bg-blue-500'
+                />
             </div>
         </div>
     </BaseModal>

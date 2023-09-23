@@ -280,13 +280,12 @@ export default function Cart() {
                         Adicionar Cupom 
                         <FiChevronRight />
                     </button>
-                    
                 </div>
                 <div className='flex justify-between pt-5 pb-6 px-6 text-base md:text-[18px] font-medium text-black/80'>
                     <p>Total</p>
                     <p>{masks.maskCurrency(total + freight.price)}</p>
                 </div>
-                <Link to={'/payment'} className='flex justify-center w-[calc(100%-48px)] py-3 bg-color-secundary text-white mx-6 rounded-sm'>CHECKOUT</Link>
+                <Link to={'/payment'} className='flex justify-center w-[calc(100%-48px)] py-3 bg-color-primary text-white mx-6 rounded-sm'>CHECKOUT</Link>
                 </>
                 :
                 <p className='px-6 text-sm pt-5'>Aqui você encontrará os valores da sua compra assim que adicionar os produtos.</p>

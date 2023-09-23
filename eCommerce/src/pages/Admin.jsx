@@ -32,7 +32,7 @@ export default function Admin() {
         <HeaderAdmin setMenuMobile={setMenuMobile} setSelected={setSelected}/>
         <div className='flex h-screen overflow-y-hidden pt-16 md:pt-20'>
             <NavLateralAdmin setSelected={setSelected} selected={selected} setMenuMobile={setMenuMobile} menuMobile={menuMobile}/>         
-            <div className='bg-gray-200/60 lg:bg-gray-50 w-full h-full overflow-auto px-4 py-8 lg:p-10'>
+            <div className='bg-[#f1f1f1] w-full h-full overflow-auto px-4 py-8 lg:p-10'>
                 { selected === 'catalog' && <CatalogoAdmin /> }
                 { selected === 'info' && <InfoAdmin /> }
                 { selected === 'custom' && <PersoAdmin /> }

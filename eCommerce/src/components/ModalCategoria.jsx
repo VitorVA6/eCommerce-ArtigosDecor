@@ -107,7 +107,7 @@ function removeUploadedImages(name){
           className={`${!edit && 'hidden'} text-red-500 font-normal absolute p-1 top-3 right-5`}
           onClick={() => remove()}
       >Excluir</button>
-      <div className='flex flex-col py-2 px-7 w-full'>
+      <div className='flex flex-col py-2 px-7 w-full gap-8'>
         <InputAdmin width={'w-full'} title='Nome da categoria' value={category} setValue={v=>setCategory(v.target.value)} placeholder={placeh} type='text'/>
         <UploadImagesBlock uploadedImages={uploadedImage} removeUploadedImages={removeUploadedImages} 
             images={image} removeFiles={removeFiles}/>
@@ -117,7 +117,13 @@ function removeUploadedImages(name){
               <input className='hidden' multiple={false} type='file' onChange={(ev) => handleFiles(ev)} />
               <BsCardImage className="w-[22px] h-[22px] text-gray-400/70"/>
             </label>
-            <LoadingButton loading={loading} text={'Confirmar'} handleSubmit={add} full={false}/>
+            <LoadingButton 
+              loading={loading} 
+              text={'Confirmar'}
+              handleSubmit={add}
+              full={false}
+              bg_color='bg-blue-500'
+            />
           </div>
       </div>
     </BaseModal>

@@ -1,10 +1,10 @@
 import React from 'react'
 import loadImg from '../images/load-icon.png'
 
-export default function LoadingButton({loading, text, handleSubmit, full}) {
+export default function LoadingButton({loading, text, handleSubmit, full, bg_color = 'bg-color-primary'}) {
   return (
     <button
-        className={`bg-color-primary text-white ${full===true?'w-full':'w-1/2'} rounded-lg py-3 text-sm font-medium flex items-center justify-center gap-3 ${loading===true&&'opacity-60'}`}
+        className={`${bg_color} text-white ${full===true?'w-full':'w-1/2'} rounded-lg py-3 text-sm font-medium flex items-center justify-center gap-3 ${loading===true&&'opacity-60'}`}
         onClick = {(ev) => {
             ev.preventDefault()
             if(handleSubmit === undefined){}

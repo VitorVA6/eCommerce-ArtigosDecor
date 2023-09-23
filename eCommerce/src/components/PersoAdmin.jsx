@@ -53,38 +53,8 @@ export default function PersoAdmin() {
   return (
     <section className='flex items-center flex-col w-full h-screen'>
       <notifies.Container />
-      <div className='flex flex-col w-full lg:w-3/4 bg-white py-5 px-4 lg:px-7 rounded-t-xl border border-gray-300/80 lg:border-gray-200/70'>
-        <h2 className='mb-3 font-medium text-lg'>Informações</h2>
-        <div className='flex flex-col w-full gap-2 mb-2.5'>
-          <h3 className='text-sm font-medium'>Nome</h3>
-          <input 
-            type="text" 
-            className='px-2 py-2.5 outline-none bg-gray-50 text-sm rounded-lg' 
-            placeholder='Nome do seu negócio' 
-            value={catalog.nome}
-            onChange={(ev)=> {
-              setCatalog( (prev) => {
-                return {...prev, nome: ev.target.value}
-              } )
-          }}
-          />
-        </div>
-        <div className='flex flex-col w-full gap-2'>
-          <h3 className='text-sm font-medium'>Número do Whatsapp</h3>
-          <input 
-            type="text" 
-            className='px-2 py-2.5 outline-none bg-gray-50 text-sm rounded-lg' 
-            placeholder='Através desse número seus clientes entrarão em contato' 
-            value={catalog.whats}
-            onChange={(ev)=> {
-              setCatalog( (prev) => {
-                return {...prev, whats: masks.maskWhats(ev.target.value)}
-              } )
-            }}
-          />
-        </div>
-      </div>
-      <div className='flex flex-col w-full lg:w-3/4 bg-white py-5 px-7 border border-gray-300/80 lg:border-gray-200/70 mb-10'>
+      
+      <div className='flex flex-col w-full lg:w-3/4 bg-white py-5 px-7 border rounded-xl border-gray-300/80 lg:border-gray-200/70 mb-10'>
         <h3 className='font-medium mb-1.5'>Banners</h3>
         <p className='text-sm text-gray-400 mb-2.5'>Adicione banners para destacar sua marca, promoções e mais.</p>
         <p className='text-sm mb-5'>Imagens dos banners</p>
@@ -129,7 +99,7 @@ export default function PersoAdmin() {
           }
         </div>
       </div>
-        <LoadingButton loading={loading} text={'Salvar alterações'} handleSubmit={handleSubmit} full={false} />    
+        <LoadingButton loading={loading} text={'Salvar alterações'} handleSubmit={handleSubmit} full={false} bg_color='bg-blue-500'/>    
     </section>
   )
 }

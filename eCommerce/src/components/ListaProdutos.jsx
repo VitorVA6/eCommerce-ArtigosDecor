@@ -17,12 +17,12 @@ export default function ListaProdutos({title, categoria, ordination}) {
 
   return (
     <section className='flex flex-col border border-y-0 overflow-x-hidden py-7 gap-y-2'>
-        <div className='flex justify-between items-center px-5 md:px-10 xl:px-32'>
-            <div className='flex flex-col w-fit gap-0.5'>
-                <h2 className='font-medium text-[24px] text-black/70'>{title}</h2>
-                <div className='w-11/12 h-[5px] bg-color-primary rounded-full'></div>
-            </div>
-            <Link to={`/category/${categoria}`} className ='text-color-primary text-base font-medium'>Ver todos</Link>
+        <div className='flex items-end px-5 md:px-10 xl:px-32 gap-5'>
+            <h2 className='font-medium text-[25px] text-black/70 leading-none'>{title}</h2>
+            <Link 
+                to={`/category/${categoria}`} 
+                className ='text-color-primary text-base font-medium leading-none mb-[2px]'
+            >Ver todos</Link>
         </div>
         <div className='flex xl:grid grid-cols-4 2xl:grid-cols-5 gap-3.5 overflow-x-auto scrollbar-hide pb-0.5 pl-5 md:pl-10 xl:px-32'>
             {produtos?.map( (produto, index) => (

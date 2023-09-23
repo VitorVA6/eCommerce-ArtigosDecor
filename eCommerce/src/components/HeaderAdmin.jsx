@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import {FiMenu} from "react-icons/fi"
 import {HiOutlineExternalLink} from 'react-icons/hi'
 import noteIcon from '../images/caderno.png'
+import logo from '../images/logo.png'
 
 export default function HeaderAdmin({setMenuMobile, setSelected}) {
 
@@ -10,15 +11,15 @@ export default function HeaderAdmin({setMenuMobile, setSelected}) {
     <header className='flex bg-white justify-between items-center px-6 lg:px-10 h-16 md:h-20 fixed w-full z-10 border-b'>
         <nav className='flex justify-between items-center w-full'>
             <Link to={'/admin'}>
-                <h1 className='text-xl lg:text-2xl font-bold'>{'Sua Logo'}</h1>
+                <h1 className='text-xl font-bold text-blue-500'>SEU ADMIN</h1>
             </Link >
             <div className='flex items-center gap-4'>
                 <div className='md:flex items-center gap-2 hidden'>
                     <p className='text-sm font-medium'>Sua loja:</p>
-                    <div className='py-3 bg-gray-100 px-3 rounded-lg md:w-60 lg:w-72 text-color-primary text-sm font-medium'>
-                        {'http://[::1]:5173/'}
+                    <div className='py-3 bg-gray-100 px-3 rounded-lg md:w-60 lg:w-72 text-blue-500 text-sm font-medium'>
+                        {'https://www.artigosdecor.onrender.com'}
                     </div>
-                    <Link to={'/'} className='bg-color-primary p-[11px] rounded-lg' target='_blank'>
+                    <Link to={'/'} className='bg-blue-500 p-[11px] rounded-lg' target='_blank'>
                         <HiOutlineExternalLink className='text-white h-5 w-5' />
                     </Link>
                 </div>

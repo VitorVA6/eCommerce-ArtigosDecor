@@ -150,7 +150,7 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
             <p className='mb-1 mt-2 text-sm font-medium'>Opções</p>
             <p className='text-xs text-gray-400 mb-2'>{placeh2}</p>
             <button 
-                className='text-color-primary bg-transparent text-left text-sm font-medium mb-4' 
+                className='text-blue-500 bg-transparent text-left text-sm font-medium mb-4' 
                 onClick={() => addOption()}    
             >+ Adicionar nova opção</button>
             <div className='flex flex-col h-40 lg:h-36 gap-y-2 overflow-auto'>
@@ -177,7 +177,13 @@ export default function ModalVariacoes({setModalVariacoes, placeh1, placeh2, edi
             </div>
         </div>
         <div className='p-4 border-t w-full flex justify-end'>
-            <LoadingButton loading={loading} handleSubmit={add} text={'Salvar'} full={false}/>
+            <LoadingButton 
+                loading={loading} 
+                handleSubmit={add} 
+                text={'Salvar'} 
+                full={false}
+                bg_color='bg-blue-500'
+            />
         </div>
     </BaseModal>
   )

@@ -103,16 +103,6 @@ export default function NavLateralAdmin({selected, setSelected, setMenuMobile, m
                 Editar frete
             </button>
             <button 
-                className={`cursor-pointer  flex gap-3 items-center ${handleClassPage('acc')} pl-5 md:pl-0`}
-                onClick = {() => {
-                    closeMenu()
-                    setSelected('acc')
-                }}
-            >
-                <MdAccountCircle className='w-[22px] h-[22px] -ml-1'/>
-                Conta
-            </button>
-            <button 
                 className={`cursor-pointer  flex gap-3 items-center ${handleClassPage('facebook')} pl-5 md:pl-0`}
                 onClick = {() => {
                     closeMenu()
@@ -122,7 +112,16 @@ export default function NavLateralAdmin({selected, setSelected, setMenuMobile, m
                 <AiFillInstagram className='w-[22px] h-[22px] -ml-1'/>
                 Instagram
             </button>
-            
+            <button 
+                className={`cursor-pointer  flex gap-3 items-center ${handleClassPage('acc')} pl-5 md:pl-0`}
+                onClick = {() => {
+                    closeMenu()
+                    setSelected('acc')
+                }}
+            >
+                <MdAccountCircle className='w-[22px] h-[22px] -ml-1'/>
+                Conta
+            </button>
         </section>
     </>
   )

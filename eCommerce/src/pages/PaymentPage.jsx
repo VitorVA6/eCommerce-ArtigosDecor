@@ -162,7 +162,7 @@ export default function PaymentPage() {
                     {
                       formikStep1.touched.whats && formikStep1.errors.whats && <p className='text-red-500 text-xs'>{`${formikStep1.errors.whats}`}</p>
                     }
-                  <button className='flex justify-center items-center gap-2 text-white bg-color-primary font-bold py-3 mt-6 rounded-md'>
+                  <button className='flex justify-center items-center gap-2 text-white bg-green-500 font-bold py-3 mt-6 rounded-md'>
                     Continuar
                     <HiArrowNarrowRight className='w-6 h-6'/>
                   </button>
@@ -315,7 +315,7 @@ export default function PaymentPage() {
                       }
                     </div>
                     <button 
-                      className='flex justify-center items-center gap-2 text-white bg-color-primary font-bold py-3 mt-4 rounded-md'>
+                      className='flex justify-center items-center gap-2 text-white bg-green-500 font-bold py-3 mt-4 rounded-md'>
                       Continuar
                     <HiArrowNarrowRight className='w-6 h-6'/>
                   </button>

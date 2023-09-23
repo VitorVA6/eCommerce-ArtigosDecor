@@ -180,11 +180,11 @@ export default function Produto() {
             </div>       
             <div className='flex flex-col w-full lg:w-2/5 h-fit md:px-8 md:py-3 md:bg-white md:rounded-md md:shadow-md lg:shadow-gray-300/60'>
                 <div className='flex flex-col pt-3 pb-5 border-b border-gray-300'>
-                    <h2 className='text-xl font-medium lg:text-[22px] text-black/90'>{produto?.title}</h2>
+                    <h2 className='text-xl font-medium lg:text-[22px] text-black/90 leading-none'>{produto?.title}</h2>
                     <h3 className='text-sm text-color-primary'>Disponível em estoque</h3>
                 </div>
                 
-                <div className='flex flex-col mt-6 mb-6'>
+                <div className='flex flex-col mt-6 mb-2'>
                     {
                     produto?.desconto > 0 &&
                     <p className='inline line-through text-gray-500/90 text-[16px] font-light'>{produto?.preco?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
@@ -196,25 +196,19 @@ export default function Produto() {
                         <p className='text-[36px] text-black/80 leading-none'>{produto?.preco?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                         }
                         {produto?.desconto > 0 &&                           
-                        <p className='text-green-500 font-medium'>{ Math.ceil((produto?.preco - produto?.desconto)*100/produto?.preco)}% OFF</p>                          
+                        <p className='text-color-primary font-medium'>{ Math.ceil((produto?.preco - produto?.desconto)*100/produto?.preco)}% OFF</p>                          
                         }
                     </div>
-                    <div className='flex gap-1 mt-1'>
-                        <p className='text-black/80'>em até</p>
-                        <p className='text-green-500 font-medium'>12x de {produto?.desconto > 0 ? parseFloat((produto?.desconto* taxa /12).toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : parseFloat((produto?.preco*taxa/12).toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                    <div className='flex gap-1 text-gray-600'>
+                        <p>em até</p>
+                        <p>12x de {produto?.desconto > 0 ? parseFloat((produto?.desconto* taxa /12).toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : parseFloat((produto?.preco*taxa/12).toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                     </div>
                     {
                     produto?.desconto > 0 &&
                     <p className='bg-color-custom-bg text-color-primary px-2 py-[7px] rounded-sm flex w-fit mt-3.5 text-sm font-semibold'>R$ {(produto?.preco - produto?.desconto).toFixed(0)} de desconto</p>
                     }
                 </div>
-                <div className='flex gap-x-4 items-center'>
-                    <img className='w-16 h-10' src="../src/images/logo-correios.png" alt="logo correio" />
-                    <div className='flex flex-col'>
-                        <p className='text-base text-black/80'>Entrega via correios</p>
-                        <p className='text-sm text-color-primary font-normal'>Após o pagamento confirmado</p>
-                    </div>
-                </div>                
+                        
                 {   
                     produto?.combinations?.length > 0 &&  
                     <div className='flex flex-col mt-6 gap-y-4'>  
@@ -241,23 +235,23 @@ export default function Produto() {
                     <p className='text-base text-green-500 font-medium mt-4 mb-6 lg:mb-0'>Frete grátis</p>
                 <div className='flex gap-5 items-center lg:border-none border-t border-gray-300 pl-1 pt-6'>               
                     <BsCreditCard2Back className="w-6 h-6  text-gray-500" />
-                    <div >
-                        <p className='font-medium text-sm text-color-primary'>Parcele suas compras</p>
-                        <p className='text-gray-400 text-sm'>Parcelamento no cartão de crédito</p>
+                    <div>
+                        <p className='font-medium text-sm text-color-primary leading-none mb-[3px]'>Parcele suas compras</p>
+                        <p className='text-gray-400 text-sm leading-none'>Parcelamento no cartão de crédito</p>
                     </div>
                 </div>
                 <div className='flex mt-3 gap-5 items-center pl-1'>              
                     <BsShieldCheck className="w-6 h-6 text-gray-500" />
-                    <div>
-                        <p className='font-medium text-sm text-color-primary'>Compra segura</p>
-                        <p className='text-gray-400 text-sm'>Sua compra é 100% protegida</p>
+                    <div className=''>
+                        <p className='font-medium text-sm text-color-primary leading-none mb-[3px]'>Compra segura</p>
+                        <p className='text-gray-400 text-sm leading-none'>Sua compra é 100% protegida</p>
                     </div>
                 </div>
                 <div className='flex mt-3 gap-5 items-center border-b border-gray-300 pb-6 lg:border-none pl-1'>              
                     <BsArrowCounterclockwise className="w-6 h-6 text-gray-500" />
                     <div>
-                        <p className='font-medium text-sm text-color-primary'>Devolução grátis</p>
-                        <p className='text-gray-400 text-sm'>Em até 7 dias a partir do recebimento</p>
+                        <p className='font-medium text-sm text-color-primary leading-none mb-[3px]'>Devolução grátis</p>
+                        <p className='text-gray-400 text-sm leading-none'>Em até 7 dias a partir do recebimento</p>
                     </div>
                 </div>
                 <div className='flex gap-2 mt-6 mb-6'>

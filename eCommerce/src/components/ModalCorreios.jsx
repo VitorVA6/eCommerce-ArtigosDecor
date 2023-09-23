@@ -68,7 +68,13 @@ export default function ModalCorreios({setModalCorreios, notifyError, notifySuce
                     options={options}
                 /> 
             </div>
-            <LoadingButton loading={loading} text='Salvar alterações' full={true} handleSubmit={handleSubmit} />
+            <LoadingButton 
+                loading={loading} 
+                text='Salvar alterações' 
+                full={true} 
+                handleSubmit={handleSubmit}
+                bg_color='bg-blue-500'
+            />
         </div>
     </BaseModal>
   )
