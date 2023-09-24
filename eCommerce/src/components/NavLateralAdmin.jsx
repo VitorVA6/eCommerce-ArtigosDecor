@@ -113,16 +113,6 @@ export default function NavLateralAdmin({selected, setSelected, setMenuMobile, m
                 Instagram
             </button>
             <button 
-                className={`cursor-pointer  flex gap-3 items-center ${handleClassPage('upload')} pl-5 md:pl-0`}
-                onClick = {() => {
-                    closeMenu()
-                    setSelected('upload')
-                }}
-            >
-                <MdFileUpload className='w-6 h-6 -ml-1.5'/>
-                Upload
-            </button>
-            <button 
                 className={`cursor-pointer  flex gap-3 items-center ${handleClassPage('acc')} pl-5 md:pl-0`}
                 onClick = {() => {
                     closeMenu()

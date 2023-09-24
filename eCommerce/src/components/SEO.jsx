@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 export default function SEO({
-    
     title = "Artigos Decor - Sua loja online de artigos para decoração, Vasos, Bandejas e Painéis de Led",
     description = "Encontre os melhores artigos para decoração de festa na nossa loja online. Oferecemos painéis de led, vasos para festas, castiçais, suporte para bolo, bandejas e lindas mesas.",
     keywords,
@@ -10,9 +9,16 @@ export default function SEO({
     contentType = "website",
     canonical = "https://artigosdecor.render.com/",
 }) {
+
+   const [titleref, setTitleref] = useState("Artigos Decor - Sua loja online de artigos para decoração, Vasos, Bandejas e Painéis de Led")
+
+   useEffect(() => {
+      setTitleref(title)
+   }, [title])
+
  return (
  <Helmet>
-   {title !==undefined && <title>{title}</title>}
+   <title>{titleref}</title>
  {/* Add meta tags for SEO */}
     <meta name="description" content={description} />
     <meta name="robots" content="index, follow" />

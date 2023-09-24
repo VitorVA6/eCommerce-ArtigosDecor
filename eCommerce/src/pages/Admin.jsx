@@ -11,7 +11,6 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import Requests from '../components/Requests'
 import OrderById from '../components/OrderById'
 import IntegrateFacebookAdmin from '../components/IntegrateFacebookAdmin'
-import Upload from '../components/Upload'
 
 export default function Admin() {
   const {authenticated, checkAuth} = useUserContext()
@@ -42,7 +41,6 @@ export default function Admin() {
                 { selected === 'req' && <Requests setSelected={setSelected}/> }
                 { selected === 'order-id' && <OrderById setSelected={setSelected}/> }
                 { selected === 'facebook' && <IntegrateFacebookAdmin/> }
-                { selected === 'upload' && <Upload/> }
             </div>
         </div>
     </div>
