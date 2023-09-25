@@ -36,6 +36,7 @@ export default function PaymentPage() {
       if(catalog.shipCustom.status === true && !!city){
           return (
           <ShipOption
+              bg_color='border-l-green-500'
               name = {catalog.shipCustom.deliveryName} 
               time = '1 a 2 dias'
               price = {city.price}
@@ -57,6 +58,7 @@ export default function PaymentPage() {
               return (
                   <>
                       <ShipOption 
+                        bg_color='border-l-green-500'
                           name='Correios - PAC' 
                           time='9 a 12 dias' 
                           price={24.5}
@@ -68,7 +70,8 @@ export default function PaymentPage() {
                           myFreight = {deliveryOptions.pac}
                           width='w-full'
                       />
-                      <ShipOption 
+                      <ShipOption
+                          bg_color='border-l-green-500'
                           name='Correios - Sedex' 
                           time='7 a 10 dias' 
                           price={29.5}

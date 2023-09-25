@@ -30,7 +30,7 @@ export default function Footer() {
     const [showIcon4, setShowIcon4] = useState(false)    
 
   return (
-    <section className='flex flex-col w-full bg-white text-black/70 h-fit'>
+    <section className='flex flex-col w-full bg-white text-black/70 h-fit border-t'>
         <SliderFooter />
         <div className='flex flex-col pt-8 pb-2 md:py-10 lg:py-12 md:gap-y-10'>
 

@@ -43,11 +43,11 @@ export default function Search() {
             Busca
         </h3>
         <div className='flex flex-col w-full md:bg-white md:col-span-10 lg:col-span-7 xl:col-span-8 md:rounded-md lg:shadow-md lg:shadow-gray-300/60 mb-10 text-black/80'>
-            <div className='flex flex-col gap-1.5 px-4 md:px-[25px] py-6'>
+            <div className='flex flex-col gap-1.5 px-3 md:px-[25px] py-6'>
                 <h1 className='text-2xl font-medium'>{`Resultados para "${name}"`}</h1>
                 <p className='text-xs text-gray-700/90'>{`${produtos.length} produtos`}</p>
             </div>      
-            <div className='flex justify-between border-y border-gray-300/80 lg:border-t-transparent px-4 md:px-[25px] py-3 md:py-4 items-center text-[13px]'>
+            <div className='flex justify-between border-y border-gray-300/80 lg:border-t-transparent px-3 md:px-[25px] py-3 md:py-4 items-center text-[13px]'>
             <div className='flex gap-2.5 items-center'>
                 <p>Visualização</p>
                 <BsGridFill 
@@ -64,7 +64,7 @@ export default function Search() {
                 />
             </div>
             </div>
-            <div className={`grid ${layout === 'grid' ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5' : 'grid-cols-1'} flex-col px-4 md:px-[25px] w-full gap-x-3 gap-y-6 py-10`}>
+            <div className={`grid ${layout === 'grid' ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5' : 'grid-cols-1'} flex-col px-3 md:px-[25px] w-full gap-x-2 gap-y-6 py-10`}>
             {
                 produtos?.map( produto => (
                 <Card key={produto._id} produto={produto} page='s' layout = {layout}/>

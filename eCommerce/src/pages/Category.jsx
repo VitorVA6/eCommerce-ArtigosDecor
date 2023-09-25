@@ -78,11 +78,11 @@ export default function Category() {
         canonical = {`https://artigosdecor.render.com/${name}`}
         keywords = {`${defineTitle()}`}
     />
-    <h3 className='hidden md:flex gap-1 items-center px-5 md:px-10 xl:px-32 my-[28px] text-sm text-black/80'>
+    <h3 className='hidden md:flex gap-1 items-center md:px-10 xl:px-32 my-[28px] text-sm text-black/80'>
       <p>Página Inicial</p> 
       <FiChevronRight className='w-3.5 h-3.5 text-gray-500 mt-0.5'/> 
       <p>Categorias</p></h3>
-    <section className='flex md:grid md:grid-cols-10 lg:grid-cols-12 overflow-x-hidden lg:gap-x-7 w-full px-0 md:px-10 xl:px-32 pb-10 md:mb-8 text-black/80'>
+    <section className='flex md:grid md:grid-cols-10 lg:grid-cols-12 overflow-x-hidden lg:gap-x-7 w-full px-0 md:px-10 xl:px-32 pb-10 md:mb-8 text-black/90'>
       {
         show === true &&
         <CategoryFilter categories={categories} name={name} show={show} setShow={setShow}/>
@@ -109,16 +109,16 @@ export default function Category() {
           modalOrder && 
           <ModalOrder setModalOrder={setModalOrder} selOrder={selOrder} setSelOrder={setSelOrder}/>
         }
-        <div className='flex flex-col gap-0.5 px-3 md:px-[25px] py-6'>
+        <div className='flex flex-col gap-0.5 px-3 md:px-[25px] py-5'>
           <h1 className='text-[22px] xl:text-2xl font-medium'>{defineTitle()}</h1>
-          <p className='text-base text-gray-500'>{`${produtos.length} produtos`}</p>
+          <p className='text-sm lg:text-base text-gray-500'>{`${produtos.length} produtos`}</p>
         </div>      
-        <div className='flex justify-between border-y border-gray-300/80 lg:border-t-transparent px-3 md:px-[25px] py-3 md:py-4 items-center text-[13px]'>
+        <div className='flex justify-between border-y border-gray-300/80 lg:border-t-transparent px-3 md:px-[25px] py-2 md:py-4 items-center text-sm'>
           <div 
             className='flex lg:hidden gap-2 items-center cursor-pointer'
             onClick={() => setShow(true)}
           >
-            <BiFilterAlt className='w-6 h-6 text-black'/>
+            <BiFilterAlt className='w-6 h-6 text-black/90'/>
             <p>Filtrar</p>
           </div>
           <div 
@@ -126,7 +126,7 @@ export default function Category() {
             onClick={() => {setModalOrder(true)}}
           >
             <p>Ordenar por</p>
-            <BiChevronDown className='w-6 h-6 text-black'/>
+            <BiChevronDown className='w-5 h-5 mt-0.5 text-black/90'/>
           </div>
           {
           name !== 'lancamentos' &&
@@ -148,7 +148,7 @@ export default function Category() {
             />
           </div>
         </div>
-        <div className={`grid ${layout === 'grid' ? 'grid-cols-2 md:grid-cols-3 2xl:grid-cols-4' : 'grid-cols-1'} flex-col px-3 md:px-[25px] w-full gap-x-3 gap-y-6 py-10`}>
+        <div className={`grid ${layout === 'grid' ? 'grid-cols-2 md:grid-cols-3 2xl:grid-cols-4' : 'grid-cols-1'} flex-col px-3 md:px-[25px] w-full gap-x-2 gap-y-6 py-6`}>
           {
             produtos?.map( produto => (
               <Card key={produto._id} produto={produto} page='c' layout = {layout}/>

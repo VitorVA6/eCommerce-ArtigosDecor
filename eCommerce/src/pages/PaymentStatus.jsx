@@ -4,8 +4,11 @@ import { StatusScreen } from '@mercadopago/sdk-react';
 import {useParams} from 'react-router-dom';
 import Loading from '../components/Loading';
 import SEO from '../components/SEO';
+import { usePaymentContext } from '../contexts/Payment';
 
 export default function PaymentStatus() {
+
+    const {resetPayment} = usePaymentContext()
 
     useEffect(()=> {
         initMercadoPago('TEST-8baf6102-c707-4284-a248-a0ac11256c46', { locale: 'pt-BR' });

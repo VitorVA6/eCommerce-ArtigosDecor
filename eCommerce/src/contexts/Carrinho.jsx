@@ -85,7 +85,6 @@ export function useCarrinhoContext(){
             setCarrinho( aux )
             calculaTotal(aux)
         }
-        setModalCarrinho(true)
     }
 
     function removeCarrinho(id){
@@ -94,6 +93,13 @@ export function useCarrinhoContext(){
             setCarrinho( aux )
             calculaTotal(aux)
         }
+    }
+
+    function resetCart(){
+        setCarrinho([])
+        setTotal(0)
+        setQuantTotal(0)
+        setFreight({delivery: 'UNSELECTED', price: 0})
     }
 
     function alteraQuantidade(id, operador){
@@ -130,6 +136,7 @@ export function useCarrinhoContext(){
         freight,
         setFreight,
         deliveryOptions,
+        resetCart,
         listaCarrinho,         
         addCarrinho,
         removeCarrinho,

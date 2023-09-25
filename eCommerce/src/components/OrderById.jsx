@@ -151,7 +151,7 @@ export default function ({setSelected}) {
                 <h3 className=' uppercase text-sm'>#{payment?._id}</h3>
                 <p className='text-xs text-gray-500/90'>{!!payment && dataConversor(payment?.date_created)}</p>
             </div>
-            <p className='font-medium text-sm border-l-4 border-color-primary pl-2 mb-2 mt-1'>{
+            <p className='font-medium text-sm border-l-4 border-blue-500 pl-2 mb-2 mt-1'>{
                 payment?.payment_type_id === 'credit_card' ?
                 'Pagamento com cartão de crédito':
                 'Pagamento no PIX'
@@ -208,7 +208,7 @@ export default function ({setSelected}) {
         <div className='flex flex-col px-4 lg:px-7 py-7 border-b-4 border-gray-100/80'>
             <h3 className='font-medium text-[15px] mb-4'>Acompanhamento do cliente</h3>
             <button 
-              className='mb-6 flex justify-center font-medium items-center w-full py-4 text-color-primary bg-blue-50 text-sm rounded-lg relative'
+              className='mb-6 flex justify-center font-medium items-center w-full py-4 text-blue-500 bg-blue-50 text-sm rounded-lg relative'
               onClick={() => notifyShipment(payment.name, payment.products, payment.endereco, payment.cep).then(data => console.log(data))}
             >
               Notificar envio do pedido 

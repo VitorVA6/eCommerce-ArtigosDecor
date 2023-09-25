@@ -25,7 +25,7 @@ export default function MenuMobile({setMenu, categories}) {
     <div 
       className={`${animate ? 'slide-in-left':'slide-out-left'} h-screen w-3/4 bg-white flex flex-col items-start z-20 absolute top-0 left-0 text-gray-600 md:hidden`}    
     >
-        <div className='flex flex-col w-full h-40 p-7 justify-center relative bg-gradient-to-r from-sky-500 to-indigo-500 text-gray-100 rounded-b-2xl shadow-md'>
+        <div className='flex flex-col w-full h-40 p-7 justify-center relative bg-gradient-to-r from-color-primary to-color-secundary text-gray-100 rounded-b-2xl shadow-md'>
             <h1 className='font-medium text-lg'>Explorar</h1>
             <h1 className='font-bold text-2xl'>Artigos Decor</h1>
             <p className='text-[11px]'>Shopping Online</p>

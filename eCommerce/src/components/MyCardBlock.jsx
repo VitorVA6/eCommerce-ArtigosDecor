@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router-dom';
 
 export default function MyCardBlock() {
 
-    const {carrinho, total} = useCarrinhoContext()
-    const {formikStep1, formikStep2} = usePaymentContext()
+    const {carrinho, resetCart, total} = useCarrinhoContext()
+    const {formikStep1, formikStep2, resetPayment} = usePaymentContext()
     const navigate = useNavigate()
 
     useEffect(()=> {
@@ -47,6 +47,8 @@ export default function MyCardBlock() {
                             }
                         } )
                     })
+                    resetPayment()
+                    resetCart()
                     navigate(`/payment-status/${data.id}`)
                 }catch(err){
                     console.log(err)

@@ -24,7 +24,7 @@ export default function Requests({setSelected}) {
         <div className='flex flex-col border-b px-4 lg:px-7'>
             <h2 className='font-medium text-[22px]'>Pedidos recebidos</h2>
             <p className='text-gray-400 text-sm -mt-0.5 mb-3'>Aqui são exibidos seus pedidos recebidos</p>
-            <button className='bg-transparent text-color-primary text-[15px] font-medium w-fit mb-4'>+ Adicionar pedido</button>
+            <button className='bg-transparent text-blue-500 text-[15px] font-medium w-fit mb-4'>+ Adicionar pedido</button>
         </div>
         {
           payments.map( element =>(
@@ -40,7 +40,7 @@ export default function Requests({setSelected}) {
                     <p className='text-xs text-gray-400'>{dataConversor(element.date_created)}</p>
                 </div>
                 <button 
-                  className='text-[12.5px] flex items-center font-medium py-2 text-white bg-color-primary px-3.5 rounded-lg w-fit'
+                  className='text-[12.5px] flex items-center font-medium py-2 text-white bg-blue-500 px-3.5 rounded-lg w-fit'
                   onClick={() => {
                     setPaymentId(element._id)
                     setSelected('order-id')

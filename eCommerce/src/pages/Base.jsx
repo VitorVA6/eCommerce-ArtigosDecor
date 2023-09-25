@@ -24,10 +24,10 @@ export default function Base() {
   }, [location] )
 
   return (
-    <section className='flex flex-col h-screen overflow-auto' ref={refToTop}>
+    <section className='flex flex-col w-full h-screen overflow-y-auto' ref={refToTop}>
       {modalCarrinho?<ModalCart />:<></>}       
         <Header/> 
-        <div className='pb-16 bg-[#f1f1f1]'>
+        <div className='pb-16 bg-[#f9f9f9] md:bg-[#f1f1f1]'>
           <Outlet />
         </div>
         <Footer />

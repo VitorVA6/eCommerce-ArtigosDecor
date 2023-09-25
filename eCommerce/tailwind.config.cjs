@@ -9,7 +9,7 @@ module.exports = {
       colors: {
         'color-primary': '#fb7185',
         'color-secundary': '#f43f5e',
-        'color-custom-bg': '#fff1f2'
+        'color-custom-bg': '#ffe4e6'
       }
     }
   },

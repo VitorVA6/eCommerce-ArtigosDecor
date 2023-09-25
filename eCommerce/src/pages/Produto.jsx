@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { Navigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, Navigate } from 'react-router-dom'
 import { useCarrinhoContext } from '../contexts/Carrinho';
 import { useProductContext } from '../contexts/Product';
 import Slider from 'react-slick'
-import { BsCreditCard2Back, BsShieldCheck, BsArrowCounterclockwise, BsCart2 } from 'react-icons/bs';
+import { BsCreditCard2Back, BsShieldCheck, BsArrowCounterclockwise, BsTruck } from 'react-icons/bs';
 import { FiChevronRight } from 'react-icons/fi';
 import { useVariationContext } from '../contexts/Variation';
 import SEO from '../components/SEO';
 
 export default function Produto() {
+    const navigate = useNavigate()
     const {id} = useParams()
     const [produto, setProduto] = useState()
     const [selectedOptions, setSelectedOptions] = useState([])
@@ -128,14 +129,14 @@ export default function Produto() {
         keywords = {`${produto?.title}, ${produto?.categoria[0]?.label}`}
     />
     <section className='flex flex-col'>    
-        <h3 className='hidden md:flex gap-1 items-center px-5 md:px-10 xl:px-32 my-[28px] text-sm text-gray-600'>
+        <h3 className='hidden md:flex gap-1 items-center md:px-10 xl:px-32 my-[28px] text-sm text-gray-600'>
             <p>Página inicial</p> 
             <FiChevronRight className='w-3.5 h-3.5 text-gray-500 mt-0.5'/> 
             <p>{produto?.categoria[0]?.label}</p>
             <FiChevronRight className='w-3.5 h-3.5 text-gray-500 mt-0.5'/>
             <p>{produto?.title}</p>
         </h3>    
-        <section className='flex flex-col lg:h-fit justify-center overflow-hidden px-5 md:px-10 xl:px-32 pt-6 md:pt-0 lg:pb-8 lg:gap-7 lg:border-b border-gray-200 lg:flex-row md:gap-y-8 md:pb-2'>
+        <section className='flex flex-col lg:h-fit justify-center overflow-hidden px-3 md:px-10 xl:px-32 pt-6 md:pt-0 lg:pb-8 lg:gap-7 lg:border-b border-gray-200 lg:flex-row md:gap-y-8 md:pb-2'>
             <div className='w-full lg:w-3/5 lg:bg-white lg:rounded-md lg:p-6 lg:shadow-lg lg:shadow-gray-300/60 md:hidden'>
                 <Slider {...settings} dots dotsClass="meus-dots">
                     {
@@ -179,9 +180,9 @@ export default function Produto() {
                 }
             </div>       
             <div className='flex flex-col w-full lg:w-2/5 h-fit md:px-8 md:py-3 md:bg-white md:rounded-md md:shadow-md lg:shadow-gray-300/60'>
-                <div className='flex flex-col pt-3 pb-5 border-b border-gray-300'>
-                    <h2 className='text-xl font-medium lg:text-[22px] text-black/90 leading-none'>{produto?.title}</h2>
-                    <h3 className='text-sm text-color-primary'>Disponível em estoque</h3>
+                <div className='flex flex-col pt-3 gap-1.5'>
+                    <h2 className='text-[20px] font-medium lg:text-[22px] text-black/90 leading-none'>{produto?.title}</h2>
+                    <h3 className='text-xs md:text-sm text-gray-400'>Disponível em estoque</h3>
                 </div>
                 
                 <div className='flex flex-col mt-6 mb-2'>
@@ -192,20 +193,19 @@ export default function Produto() {
                     <div className='flex items-center gap-x-1.5'>
                         {
                         produto?.desconto > 0 ?
-                        <p className='text-[36px] text-black/80 leading-none'>{produto?.desconto?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p> :
-                        <p className='text-[36px] text-black/80 leading-none'>{produto?.preco?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                        <p className='text-[32px] md:text-[36px] text-black/80 leading-none'>{produto?.desconto?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p> :
+                        <p className='text-[32px] md:text-[36px] text-black/80 leading-none'>{produto?.preco?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                         }
                         {produto?.desconto > 0 &&                           
                         <p className='text-color-primary font-medium'>{ Math.ceil((produto?.preco - produto?.desconto)*100/produto?.preco)}% OFF</p>                          
                         }
                     </div>
                     <div className='flex gap-1 text-gray-600'>
-                        <p>em até</p>
-                        <p>12x de {produto?.desconto > 0 ? parseFloat((produto?.desconto* taxa /12).toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : parseFloat((produto?.preco*taxa/12).toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                        <p>em até 12x de {produto?.desconto > 0 ? parseFloat((produto?.desconto* taxa /12).toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : parseFloat((produto?.preco*taxa/12).toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                     </div>
                     {
                     produto?.desconto > 0 &&
-                    <p className='bg-color-custom-bg text-color-primary px-2 py-[7px] rounded-sm flex w-fit mt-3.5 text-sm font-semibold'>R$ {(produto?.preco - produto?.desconto).toFixed(0)} de desconto</p>
+                    <p className='bg-color-custom-bg text-color-primary px-2 py-1 md:py-[7px] rounded-sm flex w-fit mt-1.5 md:mt-3.5 text-xs md:text-sm font-semibold'>R$ {(produto?.preco - produto?.desconto).toFixed(0)} de desconto</p>
                     }
                 </div>
                         
@@ -215,7 +215,7 @@ export default function Produto() {
                     {  
                     produto?.variations?.map( variation => (
                         <div key={variation.idVariacao} className='flex flex-col w-full'>
-                            <h3 className='text-base text-gray-700 mb-2'>{getVarName(variation.idVariacao)}:</h3>
+                            <h3 className='text-sm md:text-base text-gray-700 mb-2'>{getVarName(variation.idVariacao)}:</h3>
                             <div className='flex flex-wrap gap-2'>
                                 {variation.idOptions.map( option => (
                                 <button 
@@ -230,32 +230,10 @@ export default function Produto() {
                         </div>
                     ) )  
                     }
-                    </div>              
-                    }
-                    <p className='text-base text-green-500 font-medium mt-4 mb-6 lg:mb-0'>Frete grátis</p>
-                <div className='flex gap-5 items-center lg:border-none border-t border-gray-300 pl-1 pt-6'>               
-                    <BsCreditCard2Back className="w-6 h-6  text-gray-500" />
-                    <div>
-                        <p className='font-medium text-sm text-color-primary leading-none mb-[3px]'>Parcele suas compras</p>
-                        <p className='text-gray-400 text-sm leading-none'>Parcelamento no cartão de crédito</p>
-                    </div>
                 </div>
-                <div className='flex mt-3 gap-5 items-center pl-1'>              
-                    <BsShieldCheck className="w-6 h-6 text-gray-500" />
-                    <div className=''>
-                        <p className='font-medium text-sm text-color-primary leading-none mb-[3px]'>Compra segura</p>
-                        <p className='text-gray-400 text-sm leading-none'>Sua compra é 100% protegida</p>
-                    </div>
-                </div>
-                <div className='flex mt-3 gap-5 items-center border-b border-gray-300 pb-6 lg:border-none pl-1'>              
-                    <BsArrowCounterclockwise className="w-6 h-6 text-gray-500" />
-                    <div>
-                        <p className='font-medium text-sm text-color-primary leading-none mb-[3px]'>Devolução grátis</p>
-                        <p className='text-gray-400 text-sm leading-none'>Em até 7 dias a partir do recebimento</p>
-                    </div>
-                </div>
-                <div className='flex gap-2 mt-6 mb-6'>
-                    <div className='flex border border-gray-300 rounded-md items-center text-gray-700'>
+                }
+                <div className='flex flex-col gap-2 mt-10 mb-2'>
+                    <div className='w-fit mb-2 hidden md:flex border border-gray-300 rounded-md items-center text-gray-700'>
                         <button className='px-2.5 md:px-3 py-2.5 lg:px-2.5  xl:py-3' onClick={() => mudaQuantidade('-')}>
                             <svg 
                                 xmlns="http://www.w3.org/2000/svg" 
@@ -283,12 +261,54 @@ export default function Produto() {
                         </button>
                     </div>
                     <button 
-                        className='bg-color-primary text-white py-2 w-full rounded-md font-medium text-base flex items-center justify-center gap-3'
-                        onClick={() => addCarrinho(produto, quantidade)}
+                        className='bg-color-secundary text-white py-2.5 w-full rounded-md font-medium text-base flex items-center justify-center gap-3'
+                        onClick={() => {
+                            addCarrinho(produto, quantidade)
+                            navigate('/cart')
+                        }}
                     >
-                        <BsCart2 className='text-white w-5 h-5'/>
                         Comprar
                     </button>
+                    <button 
+                        className=' bg-color-custom-bg text-color-secundary py-2.5 w-full rounded-md font-medium text-base flex items-center justify-center gap-3'
+                        onClick={() => {
+                            addCarrinho(produto, quantidade)
+                            navigate('/')
+                        }}
+                    >
+                        Adicionar ao carrinho
+                    </button>
+                </div>
+                <div className='flex gap-5 w-full bg-white shadow-md my-6 px-5 py-4 rounded-md'>
+                    <div className='bg-[#2381A8] text-white rounded-full p-2 h-fit'>
+                        <BsTruck className=''/>
+                    </div>
+                    <div className='flex flex-col w-full'>
+                        <p className='text-[13px] font-medium mb-2'>Este produto está com frete grátis</p>
+                        <div className='h-[5px] w-full rounded-full bg-[#2381A8] mb-1'/>
+                        <p className='text-[13px]'>Com entrega via correios!</p>
+                    </div>
+                </div>
+                <div className='flex gap-5 items-center lg:border-none pl-1 pt-2 text-[13px] mb-2'>               
+                    <BsCreditCard2Back className="w-[18px] h-[18px] md:w-6 md:h-6 text-gray-500" />
+                    <div>
+                        <p className='font-medium text-color-secundary leading-none mb-[3px]'>Parcele suas compras</p>
+                        <p className='text-gray-500 leading-none'>Parcelamento no cartão de crédito</p>
+                    </div>
+                </div>
+                <div className='flex mt-3 gap-5 items-center pl-1 text-[13px] mb-2'>              
+                    <BsShieldCheck className="w-[18px] h-[18px] md:w-6 md:h-6 text-gray-500" />
+                    <div className=''>
+                        <p className='font-medium text-color-secundary leading-none mb-[3px]'>Compra segura</p>
+                        <p className='text-gray-500 leading-none'>Sua compra é 100% protegida</p>
+                    </div>
+                </div>
+                <div className='text-[13px] flex mt-3 gap-5 items-center border-b border-gray-300 pb-6 lg:border-none pl-1'>              
+                    <BsArrowCounterclockwise className="w-[18px] h-[18px] md:w-6 md:h-6 text-gray-500" />
+                    <div>
+                        <p className='font-medium text-color-secundary leading-none mb-[3px]'>Devolução grátis</p>
+                        <p className='text-gray-500 leading-none'>Em até 7 dias a partir do recebimento</p>
+                    </div>
                 </div>
             </div>
         </section>

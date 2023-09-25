@@ -159,6 +159,18 @@ export function usePaymentContext(){
         }
     }
 
+    function resetPayment(){
+        setPaymentId(undefined)
+        setValidCEP(false)
+        setErrorCEP('')
+        setChangeBlock('1')
+        formikStep1.resetForm()
+        formikStep2.resetForm()
+        setBlock1({selected:true, completed:false, disabled: false})
+        setBlock2({selected:false, completed:false, disabled: true})
+        setBlock3({selected:false, completed:false, disabled: true})
+    }
+
     return {
         formikStep1,
         formikStep2,
@@ -177,6 +189,7 @@ export function usePaymentContext(){
         getPayments,
         getPaymentById,
         calcelPayment,
-        notifyShipment
+        notifyShipment,
+        resetPayment
     }
 }

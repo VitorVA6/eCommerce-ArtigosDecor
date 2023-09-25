@@ -78,22 +78,22 @@ export default function Header() {
             </div> 
             
         </header> : 
-        <header className='flex flex-col bg-white justify-between w-full md:justify-center h-fit'>
-            <div className='flex w-full justify-center md:justify-between md:px-10 xl:px-32 py-2 text-xs md:text-[13px] text-black/70 font-medium border-b-[2px]'>
+        <header className='flex flex-col bg-white justify-between w-full md:justify-center h-fit z-10 border md:border-none'>
+            <div className='hidden md:flex w-full justify-center md:justify-between md:px-10 xl:px-32 py-1.5 md:py-2 text-xs md:text-[13px] text-black/70 font-medium border-b-[2px]'>
                 <div className='flex gap-2 items-center'>
                     <FiPackage className='w-4 h-4 md:w-5 md:h-5'/>
                     <p>Frete grátis para todo o Brasil</p>
                 </div>
-                <div className='hidden md:flex gap-2 items-center'>
+                <div className='flex gap-2 items-center'>
                     <IoReturnDownBackSharp className='w-5 h-5'/>
                     <p>Trocas e devoluções em até 7 dias</p>
                 </div>
-                <div className='hidden md:flex gap-2 items-center'>
+                <div className='flex gap-2 items-center'>
                     <AiOutlineHeart className='w-5 h-5'/>
                     <p>Satisfação garantida</p>
                 </div>
             </div>
-            <div className='flex flex-col justify-between px-5 md:px-10 xl:px-32 text-black/70 gap-5 md:gap-0 items-center pb-5 pt-4 md:pt-8 md:pb-8'>
+            <div className='flex flex-col justify-between px-3 md:px-10 xl:px-32 text-black/70 gap-4 md:gap-0 items-center pb-4 pt-4 md:pt-8 md:pb-8'>
                 <nav className='flex justify-between items-center w-full'>
                     {
                         menu &&
@@ -132,10 +132,10 @@ export default function Header() {
                                 <BsTelephone className="w-[26px] text-gray-500/80 h-[26px] md:w-[17px] md:h-[17px]"/>
                         </Link>
                         <Link to={'/cart'} className='flex items-center gap-2 relative h-full'>
-                            <div className='flex relative rounded-full border-[2px] border-gray-200 h-[34px] w-[34px] md:h-[40px] md:w-[40px] justify-center items-center'>
-                                <BsCart2 className="w-[22px] h-[22px] text-gray-500/80 md:w-5 md:h-5"/>
+                            <div className='flex relative rounded-full h-[34px] w-[34px] md:h-[40px] md:w-[40px] justify-center items-center'>
+                                <BsCart2 className="w-6 h-6 text-color-secundary md:w-5 md:h-5 xl:w-7 xl:h-7"/>
                                 <div 
-                                    className='flex justify-center items-center bg-color-primary rounded-full text-white font-medium absolute -top-1 -right-1 text-[12px] leading-none w-[18px] h-[18px]'
+                                    className='flex justify-center items-center bg-color-secundary rounded-full text-white font-medium absolute -top-0.5 -right-0 text-[12px] leading-none w-[18px] h-[18px] border border-white'
                                 >
                                     <span className='text-[11px] text-gray-100'>{quantTotal}</span>
                                 </div>
@@ -147,20 +147,20 @@ export default function Header() {
                     </div>
                     
                 </nav>
-                <div className='flex md:hidden rounded-full h-full w-full bg-white items-center text-black-80 justify-between border-[3px]'>
+                <div className='flex md:hidden rounded-md h-full w-full bg-gray-200 items-center text-black/80 justify-between'>
                     <input 
                         type="text" 
                         placeholder='Busque um produto'
-                        className='py-[6px] pl-5 rounded-full w-full flex items-center outline-none text-sm placeholder-gray-400'
+                        className='py-2 pl-5 bg-transparent w-full flex items-center outline-none text-sm placeholder-gray-500'
                         value={key}
                         onChange={(ev) => setKey(ev.target.value)}
                         onKeyDown={handleKeyDownMobile}
                     />
                     <button 
-                        className='px-[24px] justify-center h-full rounded-full items-center flex bg-gray-200'
+                        className='px-3 justify-center h-full rounded-full items-center flex bg-gray-200'
                         onClick={handleSearchMobile}
                     >
-                        <GoSearch className='w-[20px] h-[20px] text-black/80'/>
+                        <GoSearch className='w-[20px] h-[20px] text-color-secundary'/>
                     </button>
                 </div>
             </div>
@@ -204,7 +204,6 @@ export default function Header() {
                     SOBRE A LOJA
                 </Link>
             </div>
-            <div className='h-[6px] bg-black/80 block lg:hidden' />
         </header>
         }
     </>

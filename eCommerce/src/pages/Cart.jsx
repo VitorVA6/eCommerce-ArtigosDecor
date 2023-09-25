@@ -109,8 +109,7 @@ export default function Cart() {
         canonical = 'https://artigosdecor.render.com/cart'
         keywords = 'carrinho, cart'
     />
-    <section className=' px-5 md:px-10 xl:px-32 pb-20 -mb-16'>
-        <h2 className='pt-10 md:pt-12 lg:pt-12 mb-10 lg:mb-12 font-semibold text-[24px] md:text-[32px] text-black/80'>Meu Carrinho</h2>
+    <section className=' px-3 md:px-10 xl:px-32 pb-20 md:pt-16 -mb-16'>
         <div className = 'grid lg:grid-cols-12 xl:grid-cols-7 gap-6'>
             <div className={`h-fit flex flex-col lg:col-span-8 xl:col-span-5 w-full ${carrinho.length > 0 && 'bg-white rounded-md shadow-md shadow-gray-400/60'}`}>
                               
@@ -246,13 +245,13 @@ export default function Cart() {
                     }
                 </div>
                 </>: 
-                <div className='flex flex-col py-16 md:py-28 h-fit items-center justify-center md:bg-gray-50 rounded-md md:shadow-md md:shadow-gray-400/60'>
+                <div className='flex flex-col px-8 pt-24 pb-8 md:py-28 h-fit items-center justify-center md:bg-gray-50 rounded-md md:shadow-md md:shadow-gray-400/60'>
                     <img src={bagImg} alt='' className='w-20 h-20 mb-4'/>
-                    <h1 className='my-2 font-medium text-base md:text-[20px] text-black/80'>Monte um carrinho de compras!</h1>
+                    <h1 className='my-2 font-medium text-base md:text-[20px] text-black/80 text-center'>Seu carrinho de compras se encontra vazio!</h1>
                     <h2 className='mb-4 text-black/50 text-sm md:text-[18px] text-center'>Não perca tempo e preencha-o com lindos artigos de decoração.</h2>
                     <Link 
                         to={'/'} 
-                        className='flex justify-center w-full md:w-[50%] py-3 bg-color-primary font-medium text-white mt-3 rounded-md'>
+                        className='flex justify-center w-fit px-8 md:px-12 md:py-3 py-2.5 border text-white bg-color-secundary font-medium mt-3 rounded-md'>
                             Continuar comprando
                     </Link>
                 </div>}            
@@ -285,7 +284,11 @@ export default function Cart() {
                     <p>Total</p>
                     <p>{masks.maskCurrency(total + freight.price)}</p>
                 </div>
-                <Link to={'/payment'} className='flex justify-center w-[calc(100%-48px)] py-3 bg-color-primary text-white mx-6 rounded-sm'>CHECKOUT</Link>
+                <Link 
+                    to={'/payment'} 
+                    className='flex justify-center w-[calc(100%-48px)] py-3 bg-color-primary text-white mx-6 rounded-sm'
+                    >CHECKOUT
+                </Link>
                 </>
                 :
                 <p className='px-6 text-sm pt-5'>Aqui você encontrará os valores da sua compra assim que adicionar os produtos.</p>

@@ -27,7 +27,7 @@ export default function Home() {
       <SEO keywords='festas, decoração, vasos, castiçais, palnéis de led, led, suporte de bolo, boleira '/>
       {
       loading === true ? <Loading /> :
-      <section className='flex flex-col overflow-x-hidden gap-y-8'>
+      <section className='flex flex-col gap-y-8'>
         {
           catalog?.bannerdt?.length !== 0 ?
           <div className='w-full md:px-10 xl:px-32 self-center md:my-10 rounded-lg box-border z-0'>
@@ -37,7 +37,7 @@ export default function Home() {
                     return (     
                       <img 
                         key={image} 
-                        className='w-full h-[25vh] md:h-[23vh] lg:h-[61vh]' 
+                        className='w-full h-[27vh] md:h-[23vh] lg:h-[61vh]' 
                         src={`${import.meta.env.VITE_AWS_URL}${image}`} 
                         alt="Imagem do produto"/>          
                     )
@@ -53,7 +53,7 @@ export default function Home() {
             setCategoria={valor => setFiltroCategoria(valor)} 
             categorias={categories}
           /> 
-          <ListaProdutos title={'Produtos em destaques'} categoria={'destaques'} ordination={'false'}/>     
+          <ListaProdutos title={'Produtos em destaque'} categoria={'destaques'} ordination={'false'}/>     
           <div className='w-full flex justify-around -mx-2 md:mx-0 md:px-5 text-black/80'>
             <img className='w-56 md:w-64 lg:w-72 xl:w-96' src={freeShipping} alt="" />
             <div className='flex flex-col justify-center gap-5 md:gap-10'>
