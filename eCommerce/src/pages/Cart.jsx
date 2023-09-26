@@ -109,9 +109,9 @@ export default function Cart() {
         canonical = 'https://artigosdecor.render.com/cart'
         keywords = 'carrinho, cart'
     />
-    <section className=' px-3 md:px-10 xl:px-32 pb-20 md:pt-16 -mb-16'>
+    <section className=' px-3 md:px-10 xl:px-32 pb-20 pt-6 md:pt-16 -mb-16'>
         <div className = 'grid lg:grid-cols-12 xl:grid-cols-7 gap-6'>
-            <div className={`h-fit flex flex-col lg:col-span-8 xl:col-span-5 w-full ${carrinho.length > 0 && 'bg-white rounded-md shadow-md shadow-gray-400/60'}`}>
+            <div className={`h-fit flex flex-col lg:col-span-8 xl:col-span-5 w-full ${carrinho.length > 0 && 'bg-white rounded-md shadow-md shadow-gray-300/80'}`}>
                               
                 { carrinho.length > 0 ?
                     <>
@@ -184,7 +184,7 @@ export default function Cart() {
                 
                 <div className='flex w-full flex-col px-4 md:px-6 border-t py-4'>
                     <div className='flex justify-between items-center'>
-                        <h2 className='text-black-80 text-[18px] font-mdium'>
+                        <h2 className='text-black-80 text-base md:text-[18px] font-mdium'>
                             Frete
                         </h2>
                         {
@@ -194,18 +194,18 @@ export default function Cart() {
                     </div>
                     {
                     (catalog.shipCustom.status === true || catalog.shipCorreios.status === true) &&
-                    <div className='mt-3'>
-                        <div className='grid grid-cols-2 items-center gap-10'>
+                    <div className='mt-1 md:mt-3'>
+                        <div className='grid grid-cols-2 items-center gap-6 md:gap-10'>
                             <div className='flex flex-col'>
                                 <InputPayment
                                     title={'Informe seu CEP'}
                                     placeholder={'99999-999'}
                                     field={ formikStep2.values.cep}
                                     setField = {(ev) => {
-                                    formikStep2.setFieldValue('cep', masks.maskCEP(ev.target.value))
-                                }}
-                                id='cep'
-                                blur={formikStep2.handleBlur}
+                                        formikStep2.setFieldValue('cep', masks.maskCEP(ev.target.value))
+                                    }}
+                                    id='cep'
+                                    blur={formikStep2.handleBlur}
                                 />
                                 {
                                 formikStep2.touched.cep && formikStep2.errors.cep && <p className='text-red-500 text-xs ml-1 mt-0.5'>{`${formikStep2.errors.cep}`}</p>
@@ -216,7 +216,7 @@ export default function Cart() {
                             </div>
                             {
                             validCEP && 
-                                <div className='flex flex-col'>
+                                <div className='flex flex-col text-sm md:text-base'>
                                     <h3 className='font-medium text-gray-500 mt-1'>
                                         {formikStep2.values.cidade} - {formikStep2.values.estado}
                                     </h3>
@@ -245,7 +245,7 @@ export default function Cart() {
                     }
                 </div>
                 </>: 
-                <div className='flex flex-col px-8 pt-24 pb-8 md:py-28 h-fit items-center justify-center md:bg-gray-50 rounded-md md:shadow-md md:shadow-gray-400/60'>
+                <div className='flex flex-col px-8 pt-24 pb-8 md:py-28 h-fit items-center justify-center md:bg-gray-50 rounded-md md:shadow-md md:shadow-gray-300/80'>
                     <img src={bagImg} alt='' className='w-20 h-20 mb-4'/>
                     <h1 className='my-2 font-medium text-base md:text-[20px] text-black/80 text-center'>Seu carrinho de compras se encontra vazio!</h1>
                     <h2 className='mb-4 text-black/50 text-sm md:text-[18px] text-center'>Não perca tempo e preencha-o com lindos artigos de decoração.</h2>
@@ -258,7 +258,7 @@ export default function Cart() {
                 
                 
             </div>
-            <div className={`w-full h-fit ${carrinho.length > 0 ? 'bg-white':'bg-gray-50 hidden md:block'} pt-5 pb-6 rounded-md lg:col-span-4 xl:col-span-2 shadow-md shadow-gray-400/60`}>
+            <div className={`w-full h-fit ${carrinho.length > 0 ? 'bg-white':'bg-gray-50 hidden md:block'} pt-5 pb-6 rounded-md lg:col-span-4 xl:col-span-2 shadow-md shadow-gray-300/80`}>
                 <h2 className='text-base md:text-[20px] xl:text-[18px] font-semibold text-black/80 pb-4 border-b px-6'>Resumo da compra</h2>
                 { carrinho.length > 0 ? 
                 <>
@@ -275,10 +275,6 @@ export default function Cart() {
                             masks.maskCurrency(freight.price)}
                         </p>
                     </div>
-                    <button className='flex items-center gap-1 font-medium text-sm md:text-base lg:text-sm'>
-                        Adicionar Cupom 
-                        <FiChevronRight />
-                    </button>
                 </div>
                 <div className='flex justify-between pt-5 pb-6 px-6 text-base md:text-[18px] font-medium text-black/80'>
                     <p>Total</p>
@@ -286,7 +282,7 @@ export default function Cart() {
                 </div>
                 <Link 
                     to={'/payment'} 
-                    className='flex justify-center w-[calc(100%-48px)] py-3 bg-color-primary text-white mx-6 rounded-sm'
+                    className='flex justify-center w-[calc(100%-48px)] py-3 bg-color-secundary text-white mx-6 rounded-sm'
                     >CHECKOUT
                 </Link>
                 </>

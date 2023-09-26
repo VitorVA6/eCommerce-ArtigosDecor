@@ -135,7 +135,7 @@ export default function Header() {
                             <div className='flex relative rounded-full h-[34px] w-[34px] md:h-[40px] md:w-[40px] justify-center items-center'>
                                 <BsCart2 className="w-6 h-6 text-color-secundary md:w-5 md:h-5 xl:w-7 xl:h-7"/>
                                 <div 
-                                    className='flex justify-center items-center bg-color-secundary rounded-full text-white font-medium absolute -top-0.5 -right-0 text-[12px] leading-none w-[18px] h-[18px] border border-white'
+                                    className='flex justify-center items-center bg-color-secundary rounded-full text-white font-medium absolute -top-0.5 -right-0 md:top-[1px] md:right-0.5 text-[12px] leading-none w-[18px] h-[18px] border border-white'
                                 >
                                     <span className='text-[11px] text-gray-100'>{quantTotal}</span>
                                 </div>

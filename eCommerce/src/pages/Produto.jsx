@@ -7,6 +7,7 @@ import { BsCreditCard2Back, BsShieldCheck, BsArrowCounterclockwise, BsTruck } fr
 import { FiChevronRight } from 'react-icons/fi';
 import { useVariationContext } from '../contexts/Variation';
 import SEO from '../components/SEO';
+import Loading from '../components/Loading'
 
 export default function Produto() {
     const navigate = useNavigate()
@@ -128,195 +129,198 @@ export default function Produto() {
         canonical = {`https://artigosdecor.render.com/produto/${id}`}
         keywords = {`${produto?.title}, ${produto?.categoria[0]?.label}`}
     />
-    <section className='flex flex-col'>    
-        <h3 className='hidden md:flex gap-1 items-center md:px-10 xl:px-32 my-[28px] text-sm text-gray-600'>
-            <p>Página inicial</p> 
-            <FiChevronRight className='w-3.5 h-3.5 text-gray-500 mt-0.5'/> 
-            <p>{produto?.categoria[0]?.label}</p>
-            <FiChevronRight className='w-3.5 h-3.5 text-gray-500 mt-0.5'/>
-            <p>{produto?.title}</p>
-        </h3>    
-        <section className='flex flex-col lg:h-fit justify-center overflow-hidden px-3 md:px-10 xl:px-32 pt-6 md:pt-0 lg:pb-8 lg:gap-7 lg:border-b border-gray-200 lg:flex-row md:gap-y-8 md:pb-2'>
-            <div className='w-full lg:w-3/5 lg:bg-white lg:rounded-md lg:p-6 lg:shadow-lg lg:shadow-gray-300/60 md:hidden'>
-                <Slider {...settings} dots dotsClass="meus-dots">
-                    {
-                        produto?.img?.map( image =>{
-                            return (
-                            <div key={image} className=''>
-                                <img 
-                                    className='h-96 w-full lg:px-0 rounded-sm' 
-                                    src={`${import.meta.env.VITE_AWS_URL}${image}`}
-                                    alt="Imagem do produto" />
-                            </div>)
-                        })
-                        
-                    }
-                </Slider>
-            </div>
-            <div className='w-full lg:w-3/5 h-[80vh] md:bg-white md:rounded-md p-6 shadow-md shadow-gray-300/60 hidden md:flex md:flex-col lg:flex-row'>
-                <div className='flex flex-row lg:flex-col gap-2.5 md:order-2 lg:order-1 md:mt-4 lg:mt-0 overflow-auto lg:mr-4 md:mr-0'>
-                    {
-                        produto?.img?.map( (image, index) =>{
-                            return (
-                                <img 
-                                    key={image} 
-                                    className={`${imgId === index ? 'border-[2px] border-color-primary': ''} cursor-pointer h-16 w-16 min-w-[64px] p-0 rounded-sm`} 
-                                    src={`${import.meta.env.VITE_AWS_URL}${image}`} 
-                                    alt="Imagem do produto" 
-                                    onMouseOver={() => {
-                                        setImgId(index)
-                                    }}
-                                />
-                            )
-                        })
-                        
-                    }
-                </div>
-                {
-                    produto?.img !== undefined &&
-                    <div className='flex md:w-full lg:w-[calc(100%-80px)] md:h-[calc(100%-80px)] lg:h-full md:order-1 lg:order-2'>
-                        <img className='rounded-sm w-full' src={`${import.meta.env.VITE_AWS_URL}${produto?.img[imgId]}`} alt="Imagem do produto" />
-                    </div>
-                }
-            </div>       
-            <div className='flex flex-col w-full lg:w-2/5 h-fit md:px-8 md:py-3 md:bg-white md:rounded-md md:shadow-md lg:shadow-gray-300/60'>
-                <div className='flex flex-col pt-3 gap-1.5'>
-                    <h2 className='text-[20px] font-medium lg:text-[22px] text-black/90 leading-none'>{produto?.title}</h2>
-                    <h3 className='text-xs md:text-sm text-gray-400'>Disponível em estoque</h3>
-                </div>
-                
-                <div className='flex flex-col mt-6 mb-2'>
-                    {
-                    produto?.desconto > 0 &&
-                    <p className='inline line-through text-gray-500/90 text-[16px] font-light'>{produto?.preco?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
-                    }
-                    <div className='flex items-center gap-x-1.5'>
+    {
+        carregado === false ? <Loading /> :
+        <section className='flex flex-col'>    
+            <h3 className='hidden md:flex gap-1 items-center md:px-10 xl:px-32 my-[28px] text-sm text-gray-600'>
+                <p>Página inicial</p> 
+                <FiChevronRight className='w-3.5 h-3.5 text-gray-500 mt-0.5'/> 
+                <p>{produto?.categoria[0]?.label}</p>
+                <FiChevronRight className='w-3.5 h-3.5 text-gray-500 mt-0.5'/>
+                <p>{produto?.title}</p>
+            </h3>    
+            <section className='flex flex-col lg:h-fit justify-center overflow-hidden px-3 md:px-10 xl:px-32 pt-6 md:pt-0 lg:pb-8 lg:gap-7 lg:border-b border-gray-200 lg:flex-row md:gap-y-8 md:pb-2'>
+                <div className='w-full lg:w-3/5 lg:bg-white lg:rounded-md lg:p-6 lg:shadow-lg lg:shadow-gray-300/60 md:hidden'>
+                    <Slider {...settings} dots dotsClass="meus-dots">
                         {
-                        produto?.desconto > 0 ?
-                        <p className='text-[32px] md:text-[36px] text-black/80 leading-none'>{produto?.desconto?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p> :
-                        <p className='text-[32px] md:text-[36px] text-black/80 leading-none'>{produto?.preco?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                            produto?.img?.map( image =>{
+                                return (
+                                <div key={image} className=''>
+                                    <img 
+                                        className='h-96 w-full lg:px-0 rounded-sm' 
+                                        src={`${import.meta.env.VITE_AWS_URL}${image}`}
+                                        alt="Imagem do produto" />
+                                </div>)
+                            })
+                            
                         }
-                        {produto?.desconto > 0 &&                           
-                        <p className='text-color-primary font-medium'>{ Math.ceil((produto?.preco - produto?.desconto)*100/produto?.preco)}% OFF</p>                          
+                    </Slider>
+                </div>
+                <div className='w-full lg:w-3/5 h-[80vh] md:bg-white md:rounded-md p-6 shadow-md shadow-gray-300/60 hidden md:flex md:flex-col lg:flex-row'>
+                    <div className='flex flex-row lg:flex-col gap-2.5 md:order-2 lg:order-1 md:mt-4 lg:mt-0 overflow-auto lg:mr-4 md:mr-0'>
+                        {
+                            produto?.img?.map( (image, index) =>{
+                                return (
+                                    <img 
+                                        key={image} 
+                                        className={`${imgId === index ? 'border-[2px] border-color-primary': ''} cursor-pointer h-16 w-16 min-w-[64px] p-0 rounded-sm`} 
+                                        src={`${import.meta.env.VITE_AWS_URL}${image}`} 
+                                        alt="Imagem do produto" 
+                                        onMouseOver={() => {
+                                            setImgId(index)
+                                        }}
+                                    />
+                                )
+                            })
+                            
                         }
-                    </div>
-                    <div className='flex gap-1 text-gray-600'>
-                        <p>em até 12x de {produto?.desconto > 0 ? parseFloat((produto?.desconto* taxa /12).toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : parseFloat((produto?.preco*taxa/12).toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                     </div>
                     {
-                    produto?.desconto > 0 &&
-                    <p className='bg-color-custom-bg text-color-primary px-2 py-1 md:py-[7px] rounded-sm flex w-fit mt-1.5 md:mt-3.5 text-xs md:text-sm font-semibold'>R$ {(produto?.preco - produto?.desconto).toFixed(0)} de desconto</p>
-                    }
-                </div>
-                        
-                {   
-                    produto?.combinations?.length > 0 &&  
-                    <div className='flex flex-col mt-6 gap-y-4'>  
-                    {  
-                    produto?.variations?.map( variation => (
-                        <div key={variation.idVariacao} className='flex flex-col w-full'>
-                            <h3 className='text-sm md:text-base text-gray-700 mb-2'>{getVarName(variation.idVariacao)}:</h3>
-                            <div className='flex flex-wrap gap-2'>
-                                {variation.idOptions.map( option => (
-                                <button 
-                                    key={option}
-                                    className={`${verifySelected(option) === true ? 'text-color-primary border-2 border-color-primary': 'border border-gray-300'} py-2 px-3 rounded-lg text-[12px]`}
-                                    onClick={() => handleSelect(variation.idVariacao, option)}
-                                >
-                                    {getOptionName(variation.idVariacao ,option)}                                
-                                </button>
-                                ) )}
-                            </div>
+                        produto?.img !== undefined &&
+                        <div className='flex md:w-full lg:w-[calc(100%-80px)] md:h-[calc(100%-80px)] lg:h-full md:order-1 lg:order-2'>
+                            <img className='rounded-sm w-full' src={`${import.meta.env.VITE_AWS_URL}${produto?.img[imgId]}`} alt="Imagem do produto" />
                         </div>
-                    ) )  
                     }
-                </div>
-                }
-                <div className='flex flex-col gap-2 mt-10 mb-2'>
-                    <div className='w-fit mb-2 hidden md:flex border border-gray-300 rounded-md items-center text-gray-700'>
-                        <button className='px-2.5 md:px-3 py-2.5 lg:px-2.5  xl:py-3' onClick={() => mudaQuantidade('-')}>
-                            <svg 
-                                xmlns="http://www.w3.org/2000/svg" 
-                                fill="none" 
-                                viewBox="0 0 24 24" 
-                                strokeWidth={1.5} 
-                                stroke="currentColor" 
-                                className="w-5 h-5 md:w-6 md:h-6 lg:w-5 lg:h-5">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M18 12H6" />
-                            </svg>
+                </div>       
+                <div className='flex flex-col w-full lg:w-2/5 h-fit md:px-8 md:py-3 md:bg-white md:rounded-md md:shadow-md lg:shadow-gray-300/60'>
+                    <div className='flex flex-col pt-3 gap-1.5'>
+                        <h2 className='text-[20px] font-medium lg:text-[22px] text-black/90 leading-none'>{produto?.title}</h2>
+                        <h3 className='text-xs md:text-sm text-gray-400'>Disponível em estoque</h3>
+                    </div>
+                    
+                    <div className='flex flex-col mt-6 mb-2'>
+                        {
+                        produto?.desconto > 0 &&
+                        <p className='inline line-through text-gray-500/90 text-[16px] font-light'>{produto?.preco?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                        }
+                        <div className='flex items-center gap-x-1.5'>
+                            {
+                            produto?.desconto > 0 ?
+                            <p className='text-[32px] md:text-[36px] text-black/80 leading-none'>{produto?.desconto?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p> :
+                            <p className='text-[32px] md:text-[36px] text-black/80 leading-none'>{produto?.preco?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                            }
+                            {produto?.desconto > 0 &&                           
+                            <p className='text-color-primary font-medium'>{ Math.ceil((produto?.preco - produto?.desconto)*100/produto?.preco)}% OFF</p>                          
+                            }
+                        </div>
+                        <div className='flex gap-1 text-gray-600'>
+                            <p>em até 12x de {produto?.desconto > 0 ? parseFloat((produto?.desconto* taxa /12).toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : parseFloat((produto?.preco*taxa/12).toFixed(2)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                        </div>
+                        {
+                        produto?.desconto > 0 &&
+                        <p className='bg-color-custom-bg text-color-primary px-2 py-1 md:py-[7px] rounded-sm flex w-fit mt-1.5 md:mt-3.5 text-xs md:text-sm font-semibold'>R$ {(produto?.preco - produto?.desconto).toFixed(0)} de desconto</p>
+                        }
+                    </div>
+                            
+                    {   
+                        produto?.combinations?.length > 0 &&  
+                        <div className='flex flex-col mt-6 gap-y-4'>  
+                        {  
+                        produto?.variations?.map( variation => (
+                            <div key={variation.idVariacao} className='flex flex-col w-full'>
+                                <h3 className='text-sm md:text-base text-gray-700 mb-2'>{getVarName(variation.idVariacao)}:</h3>
+                                <div className='flex flex-wrap gap-2'>
+                                    {variation.idOptions.map( option => (
+                                    <button 
+                                        key={option}
+                                        className={`${verifySelected(option) === true ? 'text-color-primary border-2 border-color-primary': 'border border-gray-300'} py-2 px-3 rounded-lg text-[12px]`}
+                                        onClick={() => handleSelect(variation.idVariacao, option)}
+                                    >
+                                        {getOptionName(variation.idVariacao ,option)}                                
+                                    </button>
+                                    ) )}
+                                </div>
+                            </div>
+                        ) )  
+                        }
+                    </div>
+                    }
+                    <div className='flex flex-col gap-2 mt-10 mb-2'>
+                        <div className='w-fit mb-2 hidden md:flex border border-gray-300 rounded-md items-center text-gray-700'>
+                            <button className='px-2.5 md:px-3 py-2.5 lg:px-2.5  xl:py-3' onClick={() => mudaQuantidade('-')}>
+                                <svg 
+                                    xmlns="http://www.w3.org/2000/svg" 
+                                    fill="none" 
+                                    viewBox="0 0 24 24" 
+                                    strokeWidth={1.5} 
+                                    stroke="currentColor" 
+                                    className="w-5 h-5 md:w-6 md:h-6 lg:w-5 lg:h-5">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M18 12H6" />
+                                </svg>
 
-                        </button>
-                        <p className='font-medium w-6 text-center'>{quantidade}</p>
-                        <button className='px-2.5 md:px-3 py-2.5 lg:px-2.5 xl:py-3' onClick={() => mudaQuantidade('+')}>
-                            <svg 
-                                xmlns="http://www.w3.org/2000/svg" 
-                                fill="none" 
-                                viewBox="0 0 24 24" 
-                                strokeWidth={1.5} 
-                                stroke="currentColor" 
-                                className="w-5 h-5 md:w-6 md:h-6 lg:w-5 lg:h-5">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
-                            </svg>
+                            </button>
+                            <p className='font-medium w-6 text-center'>{quantidade}</p>
+                            <button className='px-2.5 md:px-3 py-2.5 lg:px-2.5 xl:py-3' onClick={() => mudaQuantidade('+')}>
+                                <svg 
+                                    xmlns="http://www.w3.org/2000/svg" 
+                                    fill="none" 
+                                    viewBox="0 0 24 24" 
+                                    strokeWidth={1.5} 
+                                    stroke="currentColor" 
+                                    className="w-5 h-5 md:w-6 md:h-6 lg:w-5 lg:h-5">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
+                                </svg>
 
+                            </button>
+                        </div>
+                        <button 
+                            className='bg-color-secundary text-white py-2.5 w-full rounded-md font-medium text-base flex items-center justify-center gap-3'
+                            onClick={() => {
+                                addCarrinho(produto, quantidade)
+                                navigate('/cart')
+                            }}
+                        >
+                            Comprar
+                        </button>
+                        <button 
+                            className=' text-color-secundary border border-color-secundary py-2.5 w-full rounded-md font-medium text-base flex items-center justify-center gap-3'
+                            onClick={() => {
+                                addCarrinho(produto, quantidade)
+                                navigate('/')
+                            }}
+                        >
+                            Adicionar ao carrinho
                         </button>
                     </div>
-                    <button 
-                        className='bg-color-secundary text-white py-2.5 w-full rounded-md font-medium text-base flex items-center justify-center gap-3'
-                        onClick={() => {
-                            addCarrinho(produto, quantidade)
-                            navigate('/cart')
-                        }}
-                    >
-                        Comprar
-                    </button>
-                    <button 
-                        className=' bg-color-custom-bg text-color-secundary py-2.5 w-full rounded-md font-medium text-base flex items-center justify-center gap-3'
-                        onClick={() => {
-                            addCarrinho(produto, quantidade)
-                            navigate('/')
-                        }}
-                    >
-                        Adicionar ao carrinho
-                    </button>
-                </div>
-                <div className='flex gap-5 w-full bg-white shadow-md my-6 px-5 py-4 rounded-md'>
-                    <div className='bg-[#2381A8] text-white rounded-full p-2 h-fit'>
-                        <BsTruck className=''/>
+                    <div className='flex gap-5 w-full bg-white shadow-md my-6 px-5 py-4 rounded-md'>
+                        <div className='bg-[#2381A8] text-white rounded-full p-2 h-fit'>
+                            <BsTruck className=''/>
+                        </div>
+                        <div className='flex flex-col w-full'>
+                            <p className='text-[13px] font-medium mb-2'>Este produto está com frete grátis</p>
+                            <div className='h-[5px] w-full rounded-full bg-[#2381A8] mb-1'/>
+                            <p className='text-[13px]'>Com entrega via correios!</p>
+                        </div>
                     </div>
-                    <div className='flex flex-col w-full'>
-                        <p className='text-[13px] font-medium mb-2'>Este produto está com frete grátis</p>
-                        <div className='h-[5px] w-full rounded-full bg-[#2381A8] mb-1'/>
-                        <p className='text-[13px]'>Com entrega via correios!</p>
+                    <div className='flex gap-5 items-center lg:border-none pl-1 pt-2 text-[13px] mb-2'>               
+                        <BsCreditCard2Back className="w-[18px] h-[18px] md:w-6 md:h-6 text-gray-500" />
+                        <div>
+                            <p className='font-medium text-[#2381A8] leading-none mb-[3px]'>Parcele suas compras</p>
+                            <p className='text-gray-500 leading-none'>Parcelamento no cartão de crédito</p>
+                        </div>
                     </div>
-                </div>
-                <div className='flex gap-5 items-center lg:border-none pl-1 pt-2 text-[13px] mb-2'>               
-                    <BsCreditCard2Back className="w-[18px] h-[18px] md:w-6 md:h-6 text-gray-500" />
-                    <div>
-                        <p className='font-medium text-color-secundary leading-none mb-[3px]'>Parcele suas compras</p>
-                        <p className='text-gray-500 leading-none'>Parcelamento no cartão de crédito</p>
+                    <div className='flex mt-3 gap-5 items-center pl-1 text-[13px] mb-2'>              
+                        <BsShieldCheck className="w-[18px] h-[18px] md:w-6 md:h-6 text-gray-500" />
+                        <div className=''>
+                            <p className='font-medium text-[#2381A8] leading-none mb-[3px]'>Compra segura</p>
+                            <p className='text-gray-500 leading-none'>Sua compra é 100% protegida</p>
+                        </div>
+                    </div>
+                    <div className='text-[13px] flex mt-3 gap-5 items-center border-b border-gray-300 pb-6 lg:border-none pl-1'>              
+                        <BsArrowCounterclockwise className="w-[18px] h-[18px] md:w-6 md:h-6 text-gray-500" />
+                        <div>
+                            <p className='font-medium text-[#2381A8] leading-none mb-[3px]'>Devolução grátis</p>
+                            <p className='text-gray-500 leading-none'>Em até 7 dias a partir do recebimento</p>
+                        </div>
                     </div>
                 </div>
-                <div className='flex mt-3 gap-5 items-center pl-1 text-[13px] mb-2'>              
-                    <BsShieldCheck className="w-[18px] h-[18px] md:w-6 md:h-6 text-gray-500" />
-                    <div className=''>
-                        <p className='font-medium text-color-secundary leading-none mb-[3px]'>Compra segura</p>
-                        <p className='text-gray-500 leading-none'>Sua compra é 100% protegida</p>
-                    </div>
-                </div>
-                <div className='text-[13px] flex mt-3 gap-5 items-center border-b border-gray-300 pb-6 lg:border-none pl-1'>              
-                    <BsArrowCounterclockwise className="w-[18px] h-[18px] md:w-6 md:h-6 text-gray-500" />
-                    <div>
-                        <p className='font-medium text-color-secundary leading-none mb-[3px]'>Devolução grátis</p>
-                        <p className='text-gray-500 leading-none'>Em até 7 dias a partir do recebimento</p>
-                    </div>
-                </div>
-            </div>
+            </section>
+            <div className='my-5 md:my-6 lg:my-8 md:mx-10 xl:mx-32 md:rounded-md px-6 md-px-8 md:bg-white md:py-8 md:shadow-md md:shadow-gray-300/60'>
+                <h3 className='text-lg mb-2 md:text-[20px] font-medium lg:mb-4'>Informações do produto</h3>
+                <p className='text-gray-500 text-sm' style={{whiteSpace: "pre-wrap"}}>{produto?.desc}</p>
+            </div>       
         </section>
-        <div className='my-5 md:my-6 lg:my-8 md:mx-10 xl:mx-32 md:rounded-md px-6 md-px-8 md:bg-white md:py-8 md:shadow-md md:shadow-gray-300/60'>
-            <h3 className='text-lg mb-2 md:text-[20px] font-medium lg:mb-4'>Informações do produto</h3>
-            <p className='text-gray-500 text-sm' style={{whiteSpace: "pre-wrap"}}>{produto?.desc}</p>
-        </div>       
-    </section>
+    }
     </>
   )
 }
