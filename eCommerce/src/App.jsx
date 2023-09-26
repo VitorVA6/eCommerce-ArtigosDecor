@@ -52,12 +52,12 @@ function App() {
           <Route path='/devolution-policy' element={<PolicyPage title={'Política de reembolso'} text={pagestexts.devolution} />} />
           <Route path='/privacy-policy' element={<PolicyPage title={'Política de privacidade'} text={pagestexts.privacy} />} />
         </Route>
-        <Route path='/404' element={<PageNotFound />} />
-        <Route path='/login' element={<Login />}/>
-        <Route path='/admin' element={<Admin />} />
-        <Route path='/users/verify/:token' element={<EmailVerify />}/>
-        <Route path='/users/forgot-password' element={<ForgotPassword />}/>
-        <Route path='/users/reset-password/:token' element={<ResetPassword />}/>
+        <Route path='404' element={<PageNotFound />} />
+        <Route path='login' element={<Login />}/>
+        <Route path='admin' element={<Admin />} />
+        <Route path='users/verify/:token' element={<EmailVerify />}/>
+        <Route path='users/forgot-password' element={<ForgotPassword />}/>
+        <Route path='users/reset-password/:token' element={<ResetPassword />}/>
       </Routes>
       </PaymentProvider>
       </CatalogProvider>
