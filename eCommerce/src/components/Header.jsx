@@ -76,7 +76,6 @@ export default function Header() {
                     </div>
                 </div>
             </div> 
-            
         </header> : 
         <header className='flex flex-col bg-white justify-between w-full md:justify-center h-fit z-10 border md:border-none'>
             <div className='hidden md:flex w-full justify-center md:justify-between md:px-10 xl:px-32 py-1.5 md:py-2 text-xs md:text-[13px] text-black/70 font-medium border-b-[2px]'>
@@ -107,7 +106,6 @@ export default function Header() {
                             alt='imagem da logo'
                         />
                     </Link >
-                    
                     <div className='hidden md:flex rounded-full h-[44px] w-[55%] lg:w-[50%] pl-3 lg:pl-0 bg-white items-center text-black-80  justify-between border-[3px]'>
                         <DropDownSearchbar categories={categories} selCategory={selCategory} setSelCategory={setSelCategory}/>
                         <input 
@@ -125,19 +123,19 @@ export default function Header() {
                             <GoSearch className='w-[22px] h-[22px] text-black/70'/>
                         </button>
                     </div>
-                    <div className='flex items-center gap-4'>
+                    <div className='flex items-center gap-3'>
                         <Link 
                             to={'/'}
-                            className='hidden lg:flex relative rounded-full border-[2px] border-gray-200 items-center justify-center h-[40px] w-[40px]'>
-                                <BsTelephone className="w-[26px] text-gray-500/80 h-[26px] md:w-[17px] md:h-[17px]"/>
+                            className='hidden lg:flex relative rounded-full items-center justify-center h-[40px] w-[40px]'>
+                                <BsTelephone className=" text-color-secundary w-6 h-6"/>
                         </Link>
                         <Link to={'/cart'} className='flex items-center gap-2 relative h-full'>
                             <div className='flex relative rounded-full h-[34px] w-[34px] md:h-[40px] md:w-[40px] justify-center items-center'>
-                                <BsCart2 className="w-6 h-6 text-color-secundary md:w-5 md:h-5 xl:w-7 xl:h-7"/>
+                                <BsCart2 className="w-7 h-7 text-color-secundary md:w-5 md:h-5 xl:w-7 xl:h-7"/>
                                 <div 
                                     className='flex justify-center items-center bg-color-secundary rounded-full text-white font-medium absolute -top-0.5 -right-0 md:top-[1px] md:right-0.5 text-[12px] leading-none w-[18px] h-[18px] border border-white'
                                 >
-                                    <span className='text-[11px] text-gray-100'>{quantTotal}</span>
+                                    <span className='text-[10px] text-gray-100'>{quantTotal}</span>
                                 </div>
                             </div>
                             <h4 className='font-medium hidden text-sm lg:block text-black/80'>

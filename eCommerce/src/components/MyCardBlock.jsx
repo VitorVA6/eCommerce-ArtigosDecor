@@ -12,7 +12,7 @@ export default function MyCardBlock() {
     const navigate = useNavigate()
 
     useEffect(()=> {
-        initMercadoPago('TEST-8baf6102-c707-4284-a248-a0ac11256c46', { locale: 'pt-BR' });
+        initMercadoPago(import.meta.env.VITE_CREDENTIAL_KEY, { locale: 'pt-BR' });
     }, [] )
 
   return (

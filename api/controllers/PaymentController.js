@@ -44,7 +44,7 @@ module.exports = class PaymentController {
         else {
             res.status(422).json({ error: 'Método de pagamento da shopee.' });
         }
-        mercadopago.configurations.setAccessToken('TEST-462015067611172-063011-b3e5d6ffd1265f43497f38b1a4341944-517694611')
+        mercadopago.configurations.setAccessToken(process.env.MP_TOKEN)
         try{
             const response = await mercadopago.payment.save(paymentData)        
             const { status, status_detail, id, payment_type_id, date_created } = response.body;
