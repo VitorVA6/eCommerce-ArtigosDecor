@@ -1,19 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { initMercadoPago } from '@mercadopago/sdk-react';
+import React, { useState } from 'react'
 import { StatusScreen } from '@mercadopago/sdk-react';
 import {useParams} from 'react-router-dom';
 import Loading from '../components/Loading';
 import SEO from '../components/SEO';
-import { usePaymentContext } from '../contexts/Payment';
 
 export default function PaymentStatus() {
-
-    const {resetPayment} = usePaymentContext()
-
-    useEffect(()=> {
-        initMercadoPago('TEST-8baf6102-c707-4284-a248-a0ac11256c46', { locale: 'pt-BR' });
-    }, [] )
-
     const [loaded, setLoaded] = useState(false)
     const {id} = useParams()
     const initialization = {
@@ -28,8 +19,8 @@ export default function PaymentStatus() {
     
        const customization = {
         backUrls: {
-          error: 'http://[::1]:5173/payment',
-          return: 'http://[::1]:5173/',
+            error: `${import.meta.env.VITE_MY_URL}payment`,
+            return: import.meta.env.VITE_MY_URL,
         },
        };
 

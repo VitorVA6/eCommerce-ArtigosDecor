@@ -40,24 +40,24 @@ function App() {
       <CatalogProvider>
       <PaymentProvider>
       <Routes>
-        <Route path='404' element={<PageNotFound />} />
-        <Route path='login' element={<Login />}/>
-        <Route path='admin' element={<Admin />} />
-        <Route path='users/verify/:token' element={<EmailVerify />}/>
-        <Route path='users/forgot-password' element={<ForgotPassword />}/>
-        <Route path='users/reset-password/:token' element={<ResetPassword />}/>
-        <Route path='' element={<Base />}>
+        <Route path='/' element={<Base />}>
           <Route index element={<Home />} />
-          <Route path='produto/:id' element = {<Produto />}/>
-          <Route path='category/:name' element = {<Category />}/>
-          <Route path='payment-status/:id' element = {<PaymentStatus />}/>
-          <Route path='search/:category/:name' element = {<Search />}/>
-          <Route path='cart' element={<Cart />} />
-          <Route path='payment' element={<Payment />} />
-          <Route path='about-us' element={<About />} />
-          <Route path='devolution-policy' element={<PolicyPage title={'Política de reembolso'} text={pagestexts.devolution} />} />
-          <Route path='privacy-policy' element={<PolicyPage title={'Política de privacidade'} text={pagestexts.privacy} />} />
+          <Route path='/produto/:id' element = {<Produto />}/>
+          <Route path='/category/:name' element = {<Category />}/>
+          <Route path='/payment-status/:id' element = {<PaymentStatus />}/>
+          <Route path='/search/:category/:name' element = {<Search />}/>
+          <Route path='/cart' element={<Cart />} />
+          <Route path='/payment' element={<Payment />} />
+          <Route path='/about-us' element={<About />} />
+          <Route path='/devolution-policy' element={<PolicyPage title={'Política de reembolso'} text={pagestexts.devolution} />} />
+          <Route path='/privacy-policy' element={<PolicyPage title={'Política de privacidade'} text={pagestexts.privacy} />} />
         </Route>
+        <Route path='/404' element={<PageNotFound />} />
+        <Route path='/login' element={<Login />}/>
+        <Route path='/admin' element={<Admin />} />
+        <Route path='/users/verify/:token' element={<EmailVerify />}/>
+        <Route path='/users/forgot-password' element={<ForgotPassword />}/>
+        <Route path='/users/reset-password/:token' element={<ResetPassword />}/>
       </Routes>
       </PaymentProvider>
       </CatalogProvider>

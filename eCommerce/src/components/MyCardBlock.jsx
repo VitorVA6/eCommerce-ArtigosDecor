@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useCarrinhoContext } from '../contexts/Carrinho';
 import { usePaymentContext } from '../contexts/Payment';
 import { useNavigate } from 'react-router-dom';
+import notifies from '../utils/toastNotifies'
 
 export default function MyCardBlock() {
 
@@ -51,7 +52,7 @@ export default function MyCardBlock() {
                     resetCart()
                     navigate(`/payment-status/${data.id}`)
                 }catch(err){
-                    console.log(err)
+                    notifies.error('Não foi possível realizar o pagamento')
                 }
             }}
         />

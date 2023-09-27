@@ -8,6 +8,7 @@ const templateShipment = require('../emailTemplates/templateShipment')
 
 module.exports = class PaymentController {
     static async processPayment(req, res){
+        console.log('oi')
         let paymentData = {}
         const {
             payment_method_id, 
@@ -24,6 +25,15 @@ module.exports = class PaymentController {
             products
         } = req.body
 
+        let description = ''
+
+        products.forEach((el, index) => {
+            if (index !== products.length - 1) description+= `${el.qty}x ${el.name} + `
+            else description+= `${el.qty}x ${el.name}`
+        });
+
+        console.log(description)
+
         if(method === 'credit_card'){
             paymentData = {
                 installments: req.body.installments,
@@ -32,6 +42,7 @@ module.exports = class PaymentController {
                 payment_method_id, 
                 transaction_amount, 
                 payer,
+                description
             }
         }
         else if(method === 'bank_transfer'){
@@ -39,6 +50,7 @@ module.exports = class PaymentController {
                 payment_method_id, 
                 transaction_amount, 
                 payer,
+                description
             }
         }
         else {

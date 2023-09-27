@@ -12,6 +12,7 @@ import { useCarrinhoContext } from '../contexts/Carrinho';
 import ShipOption from '../components/ShipOption';
 import { scrollToDiv } from '../utils/scroll';
 import SEO from '../components/SEO';
+import notifies from '../utils/toastNotifies'
 
 export default function PaymentPage() {
 
@@ -110,6 +111,7 @@ export default function PaymentPage() {
         canonical = 'https://artigosdecor.render.com/payment'
         keywords = 'pagamento, checkout, mercado pago'
     />
+    <notifies.Container />
     <div className='grid xl:grid-cols-3 md:px-36 lg:px-64 xl:px-32 py-10 gap-5'>
         <ProgressbarPayment />
         <div className='order-2 xl:order-1 flex flex-col gap-3'>
