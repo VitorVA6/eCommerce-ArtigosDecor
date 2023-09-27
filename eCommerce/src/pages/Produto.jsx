@@ -316,8 +316,11 @@ export default function Produto() {
                 </div>
             </section>
             <div className='my-5 md:my-6 lg:my-8 md:mx-10 xl:mx-32 md:rounded-md px-6 md-px-8 md:bg-white md:py-8 md:shadow-md md:shadow-gray-300/60'>
-                <h3 className='text-lg mb-2 md:text-[20px] font-medium lg:mb-4'>Informações do produto</h3>
-                <p className='text-gray-500 text-sm' style={{whiteSpace: "pre-wrap"}}>{produto?.desc}</p>
+                <h3 className='text-lg mb-2 md:text-[22px] font-medium text-black/80 lg:mb-4'>Informações do produto</h3>
+                <p 
+                    className='text-gray-500 text-sm md:text-base' 
+                    style={{whiteSpace: "pre-wrap"}}>
+                        {produto?.desc}</p>
             </div>       
         </section>
     }

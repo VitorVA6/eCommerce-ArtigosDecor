@@ -204,7 +204,8 @@ export default function ModalProduto({setModalProduto, edit, categorias, idProdu
                     type="text" 
                     placeholder='Ex: Camiseta preta de algodão. Tamanhos P, M e G.' 
                     value={desc}
-                    onChange={event => setDesc(event.target.value) }    
+                    onChange={event => setDesc(event.target.value) }
+                    rows={5} 
                     />    
             </div>
             {

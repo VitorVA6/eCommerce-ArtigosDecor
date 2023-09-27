@@ -106,21 +106,21 @@ export default function Header() {
                             alt='imagem da logo'
                         />
                     </Link >
-                    <div className='hidden md:flex rounded-full h-[44px] w-[55%] lg:w-[50%] pl-3 lg:pl-0 bg-white items-center text-black-80  justify-between border-[3px]'>
+                    <div className='hidden md:flex rounded-md h-[44px] w-[55%] lg:w-[50%] 2xl:w-[55%] pl-3 lg:pl-0 bg-white items-center text-black-80 justify-between border-[2px]'>
                         <DropDownSearchbar categories={categories} selCategory={selCategory} setSelCategory={setSelCategory}/>
                         <input 
                             type="text" 
                             placeholder='O que está procurando?'
-                            className='pl-3 lg:pl-5 rounded-full w-full flex items-center outline-none text-base placeholder-gray-400'
+                            className='pl-3 lg:pl-5 rounded-md w-full flex items-center outline-none text-base placeholder-gray-400'
                             value={key}
                             onChange={(ev) => setKey(ev.target.value)}
                             onKeyDown={handleKeyDown}
                         />
                         <button 
-                            className='px-[30px] justify-center h-full rounded-full items-center flex bg-gray-200'
+                            className='px-[26px] justify-center h-full  items-center flex bg-gray-200'
                             onClick={handleSearch }
                         >
-                            <GoSearch className='w-[22px] h-[22px] text-black/70'/>
+                            <GoSearch className='w-[22px] h-[22px] text-color-secundary'/>
                         </button>
                     </div>
                     <div className='flex items-center gap-2'>

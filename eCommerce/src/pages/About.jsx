@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useCatalogContext } from '../contexts/Catalog'
 import SEO from '../components/SEO'
+import parse from 'html-react-parser'
 
 export default function About() {
 
@@ -18,19 +19,11 @@ export default function About() {
         url = {`https://artigosdecor.render.com/about-us`}
         canonical = {`https://artigosdecor.render.com/about-us`}
     />
-    <div className='flex flex-col py-16 px-32 gap-5'>
-        <h1 className='font-bold text-[36px] text-center mb-6'>{`Sobre a ${catalog.nome}`}</h1>
-        {
-            text.map((el, index )=> {
-                if(el !== ''){
-                    return (
-                        <p key={index}>
-                            {`${el}`}
-                        </p>
-                    )
-                }
-            })
-        }
+    <div className='flex flex-col py-12 px-32 gap-5 text-black/80 bg-white'>
+        <h1 className='font-semibold text-[36px] text-center mb-6'>{`Sobre a ${catalog.nome}`}</h1>
+        <p style={{whiteSpace: "pre-wrap"}}>
+            {parse(catalog.sobre)}
+        </p>
     </div>
     </>
   )

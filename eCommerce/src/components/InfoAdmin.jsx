@@ -6,6 +6,7 @@ import masks from '../utils/masks.js';
 import notifies from '../utils/toastNotifies';
 import LoadingButton from './LoadingButton';
 import InputAdmin from './InputAdmin';
+import Editor from './Editor';
 
 export default function InfoAdmin() {
 
@@ -45,15 +46,11 @@ export default function InfoAdmin() {
           placeholder='Digite o nome da sua loja'/>
 
         <div className='flex flex-col w-full'>
-          <p className='mb-2 text-sm font-medium'>Descrição</p>
-          <textarea 
-              className='px-4 py-2.5 w-full rounded-lg bg-gray-100 focus:outline outline-1 outline-blue-500' 
-              type="text" 
-              placeholder='Disserte um pouco sobre seu negócio.' 
-              value={catalog.sobre}
-              onChange={ev=>setCatalog(prev=>({...prev, sobre: ev.target.value}))}
-              rows={4} 
-              />    
+          <p className='mb-2 text-sm font-medium h-10'>Descrição</p>
+          <Editor 
+            val={catalog.sobre} 
+            setVal={ev=>setCatalog(prev=>({...prev, sobre: ev}))}
+          />
         </div>
         <InputAdmin 
             title={'Telefone'} 
