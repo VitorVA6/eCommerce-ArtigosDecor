@@ -100,7 +100,7 @@ export default function ModalRsociais({setModalRS, catalog, setCatalog, sucesso,
                 />
             </div>
             <button 
-                className='rounded-lg bg-color-primary text-white py-2 w-fit px-10 mb-3'
+                className='rounded-md bg-blue-500 text-white py-2 md:py-2.5 w-fit px-10 mb-3'
             >
                 Salvar alterações
             </button>

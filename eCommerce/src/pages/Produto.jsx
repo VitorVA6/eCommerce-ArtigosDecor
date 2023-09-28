@@ -131,7 +131,7 @@ export default function Produto() {
     />
     {
         carregado === false ? <Loading /> :
-        <section className='flex flex-col'>    
+        <section className='flex flex-col pb-16'>    
             <h3 className='hidden md:flex gap-1 items-center md:px-10 xl:px-32 my-[28px] text-sm text-gray-600'>
                 <p>Página inicial</p> 
                 <FiChevronRight className='w-3.5 h-3.5 text-gray-500 mt-0.5'/> 

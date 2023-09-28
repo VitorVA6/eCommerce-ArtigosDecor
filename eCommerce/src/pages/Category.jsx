@@ -82,7 +82,7 @@ export default function Category() {
       <p>Página Inicial</p> 
       <FiChevronRight className='w-3.5 h-3.5 text-gray-500 mt-0.5'/> 
       <p>Categorias</p></h3>
-    <section className='flex md:grid md:grid-cols-10 lg:grid-cols-12 overflow-x-hidden lg:gap-x-7 w-full px-0 md:px-10 xl:px-32 pb-10 md:mb-8 text-black/90'>
+    <section className='flex md:grid md:grid-cols-10 lg:grid-cols-12 overflow-x-hidden lg:gap-x-7 w-full px-0 md:px-10 xl:px-32 pb-10 md:mb-24 text-black/90'>
       {
         show === true &&
         <CategoryFilter categories={categories} name={name} show={show} setShow={setShow}/>

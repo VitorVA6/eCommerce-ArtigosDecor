@@ -27,7 +27,7 @@ export default function Home() {
       <SEO keywords='festas, decoração, vasos, castiçais, palnéis de led, led, suporte de bolo, boleira '/>
       {
       loading === true ? <Loading /> :
-      <section className='flex flex-col gap-y-8'>
+      <section className='flex flex-col gap-y-8 pb-16'>
         {
           catalog?.bannerdt?.length !== 0 ?
           <div className='w-full md:px-10 xl:px-32 self-center md:my-10 rounded-lg box-border z-0'>

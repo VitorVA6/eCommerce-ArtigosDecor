@@ -77,7 +77,7 @@ export default function Header() {
                 </div>
             </div> 
         </header> : 
-        <header className='flex flex-col bg-white justify-between w-full md:justify-center h-fit z-10 border md:border-none'>
+        <header className='flex flex-col bg-white justify-between w-full md:justify-center h-fit z-10 border lg:border-none'>
             <div className='hidden md:flex w-full justify-center md:justify-between md:px-10 xl:px-32 py-1.5 md:py-2 text-xs md:text-[13px] text-black/70 font-medium border-b-[2px]'>
                 <div className='flex gap-2 items-center'>
                     <FiPackage className='w-4 h-4 md:w-5 md:h-5'/>

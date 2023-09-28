@@ -109,7 +109,7 @@ export default function Cart() {
         canonical = 'https://artigosdecor.render.com/cart'
         keywords = 'carrinho, cart'
     />
-    <section className=' px-3 md:px-10 xl:px-32 pb-20 pt-6 md:pt-16 -mb-16'>
+    <section className=' px-3 md:px-10 xl:px-32 pb-36 pt-6 md:pt-16'>
         <div className = 'grid lg:grid-cols-12 xl:grid-cols-7 gap-6'>
             <div className={`h-fit flex flex-col lg:col-span-8 xl:col-span-5 w-full ${carrinho.length > 0 && 'bg-white rounded-md shadow-md shadow-gray-300/80'}`}>
                               

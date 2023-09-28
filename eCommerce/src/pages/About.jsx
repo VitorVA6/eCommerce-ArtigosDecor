@@ -19,11 +19,13 @@ export default function About() {
         url = {`https://artigosdecor.render.com/about-us`}
         canonical = {`https://artigosdecor.render.com/about-us`}
     />
-    <div className='flex flex-col py-12 px-32 gap-5 text-black/80 bg-white'>
-        <h1 className='font-semibold text-[36px] text-center mb-6'>{`Sobre a ${catalog.nome}`}</h1>
-        <p style={{whiteSpace: "pre-wrap"}}>
+    <div className='flex flex-col pt-8 md:pt-12 pb-28 px-6 md:px-10 xl:px-32 gap-5 text-black/80 bg-white'>
+        <h1 className='font-semibold text-[28px] lg:text-[36px] text-center mb-2 md:mb-6'>{`Sobre a ${catalog.nome}`}</h1>
+        <div  
+            className='text-gray-500/90 md:text-lg'
+            style={{whiteSpace: "pre-wrap"}}>
             {parse(catalog.sobre)}
-        </p>
+        </div>
     </div>
     </>
   )

@@ -17,7 +17,7 @@ export default function SliderFooter() {
 
   return (
     <>
-    <Slider className='lg:hidden py-8 border-b-2 w-[calc(100%-40px)]' {...settings} dots dotsClass="meus-dots">
+    <Slider className='lg:hidden py-8 border-b-2 w-[calc(100%-40px)] px-5' {...settings} dots dotsClass="meus-dots">
         <div className='flex flex-col items-center'>
           <div className='flex justify-center mb-2'>
             <div className='flex justify-center items-center w-12 h-12 border-2 border-gray-300 rounded-full'>

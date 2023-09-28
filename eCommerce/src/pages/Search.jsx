@@ -36,7 +36,7 @@ export default function Search() {
         canonical = {`https://artigosdecor.render.com/search/${category}/${name}`}
         keywords = 'busca, artigos decor'
     />
-    <div className='flex flex-col overflow-x-hidden md:px-10 xl:px-32'>
+    <div className='flex flex-col overflow-x-hidden md:px-10 xl:px-32 pb-16'>
         <h3 className='hidden md:flex gap-1 items-center my-[28px] text-sm text-black/80'>
             <p>Página iInicial</p> 
             <FiChevronRight className='w-3.5 h-3.5 text-gray-500 mt-0.5'/>
