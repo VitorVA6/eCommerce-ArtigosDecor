@@ -6,11 +6,6 @@ import parse from 'html-react-parser'
 export default function About() {
 
     const {catalog} = useCatalogContext()
-    const [text, setText] = useState([])
-
-    useEffect(() => {
-        setText(catalog.sobre.split('\n'))
-    }, [catalog])
 
   return (
     <>

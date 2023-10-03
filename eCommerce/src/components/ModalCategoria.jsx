@@ -45,6 +45,21 @@ export default function ModalCategoria({setModalCategoria, edit, placeh, idCusto
       setImage( prev => prev.filter( image => image.id !== id ) )
   }
 
+  function checkCategory(){
+    const categoryExist = categories.find(el => el.name === category)
+    if(!categoryExist) return true
+    else{
+      if(categoryExist._id === idCustom) return true
+    }
+    return false
+  }
+
+  function checkCategoryAdd(){
+    const categoryExist = categories.find(el => el.name === category)
+    if(!categoryExist) return true
+    return false
+  }
+
 function removeUploadedImages(name){
     setUploadesImage( prev => prev.filter( img => img !== name ) )
 }
@@ -64,7 +79,7 @@ function removeUploadedImages(name){
 
   function add(){
     if(edit){
-      if(category.trim().length > 0 && categories.find(el => el.name === category) === undefined){
+      if(category.trim().length > 0 && checkCategory()){
         setLoading(true)
         updateCategory(idCustom, category, image, uploadedImage)
         .then( data => {
@@ -82,7 +97,7 @@ function removeUploadedImages(name){
       }
       return
     }
-    if(category.trim().length > 0 && categories.find(el => el.name === category) === undefined){
+    if(category.trim().length > 0 && checkCategoryAdd()){
       setLoading(true)
       addCategory(category, image).then(data => {
         setLoading(false)
