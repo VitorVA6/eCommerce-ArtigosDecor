@@ -32,13 +32,17 @@ export default function ModalCategoria({setModalCategoria, edit, placeh, idCusto
     setTimeout(() => setModalCategoria(false), 200) 
   }
 
-  function handleFiles(ev){
-    const newImages = Array.from(ev.target.files).map( image => ({
-        id: uuidv4(),
-        file: image
-    }) )
-    setUploadesImage([])
-    setImage(newImages)
+  function handleFiles(files){
+    if(files[0].type === 'image/jpeg' || files[0].type === 'image/png'){
+      setImage([{
+          id: uuidv4(),
+          file: files[0]
+      }]) 
+      setUploadesImage([])
+    }
+    else{
+      notifyError('Formato de arquivo inválido')
+    }
 }
 
   function removeFiles(id){
@@ -129,7 +133,7 @@ function removeUploadedImages(name){
           
           <div className='flex justify-between items-center w-full mb-2'>
             <label className='border border-dashed border-gray-400/70 w-fit h-fit px-2.5 py-2 rounded-md cursor-pointer'>
-              <input className='hidden' multiple={false} type='file' onChange={(ev) => handleFiles(ev)} />
+              <input className='hidden' multiple={false} type='file' onChange={(ev) => handleFiles(ev.target.files)} />
               <BsCardImage className="w-[22px] h-[22px] text-gray-400/70"/>
             </label>
             <LoadingButton 
