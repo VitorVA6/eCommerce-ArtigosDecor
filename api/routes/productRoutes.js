@@ -15,6 +15,7 @@ router.patch('/:id', checkToken, imageUpload.array('images'), removeImages, Prod
 router.delete('/:id', checkToken, ProductController.deleteProduct)
 router.put('/select/:id', checkToken, ProductController.selectOption)
 router.put('/unselect/:id', checkToken, ProductController.unSelectOption)
+router.post('/upload-link', ProductController.createByFile)
 
 
 module.exports = router

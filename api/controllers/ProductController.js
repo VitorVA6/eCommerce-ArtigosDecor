@@ -5,8 +5,11 @@ const combine = require('../utils/combine')
 const ObjectId = require('mongoose')
 const fs = require('fs')
 const uploadS3 = require('../utils/uploadS3')
+const uploadS3files = require('../utils/uploadS3files')
 const removeS3 = require('../utils/removeS3')
 const generateXML = require('../utils/generateXML')
+const axios = require('axios')
+const imageReader = require('../utils/imageReader')
 
 module.exports = class ProductController{
 
@@ -171,6 +174,37 @@ module.exports = class ProductController{
         }
 
         res.status(200).json({product: product})
+
+    }
+
+    static async createByFile(req, res){
+
+        const { products } = req.body
+
+        for (let i = 0; i < products.length; i++) {
+
+            const files = await imageReader(products[i].urls)
+    
+            const images = await uploadS3files(files)
+
+            await Product.create({
+                title: products[i].title, 
+                preco: products[i].price,
+                destaque: false,
+                desconto: 0,
+                categoria: [{
+                    value: "651bf627f684be74b9a56d82",
+                    label: "Painel de Led"
+                }],
+                combinations: [],
+                variations: [],
+                desc: products[i].desc,
+                img: images
+            })
+        }
+
+
+        res.status(200).json({message: 'Produtos adicinados com sucesso'})
 
     }
 
