@@ -1,18 +1,30 @@
 import React from 'react'
 import {BsFiletypeCsv} from 'react-icons/bs'
+import papa from 'papaparse'
+import notifies from '../utils/toastNotifies'
 
 export default function FileUpload() {
     async function handleFiles(ev){
-        const xml = ev.target.files[0]
-        if(xml && xml.type === "text/csv"){
-            console.log('Arquivinho de cria')
+        const csvFile = ev.target.files[0]
+        if(csvFile && csvFile.type === "text/csv"){
+            papa.parse(csvFile, {
+                header: true,
+                complete: (results) => {
+                    const data = results?.data.slice(0, -1)
+                    console.log(data.map( el => ({
+                        ...el,
+                        urls: el.urls.split(',')
+                    }) ))
+                }
+            })
         }else{
-            console.log('Formato de arquivo inválido')
+            notifies.error('Formato de arquivo inválido')
         }
     }
 
   return (
     <div className='flex items-center flex-col w-full'>
+        <notifies.Container />
         <div className='flex flex-col w-full lg:w-3/4 bg-white py-10 px-4 lg:px-7 rounded-xl border border-gray-300/80 lg:border-gray-200/70 gap-7'>
             <h1 className='font-medium text-lg'>Upload de arquivos</h1>
             <div className='flex flex-col'>
@@ -29,7 +41,6 @@ export default function FileUpload() {
                     <BsFiletypeCsv className='w-5 h-5 text-white'/>
                     Upload
                 </label>
-                <button onClick={teste}>Testar</button>
             </div>
         </div>
     </div>
