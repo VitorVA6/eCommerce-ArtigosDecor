@@ -7,7 +7,7 @@ import PersoAdmin from '../components/PersoAdmin'
 import ContaAdmin from '../components/ContaAdmin'
 import ShipmentAdmin from '../components/ShipmentAdmin'
 import { useUserContext } from '../contexts/User'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import Requests from '../components/Requests'
 import OrderById from '../components/OrderById'
 import IntegrateFacebookAdmin from '../components/IntegrateFacebookAdmin'
@@ -16,7 +16,6 @@ import FileUpload from '../components/FileUpload'
 export default function Admin() {
   const {authenticated, checkAuth} = useUserContext()
   const [selected, setSelected] = useState('catalog')
-  const navigate = useNavigate()
 
   useEffect( ()=> {
     checkAuth()

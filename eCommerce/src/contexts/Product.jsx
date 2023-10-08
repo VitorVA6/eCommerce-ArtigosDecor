@@ -20,8 +20,17 @@ export default function ProductProvider( {children} ){
 export function useProductContext(){
     const { produtos, setProdutos, perPage, selCategory, setSelCategory} = useContext(ProductContext)
 
+
+    async function addProductByFile(products){
+        try{
+            const {data} = await axios.post(`/products/upload-link`, {products})
+            return data
+        }catch(err){
+            return err.response ? err.response.data : {error: 'Ocorreu um erro no servidor!'}
+        }
+    }
+
     async function addProduct(name, price, priceoff, category, desc, images, combinations, variations){
-        console.log(category)
         const formData = new FormData()
         formData.append('title', name)
         formData.append('preco', price)
@@ -167,6 +176,7 @@ export function useProductContext(){
         perPage,
         selCategory,
         setSelCategory,
+        addProductByFile,
         addProduct,
         getProducts,
         getProductById,

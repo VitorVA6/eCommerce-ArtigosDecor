@@ -181,30 +181,38 @@ module.exports = class ProductController{
 
         const { products } = req.body
 
-        for (let i = 0; i < products.length; i++) {
+        if(!products) return res.status(400).json({error: 'A lista de produtos é obrigatória'})
 
-            const files = await imageReader(products[i].urls)
+        try{
+
+            for (let i = 0; i < products.length; i++) {
     
-            const images = await uploadS3files(files)
-
-            await Product.create({
-                title: products[i].title, 
-                preco: products[i].price,
-                destaque: false,
-                desconto: 0,
-                categoria: [{
-                    value: "651bf627f684be74b9a56d82",
-                    label: "Painel de Led"
-                }],
-                combinations: [],
-                variations: [],
-                desc: products[i].desc,
-                img: images
-            })
+                const files = await imageReader(products[i].urls)
+        
+                const images = await uploadS3files(files)
+    
+                await Product.create({
+                    title: products[i].title, 
+                    preco: products[i].price,
+                    destaque: false,
+                    desconto: 0,
+                    categoria: [{
+                        value: "651bf627f684be74b9a56d82",
+                        label: "Painel de Led"
+                    }],
+                    combinations: [],
+                    variations: [],
+                    desc: products[i].desc,
+                    img: images
+                })
+            }
+    
+    
+            res.status(200).json({message: 'Produtos adicinados com sucesso'})
+        }catch(err){
+            console.log(err)
+            res.status(500).json({message: 'Ocorreu um erro no cadastro de um dos produtos'})
         }
-
-
-        res.status(200).json({message: 'Produtos adicinados com sucesso'})
 
     }
 
