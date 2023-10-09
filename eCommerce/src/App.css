@@ -59,21 +59,19 @@
   background: #fff;
 }
 .meus-dots li.slick-active {
-  width: 9.5px;
-  height: 9.5px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   position: relative;
   top: 50%;
-  transform: translateY(-6%);
-  background: rgb(31 41 55);
+  background: #f43f5e;
 }
 .meus-dots li {
-  margin: 0 8px;
-  background-color: transparent;
+  margin: 0 5px;
+  background-color: #9ca3afcc;
   border-radius: 50%;
-  border: 1px solid #555;
-  width: 9px;
-  height: 9px;
+  width: 10px;
+  height: 10px;
   display: inline-block;
   list-style: none;
 }

@@ -138,16 +138,20 @@ export default function Produto() {
                 <p>{produto?.categoria[0]?.label}</p>
                 <FiChevronRight className='w-3.5 h-3.5 text-gray-500 mt-0.5'/>
                 <p>{produto?.title}</p>
-            </h3>    
+            </h3>
             <section className='flex flex-col lg:h-fit justify-center overflow-hidden px-3 md:px-10 xl:px-32 pt-6 md:pt-0 lg:pb-8 lg:gap-7 lg:border-b border-gray-200 lg:flex-row md:gap-y-8 md:pb-2'>
-                <div className='w-full lg:w-3/5 lg:bg-white lg:rounded-md lg:p-6 lg:shadow-lg lg:shadow-gray-300/60 md:hidden'>
-                    <Slider {...settings} dots dotsClass="meus-dots">
+                <div className= 'w-full lg:w-3/5 lg:p-6 md:hidden'>
+                    <Slider
+                        {...settings} 
+                        dots 
+                        dotsClass="meus-dots"
+                    >
                         {
                             produto?.img?.map( image =>{
                                 return (
                                 <div key={image} className=''>
                                     <img 
-                                        className='h-96 w-full lg:px-0 rounded-sm' 
+                                        className='h-80 w-full lg:px-0' 
                                         src={`${import.meta.env.VITE_AWS_URL}${image}`}
                                         alt="Imagem do produto" />
                                 </div>)
@@ -182,7 +186,7 @@ export default function Produto() {
                         </div>
                     }
                 </div>       
-                <div className='flex flex-col w-full lg:w-2/5 h-fit md:px-8 md:py-3 md:bg-white md:rounded-md md:shadow-md lg:shadow-gray-300/60'>
+                <div className='mt-3 flex flex-col w-full lg:w-2/5 h-fit md:px-8 md:py-3 md:bg-white md:rounded-md md:shadow-md lg:shadow-gray-300/60'>
                     <div className='flex flex-col pt-3 gap-1.5'>
                         <h2 className='text-[20px] font-medium lg:text-[22px] text-black/90 leading-none'>{produto?.title}</h2>
                         <h3 className='text-xs md:text-sm text-gray-400'>Disponível em estoque</h3>

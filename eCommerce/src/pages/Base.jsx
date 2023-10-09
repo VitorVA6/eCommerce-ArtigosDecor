@@ -24,7 +24,7 @@ export default function Base() {
   }, [location] )
 
   return (
-    <section className='flex flex-col w-full h-screen overflow-y-auto' ref={refToTop}>
+    <section className='flex flex-col w-full h-screen overflow-y-auto overflow-x-hidden' ref={refToTop}>
       {modalCarrinho?<ModalCart />:<></>}       
         <Header/> 
         <div className='bg-[#f9f9f9] md:bg-[#f1f1f1]'>
