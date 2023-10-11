@@ -37,7 +37,7 @@ export default function Home() {
                     return (     
                       <img 
                         key={image} 
-                        className='w-full h-[27vh] md:h-[23vh] lg:h-[61vh]' 
+                        className='w-full h-[25vh] md:h-[23vh] lg:h-[61vh]' 
                         src={`${import.meta.env.VITE_AWS_URL}${image}`} 
                         alt="Imagem do produto"/>          
                     )

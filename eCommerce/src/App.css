@@ -26,19 +26,21 @@
   margin-top: 0px;
   list-style: none;
   text-align: center;
-  bottom: 30px;
+  bottom: 15px;
   left: 46%;
 }
+
 .meus-dots__banner li {
   margin: 0 8px;
   background-color: transparent;
   border-radius: 50%;
-  border: 3px solid #fff;
-  width: 12px;
-  height: 12px;
+  border: 2px solid #fff;
+  width: 8px;
+  height: 8px;
   display: inline-block;
   list-style: none;
 }
+
 .meus-dots__banner li button {
   font-size: 0;
   line-height: 0;
@@ -50,14 +52,32 @@
   background: transparent;
 }
 .meus-dots__banner li.slick-active {
-  width: 12px;
-  height: 12px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   position: relative;
   top: 50%;
   transform: translateY(1%);
   background: #fff;
 }
+
+@media (min-width: 640px){
+  .meus-dots__banner {
+    text-align: center;
+    bottom: 30px;
+    left: 46%;
+  }
+  .meus-dots__banner li {
+    border: 3px solid #fff;
+    width: 12px;
+    height: 12px;
+  }
+  .meus-dots__banner li.slick-active {
+    width: 12px;
+    height: 12px
+  }
+}
+
 .meus-dots li.slick-active {
   width: 10px;
   height: 10px;
